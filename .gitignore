@@ -4,8 +4,5 @@
 *.csv
 *.o
 *.log
-schools8
-bernoulli
-kid
 .ipynb_checkpoints
 .ipynb_checkpoints/*
