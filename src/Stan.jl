@@ -15,11 +15,11 @@ module Stan
     stan_summary,
     read_stanfit,
     STANDIR,
-  # From cmdtype.jl
+  # From modeltype.jl
     Model,
-    In,
+    Data,
     RNG,
-    Out,
+    Output,
   # From sampletype.jl
     Sample,
     Hmc,
