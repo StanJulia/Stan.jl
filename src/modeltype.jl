@@ -31,6 +31,7 @@ Output(;file::String="", diagnostic_file::String="", refresh::Number=100) =
 
 type Model
   name::String
+  stanfile::String
   noofchains::Int
   command::Array{Base.AbstractCmd, 1}
   method::Methods
@@ -40,14 +41,19 @@ type Model
   output::Output
 end
 
-function Model(;name::String="noname", noofchains::Int=4, method::Methods=Sample(),
+function Model(;name::String="noname", stanfile="", noofchains::Int=4,
+  method::Methods=Sample(),
   random=Random(), init=Init(), data=Data(), output=Output())
   cmdarray = fill(``, noofchains)
-  Model(name, noofchains, cmdarray, method, random, init, data, output)
+  if stanfile == ""
+    stanfile = name
+  end
+  Model(name, stanfile, noofchains, cmdarray, method, random, init, data, output)
 end
 
 function model_show(io::IO, m::Model, compact::Bool)
   println("  name =                    \"$(m.name)\"")
+  println("  stanfile =                \"$(m.stanfile)\"")
   println("  noofchains =              $(m.noofchains)")
   println("  init =                    $(m.init.init)")
   println("  data =                    Data()")
