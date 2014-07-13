@@ -66,7 +66,7 @@ In this case only bernoulli_samples_2.csv is read in. Or select the appropriate 
 
 The full signature of stan() is:
 
-``stan(model::Model, data=Nothing, ProjDir=pwd(); summary=true, diagnostics=false, StanDir=STANDIR)``
+``stan(model::Model, data=Nothing, ProjDir=pwd(); summary=true, diagnostics=false, StanDir=CMDSTANDIR)``
 
 All parameters to compile and run the Stan script are implicitly passed in through the model argument. Some more details are given below.
 

@@ -26,7 +26,7 @@ type Output
   diagnostic_file::String
   refresh::Int64
 end
-Output(;file::String="output.csv", diagnostic_file::String="", refresh::Number=100) =
+Output(;file::String="", diagnostic_file::String="", refresh::Number=100) =
   Output(file, diagnostic_file, refresh)
 
 type Model

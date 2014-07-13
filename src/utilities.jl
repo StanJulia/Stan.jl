@@ -9,7 +9,8 @@ function getenv(var::String)
   bytestring(val)
 end
 
-STANDIR = getenv("STAN_HOME");
+STANDIR = getenv("CMDSTAN_HOME");
+CMDSTANDIR = getenv("CMDSTAN_HOME");
 
 function *(c1::Cmd, c2::Cmd)
   res = deepcopy(c1)

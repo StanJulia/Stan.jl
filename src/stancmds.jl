@@ -3,7 +3,7 @@
 #
 
 function stan(model::Model, data=Nothing, ProjDir=pwd();
-  summary=true, diagnostics=false, StanDir=STANDIR)
+  summary=true, diagnostics=false, StanDir=CMDSTANDIR)
   
   old = pwd()
   println()
@@ -70,7 +70,7 @@ function stan(model::Model, data=Nothing, ProjDir=pwd();
   res
 end
 
-function stan_summary(file::String; StanDir=getenv("STAN_HOME"))
+function stan_summary(file::String; StanDir=getenv("CMDSTAN_HOME"))
   try
     cmd = @unix ? `$(StanDir)/bin/print $(file)` : `$(StanDir)\bin\print.exe $(file)`
     print(open(readall, cmd, "r"))
@@ -79,7 +79,7 @@ function stan_summary(file::String; StanDir=getenv("STAN_HOME"))
   end
 end
 
-function stan_summary(filecmd::Cmd; StanDir=getenv("STAN_HOME"))
+function stan_summary(filecmd::Cmd; StanDir=getenv("CMDSTAN_HOME"))
   try
     cmd = @unix ? `$(StanDir)/bin/print $(filecmd)` : `$(StanDir)\bin\print.exe $(filecmd)`
     print(open(readall, cmd, "r"))
