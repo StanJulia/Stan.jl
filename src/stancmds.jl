@@ -9,11 +9,11 @@ function stan(model::Model, data=Nothing, ProjDir=pwd();
   println()
   try
     cd(string(Pkg.dir("$(ProjDir)")))
-    isfile("$(model.name)_build.log") && rm("$(model.name)_build.log")
+    isfile("$(model.stanfile)_build.log") && rm("$(model.stanfile)_build.log")
     isfile("$(model.name)_run.log") && rm("$(model.name)_run.log")
 
     cd(string(Pkg.dir(StanDir)))
-    run(`make $(ProjDir)/$(model.name)` .> "$(ProjDir)/$(model.name)_build.log")
+    run(`make $(ProjDir)/$(model.stanfile)` .> "$(ProjDir)/$(model.stanfile)_build.log")
 
     cd(string(Pkg.dir("$(ProjDir)")))
     if data != Nothing && isa(data, String)
@@ -22,17 +22,17 @@ function stan(model::Model, data=Nothing, ProjDir=pwd();
     for i in 1:model.noofchains
       if isa(model.method, Sample)
         model.output.file = model.name*"_samples_$(i).csv"
-        isfile("$(model.stanfile)_samples_$(i).csv") && rm("$(model.stanfile)_samples_$(i).csv")
+        isfile("$(model.name)_samples_$(i).csv") && rm("$(model.name)_samples_$(i).csv")
         if diagnostics
-          model.output.diagnostic_file = model.stanfile*"_diagnostics_$(i).csv"
-          isfile("$(model.stanfile)_diagnostics_$(i).csv") && rm("$(model.stanfile)_diagnostics_$(i).csv")
+          model.output.diagnostic_file = model.name*"_diagnostics_$(i).csv"
+          isfile("$(model.name)_diagnostics_$(i).csv") && rm("$(model.name)_diagnostics_$(i).csv")
         end
       elseif isa(model.method, Optimize)
-        isfile("$(model.stanfile)_optimize_$(i).csv") && rm("$(model.stanfile)_optimize_$(i).csv")
-        model.output.file = model.stanfile*"_optimize_$(i).csv"
+        isfile("$(model.name)_optimize_$(i).csv") && rm("$(model.name)_optimize_$(i).csv")
+        model.output.file = model.name*"_optimize_$(i).csv"
       elseif isa(model.method, Diagnose)
-        isfile("$(model.stanfile)_diagnose_$(i).csv") && rm("$(model.stanfile)_diagnose_$(i).csv")
-        model.output.file = model.stanfile*"_diagnose_$(i).csv"
+        isfile("$(model.name)_diagnose_$(i).csv") && rm("$(model.name)_diagnose_$(i).csv")
+        model.output.file = model.name*"_diagnose_$(i).csv"
       end
       model.command[i] = cmdline(model)
     end
@@ -49,15 +49,15 @@ function stan(model::Model, data=Nothing, ProjDir=pwd();
 
   if isa(model.method, Sample)
     for i in 1:model.noofchains
-      res = vcat(res, read_stanfit(("$(model.stanfile)_samples_$(i).csv")))
-      push!(samplefiles, "$(model.stanfile)_samples_$(i).csv")
+      res = vcat(res, read_stanfit(("$(model.name)_samples_$(i).csv")))
+      push!(samplefiles, "$(model.name)_samples_$(i).csv")
     end
   elseif isa(model.method, Optimize)
-    res = read_stanfit(("$(model.stanfile)_optimize_1.csv"))
-    push!(samplefiles, "$(model.stanfile)_optimize_1.csv")
+    res = read_stanfit(("$(model.name)_optimize_1.csv"))
+    push!(samplefiles, "$(model.name)_optimize_1.csv")
   elseif isa(model.method, Diagnose)
-    res = read_standiagnose(("$(model.stanfile)_diagnose_1.csv"))
-    push!(samplefiles, "$(model.stanfile)_diagnose_1.csv")
+    res = read_standiagnose(("$(model.name)_diagnose_1.csv"))
+    push!(samplefiles, "$(model.name)_diagnose_1.csv")
   else
     println("Unknown method.")
   end
