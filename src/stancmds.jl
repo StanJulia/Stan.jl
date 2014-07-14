@@ -9,11 +9,11 @@ function stan(model::Model, data=Nothing, ProjDir=pwd();
   println()
   try
     cd(string(Pkg.dir("$(ProjDir)")))
-    isfile("$(model.stanfile)_build.log") && rm("$(model.stanfile)_build.log")
+    isfile("$(model.name)_build.log") && rm("$(model.name)_build.log")
     isfile("$(model.name)_run.log") && rm("$(model.name)_run.log")
 
     cd(string(Pkg.dir(StanDir)))
-    run(`make $(ProjDir)/$(model.stanfile)` .> "$(ProjDir)/$(model.stanfile)_build.log")
+    run(`make $(ProjDir)/$(model.name)` .> "$(ProjDir)/$(model.name)_build.log")
 
     cd(string(Pkg.dir("$(ProjDir)")))
     if data != Nothing && isa(data, String)
