@@ -7,7 +7,7 @@ old = pwd()
 cd(ProjDir)
 
 # Shows an example of updating a Gradient setting.
-stanmodel = Model(name="bernoulli", method=Diagnose(Gradient(epsilon=1e-6)));
+stanmodel = Model(Diagnose(Gradient(epsilon=1e-6)), name="bernoulli");
 data_file = "bernoulli.data.R"
 diagnose = stan(stanmodel, data_file, ProjDir)
 

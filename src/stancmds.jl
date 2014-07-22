@@ -115,6 +115,106 @@ function read_stanfit(file::String)
   df
 end
 
+function read_stanfit(model::Model)
+  
+  ## Collect the results of a chain in an array ##
+  
+  chainarray = Dict[]
+  
+  ## Each chain dictionary can contain up to 4 types of results ##
+  
+  result_type_files = ["samples", "diagnostics", "optimize", "diagnose"]
+  rtdict = Dict()
+  
+  ## tdict contains the arrays of values ##
+  tdict = Dict()
+  
+  for i in 1:model.noofchains
+    for res_type in result_type_files
+      println(res_type)
+      if isfile("$(model.name)_$(res_type)_$(i).csv")
+        instream = open("$(model.name)_$(res_type)_$(i).csv")
+        
+        ## A result type file for chain i is present ##
+        ## Result type diagnose needs special treatment ##
+        
+        if res_type == "diagnose"
+          skipchars(instream, isspace, linecomment='#')
+          i = 0
+          tdict = Dict()
+          while true
+            i += 1 
+            line = readline(instream)
+            #println(i, ": ", line)
+            if i == 1
+              tdict = merge(tdict, [:lp => [float(split(line[1:(length(line)-1)], "=")[2])]])
+            elseif i == 3
+              sa = split(line)
+              tdict = merge(tdict, [:var_id => [int(sa[1])], :value => [float(sa[2])]])
+              tdict = merge(tdict, [:model => [float(sa[3])], :finite_dif => [float(sa[4])]])
+              tdict = merge(tdict, [:error => [float(sa[5])]])
+            end
+            if eof(instream)
+              break
+            end
+            skipchars(instream, isspace, linecomment='#')
+          end
+        else
+          tdict = Dict()
+          skipchars(instream, isspace, linecomment='#')
+          line = readline(instream)
+          res_type == "optimize" && println(line)
+          idx = split(line[1:length(line)-1], ",")
+          index = [convert(Symbol, idx[k]) for k in 1:length(idx)]
+          res_type == "optimize" && println(index)
+          j = 0
+          skipchars(instream, isspace, linecomment='#')
+          while true
+            j += 1
+            skipchars(instream, isspace, linecomment='#')
+            line = readline(instream)
+            res_type == "optimize" && println(line)
+            if eof(instream) && length(line) == 0
+              println("EOF detected")
+              close(instream)
+              break
+            else
+              flds = float(split(line[1:length(line)-1], ","))
+              res_type == "optimize" && println(flds)
+              for k in 1:length(index)
+                if j ==1
+                  tdict = merge(tdict, [index[k] => [flds[k]]])
+                else
+                  tdict[index[k]] = push!(tdict[index[k]], flds[k])
+                end
+              end
+            end
+          end
+        end
+        
+      end
+      
+      ## End of processing result type file ##
+      ## If any keys were found, merge it in the rtdict ##
+      
+      if length(keys(tdict)) > 0
+        println("Merging $(convert(Symbol, res_type)) with keys $(keys(tdict))")
+        rtdict = merge(rtdict, [convert(Symbol, res_type) => tdict])
+        tdict = Dict()
+      end
+    end
+    
+    ## If rtdict has keys, push it to the chain array ##
+    
+    if length(keys(rtdict)) > 0
+      println("Pushing the rtdict with keys $(keys(rtdict))")
+      push!(chainarray, rtdict)
+      rtdict = Dict()
+    end
+  end
+  chainarray
+end
+
 function read_standiagnose(file::String)
   
   instream = open(file)

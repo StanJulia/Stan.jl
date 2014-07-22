@@ -21,5 +21,6 @@ println()
 using StatsBase
 println("Compare unconstrained diagnostics with sample_df results: \n")
 println([logistic(diags_2_df[1:5, :theta]) samples_df[101:105, :theta]])
+println()
 
 cd(old)

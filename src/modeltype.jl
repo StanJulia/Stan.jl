@@ -40,8 +40,7 @@ type Model
   output::Output
 end
 
-function Model(;name::String="noname", noofchains::Int=4,
-  method::Methods=Sample(),
+function Model(method::Methods=Sample();name::String="noname", noofchains::Int=4,
   random=Random(), init=Init(), data=Data(), output=Output())
   cmdarray = fill(``, noofchains)
   Model(name, noofchains, cmdarray, method, random, init, data, output)
