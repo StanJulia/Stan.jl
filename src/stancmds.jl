@@ -131,9 +131,10 @@ function read_stanfit(model::Model)
   
   for i in 1:model.noofchains
     for res_type in result_type_files
-      println(res_type)
+      #println(res_type)
       if isfile("$(model.name)_$(res_type)_$(i).csv")
         instream = open("$(model.name)_$(res_type)_$(i).csv")
+        #println("$(model.name)_$(res_type)_$(i).csv")
         
         ## A result type file for chain i is present ##
         ## Result type diagnose needs special treatment ##
@@ -163,24 +164,24 @@ function read_stanfit(model::Model)
           tdict = Dict()
           skipchars(instream, isspace, linecomment='#')
           line = readline(instream)
-          res_type == "optimize" && println(line)
+          #res_type == "optimize" && println(line)
           idx = split(line[1:length(line)-1], ",")
           index = [convert(Symbol, idx[k]) for k in 1:length(idx)]
-          res_type == "optimize" && println(index)
+          #res_type == "optimize" && println(index)
           j = 0
           skipchars(instream, isspace, linecomment='#')
           while true
             j += 1
             skipchars(instream, isspace, linecomment='#')
             line = readline(instream)
-            res_type == "optimize" && println(line)
+            #res_type == "optimize" && println(line)
             if eof(instream) && length(line) == 0
-              println("EOF detected")
+              #println("EOF detected")
               close(instream)
               break
             else
               flds = float(split(line[1:length(line)-1], ","))
-              res_type == "optimize" && println(flds)
+              #res_type == "optimize" && println(flds)
               for k in 1:length(index)
                 if j ==1
                   tdict = merge(tdict, [index[k] => [flds[k]]])
@@ -198,7 +199,7 @@ function read_stanfit(model::Model)
       ## If any keys were found, merge it in the rtdict ##
       
       if length(keys(tdict)) > 0
-        println("Merging $(convert(Symbol, res_type)) with keys $(keys(tdict))")
+        #println("Merging $(convert(Symbol, res_type)) with keys $(keys(tdict))")
         rtdict = merge(rtdict, [convert(Symbol, res_type) => tdict])
         tdict = Dict()
       end
@@ -207,7 +208,7 @@ function read_stanfit(model::Model)
     ## If rtdict has keys, push it to the chain array ##
     
     if length(keys(rtdict)) > 0
-      println("Pushing the rtdict with keys $(keys(rtdict))")
+      #println("Pushing the rtdict with keys $(keys(rtdict))")
       push!(chainarray, rtdict)
       rtdict = Dict()
     end
