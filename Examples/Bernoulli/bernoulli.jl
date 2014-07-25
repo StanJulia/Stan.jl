@@ -11,8 +11,9 @@ data_file = "bernoulli.data.R"
 samples_df = stan(stanmodel, data_file, ProjDir, diagnostics=true)
 
 stan_summary("$(stanmodel.name)_samples_2.csv")
-println("First 5 of $(size(samples_df)[1]) rows of sample_df: ")
-show(samples_df[1:5, :], true)
+
+println()
+read_stanfit(stanmodel)[1][:samples] |> display
 println()
 
 diags_2_df = read_stanfit("$(stanmodel.name)_diagnostics_2.csv")
