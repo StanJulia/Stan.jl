@@ -33,7 +33,7 @@ Concatenate home directory and project directory. For Windows, backslashes need 
 
 Simplifies calling read_stanfit() and/or stan_summary() later.
 
-**julia >** ``stanmodel = Model(name="bernoulli");``
+**julia >** ``stanmodel = Stanmodel(name="bernoulli");``
 
 Create a default model for sampling. See other examples for methods optimize and diagnose in the Bernoulli example directory.
 
@@ -66,7 +66,7 @@ In this case only bernoulli_samples_2.csv is read in. Or select the appropriate 
 
 The full signature of stan() is:
 
-``stan(model::Model, data=Nothing, ProjDir=pwd(); summary=true, diagnostics=false, StanDir=CMDSTANDIR)``
+``stan(model::Stanmodel, data=Nothing, ProjDir=pwd(); summary=true, diagnostics=false, StanDir=CMDSTANDIR)``
 
 All parameters to compile and run the Stan script are implicitly passed in through the model argument. Some more details are given below.
 
@@ -74,14 +74,14 @@ The stan() call uses make to create (or update when needed) an executable with t
 
 If the Julia REPL is started in the correct directory, stan(model) is sufficient for a model that does not require a data file. See the Binormal example.
 
-Next to stan(), the other important method to run Stan scripts is Model():
+Next to stan(), the other important method to run Stan scripts is Stanmodel():
 
-**julia >** ``stanmodel = Model(name="bernoulli");``
+**julia >** ``stanmodel = Stanmodel(name="bernoulli");``
 <br>**julia >** ``stanmodel``
 
 Shows all parameters in the model, in this case (by default) a sample model. 
 
-**julia >** ``stanmodel2 = Model(name="bernoulli2", noofchains=6, method=Sample(adapt=Adapt(delta=0.9)))``
+**julia >** ``stanmodel2 = Stanmodel(name="bernoulli2", noofchains=6, method=Sample(adapt=Adapt(delta=0.9)))``
 
 An example of updating default model values when creating a model. The format is slightly different from CmdStan, but the parameters are as described in the CmdStan Interface User's Guide (v2.3.0, June 20th 2014). 
 
@@ -89,7 +89,7 @@ Now stanmodel2 will look like:
 
 **julia >** ``stanmodel2``
 
-After the Model object has been created fields can be updated, e.g.
+After the Stanmodel object has been created fields can be updated, e.g.
 
 ``stanmodel2.method.adapt.delta=0.85``
 

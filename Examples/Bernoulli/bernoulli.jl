@@ -6,7 +6,7 @@ old = pwd()
 ProjDir = homedir()*"/.julia/v0.3/Stan/Examples/Bernoulli"
 cd(ProjDir)
 
-stanmodel = Model(name="bernoulli");
+stanmodel = Stanmodel(name="bernoulli");
 data_file = "bernoulli.data.R"
 samples_df = stan(stanmodel, data_file, ProjDir, diagnostics=true)
 

@@ -2,7 +2,7 @@
 
 function cmdline(m)
   cmd = ``
-  if isa(m, Model)
+  if isa(m, Stanmodel)
     # Handle the model name field for unix and windows
     cmd = @unix ? `./` : ``
     cmd = @unix ? `$cmd$(getfield(m, :name))` : `$cmd$(getfield(m, :name)).exe`

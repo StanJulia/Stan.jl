@@ -6,7 +6,7 @@ old = pwd()
 ProjDir = homedir()*"/.julia/v0.3/Stan/Examples/Binormal"
 cd(ProjDir)
 
-binormalmodel = Model(name="binormal");
+binormalmodel = Stanmodel(name="binormal");
 samples_df = stan(binormalmodel)
 
 show(samples_df[1:5, :], true)

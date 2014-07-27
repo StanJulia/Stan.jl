@@ -1,7 +1,7 @@
 using Stan
 using Base.Test
 
-m = Model(name="8schools")
+m = Stanmodel(name="8schools")
 m.command[1] = cmdline(m)
 
 println()
@@ -18,16 +18,16 @@ showcompact(s1)
 println()
 show(s1)
 
-n1 = Nesterov()
-n2 = Nesterov(stepsize=3)
-@assert 3*n1.stepsize == n2.stepsize
+n1 = Lbfgs()
+n2 = Lbfgs(history_size=15)
+@assert 3*n1.history_size == n2.history_size
 
 b1 = Bfgs()
 b2 = Bfgs(tol_obj=1//100000000)
 @assert b1.tol_obj == b2.tol_obj
 o1 = Optimize()
 o2 = Optimize(Newton())
-o3 = Optimize(Nesterov(stepsize=3000))
+o3 = Optimize(Lbfgs(history_size=10))
 o4 = Optimize(Bfgs(tol_obj=1e-9))
 o5 = Optimize(method=Bfgs(tol_obj=1e-9), save_iterations=true)
 @assert o5.method.tol_obj == o1.method.tol_obj/10

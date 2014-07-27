@@ -7,7 +7,7 @@ ProjDir = homedir()*"/.julia/v0.3/Stan/Examples/EightSchools"
 old = pwd()
 cd(ProjDir)
 
-stanmodel = Model(name="schools8");
+stanmodel = Stanmodel(name="schools8");
 data_file = "schools8.data.R"
 df = stan(stanmodel, data_file, ProjDir)
 

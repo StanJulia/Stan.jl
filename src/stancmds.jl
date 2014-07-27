@@ -2,7 +2,7 @@
 # Basic definitions
 #
 
-function stan(model::Model, data=Nothing, ProjDir=pwd();
+function stan(model::Stanmodel, data=Nothing, ProjDir=pwd();
   summary=true, diagnostics=false, StanDir=CMDSTANDIR)
   
   old = pwd()
@@ -115,7 +115,7 @@ function read_stanfit(file::String)
   df
 end
 
-function read_stanfit(model::Model)
+function read_stanfit(model::Stanmodel)
   
   ## Collect the results of a chain in an array ##
   

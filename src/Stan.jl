@@ -17,7 +17,7 @@ module Stan
     CMDSTANDIR,
     STANDIR,
   # From modeltype.jl
-    Model,
+    Stanmodel,
     Data,
     RNG,
     Output,
@@ -36,7 +36,7 @@ module Stan
     Adapt,
   # From optimizetype.jl
     Optimize,
-    Nesterov,
+    Lbfgs,
     Bfgs,
     Newton,
   # From diagnosetype.jl
