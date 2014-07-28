@@ -1,6 +1,6 @@
 # Stan
 
-[![Build Status](https://travis-ci.org/goedman/Stan.jl.png)](https://travis-ci.org/goedman/Stan.jl)
+[![Build Status](https://travis-ci.org/goedman/Stan.jl.svg)](https://travis-ci.org/goedman/Stan.jl)
 
 ## Purpose
 
