@@ -9,8 +9,14 @@ function getenv(var::String)
   bytestring(val)
 end
 
-STANDIR = getenv("CMDSTAN_HOME");
-CMDSTANDIR = getenv("CMDSTAN_HOME");
+STANDIR = ""
+CMDSTANDIR = ""
+try
+  STANDIR = getenv("STAN_HOME");
+  CMDSTANDIR = getenv("CMDSTAN_HOME");
+catch e
+  println("STAN_HOME or CMDSTAN_HOME not found.")
+end
 
 function *(c1::Cmd, c2::Cmd)
   res = deepcopy(c1)

@@ -2,19 +2,36 @@
 
 using Base.Test
 
-my_tests = [
-  "test_bernoulli.jl",
-  "test_binormal.jl",
-  "test_kidscore.jl",
-  "test_schools8.jl",
+code_tests = [
   "test_utilities.jl",
   "test_cmdtype.jl"
 ]
 
+execution_tests = [
+  "test_bernoulli.jl",
+  "test_binormal.jl",
+  "test_kidscore.jl",
+  "test_schools8.jl"
+]
+
 println("Running tests:")
 
-for my_test in my_tests
+for my_test in code_tests
     println("\n  * $(my_test) *")
     include(my_test)
 end
 
+if STANDIR != "" && CMDSTANDIR != ""
+  println("STAN_HOME and CMDSTAN_HOME found! Try to run bernoulli.")
+  try
+    for my_test in execution_tests
+        println("\n  * $(my_test) *")
+        include(my_test)
+    end
+  catch e
+     println("STAN_HOME and CMDSTAN_HOME found, but Stan not installed properly.")
+     println(e)
+  end 
+else
+  println("STAN_HOME and CMDSTAN_HOME not found!")  
+end
