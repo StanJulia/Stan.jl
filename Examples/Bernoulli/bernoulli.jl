@@ -25,8 +25,11 @@ println()
 chains[1][:diagnostics] |> display
 println()
 
-diags_1_df = read_stanfit("$(stanmodel.name)_diagnostics_1.csv");
+logistic(x::FloatingPoint) = one(x) / (one(x) + exp(-x))
+logistic(x::Real) = logistic(float(x))
+@vectorize_1arg Real logistic
 
 println()
+[logistic(chains[1][:diagnostics][:theta]) chains[1][:samples][:theta]][1:5,:] |> display
 
 cd(old)

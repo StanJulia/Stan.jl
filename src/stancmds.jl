@@ -86,33 +86,6 @@ function stan_summary(filecmd::Cmd; StanDir=getenv("CMDSTAN_HOME"))
   end
 end
 
-function read_stanfit(file::String)
-  
-  instream = open(file)
-  tmpfile = "tmp_"*file
-  outstream = open(tmpfile, "w")
-  skipchars(instream, isspace, linecomment='#')
-
-  i = 0
-  while true
-    i += 1 
-    line = readline(instream)
-    #println(i, ": ", line)
-    if eof(instream)
-      write(outstream, line)
-      close(outstream)
-      break
-    end
-    write(outstream, line)
-    skipchars(instream, isspace, linecomment='#')
-  end
-  
-  
-  df = readtable(tmpfile, allowcomments=true, nrows=i)
-  rm(tmpfile)
-  df
-end
-
 function read_stanfit(model::Stanmodel)
   
   ## Collect the results of a chain in an array ##
@@ -212,33 +185,6 @@ function read_stanfit(model::Stanmodel)
     end
   end
   chainarray
-end
-
-function read_standiagnose(file::String)
-  
-  instream = open(file)
-  skipchars(instream, isspace, linecomment='#')
-
-  i = 0
-  dict = Dict()
-  while true
-    i += 1 
-    line = readline(instream)
-    #println(i, ": ", line)
-    if i == 1
-      dict = merge(dict, [:lp => float(split(line[1:(length(line)-1)], "=")[2])])
-    elseif i == 3
-      sa = split(line)
-      dict = merge(dict, [:var_id => int(sa[1]), :value => float(sa[2])])
-      dict = merge(dict, [:model => float(sa[3]), :finite_dif => float(sa[4])])
-      dict = merge(dict, [:error => float(sa[5])])
-    end
-    if eof(instream)
-      break
-    end
-    skipchars(instream, isspace, linecomment='#')
-  end
-  dict
 end
 
  
