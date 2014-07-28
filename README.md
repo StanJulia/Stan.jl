@@ -1,5 +1,7 @@
 # Stan
 
+[![Build Status](https://travis-ci.org/goedman/Stan.jl.png)](https://travis-ci.org/goedman/Stan.jl)
+
 ## Purpose
 
 A package to use Stan (as an external program) from Julia. 
