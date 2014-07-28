@@ -1,6 +1,6 @@
 ######### Stan program example  ###########
 
-using DataFrames, Stan
+using Stan
 
 ProjDir = homedir()*"/.julia/v0.3/Stan/Examples/Bernoulli"
 old = pwd()
@@ -8,7 +8,7 @@ cd(ProjDir)
 
 stanmodel = Stanmodel(Optimize(), name="bernoulli");
 data_file = "bernoulli.data.R"
-df = stan(stanmodel, data_file, ProjDir)
+optim = stan(stanmodel, data_file, ProjDir);
+optim[1] |> display
 
-println(df)
 cd(old)

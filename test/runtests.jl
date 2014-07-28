@@ -31,6 +31,7 @@ if STANDIR != "" && CMDSTANDIR != ""
   catch e
      println("STAN_HOME and CMDSTAN_HOME found, but Stan not installed properly.")
      println(e)
+     println("No simulation runs have been performed.")
   end 
 else
   println("STAN_HOME and CMDSTAN_HOME not found!")  

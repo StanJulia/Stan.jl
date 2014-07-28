@@ -1,6 +1,6 @@
 ######### Stan batch program example  ###########
 
-using DataFrames, Stan
+using Stan
 #using Distributions, MCMC, Gadfly
 
 ProjDir = homedir()*"/.julia/v0.3/Stan/Examples/EightSchools"
@@ -9,10 +9,10 @@ cd(ProjDir)
 
 stanmodel = Stanmodel(name="schools8");
 data_file = "schools8.data.R"
-df = stan(stanmodel, data_file, ProjDir)
+chains = stan(stanmodel, data_file, ProjDir)
 
-println(df)
-showall(df[1:3, 7:24], true)
+println()
+chains[1][:samples] |> display
 println()
 
 cd(old)

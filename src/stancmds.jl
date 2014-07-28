@@ -45,19 +45,17 @@ function stan(model::Stanmodel, data=Nothing, ProjDir=pwd();
   end
   
   local samplefiles = String[]
-  local res = DataFrame()
+  local res = Dict[]
 
   if isa(model.method, Sample)
     for i in 1:model.noofchains
-      res = vcat(res, read_stanfit(("$(model.name)_samples_$(i).csv")))
       push!(samplefiles, "$(model.name)_samples_$(i).csv")
     end
+    res = read_stanfit(model)
   elseif isa(model.method, Optimize)
-    res = read_stanfit(("$(model.name)_optimize_1.csv"))
-    push!(samplefiles, "$(model.name)_optimize_1.csv")
+    res = read_stanfit(model)
   elseif isa(model.method, Diagnose)
-    res = read_standiagnose(("$(model.name)_diagnose_1.csv"))
-    push!(samplefiles, "$(model.name)_diagnose_1.csv")
+    res = read_stanfit(model)
   else
     println("Unknown method.")
   end

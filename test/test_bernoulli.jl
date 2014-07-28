@@ -26,7 +26,6 @@ for i in 1:8
 end
 
 include("$(dir)bernoulli_diagnose.jl")
-println(diagnose)
 for i in 1:8
   isfile("bernoulli_diagnose_$(i).csv") && rm("bernoulli_diagnose_$(i).csv")
 end

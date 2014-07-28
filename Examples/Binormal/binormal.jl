@@ -7,9 +7,9 @@ ProjDir = homedir()*"/.julia/v0.3/Stan/Examples/Binormal"
 cd(ProjDir)
 
 binormalmodel = Stanmodel(name="binormal");
-samples_df = stan(binormalmodel)
+chains = stan(binormalmodel)
 
-show(samples_df[1:5, :], true)
+chains[1][:samples] |> display
 println()
 
 cd(old)
