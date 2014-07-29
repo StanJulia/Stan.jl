@@ -8,10 +8,7 @@ cd(ProjDir)
 
 stanmodel = Stanmodel(name="bernoulli");
 data_file = "bernoulli.data.R"
-samples_df = stan(stanmodel, data_file, ProjDir, diagnostics=true)
-
-stan_summary("$(stanmodel.name)_samples_2.csv")
-chains = read_stanfit(stanmodel);
+chains = stan(stanmodel, data_file, ProjDir, diagnostics=true)
 
 println("$(stanmodel.noofchains) chains: ")
 for i in 1:stanmodel.noofchains

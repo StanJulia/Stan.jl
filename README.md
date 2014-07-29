@@ -22,47 +22,51 @@ To test and run the examples:
 
 To run the Bernoulli example:
 
-**julia >** ``using Stan``
+```
+using Stan
 
-The Stan package uses DataFrames, but DataFrames is only required if Stan's results are further processed.
-
-**julia >** ``old = pwd()``
-<br>**julia >** ``ProjDir = homedir() * "/.julia/v0.3/Stan/Examples/Bernoulli/"``
-
+old = pwd()
+ProjDir = homedir()*"/.julia/v0.3/Stan/Examples/Bernoulli"
+cd(ProjDir)
+```
 Concatenate home directory and project directory. For Windows, backslashes need to be reversed.
 
-**julia >** ``cd(ProjDir)``
+```
+stanmodel = Stanmodel(name="bernoulli");
+data_file = "bernoulli.data.R"
+chains = stan(stanmodel, data_file, ProjDir, diagnostics=true)
+```
+Create and run a default model for sampling. See other examples for methods optimize and diagnose in the Bernoulli example directory.
 
-Simplifies calling read_stanfit() and/or stan_summary() later.
+'stan()' is the work horse, the first time it will compile the model and create the executable. By default it will run 4 chains, display a combined summary and returns a array of dictionaries (one dictionary for each chain) with all samples.
 
-**julia >** ``stanmodel = Stanmodel(name="bernoulli");``
+In this example the diagnostics_file, which can optionally be produced by Stan, is used below and hence the argument 'diagnostics=true' has been added. By default diagnostics is set to false.
 
-Create a default model for sampling. See other examples for methods optimize and diagnose in the Bernoulli example directory.
+```
+println("$(stanmodel.noofchains) chains: ")
+for i in 1:stanmodel.noofchains
+  chains[i] |> display
+  println()
+end
 
-**julia >** ``data_file = "bernoulli.data.R"``
-<br>**julia >** ``samples_df = stan(stanmodel, data_file, ProjDir, diagnostics=true)``
+println()
+chains[1][:samples] |> display
+println()
+chains[1][:diagnostics] |> display
+println()
+```
 
-'stan()' is the work horse, the first time it will compile the model and create the executable.
-By default it will run 4 chains, display a combined summary and returns a DataFrame with all samples.
+```
+logistic(x::FloatingPoint) = one(x) / (one(x) + exp(-x))
+logistic(x::Real) = logistic(float(x))
+@vectorize_1arg Real logistic
 
-In this example the diagnostics_file, which can optionally be produced by Stan, is used below and hence the argument 'diagnostics=true' has been added. By default diagnostics is set to false. See also the next section.
+println()
+[logistic(chains[1][:diagnostics][:theta]) chains[1][:samples][:theta]][1:5,:] |> display
 
-**julia >** ``stan_summary("$(stanmodel.name)_samples_2.csv")``
-<br>**julia >** ``println("First 5 of $(size(samples_df)[1]) rows of sample_df: ")``
-<br>**julia >** ``show(samples_df[1:5, :], true)``
-<br>**julia >** ``println()``
+cd(old)
+```
 
-Notice samples_df has 400 rows and contains all (thinned) samples from the 4 chains.
-
-**julia >** ``samples_2_df = read_stanfit("$(stanmodel.name)_samples_2.csv")``
-<br>**julia >** ``diags_2_df = read_stanfit("$(stanmodel.name)_diagnostics_2.csv")``
-
-In this case only bernoulli_samples_2.csv is read in. Or select the appropriate rows:
-
-**julia >** ``println()``
-<br>**julia >** ``println([logistic(diags_2_df[1:5, :theta]) samples_df[101:105, :theta]])``
-<br>
-<br>**julia >** ``cd(old)``
 
 ## Running a Stan script, some details
 
