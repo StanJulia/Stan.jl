@@ -6,13 +6,13 @@
 
 A package to use Stan (as an external program) from Julia. 
 
-Right now the package has been tested on Mac OSX 10.9.3+, Julia 0.3-prerelease and CmStan 2.3.0.
+Right now the package has been tested on Mac OSX 10.9.3+, Julia 0.3-prerelease and CmStan 2.4.0.
 
 For more info on Stan, please go to <http://mc-stan.org>.
 
 ## Requirements
 
-This version of the Stan.jl package assumes that CmdStan (see <http://mc-stan.org>) is installed and the environment variable STAN_HOME is set accordingly (pointing to the CmdStan directory).
+This version of the Stan.jl package assumes that CmdStan (see <http://mc-stan.org>) is installed and the environment variables STAN_HOME and CMDSTAN_HOME are set accordingly (pointing to the Stan and CmdStan directories, e.g. /Users/rob/Projects/Stan/cmdstan/stan and /Users/rob/Projects/Stan/cmdstan on my system).
 
 To test and run the examples:
 
@@ -72,7 +72,9 @@ cd(old)
 
 The full signature of stan() is:
 
-``stan(model::Stanmodel, data=Nothing, ProjDir=pwd(); summary=true, diagnostics=false, StanDir=CMDSTANDIR)``
+```
+stan(model::Stanmodel, data=Nothing, ProjDir=pwd(); summary=true, diagnostics=false, StanDir=CMDSTANDIR)
+````
 
 All parameters to compile and run the Stan script are implicitly passed in through the model argument. Some more details are given below.
 
@@ -82,22 +84,30 @@ If the Julia REPL is started in the correct directory, stan(model) is sufficient
 
 Next to stan(), the other important method to run Stan scripts is Stanmodel():
 
-**julia >** ``stanmodel = Stanmodel(name="bernoulli");``
-<br>**julia >** ``stanmodel``
+```
+stanmodel = Stanmodel(name="bernoulli");
+stanmodel
+````
 
 Shows all parameters in the model, in this case (by default) a sample model. 
 
-**julia >** ``stanmodel2 = Stanmodel(name="bernoulli2", noofchains=6, method=Sample(adapt=Adapt(delta=0.9)))``
+```
+stanmodel2 = Stanmodel(Sample(adapt=Adapt(delta=0.9)), name="bernoulli2", noofchains=6)
+```
 
-An example of updating default model values when creating a model. The format is slightly different from CmdStan, but the parameters are as described in the CmdStan Interface User's Guide (v2.3.0, June 20th 2014). 
+An example of updating default model values when creating a model. The format is slightly different from CmdStan, but the parameters are as described in the CmdStan Interface User's Guide (v2.4.0, July 20th 2014). 
 
 Now stanmodel2 will look like:
 
-**julia >** ``stanmodel2``
+```
+stanmodel2
+````
 
 After the Stanmodel object has been created fields can be updated, e.g.
 
-``stanmodel2.method.adapt.delta=0.85``
+```
+stanmodel2.method.adapt.delta=0.85
+```
 
 After the stan() call, the stanmodel.command contains an array of Cmd fields that contain the actual run commands for each chain.
 
