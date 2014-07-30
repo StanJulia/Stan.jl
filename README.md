@@ -1,8 +1,6 @@
 # Stan
 
-[![Build Status](https://travis-ci.org/goedman/Stan.jl.svg)](https://travis-ci.org/goedman/Stan.jl)
-[![Stan](http://pkg.julialang.org/badges/Stan.jl.svg)](http://pkg.julialang.org/?pkg=Stan)
-
+[![Stan](http://pkg.julialang.org/badges/Stan_0.3.svg)](http://pkg.julialang.org/?pkg=Stan&ver=0.3)
 ## Purpose
 
 A package to use Stan (as an external program) from Julia. 
