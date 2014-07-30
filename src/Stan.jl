@@ -1,7 +1,6 @@
 module Stan
 
 # package code goes here
-  using DataFrames
 
   include("utilities.jl")
   include("modeltype.jl")

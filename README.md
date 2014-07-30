@@ -1,6 +1,7 @@
 # Stan
 
 [![Build Status](https://travis-ci.org/goedman/Stan.jl.svg)](https://travis-ci.org/goedman/Stan.jl)
+[![Stan](http://pkg.julialang.org/badges/Stan.jl.svg)](http://pkg.julialang.org/?pkg=Stan)
 
 ## Purpose
 
