@@ -9,6 +9,8 @@ Right now the package has been tested on Mac OSX 10.9.3+, Julia 0.3-prerelease a
 
 For more info on Stan, please go to <http://mc-stan.org>.
 
+This version is the Github branch Stan-j0.3-v0.0.3
+
 ## Requirements
 
 This version of the Stan.jl package assumes that CmdStan (see <http://mc-stan.org>) is installed and the environment variables STAN_HOME and CMDSTAN_HOME are set accordingly (pointing to the Stan and CmdStan directories, e.g. /Users/rob/Projects/Stan/cmdstan/stan and /Users/rob/Projects/Stan/cmdstan on my system).
