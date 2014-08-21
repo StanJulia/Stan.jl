@@ -37,7 +37,8 @@ type Stanmodel
   thin::Int
   model::String
   model_file::String
-  data::Dict
+  data::Array{Dict{ASCIIString, Any}, 1}
+  data_file_array::Array{ASCIIString, 1}
   data_file::String
   command::Array{Base.AbstractCmd, 1}
   method::Methods
@@ -50,7 +51,8 @@ function Stanmodel(method::Methods=Sample();
   name::String="noname", nchains::Int=4,
   adapt::Number=1000, update::Number=1000, thin::Number=10,
   model::String="", model_file::String="",
-  data::Dict{ASCIIString, Any}=Dict{ASCIIString, Any}(), 
+  data::Array{Dict{ASCIIString, Any}, 1}=[], 
+  data_file_array::Vector{String}=String[],
   data_file::String="",
   cmdarray = fill(``, nchains),
   random=Random(), init=Init(), output=Output())
@@ -59,17 +61,12 @@ function Stanmodel(method::Methods=Sample();
     update_model_file("$(name).stan", strip(model))
   end
   
-  if length(keys(data)) > 0
-    update_R_file("$(name).data.R", data)
-  end
-  
   model_file = "$(name).stan";
-  data_file = "$(name).data.R"
   
   Stanmodel(name, nchains, 
     adapt, update, thin,
     model, model_file, 
-    data, data_file, 
+    data, data_file_array, data_file,
     cmdarray, method, random, init, output);
 end
 
@@ -87,57 +84,11 @@ function update_model_file(file::String, str::String)
   end
 end
 
-function update_R_file(file::String, dct::Dict{ASCIIString, Any}; replaceNaNs::Bool=true)
-  isfile(file) && rm(file)
-  strmout = open(file, "w")
-  
-  str = ""
-  for entry in dct
-    str = "\""*entry[1]*"\""*" <- "
-    val = entry[2]
-    if replaceNaNs && true in isnan(entry[2])
-      val = convert(DataArray, entry[2])
-      for i in 1:length(val)
-        if isnan(val[i])
-          val[i] = NA
-        end
-      end
-    end
-    if length(val)==1 && length(size(val))==0
-      # Scalar
-      str = str*"$(val)\n"
-    elseif length(val)>1 && length(size(val))==1
-      # Vector
-      str = str*"structure(c("
-      for i in 1:length(val)
-        str = str*"$(val[i])"
-        if i < length(val)
-          str = str*", "
-        end
-      end
-      str = str*"), .Dim=c($(length(val))))\n"
-    elseif length(val)>1 && length(size(val))>1
-      # Array
-      str = str*"structure(c("
-      for i in 1:length(val)
-        str = str*"$(val[i])"
-        if i < length(val)
-          str = str*", "
-        end
-      end
-      dimstr = "c"*string(size(val))
-      str = str*"), .Dim=$(dimstr))\n"
-    end
-    write(strmout, str)
-  end
-  close(strmout)
-end
-
 function model_show(io::IO, m::Stanmodel, compact::Bool)
   println("  name =                    \"$(m.name)\"")
   println("  nchains =                 $(m.nchains)")
   println("  model_file =              \"$(m.model_file)\"")
-  println("  data_file =               \"$(m.data_file)\"")
+  println("  data_file =                \"$(m.data_file)\"")
   println("  output =                  Output()")
   println("    file =                    \"$(m.output.file)\"")
   println("    diagnostics_file =        \"$(m.output.diagnostic_file)\"")

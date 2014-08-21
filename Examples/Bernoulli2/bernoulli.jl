@@ -22,9 +22,9 @@ model {
 }
 "
 
-data = Dict{ASCIIString, Any}()
-data["N"] = 10
-data["y"] = [0, 1, 0, 1, 0, 0, 0, 0, 0, 1]
+data = [
+  (ASCIIString => Any)["N" => 10, "y" => [0, 1, 0, 1, 0, 0, 0, 0, 0, 1]]
+]
 
 stanmodel = Stanmodel(name="bernoulli", model=bernoulli, data=data);
 
@@ -34,7 +34,7 @@ println("Input observed data dictionary:")
 data |> display
 println()
 
-#chains = stan(stanmodel, data, ProjDir, diagnostics=true)
+chains = stan(stanmodel, data, ProjDir, diagnostics=true)
 
 
 cd(old)

@@ -15,8 +15,8 @@ function cmdline(m)
     cmd = `$cmd init=$(getfield(m, :init).init)`
     
     # Data file required?
-    if length(getfield(m, :data).file) > 0
-      cmd = `$cmd $(cmdline(getfield(m, :data)))`
+    if length(m.data_file) > 0
+      cmd = `$cmd data file=$(m.data_file)`
     end
     
     # Output options

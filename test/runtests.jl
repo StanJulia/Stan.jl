@@ -8,10 +8,7 @@ code_tests = [
 ]
 
 execution_tests = [
-  "test_bernoulli.jl",
-  "test_binormal.jl",
-  "test_kidscore.jl",
-  "test_schools8.jl"
+  "test_bernoulli2.jl"
 ]
 
 println("Running tests:")

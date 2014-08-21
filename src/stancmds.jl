@@ -16,10 +16,27 @@ function stan(model::Stanmodel, data=Nothing, ProjDir=pwd();
     run(`make $(ProjDir)/$(model.name)` .> "$(ProjDir)/$(model.name)_build.log")
 
     cd(string(Pkg.dir("$(ProjDir)")))
-    if data != Nothing && isa(data, String)
-      model.data.file = data
+    if data != Nothing && isa(data, Array{Dict{ASCIIString, Any}, 1}) && length(data) > 0
+      if length(data) == model.nchains
+        for i in 1:model.nchains
+          if length(keys(data[i])) > 0
+            update_R_file("$(model.name)_$(i).data.R", data[i])
+          end
+        end
+      else
+        for i in 1:model.nchains
+          if length(keys(data[1])) > 0
+            if i == 1
+              println("\nLength of data array is not equal to nchains,")
+              println("all chains will use the first data dictionary.")
+            end
+            update_R_file("$(model.name)_$(i).data.R", data[1])
+          end
+        end
+      end
     end
-    for i in 1:model.noofchains
+    for i in 1:model.nchains
+      model.data_file ="$(model.name)_$(i).data.R"
       if isa(model.method, Sample)
         model.output.file = model.name*"_samples_$(i).csv"
         isfile("$(model.name)_samples_$(i).csv") && rm("$(model.name)_samples_$(i).csv")
@@ -48,7 +65,7 @@ function stan(model::Stanmodel, data=Nothing, ProjDir=pwd();
   local res = Dict[]
 
   if isa(model.method, Sample)
-    for i in 1:model.noofchains
+    for i in 1:model.nchains
       push!(samplefiles, "$(model.name)_samples_$(i).csv")
     end
     res = read_stanfit(model)
@@ -66,6 +83,52 @@ function stan(model::Stanmodel, data=Nothing, ProjDir=pwd();
   
   cd(old)
   res
+end
+
+function update_R_file(file::String, dct::Dict{ASCIIString, Any}; replaceNaNs::Bool=true)
+  isfile(file) && rm(file)
+  strmout = open(file, "w")
+  
+  str = ""
+  for entry in dct
+    str = "\""*entry[1]*"\""*" <- "
+    val = entry[2]
+    if replaceNaNs && true in isnan(entry[2])
+      val = convert(DataArray, entry[2])
+      for i in 1:length(val)
+        if isnan(val[i])
+          val[i] = NA
+        end
+      end
+    end
+    if length(val)==1 && length(size(val))==0
+      # Scalar
+      str = str*"$(val)\n"
+    elseif length(val)>1 && length(size(val))==1
+      # Vector
+      str = str*"structure(c("
+      for i in 1:length(val)
+        str = str*"$(val[i])"
+        if i < length(val)
+          str = str*", "
+        end
+      end
+      str = str*"), .Dim=c($(length(val))))\n"
+    elseif length(val)>1 && length(size(val))>1
+      # Array
+      str = str*"structure(c("
+      for i in 1:length(val)
+        str = str*"$(val[i])"
+        if i < length(val)
+          str = str*", "
+        end
+      end
+      dimstr = "c"*string(size(val))
+      str = str*"), .Dim=$(dimstr))\n"
+    end
+    write(strmout, str)
+  end
+  close(strmout)
 end
 
 function stan_summary(file::String; StanDir=getenv("CMDSTAN_HOME"))
@@ -100,7 +163,7 @@ function read_stanfit(model::Stanmodel)
   ## tdict contains the arrays of values ##
   tdict = Dict()
   
-  for i in 1:model.noofchains
+  for i in 1:model.nchains
     for res_type in result_type_files
       #println(res_type)
       if isfile("$(model.name)_$(res_type)_$(i).csv")
