@@ -55,7 +55,7 @@ data = [
   (ASCIIString => Any)["N" => 10, "y" => [0, 0, 0, 1, 0, 0, 0, 1, 0, 1]]
 ]
 
-stanmodel = Stanmodel(name="bernoulli", model=bernoulli, data=data);
+stanmodel = Stanmodel(name="bernoulli", model=bernoulli);
 ```
 
 Create a default model for sampling. See other examples for methods optimize and diagnose in the Bernoulli example directory. Show the results from the first chain:
@@ -98,21 +98,21 @@ stan(model::Stanmodel, data=Nothing, ProjDir=pwd(); summary=true, diagnostics=fa
 
 All parameters to compile and run the Stan script are implicitly passed in through the model argument. Some more details are given below.
 
-The stan() call uses make to create (or update when needed) an executable with the given model.name, e.g. bernoulli in the above example.
+The stan() call uses make to create (or update when needed) an executable with the given model.name, e.g. bernoulli in the above example. If no model String (or of zero length) is found, a message will be shown.
 
 If the Julia REPL is started in the correct directory, stan(model) is sufficient for a model that does not require a data file. See the Binormal example.
 
 Next to stan(), the other important method to run Stan scripts is Stanmodel():
 
 ```
-stanmodel = Stanmodel(name="bernoulli");
+stanmodel = Stanmodel(name="bernoulli", model=bernoulli);
 stanmodel
 ````
 
 Shows all parameters in the model, in this case (by default) a sample model. 
 
 ```
-stanmodel2 = Stanmodel(Sample(adapt=Adapt(delta=0.9)), name="bernoulli2", noofchains=6)
+stanmodel2 = Stanmodel(Sample(adapt=Adapt(delta=0.9)), name="bernoulli2", nchains=6)
 ```
 
 An example of updating default model values when creating a model. The format is slightly different from CmdStan, but the parameters are as described in the CmdStan Interface User's Guide (v2.4.0, July 20th 2014). 
@@ -129,7 +129,7 @@ After the Stanmodel object has been created fields can be updated, e.g.
 stanmodel2.method.adapt.delta=0.85
 ```
 
-After the stan() call, the stanmodel.command contains an array of Cmd fields that contain the actual run commands for each chain.
+After the stan() call, the stanmodel.command contains an array of Cmd fields that contain the actual run commands for each chain. These are executed in parallel.
 
 ## To do
 
