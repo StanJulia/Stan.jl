@@ -1,7 +1,34 @@
 using Stan
 using Base.Test
 
-m = Stanmodel(name="8schools")
+old = pwd()
+path = @windows ? "\\test" : "/test"
+ProjDir = Pkg.dir("Stan")*path
+cd(ProjDir)
+
+bernoulli = "
+data { 
+  int<lower=0> N; 
+  int<lower=0,upper=1> y[N];
+} 
+parameters {
+  real<lower=0,upper=1> theta;
+} 
+model {
+  theta ~ beta(1,1);
+    y ~ bernoulli(theta);
+}
+"
+
+data = [
+  (ASCIIString => Any)["N" => 10, "y" => [0, 1, 0, 1, 0, 0, 0, 0, 0, 1]],
+  (ASCIIString => Any)["N" => 10, "y" => [0, 1, 0, 0, 0, 0, 1, 0, 0, 1]],
+  (ASCIIString => Any)["N" => 10, "y" => [0, 1, 0, 0, 0, 0, 0, 0, 1, 1]],
+  (ASCIIString => Any)["N" => 10, "y" => [0, 0, 0, 1, 0, 0, 0, 1, 0, 1]]
+]
+
+
+m = Stanmodel(Optimize(), name="bernoulli", model=bernoulli, data=data);
 m.command[1] = cmdline(m)
 
 println()
@@ -38,18 +65,18 @@ println()
 show(o5)
 
 d1 = Diagnose()
-@assert d1.diagnostic.error == 1e-6 && d1.id == 1
+@assert d1.diagnostic.error == 1e-6
 d2 = Diagnose(Gradient(error=1e-7))
 @assert d2.diagnostic.error == 1e-7
-d3 = Diagnose(id=3)
-@assert d3.diagnostic.error == 1e-6 && d3.id == 3
-d4 = Diagnose(Gradient(epsilon=1e-7), 4)
-@assert d4.diagnostic.epsilon == 1e-7 && d4.id == 4
 
 println()
-showcompact(d4)
+showcompact(d2)
 println()
-show(d4)
+show(d2)
 
 println()
 m.command
+
+isfile("bernoulli.stan") && rm("bernoulli.stan")
+
+cd(old)

@@ -4,5 +4,6 @@
 *.csv
 *.o
 *.log
-.ipynb_checkpoints
-.ipynb_checkpoints/*
+*.svg
+bernoulli.bugs
+bernoulli.data.R
