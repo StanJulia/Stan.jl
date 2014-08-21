@@ -5,11 +5,11 @@
 
 A package to use Stan (as an external program) from Julia. 
 
-Right now the package has been tested on Mac OSX 10.9.3+, Julia 0.3-prerelease and CmStan 2.4.0.
+Right now the package has been tested on Mac OSX 10.9.3+, Julia 0.3 and CmStan 2.4.0.
 
 For more info on Stan, please go to <http://mc-stan.org>.
 
-This version is the Github branch Stan-j0.3-v0.0.3
+This version will be kept as the Github branch Stan-j0.3-v0.0.3
 
 ## Requirements
 
@@ -18,6 +18,10 @@ This version of the Stan.jl package assumes that CmdStan (see <http://mc-stan.or
 To test and run the examples:
 
 **julia >** ``Pkg.test("Stan")``
+
+## Caveats
+
+Version 0.0.3 does not handle NaN in the input data. 
 
 ## A walk-through example
 

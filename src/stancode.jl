@@ -99,14 +99,16 @@ function update_R_file(file::String, dct::Dict{ASCIIString, Any}; replaceNaNs::B
   for entry in dct
     str = "\""*entry[1]*"\""*" <- "
     val = entry[2]
+    #=
     if replaceNaNs && true in isnan(entry[2])
       val = convert(DataArray, entry[2])
       for i in 1:length(val)
         if isnan(val[i])
-          val[i] = NA
+          val[i] = "NA"
         end
       end
     end
+    =#
     if length(val)==1 && length(size(val))==0
       # Scalar
       str = str*"$(val)\n"
