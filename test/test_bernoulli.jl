@@ -11,6 +11,7 @@ for i in 1:8
   isfile("bernoulli_diagnose_$(i).csv") && rm("bernoulli_diagnose_$(i).csv")
 end
 isfile("bernoulli.cpp") && rm("bernoulli.cpp")
+isfile("bernoulli.stan") && rm("bernoulli.stan")
 isfile("bernoulli") && rm("bernoulli")
 isfile("bernoulli_build.log") && rm("bernoulli_build.log")
 isfile("bernoulli_run.log") && rm("bernoulli_run.log")
@@ -34,6 +35,7 @@ for i in 1:8
   isfile("bernoulli_diagnose_$(i).csv") && rm("bernoulli_diagnose_$(i).csv")
 end
 
+isfile("bernoulli.stan") && rm("bernoulli.stan")
 isfile("bernoulli.cpp") && rm("bernoulli.cpp")
 isfile("bernoulli") && rm("bernoulli")
 isfile("bernoulli_build.log") && rm("bernoulli_build.log")

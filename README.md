@@ -27,37 +27,56 @@ To run the Bernoulli example:
 using Stan
 
 old = pwd()
-ProjDir = homedir()*"/.julia/v0.3/Stan/Examples/Bernoulli"
+path = @windows ? "\\Examples\\Bernoulli" : "/Examples/Bernoulli"
+ProjDir = Pkg.dir("Stan")*path
 cd(ProjDir)
 ```
 Concatenate home directory and project directory. For Windows, backslashes need to be reversed.
 
 ```
-stanmodel = Stanmodel(name="bernoulli");
-data_file = "bernoulli.data.R"
-chains = stan(stanmodel, data_file, ProjDir, diagnostics=true)
-```
-Create and run a default model for sampling. See other examples for methods optimize and diagnose in the Bernoulli example directory.
+bernoulli = "
+data { 
+  int<lower=0> N; 
+  int<lower=0,upper=1> y[N];
+} 
+parameters {
+  real<lower=0,upper=1> theta;
+} 
+model {
+  theta ~ beta(1,1);
+    y ~ bernoulli(theta);
+}
+"
 
-'stan()' is the work horse, the first time it will compile the model and create the executable. By default it will run 4 chains, display a combined summary and returns a array of dictionaries (one dictionary for each chain) with all samples.
+data = [
+  (ASCIIString => Any)["N" => 10, "y" => [0, 1, 0, 1, 0, 0, 0, 0, 0, 1]],
+  (ASCIIString => Any)["N" => 10, "y" => [0, 1, 0, 0, 0, 0, 1, 0, 0, 1]],
+  (ASCIIString => Any)["N" => 10, "y" => [0, 1, 0, 0, 0, 0, 0, 0, 1, 1]],
+  (ASCIIString => Any)["N" => 10, "y" => [0, 0, 0, 1, 0, 0, 0, 1, 0, 1]]
+]
+
+stanmodel = Stanmodel(name="bernoulli", model=bernoulli, data=data);
+```
+
+Create a default model for sampling. See other examples for methods optimize and diagnose in the Bernoulli example directory. Show the results from the first chain:
+
+```
+chains = stan(stanmodel, data_file, ProjDir, diagnostics=true)
+
+chains[1][:samples] |> display
+
+```
+
+'stan()' is the work horse, the first time it will compile the model and create the executable. 
+
+By default it will run 4 chains, display a combined summary and returns a array of dictionaries (one dictionary for each chain) with all samples.
 
 In this example the diagnostics_file, which can optionally be produced by Stan, is used below and hence the argument 'diagnostics=true' has been added. By default diagnostics is set to false.
 
 ```
-println("$(stanmodel.noofchains) chains: ")
-for i in 1:stanmodel.noofchains
-  chains[i] |> display
-  println()
-end
-
-println()
-chains[1][:samples] |> display
-println()
 chains[1][:diagnostics] |> display
 println()
-```
 
-```
 logistic(x::FloatingPoint) = one(x) / (one(x) + exp(-x))
 logistic(x::Real) = logistic(float(x))
 @vectorize_1arg Real logistic

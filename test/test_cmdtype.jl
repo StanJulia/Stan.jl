@@ -1,6 +1,11 @@
 using Stan
 using Base.Test
 
+old = pwd()
+path = @windows ? "\\test" : "/test"
+ProjDir = Pkg.dir("Stan")*path
+cd(ProjDir)
+
 bernoulli = "
 data { 
   int<lower=0> N; 
@@ -71,3 +76,7 @@ show(d2)
 
 println()
 m.command
+
+isfile("bernoulli.stan") && rm("bernoulli.stan")
+
+cd(old)
