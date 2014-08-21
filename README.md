@@ -63,7 +63,7 @@ Create a default model for sampling. See other examples for methods optimize and
 ```
 chains = stan(stanmodel, data_file, ProjDir, diagnostics=true)
 
-chains[1][:samples] |> display
+chains[1]["samples"] |> display
 
 ```
 
@@ -74,7 +74,7 @@ By default it will run 4 chains, display a combined summary and returns a array 
 In this example the diagnostics_file, which can optionally be produced by Stan, is used below and hence the argument 'diagnostics=true' has been added. By default diagnostics is set to false.
 
 ```
-chains[1][:diagnostics] |> display
+chains[1]["diagnostics"] |> display
 println()
 
 logistic(x::FloatingPoint) = one(x) / (one(x) + exp(-x))
@@ -82,7 +82,7 @@ logistic(x::Real) = logistic(float(x))
 @vectorize_1arg Real logistic
 
 println()
-[logistic(chains[1][:diagnostics][:theta]) chains[1][:samples][:theta]][1:5,:] |> display
+[logistic(chains[1]["diagnostics"]["diagnostics"]) chains[1]["samples"]["diagnostics"]][1:5,:] |> display
 
 cd(old)
 ```

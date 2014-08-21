@@ -31,6 +31,6 @@ data = [
 stanmodel = Stanmodel(Diagnose(Gradient(epsilon=1e-6)), name="bernoulli", model=bernoulli, data=data);
 
 diags = stan(stanmodel, data, ProjDir);
-diags[1][:diagnose] |> display
+diags[1]["diagnose"] |> display
 
 cd(old)

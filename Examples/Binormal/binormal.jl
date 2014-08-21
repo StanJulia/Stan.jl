@@ -30,7 +30,7 @@ binormalmodel = Stanmodel(name="binormal", model=binorm);
 
 chains = stan(binormalmodel)
 
-chains[1][:samples] |> display
+chains[1]["samples"] |> display
 println()
 
 cd(old)

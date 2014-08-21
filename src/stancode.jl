@@ -206,7 +206,7 @@ function read_stanfit(model::Stanmodel)
           line = readline(instream)
           #res_type == "optimize" && println(line)
           idx = split(line[1:length(line)-1], ",")
-          index = [convert(Symbol, idx[k]) for k in 1:length(idx)]
+          index = [idx[k] for k in 1:length(idx)]
           #res_type == "optimize" && println(index)
           j = 0
           skipchars(instream, isspace, linecomment='#')
@@ -239,8 +239,8 @@ function read_stanfit(model::Stanmodel)
       ## If any keys were found, merge it in the rtdict ##
       
       if length(keys(tdict)) > 0
-        #println("Merging $(convert(Symbol, res_type)) with keys $(keys(tdict))")
-        rtdict = merge(rtdict, [convert(Symbol, res_type) => tdict])
+        #println("Merging $(res_type) with keys $(keys(tdict))")
+        rtdict = merge(rtdict, [res_type => tdict])
         tdict = Dict()
       end
     end

@@ -42,7 +42,7 @@ stanmodel = Stanmodel(name="schools8", model=eightschools);
 chains = stan(stanmodel, data, ProjDir)
 
 println()
-chains[1][:samples] |> display
+chains[1]["samples"] |> display
 println()
 
 cd(old)
