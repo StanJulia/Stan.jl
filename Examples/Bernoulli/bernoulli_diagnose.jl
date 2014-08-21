@@ -2,14 +2,35 @@
 
 using Stan
 
-ProjDir = homedir()*"/.julia/v0.3/Stan/Examples/Bernoulli"
 old = pwd()
+path = @windows ? "\\Examples\\Bernoulli" : "/Examples/Bernoulli"
+ProjDir = Pkg.dir("Stan")*path
 cd(ProjDir)
 
-# Shows an example of updating a Gradient setting.
-stanmodel = Stanmodel(Diagnose(Gradient(epsilon=1e-6)), name="bernoulli");
-data_file = "bernoulli.data.R"
-diags = stan(stanmodel, data_file, ProjDir);
+bernoulli = "
+data { 
+  int<lower=0> N; 
+  int<lower=0,upper=1> y[N];
+} 
+parameters {
+  real<lower=0,upper=1> theta;
+} 
+model {
+  theta ~ beta(1,1);
+    y ~ bernoulli(theta);
+}
+"
+
+data = [
+  (ASCIIString => Any)["N" => 10, "y" => [0, 1, 0, 1, 0, 0, 0, 0, 0, 1]],
+  (ASCIIString => Any)["N" => 10, "y" => [0, 1, 0, 0, 0, 0, 1, 0, 0, 1]],
+  (ASCIIString => Any)["N" => 10, "y" => [0, 1, 0, 0, 0, 0, 0, 0, 1, 1]],
+  (ASCIIString => Any)["N" => 10, "y" => [0, 0, 0, 1, 0, 0, 0, 1, 0, 1]]
+]
+
+stanmodel = Stanmodel(Diagnose(Gradient(epsilon=1e-6)), name="bernoulli", model=bernoulli, data=data);
+
+diags = stan(stanmodel, data, ProjDir);
 diags[1][:diagnose] |> display
 
 cd(old)
