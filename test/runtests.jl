@@ -33,3 +33,5 @@ if STANDIR != "" && CMDSTANDIR != ""
 else
   println("STAN_HOME and CMDSTAN_HOME not found!")  
 end
+
+println("\n")
