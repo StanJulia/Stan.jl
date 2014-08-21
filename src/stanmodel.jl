@@ -6,11 +6,6 @@ include("./sampletype.jl")
 include("./optimizetype.jl")
 include("./diagnosetype.jl")
 
-type Data
-  file::String
-end
-Data(;file::String="") = Data(file)
-
 type Init
   init::Int64
 end
@@ -52,7 +47,7 @@ function Stanmodel(method::Methods=Sample();
   name::String="noname", nchains::Int=4,
   adapt::Number=1000, update::Number=1000, thin::Number=10,
   id::Int=0, model::String="", model_file::String="",
-  data::Array{Dict{ASCIIString, Any}, 1}=[], 
+  data::Array{Dict{ASCIIString, Any}, 1}=Dict{ASCIIString, Any}[], 
   data_file_array::Vector{String}=String[],
   data_file::String="",
   cmdarray = fill(``, nchains),

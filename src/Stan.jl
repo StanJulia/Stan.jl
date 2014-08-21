@@ -4,8 +4,7 @@ module Stan
 
   include("utilities.jl")
   include("stanmodel.jl")
-  include("stancmds.jl")
-  include("cmdline.jl")
+  include("stancode.jl")
 
   export
   # From stancmnds.jl
