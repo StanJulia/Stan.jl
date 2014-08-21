@@ -16,7 +16,7 @@ function cmdline(m)
     
     # Data file required?
     if length(m.data_file) > 0
-      cmd = `$cmd data file=$(m.data_file)`
+      cmd = `$cmd id=$(m.id) data file=$(m.data_file)`
     end
     
     # Output options

@@ -35,6 +35,7 @@ type Stanmodel
   adapt::Int
   update::Int
   thin::Int
+  id::Int
   model::String
   model_file::String
   data::Array{Dict{ASCIIString, Any}, 1}
@@ -50,7 +51,7 @@ end
 function Stanmodel(method::Methods=Sample();
   name::String="noname", nchains::Int=4,
   adapt::Number=1000, update::Number=1000, thin::Number=10,
-  model::String="", model_file::String="",
+  id::Int=0, model::String="", model_file::String="",
   data::Array{Dict{ASCIIString, Any}, 1}=[], 
   data_file_array::Vector{String}=String[],
   data_file::String="",
@@ -65,7 +66,7 @@ function Stanmodel(method::Methods=Sample();
   
   Stanmodel(name, nchains, 
     adapt, update, thin,
-    model, model_file, 
+    id, model, model_file, 
     data, data_file_array, data_file,
     cmdarray, method, random, init, output);
 end

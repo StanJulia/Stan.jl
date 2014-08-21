@@ -36,6 +36,7 @@ function stan(model::Stanmodel, data=Nothing, ProjDir=pwd();
       end
     end
     for i in 1:model.nchains
+      model.id = i
       model.data_file ="$(model.name)_$(i).data.R"
       if isa(model.method, Sample)
         model.output.file = model.name*"_samples_$(i).csv"
