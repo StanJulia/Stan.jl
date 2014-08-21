@@ -1,25 +1,48 @@
 ######### Stan program example  ###########
 
+#using Cairo, Mamba, Stan
 using Stan
 
 old = pwd()
-ProjDir = homedir()*"/.julia/v0.3/Stan/Examples/Bernoulli"
+path = @windows ? "\\Examples\\Bernoulli" : "/Examples/Bernoulli"
+ProjDir = Pkg.dir("Stan")*path
 cd(ProjDir)
 
-stanmodel = Stanmodel(name="bernoulli");
-data_file = "bernoulli.data.R"
-chains = stan(stanmodel, data_file, ProjDir, diagnostics=true)
+bernoulli = "
+data { 
+  int<lower=0> N; 
+  int<lower=0,upper=1> y[N];
+} 
+parameters {
+  real<lower=0,upper=1> theta;
+} 
+model {
+  theta ~ beta(1,1);
+    y ~ bernoulli(theta);
+}
+"
 
-println("$(stanmodel.noofchains) chains: ")
-for i in 1:stanmodel.noofchains
-  chains[i] |> display
-  println()
-end
+data = [
+  (ASCIIString => Any)["N" => 10, "y" => [0, 1, 0, 1, 0, 0, 0, 0, 0, 1]],
+  (ASCIIString => Any)["N" => 10, "y" => [0, 1, 0, 0, 0, 0, 1, 0, 0, 1]],
+  (ASCIIString => Any)["N" => 10, "y" => [0, 1, 0, 0, 0, 0, 0, 0, 1, 1]],
+  (ASCIIString => Any)["N" => 10, "y" => [0, 0, 0, 1, 0, 0, 0, 1, 0, 1]]
+]
 
+
+stanmodel = Stanmodel(name="bernoulli", model=bernoulli);
+
+println("\nStanmodel that will be used:")
+stanmodel |> display
+println("Input observed data dictionary:")
+data |> display
 println()
-chains[1][:samples] |> display
-println()
-chains[1][:diagnostics] |> display
+
+chains = stan(stanmodel, data, ProjDir, diagnostics=true)
+
+chains[1]["samples"] |> display
+
+chains[1]["diagnostics"] |> display
 println()
 
 logistic(x::FloatingPoint) = one(x) / (one(x) + exp(-x))
@@ -27,6 +50,6 @@ logistic(x::Real) = logistic(float(x))
 @vectorize_1arg Real logistic
 
 println()
-[logistic(chains[1][:diagnostics][:theta]) chains[1][:samples][:theta]][1:5,:] |> display
+[logistic(chains[1]["diagnostics"]["theta"]) chains[1]["samples"]["theta"]][1:5,:] |> display
 
 cd(old)
