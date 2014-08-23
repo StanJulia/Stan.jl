@@ -7,6 +7,11 @@ function stan(model::Stanmodel, data=Nothing, ProjDir=pwd();
   
   old = pwd()
   println()
+  if length(model.model) == 0
+    println("\nNo proper model specified in \"$(model.name).stan\".")
+    println("This file is typically created from a String passed to Stanmodel().\n")
+    return
+  end
   try
     cd(string(Pkg.dir("$(ProjDir)")))
     isfile("$(model.name)_build.log") && rm("$(model.name)_build.log")
@@ -16,10 +21,28 @@ function stan(model::Stanmodel, data=Nothing, ProjDir=pwd();
     run(`make $(ProjDir)/$(model.name)` .> "$(ProjDir)/$(model.name)_build.log")
 
     cd(string(Pkg.dir("$(ProjDir)")))
-    if data != Nothing && isa(data, String)
-      model.data.file = data
+    if data != Nothing && isa(data, Array{Dict{ASCIIString, Any}, 1}) && length(data) > 0
+      if length(data) == model.nchains
+        for i in 1:model.nchains
+          if length(keys(data[i])) > 0
+            update_R_file("$(model.name)_$(i).data.R", data[i])
+          end
+        end
+      else
+        for i in 1:model.nchains
+          if length(keys(data[1])) > 0
+            if i == 1
+              println("\nLength of data array is not equal to nchains,")
+              println("all chains will use the first data dictionary.")
+            end
+            update_R_file("$(model.name)_$(i).data.R", data[1])
+          end
+        end
+      end
     end
-    for i in 1:model.noofchains
+    for i in 1:model.nchains
+      model.id = i
+      model.data_file ="$(model.name)_$(i).data.R"
       if isa(model.method, Sample)
         model.output.file = model.name*"_samples_$(i).csv"
         isfile("$(model.name)_samples_$(i).csv") && rm("$(model.name)_samples_$(i).csv")
@@ -48,7 +71,7 @@ function stan(model::Stanmodel, data=Nothing, ProjDir=pwd();
   local res = Dict[]
 
   if isa(model.method, Sample)
-    for i in 1:model.noofchains
+    for i in 1:model.nchains
       push!(samplefiles, "$(model.name)_samples_$(i).csv")
     end
     res = read_stanfit(model)
@@ -66,6 +89,54 @@ function stan(model::Stanmodel, data=Nothing, ProjDir=pwd();
   
   cd(old)
   res
+end
+
+function update_R_file(file::String, dct::Dict{ASCIIString, Any}; replaceNaNs::Bool=true)
+  isfile(file) && rm(file)
+  strmout = open(file, "w")
+  
+  str = ""
+  for entry in dct
+    str = "\""*entry[1]*"\""*" <- "
+    val = entry[2]
+    #=
+    if replaceNaNs && true in isnan(entry[2])
+      val = convert(DataArray, entry[2])
+      for i in 1:length(val)
+        if isnan(val[i])
+          val[i] = "NA"
+        end
+      end
+    end
+    =#
+    if length(val)==1 && length(size(val))==0
+      # Scalar
+      str = str*"$(val)\n"
+    elseif length(val)>1 && length(size(val))==1
+      # Vector
+      str = str*"structure(c("
+      for i in 1:length(val)
+        str = str*"$(val[i])"
+        if i < length(val)
+          str = str*", "
+        end
+      end
+      str = str*"), .Dim=c($(length(val))))\n"
+    elseif length(val)>1 && length(size(val))>1
+      # Array
+      str = str*"structure(c("
+      for i in 1:length(val)
+        str = str*"$(val[i])"
+        if i < length(val)
+          str = str*", "
+        end
+      end
+      dimstr = "c"*string(size(val))
+      str = str*"), .Dim=$(dimstr))\n"
+    end
+    write(strmout, str)
+  end
+  close(strmout)
 end
 
 function stan_summary(file::String; StanDir=getenv("CMDSTAN_HOME"))
@@ -100,7 +171,7 @@ function read_stanfit(model::Stanmodel)
   ## tdict contains the arrays of values ##
   tdict = Dict()
   
-  for i in 1:model.noofchains
+  for i in 1:model.nchains
     for res_type in result_type_files
       #println(res_type)
       if isfile("$(model.name)_$(res_type)_$(i).csv")
@@ -137,7 +208,7 @@ function read_stanfit(model::Stanmodel)
           line = readline(instream)
           #res_type == "optimize" && println(line)
           idx = split(line[1:length(line)-1], ",")
-          index = [convert(Symbol, idx[k]) for k in 1:length(idx)]
+          index = [idx[k] for k in 1:length(idx)]
           #res_type == "optimize" && println(index)
           j = 0
           skipchars(instream, isspace, linecomment='#')
@@ -170,8 +241,8 @@ function read_stanfit(model::Stanmodel)
       ## If any keys were found, merge it in the rtdict ##
       
       if length(keys(tdict)) > 0
-        #println("Merging $(convert(Symbol, res_type)) with keys $(keys(tdict))")
-        rtdict = merge(rtdict, [convert(Symbol, res_type) => tdict])
+        #println("Merging $(res_type) with keys $(keys(tdict))")
+        rtdict = merge(rtdict, [res_type => tdict])
         tdict = Dict()
       end
     end
@@ -187,4 +258,68 @@ function read_stanfit(model::Stanmodel)
   chainarray
 end
 
+"Recursively parse the model to construct command line"
+
+function cmdline(m)
+  cmd = ``
+  if isa(m, Stanmodel)
+    # Handle the model name field for unix and windows
+    cmd = @unix ? `./` : ``
+    cmd = @unix ? `$cmd$(getfield(m, :name))` : `$cmd$(getfield(m, :name)).exe`
+
+    # Method (sample, optimize and diagnose) specific portion of the model
+    cmd = `$cmd $(cmdline(getfield(m, :method)))`
+    
+    # Common to all models
+    cmd = `$cmd $(cmdline(getfield(m, :random)))`
+    cmd = `$cmd init=$(getfield(m, :init).init)`
+    
+    # Data file required?
+    if length(m.data_file) > 0
+      cmd = `$cmd id=$(m.id) data file=$(m.data_file)`
+    end
+    
+    # Output options
+    cmd = `$cmd output`
+    if length(getfield(m, :output).file) > 0
+      cmd = `$cmd file=$(string(getfield(m, :output).file))`
+    end
+    if length(getfield(m, :output).diagnostic_file) > 0
+      cmd = `$cmd diagnostic_file=$(string(getfield(m, :output).diagnostic_file))`
+    end
+    cmd = `$cmd refresh=$(string(getfield(m, :output).refresh))`
+  else
+    # The 'recursive' part
+    #println(lowercase(string(typeof(m))))
+    if isa(m, Algorithm)
+      cmd = `$cmd algorithm=$(lowercase(string(typeof(m))))`
+    elseif isa(m, Engine)
+      cmd = `$cmd engine=$(lowercase(string(typeof(m))))`
+    elseif isa(m, Diagnostics)
+      cmd = `$cmd test=$(lowercase(string(typeof(m))))`
+    else
+      cmd = `$cmd $(lowercase(string(typeof(m))))`
+    end
+    #println(cmd)
+    for name in names(m)
+      #println("$(name) = $(getfield(m, name)) ($(typeof(getfield(m, name))))")
+      if  isa(getfield(m, name), String) || isa(getfield(m, name), Tuple)
+        cmd = `$cmd $(name)=$(getfield(m, name))`
+      elseif length(names(typeof(getfield(m, name)))) == 0
+        if isa(getfield(m, name), Bool)
+          cmd = `$cmd $(name)=$(getfield(m, name) ? 1 : 0)`
+        else
+          if name == :metric || isa(getfield(m, name), DataType) 
+            cmd = `$cmd $(name)=$(typeof(getfield(m, name)))`
+          else
+            cmd = `$cmd $(name)=$(getfield(m, name))`
+          end
+        end
+      else
+        cmd = `$cmd $(cmdline(getfield(m, name)))`
+      end
+    end
+  end
+  cmd
+end
  

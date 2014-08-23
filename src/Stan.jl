@@ -1,12 +1,10 @@
 module Stan
 
 # package code goes here
-  using DataFrames
 
   include("utilities.jl")
-  include("modeltype.jl")
-  include("stancmds.jl")
-  include("cmdline.jl")
+  include("stanmodel.jl")
+  include("stancode.jl")
 
   export
   # From stancmnds.jl
@@ -16,7 +14,7 @@ module Stan
     read_stanfit,
     CMDSTANDIR,
     STANDIR,
-  # From modeltype.jl
+  # From stanmodel.jl
     Stanmodel,
     Data,
     RNG,

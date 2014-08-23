@@ -10,8 +10,8 @@ code_tests = [
 execution_tests = [
   "test_bernoulli.jl",
   "test_binormal.jl",
-  "test_kidscore.jl",
-  "test_schools8.jl"
+  "test_schools8.jl",
+  "test_kidscore.jl"  
 ]
 
 println("Running tests:")
@@ -36,3 +36,5 @@ if STANDIR != "" && CMDSTANDIR != ""
 else
   println("STAN_HOME and CMDSTAN_HOME not found!")  
 end
+
+println("\n")
