@@ -1,10 +1,32 @@
+importall Base
+
 module Stan
 
 # package code goes here
 
-  include("utilities.jl")
   include("stanmodel.jl")
   include("stancode.jl")
+  if !isdefined(:Jags)
+    include("utilities.jl")
+  end
+  
+  function getenv(var::String)
+    val = ccall( (:getenv, "libc"),
+      Ptr{Uint8}, (Ptr{Uint8},), bytestring(var))
+    if val == C_NULL
+     error("getenv: undefined variable: ", var)
+    end
+    bytestring(val)
+  end
+
+  STANDIR = ""
+  CMDSTANDIR = ""
+  try
+    STANDIR = getenv("STAN_HOME");
+    CMDSTANDIR = getenv("CMDSTAN_HOME");
+  catch e
+    println("STAN_HOME or CMDSTAN_HOME not found.")
+  end
 
   export
   # From stancmnds.jl
