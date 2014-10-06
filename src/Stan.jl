@@ -1,12 +1,10 @@
-importall Base
-
 module Stan
 
 # package code goes here
 
   include("stanmodel.jl")
   include("stancode.jl")
-  if !isdefined(:Jags)
+  if !isdefined(Main, :Jags)
     include("utilities.jl")
   end
   
@@ -23,9 +21,13 @@ module Stan
   CMDSTANDIR = ""
   try
     STANDIR = getenv("STAN_HOME");
+  catch e
+    println("Environment variable STAN_HOME not found.")
+  end
+  try
     CMDSTANDIR = getenv("CMDSTAN_HOME");
   catch e
-    println("STAN_HOME or CMDSTAN_HOME not found.")
+    println("Environment variable CMDSTAN_HOME not found.")
   end
 
   export

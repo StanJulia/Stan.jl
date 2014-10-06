@@ -1,4 +1,4 @@
-importall Base
+import Base: show, showcompact
 
 abstract Methods
 
