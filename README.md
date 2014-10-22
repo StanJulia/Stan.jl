@@ -32,8 +32,7 @@ To run the Bernoulli example:
 using Stan
 
 old = pwd()
-path = @windows ? "\\Examples\\Bernoulli" : "/Examples/Bernoulli"
-ProjDir = Pkg.dir("Stan")*path
+ProjDir = Pkg.dir("Stan", "Examples", "Bernoulli")
 cd(ProjDir)
 ```
 Concatenate home directory and project directory. For Windows, backslashes need to be reversed.
