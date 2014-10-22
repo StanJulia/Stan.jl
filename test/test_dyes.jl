@@ -16,7 +16,7 @@ isfile("dyes") && rm("dyes")
 isfile("dyes_build.log") && rm("dyes_build.log")
 isfile("dyes_run.log") && rm("dyes_run.log")
 
-include("$(ProjDir)/dyes.jl")
+include(Pkg.dir(ProjDir, "dyes.jl"))
 for i in 1:8
   isfile("dyes_$(i).data.R") && rm("dyes_$(i).data.R")
   isfile("dyes_samples_$(i).csv") && rm("dyes_samples_$(i).csv")

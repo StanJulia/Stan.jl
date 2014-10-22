@@ -16,8 +16,7 @@ isfile("schools8") && rm("schools8")
 isfile("schools8_build.log") && rm("schools8_build.log")
 isfile("schools8_run.log") && rm("schools8_run.log")
 
-include("$(ProjDir)/schools8.jl")
-
+include(Pkg.dir(ProjDir, "schools8.jl"))
 for i in 1:8
   isfile("schools8_$(i).data.R") && rm("schools8_$(i).data.R")
   isfile("schools8_samples_$(i).csv") && rm("schools8_samples_$(i).csv")

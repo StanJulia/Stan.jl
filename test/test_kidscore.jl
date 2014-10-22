@@ -16,8 +16,7 @@ isfile("kid") && rm("kid")
 isfile("kid_build.log") && rm("kid_build.log")
 isfile("kid_run.log") && rm("kid_run.log")
 
-include(pwd()*"/kidscore.jl")
-
+include(Pkg.dir(ProjDir, "kidscore.jl"))
 for i in 1:8
   isfile("kid_$(i).data.R") && rm("kid_$(i).data.R")
   isfile("kid_samples_$(i).csv") && rm("kid_samples_$(i).csv")

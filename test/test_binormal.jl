@@ -16,7 +16,7 @@ isfile("binormal") && rm("binormal")
 isfile("binormal_build.log") && rm("binormal_build.log")
 isfile("binormal_run.log") && rm("binormal_run.log")
 
-include("$(ProjDir)/binormal.jl")
+include(Pkg.dir(ProjDir, "binormal.jl"))
 
 for i in 1:8
   isfile("binormal_$(i).data.R") && rm("binormal_$(i).data.R")
