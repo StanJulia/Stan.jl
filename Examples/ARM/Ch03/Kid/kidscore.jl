@@ -3,8 +3,7 @@
 using Stan
 
 old = pwd()
-path = @windows ? "\\Examples\\ARM\\Ch03\\Kid" : "/Examples/ARM/Ch03/Kid"
-ProjDir = Pkg.dir("Stan")*path
+ProjDir = Pkg.dir("Stan", "Examples", "ARM", "Ch03", "Kid")
 cd(ProjDir)
 
 kid = "

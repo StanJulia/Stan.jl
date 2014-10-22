@@ -2,8 +2,7 @@ using Stan
 using Base.Test
 
 old = pwd()
-path = @windows ? "\\test" : "/test"
-ProjDir = Pkg.dir("Stan")*path
+ProjDir = Pkg.dir("Stan", "test")
 cd(ProjDir)
 
 bernoulli = "

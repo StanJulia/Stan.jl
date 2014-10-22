@@ -3,8 +3,7 @@
 using Stan
 
 old = pwd()
-path = @windows ? "\\Examples\\Bernoulli" : "/Examples/Bernoulli"
-ProjDir = Pkg.dir("Stan")*path
+ProjDir = Pkg.dir("Stan", "Examples", "Bernoulli")
 cd(ProjDir)
 
 bernoulli = "

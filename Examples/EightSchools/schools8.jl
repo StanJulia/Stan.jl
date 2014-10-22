@@ -4,8 +4,7 @@ using Stan
 #using Distributions, MCMC, Gadfly
 
 old = pwd()
-path = @windows ? "\\Examples\\EightSchools" : "/Examples/EightSchools"
-ProjDir = Pkg.dir("Stan")*path
+ProjDir = Pkg.dir("Stan", "Examples", "EightSchools")
 cd(ProjDir)
 
 eightschools ="

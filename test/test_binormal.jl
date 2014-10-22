@@ -1,7 +1,7 @@
 old = pwd()
-dir = Pkg.dir("Stan")*"/Examples/Binormal/"
-cd(dir)
-println("Moving to directory: $(dir)")
+ProjDir = Pkg.dir("Stan", "Examples", "Binormal")
+cd(ProjDir)
+println("Moving to directory: $(ProjDir)")
 
 for i in 1:8
   isfile("binormal_$(i).data.R") && rm("binormal_$(i).data.R")
@@ -16,7 +16,7 @@ isfile("binormal") && rm("binormal")
 isfile("binormal_build.log") && rm("binormal_build.log")
 isfile("binormal_run.log") && rm("binormal_run.log")
 
-include("$(dir)binormal.jl")
+include("$(ProjDir)/binormal.jl")
 
 for i in 1:8
   isfile("binormal_$(i).data.R") && rm("binormal_$(i).data.R")

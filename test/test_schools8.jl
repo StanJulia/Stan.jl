@@ -1,7 +1,7 @@
 old = pwd()
-dir = Pkg.dir("Stan")*"/Examples/EightSchools/"
-cd(dir)
-println("Switched to directory: $(dir)")
+ProjDir = Pkg.dir("Stan", "Examples", "EightSchools")
+cd(ProjDir)
+println("Switched to directory: $(ProjDir)")
 
 for i in 1:8
   isfile("schools8_$(i).data.R") && rm("schools8_$(i).data.R")
@@ -16,7 +16,7 @@ isfile("schools8") && rm("schools8")
 isfile("schools8_build.log") && rm("schools8_build.log")
 isfile("schools8_run.log") && rm("schools8_run.log")
 
-include("$(dir)schools8.jl")
+include("$(ProjDir)/schools8.jl")
 
 for i in 1:8
   isfile("schools8_$(i).data.R") && rm("schools8_$(i).data.R")

@@ -3,8 +3,7 @@
 using Stan
 
 old = pwd()
-path = @windows ? "\\Examples\\Binormal" : "/Examples/Binormal"
-ProjDir = Pkg.dir("Stan")*path
+ProjDir = Pkg.dir("Stan", "Examples", "Binormal")
 cd(ProjDir)
 
 binorm = "

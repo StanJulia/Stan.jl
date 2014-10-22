@@ -1,7 +1,7 @@
 old = pwd()
-dir = Pkg.dir("Stan")*"/Examples/ARM/Ch03/Kid/"
-cd(dir)
-println("Moving to directory: $(dir)")
+ProjDir = Pkg.dir("Stan", "Examples","ARM", "Ch03", "Kid")
+cd(ProjDir)
+println("Moving to directory: $(ProjDir)")
 
 for i in 1:8
   isfile("kid_$(i).data.R") && rm("kid_$(i).data.R")
