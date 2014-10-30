@@ -1,7 +1,6 @@
 ######### Stan batch program example  ###########
 
 using Stan, Mamba
-#using Distributions, MCMC, Gadfly
 
 old = pwd()
 ProjDir = Pkg.dir("Stan", "Examples", "EightSchools")

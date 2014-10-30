@@ -260,7 +260,7 @@ end
 
 function read_stanfit_samples(m::Stanmodel)
 
-  local a3d, monitors, index, idx
+  local a3d, monitors, index, idx, indvec
   
   for i in 1:m.nchains
     if isfile("$(m.name)_samples_$(i).csv")
@@ -268,17 +268,16 @@ function read_stanfit_samples(m::Stanmodel)
       skipchars(instream, isspace, linecomment='#')
       line = readline(instream)
       idx = split(line[1:length(line)-1], ",")
-      #println(idx)
-      if i == 1
-        a3d = fill(0.0, m.method.num_samples, length(idx), m.nchains)
-      end
-      #println(size(a3d))
       if length(m.monitors) == 0
         index = [idx[k] for k in 1:length(idx)]
+        indvec = 1:length(index)
       else
         index = [idx[k] for k in 1:length(idx)]
+        indvec = findin(index, m.monitors)
       end
-      #println(index)
+      if i == 1
+        a3d = fill(0.0, m.method.num_samples, length(indvec), m.nchains)
+      end
       skipchars(instream, isspace, linecomment='#')
       for j in 1:m.method.num_samples
         skipchars(instream, isspace, linecomment='#')
@@ -288,7 +287,7 @@ function read_stanfit_samples(m::Stanmodel)
           break
         else
           flds = float(split(line[1:length(line)-1], ","))
-          flds = reshape(flds, 1, length(flds))
+          flds = reshape(flds[indvec], 1, length(indvec))
           #println(j, ", ", i, ", ", a3d[j,:,i])
           #if i == 1 && j == 1
           #  println(j, ", ", i, ", ", flds)
@@ -302,10 +301,10 @@ function read_stanfit_samples(m::Stanmodel)
   
   if m.method.save_warmup
     sr = getindex(a3d, [m.method.num_warmup:m.method.thin:size(a3d, 1)], [1:size(a3d, 2)], [1:size(a3d, 3)])
-    Chains(sr, start=m.method.num_warmup, thin=m.method.thin, names=idx, chains=[i for i in 1:m.nchains])
+    Chains(sr, start=m.method.num_warmup, thin=m.method.thin, names=idx[indvec], chains=[i for i in 1:m.nchains])
   else  
     sr = getindex(a3d, [1:m.method.thin:size(a3d, 1)], [1:size(a3d, 2)], [1:size(a3d, 3)])
-    Chains(sr, start=1, thin=m.method.thin, names=idx, chains=[i for i in 1:m.nchains])
+    Chains(sr, start=1, thin=m.method.thin, names=idx[indvec], chains=[i for i in 1:m.nchains])
   end
 end
 

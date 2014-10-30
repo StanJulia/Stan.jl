@@ -1,6 +1,6 @@
 ######### Stan program example  ###########
 
-using Mamba, Stan
+using Mamba, Stan, Compat
 
 old = pwd()
 ProjDir = Pkg.dir("Stan", "Examples", "Bernoulli")
@@ -21,14 +21,15 @@ model {
 "
 
 data = [
-  (ASCIIString => Any)["N" => 10, "y" => [0, 1, 0, 1, 0, 0, 0, 0, 0, 1]],
-  (ASCIIString => Any)["N" => 10, "y" => [0, 1, 0, 0, 0, 0, 1, 0, 0, 1]],
-  (ASCIIString => Any)["N" => 10, "y" => [0, 0, 0, 0, 0, 0, 1, 0, 1, 1]],
-  (ASCIIString => Any)["N" => 10, "y" => [0, 0, 0, 1, 0, 0, 0, 1, 0, 1]]
+  @Compat.Dict("N" => 10, "y" => [0, 1, 0, 1, 0, 0, 0, 0, 0, 1]),
+  @Compat.Dict("N" => 10, "y" => [0, 1, 0, 0, 0, 0, 1, 0, 0, 1]),
+  @Compat.Dict("N" => 10, "y" => [0, 0, 0, 0, 0, 0, 1, 0, 1, 1]),
+  @Compat.Dict("N" => 10, "y" => [0, 0, 0, 1, 0, 0, 0, 1, 0, 1])
 ]
 
-monitor = ["theta", "lp__"]
+monitor = ["theta", "lp__", "accept_stat__"]
 
+#stanmodel = Stanmodel(name="bernoulli", model=bernoulli, monitors=monitor);
 stanmodel = Stanmodel(name="bernoulli", model=bernoulli);
 
 println("\nStanmodel that will be used:")
@@ -40,7 +41,8 @@ println()
 sim1 = stan(stanmodel, data, ProjDir, diagnostics=true);
 
 ## Subset Sampler Output
-sim = sim1[1:1000, ["lp__", "theta", "accept_stat__"], :]
+sim = sim1[1:1000, monitor, :]
+#sim = sim1
 describe(sim)
 println()
 

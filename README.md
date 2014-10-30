@@ -12,13 +12,17 @@ For more info on Stan, please go to <http://mc-stan.org>.
 
 For more info on Mamba, please go to <http://mambajl.readthedocs.org/en/latest/>.
 
-This version will be kept as the Github branch Stan-j0.4-v0.0.4
+This version will be kept as the Github branch Stan-j0.3-v0.0.4
 
 ## Whats new
 
 ### Version 0.0.4
 
-The two most important features introduced in version 0.0.4 are using Mamba to display and diagnose simulation results and the handling of NaNs in input data.
+The three most important features introduced in version 0.0.4 are:
+
+1. Using Mamba to display and diagnose simulation results.
+2. The handling of NaNs in input data.
+3. The ability to select which variables to extract form Stan's output .csv file.
 
 ### Version 0.0.3
 
@@ -36,7 +40,7 @@ This version of the Stan.jl package assumes that:
 julia> Pkg.clone("git://github.com/brian-j-smith/Mamba.jl.git")
 ```
 
-3. On unix-like systems is uses Google's Chrome to display simulation results after creating .svg files.
+3. On unix-like systems Stan-j03-v0.0.4 examples uses Google's Chrome to display simulation results after creating .svg files.
 
 To test and run the examples:
 
