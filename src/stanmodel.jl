@@ -29,10 +29,10 @@ type Stanmodel
   nchains::Int
   adapt::Int
   update::Int
-  thin::Int
   id::Int
   model::String
   model_file::String
+  monitors::Vector{ASCIIString}
   data::Array{Dict{ASCIIString, Any}, 1}
   data_file_array::Array{ASCIIString, 1}
   data_file::String
@@ -45,8 +45,10 @@ end
 
 function Stanmodel(method::Methods=Sample();
   name::String="noname", nchains::Int=4,
-  adapt::Number=1000, update::Number=1000, thin::Number=10,
-  id::Int=0, model::String="", model_file::String="",
+  adapt::Number=1000, update::Number=1000,
+  id::Int=0,
+  model::String="", model_file::String="",
+  monitors=ASCIIString[],
   data::Array{Dict{ASCIIString, Any}, 1}=Dict{ASCIIString, Any}[], 
   data_file_array::Vector{String}=String[],
   data_file::String="",
@@ -57,11 +59,11 @@ function Stanmodel(method::Methods=Sample();
     update_model_file("$(name).stan", strip(model))
   end
   
-  model_file = "$(name).stan";
+  model_file = "$(name).stan"
   
   Stanmodel(name, nchains, 
-    adapt, update, thin,
-    id, model, model_file, 
+    adapt, update,
+    id, model, model_file, monitors,
     data, data_file_array, data_file,
     cmdarray, method, random, init, output);
 end
@@ -83,6 +85,7 @@ end
 function model_show(io::IO, m::Stanmodel, compact::Bool)
   println("  name =                    \"$(m.name)\"")
   println("  nchains =                 $(m.nchains)")
+  println("  monitors =                $(m.monitors)")
   println("  model_file =              \"$(m.model_file)\"")
   println("  data_file =                \"$(m.data_file)\"")
   println("  output =                  Output()")

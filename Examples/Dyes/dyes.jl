@@ -63,10 +63,48 @@ data = [
 ]
 
 stanmodel = Stanmodel(name="dyes", model=dyes);
-chains = stan(stanmodel, data, ProjDir)
+sim1 = stan(stanmodel, data, ProjDir)
 
+nodesubset = ["theta", "mu.1", "mu.2", "mu.3", "mu.4", "mu.5", "mu.6", "sigma_between", "sigma_within"]
+## Subset Sampler Output
+sim = sim1[1:1000, nodesubset, :]
+describe(sim)
 println()
-chains[1]["samples"] |> display
-println()
+
+
+## Brooks, Gelman and Rubin Convergence Diagnostic
+try
+  gelmandiag(sim1, mpsrf=true, transform=true) |> display
+catch e
+  #println(e)
+  gelmandiag(sim, mpsrf=false, transform=true) |> display
+end
+
+## Geweke Convergence Diagnostic
+gewekediag(sim) |> display
+
+## Highest Posterior Density Intervals
+hpd(sim) |> display
+
+## Cross-Correlations
+cor(sim) |> display
+
+## Lag-Autocorrelations
+autocor(sim) |> display
+
+## Deviance Information Criterion
+#dic(sim) |> display
+
+
+## Plotting
+
+p = plot(sim, [:trace, :mean, :density, :autocor], legend=true);
+draw(p, ncol=4, filename="summaryplot", fmt=:svg)
+draw(p, ncol=4, filename="summaryplot", fmt=:pdf)
+
+for i in 1:3
+  isfile("summaryplot-$(i).svg") &&
+    run(`open -a "Google Chrome.app" "summaryplot-$(i).svg"`)
+end
 
 cd(old)

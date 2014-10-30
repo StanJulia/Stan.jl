@@ -38,10 +38,49 @@ data = [
 ]
 
 stanmodel = Stanmodel(name="schools8", model=eightschools);
-chains = stan(stanmodel, data, ProjDir)
+sim1 = stan(stanmodel, data, ProjDir)
 
+nodesubset = ["lp__", "accept_stat__", "mu", "tau", "theta.1", "theta.2", "theta.3", "theta.4", "theta.5", "theta.6", "theta.7", "theta.8"]
+
+## Subset Sampler Output
+sim = sim1[1:1000, nodesubset, :]
+describe(sim)
 println()
-chains[1]["samples"] |> display
-println()
+
+
+## Brooks, Gelman and Rubin Convergence Diagnostic
+try
+  gelmandiag(sim1, mpsrf=true, transform=true) |> display
+catch e
+  #println(e)
+  gelmandiag(sim, mpsrf=false, transform=true) |> display
+end
+
+## Geweke Convergence Diagnostic
+gewekediag(sim) |> display
+
+## Highest Posterior Density Intervals
+hpd(sim) |> display
+
+## Cross-Correlations
+cor(sim) |> display
+
+## Lag-Autocorrelations
+autocor(sim) |> display
+
+## Deviance Information Criterion
+#dic(sim) |> display
+
+
+## Plotting
+
+p = plot(sim, [:trace, :mean, :density, :autocor], legend=true);
+draw(p, nrow=4, ncol=4, filename="mutauplot", fmt=:svg)
+draw(p, nrow=4, ncol=4, filename="mutauplot", fmt=:pdf)
+
+for i in 1:3
+  isfile("mutauplot-$(i).svg") &&
+    run(`open -a "Google Chrome.app" "mutauplot-$(i).svg"`)
+end
 
 cd(old)

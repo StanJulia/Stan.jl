@@ -1,6 +1,6 @@
 ######### Stan program example  ###########
 
-using Stan
+using Mamba, Stan
 
 old = pwd()
 ProjDir = Pkg.dir("Stan", "Examples", "Bernoulli")
@@ -27,6 +27,7 @@ data = [
   (ASCIIString => Any)["N" => 10, "y" => [0, 0, 0, 1, 0, 0, 0, 1, 0, 1]]
 ]
 
+monitor = ["theta", "lp__"]
 
 stanmodel = Stanmodel(name="bernoulli", model=bernoulli);
 
@@ -36,18 +37,47 @@ println("Input observed data dictionary:")
 data |> display
 println()
 
-chains = stan(stanmodel, data, ProjDir, diagnostics=true)
+sim1 = stan(stanmodel, data, ProjDir, diagnostics=true);
 
-chains[1]["samples"] |> display
-
-chains[1]["diagnostics"] |> display
+## Subset Sampler Output
+sim = sim1[1:1000, ["lp__", "theta", "accept_stat__"], :]
+describe(sim)
 println()
 
-logistic(x::FloatingPoint) = one(x) / (one(x) + exp(-x))
-logistic(x::Real) = logistic(float(x))
-@vectorize_1arg Real logistic
 
-println()
-[logistic(chains[1]["diagnostics"]["theta"]) chains[1]["samples"]["theta"]][1:5,:] |> display
+## Brooks, Gelman and Rubin Convergence Diagnostic
+try
+  gelmandiag(sim1, mpsrf=true, transform=true) |> display
+catch e
+  #println(e)
+  gelmandiag(sim, mpsrf=false, transform=true) |> display
+end
+
+## Geweke Convergence Diagnostic
+gewekediag(sim) |> display
+
+## Highest Posterior Density Intervals
+hpd(sim) |> display
+
+## Cross-Correlations
+cor(sim) |> display
+
+## Lag-Autocorrelations
+autocor(sim) |> display
+
+## Deviance Information Criterion
+#dic(sim) |> display
+
+
+## Plotting
+
+p = plot(sim, [:trace, :mean, :density, :autocor], legend=true);
+draw(p, ncol=4, filename="summaryplot", fmt=:svg)
+draw(p, ncol=4, filename="summaryplot", fmt=:pdf)
+
+for i in 1:4
+  isfile("summaryplot-$(i).svg") &&
+    run(`open -a "Google Chrome.app" "summaryplot-$(i).svg"`)
+end
 
 cd(old)

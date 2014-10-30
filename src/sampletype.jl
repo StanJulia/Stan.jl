@@ -56,7 +56,7 @@ type Sample <: Methods
   algorithm::Algorithm
 end
 Sample(;num_samples::Number=1000, num_warmup::Number=1000,
-  save_warmup::Bool=false, thin::Number=10, 
+  save_warmup::Bool=false, thin::Number=1, 
   adapt::Adapt=Adapt(), algorithm::Algorithm=Hmc()) = 
     Sample(num_samples, num_warmup, save_warmup, thin, adapt, algorithm)
 

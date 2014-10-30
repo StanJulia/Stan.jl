@@ -2,8 +2,11 @@ module Stan
 
 # package code goes here
 
+  using Mamba
+
   include("stanmodel.jl")
   include("stancode.jl")
+  
   if !isdefined(Main, :Jags)
     include("utilities.jl")
   end
