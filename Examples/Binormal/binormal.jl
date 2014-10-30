@@ -1,6 +1,6 @@
 ######### Stan program example  ###########
 
-using Stan
+using Stan, Mamba
 
 old = pwd()
 ProjDir = Pkg.dir("Stan", "Examples", "Binormal")

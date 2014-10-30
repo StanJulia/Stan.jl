@@ -6,15 +6,37 @@
 
 A package to use Stan (as an external program) from Julia. 
 
-Right now the package has been tested on Mac OSX 10.9.3+, Julia 0.3 and CmStan 2.4.0.
+The package is tested on Mac OSX 10.10, Julia 0.3.2 and CmStan 2.5.0.
 
 For more info on Stan, please go to <http://mc-stan.org>.
 
-This version will be kept as the Github branch Stan-j0.3-v0.0.3
+For more info on Mamba, please go to <http://mambajl.readthedocs.org/en/latest/>.
+
+This version will be kept as the Github branch Stan-j0.4-v0.0.4
+
+## Whats new
+
+### Version 0.0.4
+
+The two most important features introduced in version 0.0.4 are using Mamba to display and diagnose simulation results and the handling of NaNs in input data.
+
+### Version 0.0.3
+
+The main feature introduced is inline definition of model and data in the .jl file
 
 ## Requirements
 
-This version of the Stan.jl package assumes that CmdStan (see <http://mc-stan.org>) is installed and the environment variables STAN_HOME and CMDSTAN_HOME are set accordingly (pointing to the Stan and CmdStan directories, e.g. /Users/rob/Projects/Stan/cmdstan/stan and /Users/rob/Projects/Stan/cmdstan on my system).
+This version of the Stan.jl package assumes that:
+
+1. CmdStan (see <http://mc-stan.org>) is installed and the environment variables STAN_HOME and CMDSTAN_HOME are set accordingly (pointing to the Stan and CmdStan directories, e.g. /Users/rob/Projects/Stan/cmdstan/stan and /Users/rob/Projects/Stan/cmdstan on my system).
+
+2. Mamba (see <https://github.com/brian-j-smith/Mamba.jl>) is installed. At this moment Mamba has not been registered on METADATA.jl yet. It can be installed using Pkg.clone():
+
+```
+julia> Pkg.clone("git://github.com/brian-j-smith/Mamba.jl.git")
+```
+
+3. On unix-like systems is uses Google's Chrome to display simulation results after creating .svg files.
 
 To test and run the examples:
 
@@ -22,7 +44,7 @@ To test and run the examples:
 
 ## Caveats
 
-Version 0.0.3 does not handle NaN in the input data. 
+Version 0.0.4 does not handle NaN in the input data???
 
 ## A walk-through example
 
@@ -35,7 +57,7 @@ old = pwd()
 ProjDir = Pkg.dir("Stan", "Examples", "Bernoulli")
 cd(ProjDir)
 ```
-Concatenate home directory and project directory. For Windows, backslashes need to be reversed.
+Concatenate home directory and project directory.
 
 ```
 bernoulli = "
@@ -60,33 +82,78 @@ data = [
 ]
 
 stanmodel = Stanmodel(name="bernoulli", model=bernoulli);
+stanmodel |> display
+println("Input observed data dictionary:")
+data |> display
+println()
 ```
 
-Create a default model for sampling. See other examples for methods optimize and diagnose in the Bernoulli example directory. Show the results from the first chain:
+Create a default model for sampling. See other examples for methods optimize and diagnose in the Bernoulli example directory. 
+
+Run the simulation and describe the results:
 
 ```
-chains = stan(stanmodel, data_file, ProjDir, diagnostics=true)
-
-chains[1]["samples"] |> display
-
+sim1 = stan(stanmodel, data_file, ProjDir, diagnostics=true)
+describe(sim1)
 ```
 
 'stan()' is the work horse, the first time it will compile the model and create the executable. 
 
-By default it will run 4 chains, display a combined summary and returns a array of dictionaries (one dictionary for each chain) with all samples.
-
-In this example the diagnostics_file, which can optionally be produced by Stan, is used below and hence the argument 'diagnostics=true' has been added. By default diagnostics is set to false.
+By default it will run 4 chains, display a combined summary and returns a Mamba Chain for a sampler. Other methods return a dictionary.
 
 ```
-chains[1]["diagnostics"] |> display
+println("Subset Sampler Output")
+sim = sim1[1:1000, ["lp__", "theta", "accept_stat__"], :]
+describe(sim)
+println()
+```
+
+It is also possible to variables to be monitored in the Stanmodel.
+
+The following diagnostics are als based on the Mamba.jl diagnostics:
+
+```
+println("Brooks, Gelman and Rubin Convergence Diagnostic")
+try
+  gelmandiag(sim1, mpsrf=true, transform=true) |> display
+catch e
+  #println(e)
+  gelmandiag(sim, mpsrf=false, transform=true) |> display
+end
 println()
 
-logistic(x::FloatingPoint) = one(x) / (one(x) + exp(-x))
-logistic(x::Real) = logistic(float(x))
-@vectorize_1arg Real logistic
-
+println("Geweke Convergence Diagnostic")
+gewekediag(sim) |> display
 println()
-[logistic(chains[1]["diagnostics"]["diagnostics"]) chains[1]["samples"]["diagnostics"]][1:5,:] |> display
+
+println("Highest Posterior Density Intervals")
+hpd(sim) |> display
+println()
+
+println("Cross-Correlations")
+cor(sim) |> display
+println()
+
+println("Lag-Autocorrelations")
+autocor(sim) |> display
+println()
+```
+
+To plot the simulation results:
+
+```
+p = plot(sim, [:trace, :mean, :density, :autocor], legend=true);
+draw(p, ncol=4, filename="summaryplot", fmt=:svg)
+draw(p, ncol=4, filename="summaryplot", fmt=:pdf)
+```
+
+On a unix-like platform, with e.g. Google's Chrome installed:
+
+```
+for i in 1:4
+  isfile("summaryplot-$(i).svg") &&
+    run(`open -a "Google Chrome.app" "summaryplot-$(i).svg"`)
+end
 
 cd(old)
 ```

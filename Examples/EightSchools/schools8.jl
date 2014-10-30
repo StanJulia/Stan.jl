@@ -1,6 +1,6 @@
 ######### Stan batch program example  ###########
 
-using Stan
+using Stan, Mamba
 #using Distributions, MCMC, Gadfly
 
 old = pwd()
@@ -75,12 +75,12 @@ autocor(sim) |> display
 ## Plotting
 
 p = plot(sim, [:trace, :mean, :density, :autocor], legend=true);
-draw(p, nrow=4, ncol=4, filename="mutauplot", fmt=:svg)
-draw(p, nrow=4, ncol=4, filename="mutauplot", fmt=:pdf)
+draw(p, nrow=4, ncol=4, filename="summaryplot", fmt=:svg)
+draw(p, nrow=4, ncol=4, filename="summaryplot", fmt=:pdf)
 
 for i in 1:3
-  isfile("mutauplot-$(i).svg") &&
-    run(`open -a "Google Chrome.app" "mutauplot-$(i).svg"`)
+  isfile("summaryplot-$(i).svg") &&
+    run(`open -a "Google Chrome.app" "summaryplot-$(i).svg"`)
 end
 
 cd(old)
