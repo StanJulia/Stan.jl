@@ -39,7 +39,7 @@ This version of the Stan.jl package assumes that:
 julia> Pkg.clone("git://github.com/brian-j-smith/Mamba.jl.git")
 ```
 
-3. On unix-like systems Stan-j03-v0.0.4 examples uses Google's Chrome to display simulation results after creating .svg files.
+3. On OSX Stan-j03-v0.0.4 examples uses Google's Chrome to display simulation results after creating .svg files. For other systems or browsers the final lines in the Examples/xxxx.jl need to be adjusted.
 
 To test and run the examples:
 
@@ -146,13 +146,13 @@ draw(p, ncol=4, filename="summaryplot", fmt=:svg)
 draw(p, ncol=4, filename="summaryplot", fmt=:pdf)
 ```
 
-On a unix-like platform, with e.g. Google's Chrome installed:
+On OSX, with e.g. Google's Chrome installed:
 
 ```
-for i in 1:4
+@osx ? for i in 1:4
   isfile("summaryplot-$(i).svg") &&
     run(`open -a "Google Chrome.app" "summaryplot-$(i).svg"`)
-end
+end : println()
 
 cd(old)
 ```

@@ -74,12 +74,13 @@ autocor(sim) |> display
 ## Plotting
 
 p = plot(sim, [:trace, :mean, :density, :autocor], legend=true);
-draw(p, ncol=4, filename="summaryplot", fmt=:svg)
-draw(p, ncol=4, filename="summaryplot", fmt=:pdf)
+draw(p, ncol=4, filename="$(stanmodel.name)-summaryplot", fmt=:svg)
+draw(p, ncol=4, filename="$(stanmodel.name)-summaryplot", fmt=:pdf)
 
-for i in 1:4
-  isfile("summaryplot-$(i).svg") &&
-    run(`open -a "Google Chrome.app" "summaryplot-$(i).svg"`)
-end
+# Below will only work on OSX, please adjust for your environment.
+@osx ? for i in 1:4
+  isfile("$(stanmodel.name)-summaryplot-$(i).svg") &&
+    run(`open -a "Google Chrome.app" "$(stanmodel.name)-summaryplot-$(i).svg"`)
+end : println()
 
 cd(old)
