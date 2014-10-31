@@ -133,7 +133,8 @@ end
 
 function stan_summary(file::String; StanDir=getenv("CMDSTAN_HOME"))
   try
-    cmd = @unix ? `$(StanDir)/bin/print $(file)` : `$(StanDir)\bin\print.exe $(file)`
+    pstring = Pkg.dir("$(StanDir)", "bin", "print")
+    cmd = `$(pstring) $(file)`
     print(open(readall, cmd, "r"))
   catch e
     println(e)
@@ -142,7 +143,8 @@ end
 
 function stan_summary(filecmd::Cmd; StanDir=getenv("CMDSTAN_HOME"))
   try
-    cmd = @unix ? `$(StanDir)/bin/print $(filecmd)` : `$(StanDir)\bin\print.exe $(filecmd)`
+    pstring = Pkg.dir("$(StanDir)", "bin", "print")
+    cmd = `$(pstring) $(filecmd)`
     print(open(readall, cmd, "r"))
   catch e
     println(e)
