@@ -38,7 +38,7 @@ println("Input observed data dictionary:")
 data |> display
 println()
 
-sim1 = stan(stanmodel, data, ProjDir, diagnostics=true);
+sim1 = stan(stanmodel, data, ProjDir, diagnostics=false);
 
 ## Subset Sampler Output
 sim = sim1[1:1000, monitor, :]

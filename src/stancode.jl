@@ -69,12 +69,14 @@ function stan(model::Stanmodel, data=Nothing, ProjDir=pwd();
   
   local samplefiles = String[]
   local res = Dict[]
+  local ftype
 
   if isa(model.method, Sample)
+    ftype = diagnostics ? "diagnostics" : "samples"
     for i in 1:model.nchains
-      push!(samplefiles, "$(model.name)_samples_$(i).csv")
+      push!(samplefiles, "$(model.name)_$(ftype)_$(i).csv")
     end
-    res = read_stanfit_samples(model)
+    res = read_stanfit_samples(model, diagnostics)
   elseif isa(model.method, Optimize)
     res = read_stanfit(model)
   elseif isa(model.method, Diagnose)
@@ -99,16 +101,6 @@ function update_R_file(file::String, dct::Dict{ASCIIString, Any}; replaceNaNs::B
   for entry in dct
     str = "\""*entry[1]*"\""*" <- "
     val = entry[2]
-    #=
-    if replaceNaNs && true in isnan(entry[2])
-      val = convert(DataArray, entry[2])
-      for i in 1:length(val)
-        if isnan(val[i])
-          val[i] = "NA"
-        end
-      end
-    end
-    =#
     if length(val)==1 && length(size(val))==0
       # Scalar
       str = str*"$(val)\n"
@@ -258,21 +250,22 @@ end
 
 #### Create a Mamba::Chains result
 
-function read_stanfit_samples(m::Stanmodel)
+function read_stanfit_samples(m::Stanmodel, diagnostics=false)
 
-  local a3d, monitors, index, idx, indvec
+  local a3d, monitors, index, idx, indvec, ftype
+  
+  ftype = diagnostics ? "diagnostics" : "samples"
   
   for i in 1:m.nchains
-    if isfile("$(m.name)_samples_$(i).csv")
-      instream = open("$(m.name)_samples_$(i).csv")
+    if isfile("$(m.name)_$(ftype)_$(i).csv")
+      instream = open("$(m.name)_$(ftype)_$(i).csv")
       skipchars(instream, isspace, linecomment='#')
       line = readline(instream)
       idx = split(line[1:length(line)-1], ",")
+      index = [idx[k] for k in 1:length(idx)]
       if length(m.monitors) == 0
-        index = [idx[k] for k in 1:length(idx)]
         indvec = 1:length(index)
       else
-        index = [idx[k] for k in 1:length(idx)]
         indvec = findin(index, m.monitors)
       end
       if i == 1
@@ -288,12 +281,7 @@ function read_stanfit_samples(m::Stanmodel)
         else
           flds = float(split(line[1:length(line)-1], ","))
           flds = reshape(flds[indvec], 1, length(indvec))
-          #println(j, ", ", i, ", ", a3d[j,:,i])
-          #if i == 1 && j == 1
-          #  println(j, ", ", i, ", ", flds)
-          #end
           a3d[j,:,i] = flds
-          #println(a3d[j,:,i])
         end
       end
     end
