@@ -1,6 +1,6 @@
 ######### Stan batch program example  ###########
 
-using Stan, Mamba
+using Compat, Stan, Mamba
 
 old = pwd()
 ProjDir = Pkg.dir("Stan", "Examples", "Dyes")
@@ -48,7 +48,7 @@ generated quantities {
 "
 
 data = [
-  [ "BATCHES" => 6,
+  @Compat.Dict("BATCHES" => 6,
     "SAMPLES" => 5,
     "y" => reshape([
       [1545, 1540, 1595, 1445, 1595]; 
@@ -58,7 +58,7 @@ data = [
       [1510, 1465, 1635, 1480, 1580]; 
       [1495, 1560, 1545, 1625, 1445]
     ], 6, 5)
-  ]
+  )
 ]
 
 stanmodel = Stanmodel(name="dyes", model=dyes);

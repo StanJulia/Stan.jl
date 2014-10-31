@@ -1,6 +1,6 @@
 ######### Stan batch program example  ###########
 
-using Stan, Mamba
+using Compat, Stan, Mamba
 
 old = pwd()
 ProjDir = Pkg.dir("Stan", "Examples", "EightSchools")
@@ -29,11 +29,11 @@ model {
 "
 
 data = [
-  [ "J" => 8,
+  @Compat.Dict("J" => 8,
     "y" => [28,  8, -3,  7, -1,  1, 18, 12],
     "sigma" => [15, 10, 16, 11,  9, 11, 10, 18],
     "tau" => 25
-  ]
+  )
 ]
 
 stanmodel = Stanmodel(name="schools8", model=eightschools);
