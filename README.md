@@ -14,15 +14,14 @@ For more info on Mamba, please go to <http://mambajl.readthedocs.org/en/latest/>
 
 This version will be kept as the Github branch Stan-j0.3-v0.0.4
 
-## Whats new
+## What's new
 
 ### Version 0.0.4
 
-The three most important features introduced in version 0.0.4 are:
+The two most important features introduced in version 0.0.4 are:
 
 1. Using Mamba to display and diagnose simulation results.
-2. The handling of NaNs in input data.
-3. The ability to select which variables to extract form Stan's output .csv file.
+2. The ability to select which variables to extract form Stan's output .csv file.
 
 ### Version 0.0.3
 
@@ -45,10 +44,6 @@ julia> Pkg.clone("git://github.com/brian-j-smith/Mamba.jl.git")
 To test and run the examples:
 
 **julia >** ``Pkg.test("Stan")``
-
-## Caveats
-
-Version 0.0.4 does not handle NaN in the input data???
 
 ## A walk-through example
 
