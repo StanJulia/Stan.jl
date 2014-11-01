@@ -21,7 +21,7 @@ This version will be kept as the Github branch Stan-j0.3-v0.0.4
 The two most important features introduced in version 0.0.4 are:
 
 1. Using Mamba to display and diagnose simulation results.
-2. The ability to select which variables to extract form Stan's output .csv file.
+2. The ability to select which variables to extract form Stan's output .csv file(s).
 
 ### Version 0.0.3
 
@@ -33,13 +33,9 @@ This version of the Stan.jl package assumes that:
 
 1. CmdStan (see <http://mc-stan.org>) is installed and the environment variables STAN_HOME and CMDSTAN_HOME are set accordingly (pointing to the Stan and CmdStan directories, e.g. /Users/rob/Projects/Stan/cmdstan/stan and /Users/rob/Projects/Stan/cmdstan on my system).
 
-2. Mamba (see <https://github.com/brian-j-smith/Mamba.jl>) is installed. At this moment Mamba has not been registered on METADATA.jl yet. It can be installed using Pkg.clone():
+2. Mamba (see <https://github.com/brian-j-smith/Mamba.jl>) is installed. At this moment Mamba has not been registered on METADATA.jl yet. It can be installed using Pkg.clone("git://github.com/brian-j-smith/Mamba.jl.git")
 
-```
-julia> Pkg.clone("git://github.com/brian-j-smith/Mamba.jl.git")
-```
-
-3. On OSX Stan-j03-v0.0.4 examples uses Google's Chrome to display simulation results after creating .svg files. For other systems or browsers the final lines in the Examples/xxxx.jl need to be adjusted.
+3. On OSX Stan-j03-v0.0.4 examples uses Google's Chrome to display simulation results after creating .svg files. For other systems or browsers the final lines in the Examples/xxxx.jl files need to be adjusted.
 
 To test and run the examples:
 
