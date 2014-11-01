@@ -6,17 +6,15 @@
 
 A package to use Stan (as an external program) from Julia. 
 
-The package is tested on Mac OSX 10.10, Julia 0.3.2 and CmStan 2.5.0.
-
 For more info on Stan, please go to <http://mc-stan.org>.
 
 For more info on Mamba, please go to <http://mambajl.readthedocs.org/en/latest/>.
 
-This version will be kept as the Github branch Stan-j0.3-v0.0.4
+This version will be kept as the Github branch Stan-j0.3-v0.1.0
 
 ## What's new
 
-### Version 0.0.4
+### Version 0.1.0
 
 The two most important features introduced in version 0.0.4 are:
 
@@ -35,7 +33,9 @@ This version of the Stan.jl package assumes that:
 
 2. Mamba (see <https://github.com/brian-j-smith/Mamba.jl>) is installed. At this moment Mamba has not been registered on METADATA.jl yet. It can be installed using Pkg.clone("git://github.com/brian-j-smith/Mamba.jl.git")
 
-3. Only on OSX Stan-j03-v0.0.4 examples uses the environment variable JULIA_SVG_BROWSER to automatically display simulation results after creating .svg files in a browser. For other systems the final lines in the Examples/xxxx.jl files may need to be adjusted. If the environment variable is not found, "Google Chrome.app" is used.
+3. Only on OSX Stan-j03-v0.0.4 examples use the environment variable JULIA_SVG_BROWSER to automatically display simulation results after creating .svg files in a browser. For other systems the final lines in the Examples/xxxx.jl files may need to be adjusted. If the environment variable is not found, "Google Chrome.app" is used.
+
+The package has been tested on Mac OSX 10.10, Julia 0.3.2 and CmStan 2.5.0.
 
 To test and run the examples:
 
@@ -194,6 +194,12 @@ function Stanmodel(
 All arguments have default values, although usually at least the name and model arguments will be provided.
 
 After a Stanmodel has been created, the workhorse function stan() is called to run the simulation.
+
+The stan() call uses 'make' to create (or update when needed) an executable with the given model.name, e.g. bernoulli in the above example. If no model String (or of zero length) is found, a message will be shown.
+
+If the Julia REPL is started in the correct directory, stan(model) is sufficient for a model that does not require a data file. See the Binormal example.
+
+
 The full signature of stan() is:
 ```
 function stan(
@@ -206,18 +212,10 @@ function stan(
 ```
 All parameters to compile and run the Stan script are implicitly passed in through the model argument. 
 
-Some more details stan() are given below.
-
-The stan() call uses make to create (or update when needed) an executable with the given model.name, e.g. bernoulli in the above example. If no model String (or of zero length) is found, a message will be shown.
-
-If the Julia REPL is started in the correct directory, stan(model) is sufficient for a model that does not require a data file. See the Binormal example.
-
 
 ## To do
 
 More features will be added as requested by users and as time permits. Please file an issue on github.
-
-See the TODO.md file for an initial list of issues I've been working on.
 
 **Note 1:** Few problems related to installing CmdStan have been reported on the Stan mailing list (but maybe most folks use RStan or Pystan).
 
