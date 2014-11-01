@@ -53,7 +53,6 @@ ProjDir = Pkg.dir("Stan", "Examples", "Bernoulli")
 cd(ProjDir)
 ```
 Concatenate home directory and project directory.
-
 ```
 bernoulli = "
 data { 
@@ -69,9 +68,14 @@ model {
 }
 "
 ```
+Variable 'bernoulli' holds the Stan model definition and is passed in using the model keyword argument:
+```
+stanmodel = Stanmodel(name="bernoulli", model=bernoulli);
+stanmodel |> display
+```
+Create a default model for sampling. See other examples for methods optimize and diagnose in the Bernoulli example directory. 
 
-The input data is defined below using the future Julia 0.4 dictionary syntax. Package Compat.jl provides the @Compat.Dict macro to support this on Julia 0.3:
-
+The input data is defined below (using the future Julia 0.4 dictionary syntax). Package Compat.jl provides the @Compat.Dict macro to support this on Julia 0.3. By default 4 chains will be simulated. Below initialization of 'data' is an array of 4 dictionaries, a dictionary for each chain. If the array length is not equal to the number of chains, only the first elemnt of the array will be used for all chains.
 ```
 data = [
   @Compat.Dict("N" => 10, "y" => [0, 1, 0, 1, 0, 0, 0, 0, 0, 1]),
@@ -79,36 +83,25 @@ data = [
   @Compat.Dict("N" => 10, "y" => [0, 1, 0, 0, 0, 0, 0, 0, 1, 1]),
   @Compat.Dict("N" => 10, "y" => [0, 0, 0, 1, 0, 0, 0, 1, 0, 1])
 ]
-
-stanmodel = Stanmodel(name="bernoulli", model=bernoulli);
-stanmodel |> display
-println("Input observed data dictionary:")
+println("Input observed data, an array of dictionaries:")
 data |> display
 println()
 ```
-
-Create a default model for sampling. See other examples for methods optimize and diagnose in the Bernoulli example directory. 
-
-Run the simulation and describe the results:
-
+Run the simulation by calling stan(), passing in the data and the intended working directory (where created files will be stored). Describe the results (describe() is a Mamba.jl function):
 ```
 sim1 = stan(stanmodel, data, ProjDir)
 describe(sim1)
 ```
-
 'stan()' is the work horse, the first time it will compile the model and create the executable. 
 
 By default it will run 4 chains, display a combined summary and returns a Mamba Chain for a sampler. Other methods return a dictionary.
-
 ```
 println("Subset Sampler Output")
 sim = sim1[1:1000, ["lp__", "theta", "accept_stat__"], :]
 describe(sim)
 println()
 ```
-
 The following diagnostics and Gadfly based plot functions from Mamba.jl are available:
-
 ```
 println("Brooks, Gelman and Rubin Convergence Diagnostic")
 try
