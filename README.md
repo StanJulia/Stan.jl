@@ -16,7 +16,7 @@ This version will be kept as the Github branch Stan-j0.3-v0.1.0
 
 ### Version 0.1.0
 
-The two most important features introduced in version 0.0.4 are:
+The two most important features introduced in version 0.1.0 are:
 
 1. Using Mamba to display and diagnose simulation results.
 2. The ability to select which variables to extract form Stan's output .csv file(s).
@@ -33,7 +33,7 @@ This version of the Stan.jl package assumes that:
 
 2. Mamba (see <https://github.com/brian-j-smith/Mamba.jl>) is installed. At this moment Mamba has not been registered on METADATA.jl yet. It can be installed using Pkg.clone("git://github.com/brian-j-smith/Mamba.jl.git")
 
-3. Only on OSX Stan-j03-v0.0.4 examples use the environment variable JULIA_SVG_BROWSER to automatically display simulation results after creating .svg files in a browser. For other systems the final lines in the Examples/xxxx.jl files may need to be adjusted. If the environment variable is not found, "Google Chrome.app" is used.
+3. Only on OSX Stan-j03-v0.1.0 examples use the environment variable JULIA_SVG_BROWSER to automatically display simulation results after creating .svg files in a browser. For other systems the final lines in the Examples/xxxx.jl files may need to be adjusted or removed. Both an .svg and a .pdf file will be created. If the environment variable JULIA_SVG_BROWSER is not found, "Google Chrome.app" is assumed.
 
 The package has been tested on Mac OSX 10.10, Julia 0.3.2 and CmStan 2.5.0.
 
