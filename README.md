@@ -54,7 +54,7 @@ cd(ProjDir)
 ```
 Concatenate home directory and project directory.
 
-Variable 'bernoulli' holds the Stan model definition:
+Variable 'bernoullistanmodel' holds the Stan model definition:
 ```
 const bernoullistanmodel = "
 data { 
