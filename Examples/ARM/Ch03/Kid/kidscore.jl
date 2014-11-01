@@ -6,7 +6,7 @@ old = pwd()
 ProjDir = Pkg.dir("Stan", "Examples", "ARM", "Ch03", "Kid")
 cd(ProjDir)
 
-kid = "
+const kid = "
 data {
   int<lower=0> N;
   vector[N] kid_score;
@@ -22,7 +22,7 @@ model {
 }
 "
 
-data = [
+const kiddata = [
   @Compat.Dict("N" => 434,
   "kid_score" => [65, 98, 85, 83, 115, 98, 69, 106, 102, 95, 91, 58, 84, 78, 102,
   110, 102, 99, 105, 101, 102, 115, 100, 87, 99, 96, 72, 78, 77, 98, 69, 130, 109,
@@ -180,7 +180,7 @@ data = [
 
 stanmodel = Stanmodel(name="kid", model=kid);
 println()
-sim1 = stan(stanmodel, data, ProjDir)
+sim1 = stan(stanmodel, kiddata, ProjDir)
 
 ## Subset Sampler Output
 sim = sim1[1:1000, ["lp__", "accept_stat__", "sigma", "beta.1", "beta.2", "beta.3"], :]
@@ -221,7 +221,7 @@ draw(p, ncol=4, filename="$(stanmodel.name)-summaryplot", fmt=:pdf)
 # Below will only work on OSX, please adjust for your environment.
 @osx ? for i in 1:4
   isfile("$(stanmodel.name)-summaryplot-$(i).svg") &&
-    run(`open -a "Google Chrome.app" "$(stanmodel.name)-summaryplot-$(i).svg"`)
+    run(`open -a $(JULIASVGBROWSER) "$(stanmodel.name)-summaryplot-$(i).svg"`)
 end : println()
 
 cd(old)

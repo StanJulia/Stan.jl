@@ -6,7 +6,7 @@ old = pwd()
 ProjDir = Pkg.dir("Stan", "Examples", "Bernoulli")
 cd(ProjDir)
 
-bernoulli = "
+const bernoullimodel = "
 data { 
   int<lower=0> N; 
   int<lower=0,upper=1> y[N];
@@ -20,25 +20,25 @@ model {
 }
 "
 
-data = [
+const bernoullidata = [
   @Compat.Dict("N" => 10, "y" => [0, 1, 0, 1, 0, 0, 0, 0, 0, 1]),
   @Compat.Dict("N" => 10, "y" => [0, 1, 0, 0, 0, 0, 1, 0, 0, 1]),
   @Compat.Dict("N" => 10, "y" => [0, 0, 0, 0, 0, 0, 1, 0, 1, 1]),
   @Compat.Dict("N" => 10, "y" => [0, 0, 0, 1, 0, 0, 0, 1, 0, 1])
 ]
 
-monitor = ["theta", "lp__", "accept_stat__"]
+const monitor = ["theta", "lp__", "accept_stat__"]
 
-#stanmodel = Stanmodel(name="bernoulli", model=bernoulli, monitors=monitor);
-stanmodel = Stanmodel(name="bernoulli", model=bernoulli);
+#stanmodel = Stanmodel(name="bernoulli", model=bernoullimodel, monitors=monitor);
+stanmodel = Stanmodel(name="bernoulli", model=bernoullimodel);
 
 println("\nStanmodel that will be used:")
 stanmodel |> display
 println("Input observed data dictionary:")
-data |> display
+bernoullidata |> display
 println()
 
-sim1 = stan(stanmodel, data, ProjDir, diagnostics=false);
+sim1 = stan(stanmodel, bernoullidata, ProjDir, diagnostics=false);
 
 ## Subset Sampler Output
 sim = sim1[1:1000, monitor, :]
@@ -72,15 +72,16 @@ autocor(sim) |> display
 
 
 ## Plotting
-
 p = plot(sim, [:trace, :mean, :density, :autocor], legend=true);
 draw(p, ncol=4, filename="$(stanmodel.name)-summaryplot", fmt=:svg)
 draw(p, ncol=4, filename="$(stanmodel.name)-summaryplot", fmt=:pdf)
 
 # Below will only work on OSX, please adjust for your environment.
-@osx ? for i in 1:4
-  isfile("$(stanmodel.name)-summaryplot-$(i).svg") &&
-    run(`open -a "Google Chrome.app" "$(stanmodel.name)-summaryplot-$(i).svg"`)
-end : println()
+if length(JULIASVGBROWSER) > 0
+  @osx ? for i in 1:4
+    isfile("$(stanmodel.name)-summaryplot-$(i).svg") &&
+      run(`open -a $(JULIASVGBROWSER) "$(stanmodel.name)-summaryplot-$(i).svg"`)
+  end : println()
+end
 
 cd(old)

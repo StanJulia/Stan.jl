@@ -6,7 +6,7 @@ old = pwd()
 ProjDir = Pkg.dir("Stan", "Examples", "Dyes")
 cd(ProjDir)
 
-dyes ="
+const dyes ="
 data {
   int BATCHES; 
   int SAMPLES; 
@@ -47,7 +47,7 @@ generated quantities {
 }
 "
 
-data = [
+const dyesdata = [
   @Compat.Dict("BATCHES" => 6,
     "SAMPLES" => 5,
     "y" => reshape([
@@ -62,7 +62,7 @@ data = [
 ]
 
 stanmodel = Stanmodel(name="dyes", model=dyes);
-sim1 = stan(stanmodel, data, ProjDir)
+sim1 = stan(stanmodel, dyesdata, ProjDir)
 
 nodesubset = ["theta", "mu.1", "mu.2", "mu.3", "mu.4", "mu.5", "mu.6", "sigma_between", "sigma_within"]
 ## Subset Sampler Output
@@ -102,9 +102,11 @@ draw(p, ncol=4, filename="$(stanmodel.name)-summaryplot", fmt=:svg)
 draw(p, ncol=4, filename="$(stanmodel.name)-summaryplot", fmt=:pdf)
 
 # Below will only work on OSX, please adjust for your environment.
-@osx ? for i in 1:3
-  isfile("$(stanmodel.name)-summaryplot-$(i).svg") &&
-    run(`open -a "Google Chrome.app" "$(stanmodel.name)-summaryplot-$(i).svg"`)
-end : println()
+if length(JULIASVGBROWSER) > 0
+  @osx ? for i in 1:4
+    isfile("$(stanmodel.name)-summaryplot-$(i).svg") &&
+      run(`open -a $(JULIASVGBROWSER) "$(stanmodel.name)-summaryplot-$(i).svg"`)
+  end : println()
+end
 
 cd(old)

@@ -2,8 +2,13 @@
 # Basic definitions
 #
 
-function stan(model::Stanmodel, data=Nothing, ProjDir=pwd();
-  summary=true, diagnostics=false, StanDir=CMDSTANDIR)
+function stan(
+  model::Stanmodel, 
+  data=Nothing, 
+  ProjDir=pwd();
+  summary=true, 
+  diagnostics=false, 
+  StanDir=CMDSTANDIR)
   
   old = pwd()
   println()

@@ -6,7 +6,7 @@ old = pwd()
 ProjDir = Pkg.dir("Stan", "Examples", "Binormal")
 cd(ProjDir)
 
-binorm = "
+const binorm = "
 transformed data {
     matrix[2,2] Sigma;
     vector[2] mu;
@@ -25,9 +25,10 @@ model {
       y ~ multi_normal(mu,Sigma);
 }
 "
-binormalmodel = Stanmodel(name="binormal", model=binorm);
 
-sim1 = stan(binormalmodel)
+stanmodel = Stanmodel(name="binormal", model=binorm);
+
+sim1 = stan(stanmodel)
 
 ## Subset Sampler Output
 sim = sim1[1:1000, ["lp__", "y.1", "y.2"], :]
@@ -66,9 +67,11 @@ draw(p, ncol=4, filename="$(stanmodel.name)-summaryplot", fmt=:svg)
 draw(p, ncol=4, filename="$(stanmodel.name)-summaryplot", fmt=:pdf)
 
 # Below will only work on OSX, please adjust for your environment.
-@osx ? for i in 1:4
-  isfile("$(stanmodel.name)-summaryplot-$(i).svg") &&
-    run(`open -a "Google Chrome.app" "$(stanmodel.name)-summaryplot-$(i).svg"`)
-end : println()
+if length(JULIASVGBROWSER) > 0
+  @osx ? for i in 1:4
+    isfile("$(stanmodel.name)-summaryplot-$(i).svg") &&
+      run(`open -a $(JULIASVGBROWSER) "$(stanmodel.name)-summaryplot-$(i).svg"`)
+  end : println()
+end
 
 cd(old)

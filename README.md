@@ -35,7 +35,7 @@ This version of the Stan.jl package assumes that:
 
 2. Mamba (see <https://github.com/brian-j-smith/Mamba.jl>) is installed. At this moment Mamba has not been registered on METADATA.jl yet. It can be installed using Pkg.clone("git://github.com/brian-j-smith/Mamba.jl.git")
 
-3. On OSX Stan-j03-v0.0.4 examples uses Google's Chrome to display simulation results after creating .svg files. For other systems or browsers the final lines in the Examples/xxxx.jl files need to be adjusted.
+3. On OSX Stan-j03-v0.0.4 examples uses the environment variable JULIA_SVG_BROWSER to display simulation results after creating .svg files. For other systems the final lines in the Examples/xxxx.jl files may need to be adjusted. If the environment variable is not found, "Google Chrome.app" is used.
 
 To test and run the examples:
 
@@ -53,8 +53,10 @@ ProjDir = Pkg.dir("Stan", "Examples", "Bernoulli")
 cd(ProjDir)
 ```
 Concatenate home directory and project directory.
+
+Variable 'bernoulli' holds the Stan model definition:
 ```
-bernoulli = "
+const bernoullistanmodel = "
 data { 
   int<lower=0> N; 
   int<lower=0,upper=1> y[N];
@@ -68,12 +70,12 @@ model {
 }
 "
 ```
-Variable 'bernoulli' holds the Stan model definition and is passed in using the model keyword argument:
+The model is given a name while the Stan model is passed in using the model keyword argument:
 ```
-stanmodel = Stanmodel(name="bernoulli", model=bernoulli);
+stanmodel = Stanmodel(name="bernoulli", model=bernoullistanmodel);
 stanmodel |> display
 ```
-Create a default model for sampling. See other examples for methods optimize and diagnose in the Bernoulli example directory. 
+The Stanmodel() call creates a default model for sampling. See other examples for methods optimize and diagnose in the Bernoulli example directory and below for some more details.
 
 The input data is defined below (using the future Julia 0.4 dictionary syntax). Package Compat.jl provides the @Compat.Dict macro to support this on Julia 0.3. By default 4 chains will be simulated. Below initialization of 'data' is an array of 4 dictionaries, a dictionary for each chain. If the array length is not equal to the number of chains, only the first elemnt of the array will be used for all chains.
 ```
@@ -87,7 +89,7 @@ println("Input observed data, an array of dictionaries:")
 data |> display
 println()
 ```
-Run the simulation by calling stan(), passing in the data and the intended working directory (where created files will be stored). Describe the results (describe() is a Mamba.jl function):
+Run the simulation by calling stan(), passing in the data and the intended working directory (where output files created by Stan will be stored). Describe the results (describe() is a Mamba.jl function):
 ```
 sim1 = stan(stanmodel, data, ProjDir)
 describe(sim1)
@@ -168,30 +170,50 @@ Notice that compared to the call to Stanmodel() above, the keyword argument moni
 ```
 stanmodel2 = Stanmodel(Sample(adapt=Adapt(delta=0.9)), name="bernoulli2", nchains=6)
 ```
-
 An example of updating default model values when creating a model. The format is slightly different from CmdStan, but the parameters are as described in the CmdStan Interface User's Guide (v2.5.0, October 20th 2014). 
 
 Now stanmodel2 will look like:
-
 ```
 stanmodel2
 ````
-
 After the Stanmodel object has been created fields can be updated, e.g.
 
 ```
 stanmodel2.method.adapt.delta=0.85
 ```
+After the stan() call, the stanmodel.command contains an array of Cmd fields that contain the actual run commands for each chain. These are executed in parallel. The call to stan() might update other info in the StanModel, e.g. the names of diagnostics files.
 
-After the stan() call, the stanmodel.command contains an array of Cmd fields that contain the actual run commands for each chain. These are executed in parallel. The call to stan() might update other info in the StanModel, e.g. the names of diagnostics files. 
-
-The full signature of stan() is:
-
+The full signature of Stanmodel() is:
 ```
-stan(model::Stanmodel, data=Nothing, ProjDir=pwd(); summary=true, diagnostics=false, StanDir=CMDSTANDIR)
-````
+function Stanmodel(
+  method=Sample();
+  name="noname", 
+  nchains=4,
+  adapt=1000, 
+  update=1000,
+  model="",
+  monitors=ASCIIString[],
+  data=Dict{ASCIIString, Any}[], 
+  random=Random(),
+  init=Init(),
+  output=Output())
+```
+All arguments have default values, although usually at least the name and model arguments will be provided.
 
-All parameters to compile and run the Stan script are implicitly passed in through the model argument. Some more details are given below.
+After a Stanmodel has been created, the workhorse function stan() is called to run the simulation.
+The full signature of stan() is:
+```
+function stan(
+  model::Stanmodel, 
+  data=Nothing, 
+  ProjDir=pwd();
+  summary=true, 
+  diagnostics=false, 
+  StanDir=CMDSTANDIR)
+```
+All parameters to compile and run the Stan script are implicitly passed in through the model argument. 
+
+Some more details stan() are given below.
 
 The stan() call uses make to create (or update when needed) an executable with the given model.name, e.g. bernoulli in the above example. If no model String (or of zero length) is found, a message will be shown.
 

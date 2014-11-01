@@ -22,6 +22,7 @@ module Stan
 
   STANDIR = ""
   CMDSTANDIR = ""
+  JULIASVGBROWSER = "Google Chrome.app"
   try
     STANDIR = getenv("STAN_HOME");
   catch e
@@ -32,6 +33,12 @@ module Stan
   catch e
     println("Environment variable CMDSTAN_HOME not found.")
   end
+  try
+    #JULIASVGBROWSER = getenv("JULIA_SVG_BROWSER");
+  catch e
+    println("Environment variable JULIA_SVG_BROWSER not found.")
+    println("Produced .svg files in examples will not be automatically displaye.")
+  end
 
   export
   # From stancmnds.jl
@@ -41,6 +48,7 @@ module Stan
     read_stanfit,
     CMDSTANDIR,
     STANDIR,
+    JULIASVGBROWSER,
   # From stanmodel.jl
     Stanmodel,
     Data,

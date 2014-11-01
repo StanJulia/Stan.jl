@@ -43,23 +43,28 @@ type Stanmodel
   output::Output
 end
 
-function Stanmodel(method::Methods=Sample();
-  name::String="noname", nchains::Int=4,
-  adapt::Number=1000, update::Number=1000,
-  id::Int=0,
-  model::String="", model_file::String="",
+function Stanmodel(
+  method=Sample();
+  name="noname", 
+  nchains=4,
+  adapt=1000, 
+  update=1000,
+  model="",
   monitors=ASCIIString[],
-  data::Array{Dict{ASCIIString, Any}, 1}=Dict{ASCIIString, Any}[], 
-  data_file_array::Vector{String}=String[],
-  data_file::String="",
-  cmdarray = fill(``, nchains),
-  random=Random(), init=Init(), output=Output())
+  data=Dict{ASCIIString, Any}[], 
+  random=Random(),
+  init=Init(),
+  output=Output())
     
+  model_file = "$(name).stan"
   if length(model) > 0
     update_model_file("$(name).stan", strip(model))
   end
   
-  model_file = "$(name).stan"
+  id::Int=0
+  data_file_array::Vector{String}=String[]
+  data_file::String=""
+  cmdarray = fill(``, nchains)
   
   Stanmodel(name, nchains, 
     adapt, update,

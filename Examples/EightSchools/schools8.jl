@@ -6,7 +6,7 @@ old = pwd()
 ProjDir = Pkg.dir("Stan", "Examples", "EightSchools")
 cd(ProjDir)
 
-eightschools ="
+const eightschools ="
 data {
   int<lower=0> J; // number of schools 
   real y[J]; // estimated treatment effects
@@ -28,7 +28,7 @@ model {
 }
 "
 
-data = [
+const schools8data = [
   @Compat.Dict("J" => 8,
     "y" => [28,  8, -3,  7, -1,  1, 18, 12],
     "sigma" => [15, 10, 16, 11,  9, 11, 10, 18],
@@ -37,7 +37,7 @@ data = [
 ]
 
 stanmodel = Stanmodel(name="schools8", model=eightschools);
-sim1 = stan(stanmodel, data, ProjDir)
+sim1 = stan(stanmodel, schools8data, ProjDir)
 
 nodesubset = ["lp__", "accept_stat__", "mu", "tau", "theta.1", "theta.2", "theta.3", "theta.4", "theta.5", "theta.6", "theta.7", "theta.8"]
 
@@ -78,9 +78,11 @@ draw(p, nrow=4, ncol=4, filename="$(stanmodel.name)-summaryplot", fmt=:svg)
 draw(p, nrow=4, ncol=4, filename="$(stanmodel.name)-summaryplot", fmt=:pdf)
 
 # Below will only work on OSX, please adjust for your environment.
-@osx ? for i in 1:3
-  isfile("$(stanmodel.name)-summaryplot-$(i).svg") &&
-    run(`open -a "Google Chrome.app" "$(stanmodel.name)-summaryplot-$(i).svg"`)
-end : println()
+if length(JULIASVGBROWSER) > 0
+  @osx ? for i in 1:4
+    isfile("$(stanmodel.name)-summaryplot-$(i).svg") &&
+      run(`open -a $(JULIASVGBROWSER) "$(stanmodel.name)-summaryplot-$(i).svg"`)
+  end : println()
+end
 
 cd(old)
