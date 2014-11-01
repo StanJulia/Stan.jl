@@ -35,7 +35,7 @@ This version of the Stan.jl package assumes that:
 
 2. Mamba (see <https://github.com/brian-j-smith/Mamba.jl>) is installed. At this moment Mamba has not been registered on METADATA.jl yet. It can be installed using Pkg.clone("git://github.com/brian-j-smith/Mamba.jl.git")
 
-3. On OSX Stan-j03-v0.0.4 examples uses the environment variable JULIA_SVG_BROWSER to display simulation results after creating .svg files. For other systems the final lines in the Examples/xxxx.jl files may need to be adjusted. If the environment variable is not found, "Google Chrome.app" is used.
+3. Only on OSX Stan-j03-v0.0.4 examples uses the environment variable JULIA_SVG_BROWSER to automatically display simulation results after creating .svg files in a browser. For other systems the final lines in the Examples/xxxx.jl files may need to be adjusted. If the environment variable is not found, "Google Chrome.app" is used.
 
 To test and run the examples:
 
@@ -79,19 +79,19 @@ The Stanmodel() call creates a default model for sampling. See other examples fo
 
 The input data is defined below (using the future Julia 0.4 dictionary syntax). Package Compat.jl provides the @Compat.Dict macro to support this on Julia 0.3. By default 4 chains will be simulated. Below initialization of 'data' is an array of 4 dictionaries, a dictionary for each chain. If the array length is not equal to the number of chains, only the first elemnt of the array will be used for all chains.
 ```
-data = [
+const bernoullidata = [
   @Compat.Dict("N" => 10, "y" => [0, 1, 0, 1, 0, 0, 0, 0, 0, 1]),
   @Compat.Dict("N" => 10, "y" => [0, 1, 0, 0, 0, 0, 1, 0, 0, 1]),
   @Compat.Dict("N" => 10, "y" => [0, 1, 0, 0, 0, 0, 0, 0, 1, 1]),
   @Compat.Dict("N" => 10, "y" => [0, 0, 0, 1, 0, 0, 0, 1, 0, 1])
 ]
 println("Input observed data, an array of dictionaries:")
-data |> display
+bernoullidata |> display
 println()
 ```
 Run the simulation by calling stan(), passing in the data and the intended working directory (where output files created by Stan will be stored). Describe the results (describe() is a Mamba.jl function):
 ```
-sim1 = stan(stanmodel, data, ProjDir)
+sim1 = stan(stanmodel, bernoullidata, ProjDir)
 describe(sim1)
 ```
 'stan()' is the work horse, the first time it will compile the model and create the executable. 
@@ -130,17 +130,13 @@ println("Lag-Autocorrelations")
 autocor(sim) |> display
 println()
 ```
-
 To plot the simulation results:
-
 ```
 p = plot(sim, [:trace, :mean, :density, :autocor], legend=true);
 draw(p, ncol=4, filename="summaryplot", fmt=:svg)
 draw(p, ncol=4, filename="summaryplot", fmt=:pdf)
 ```
-
 On OSX, with e.g. Google's Chrome installed:
-
 ```
 @osx ? for i in 1:4
   isfile("summaryplot-$(i).svg") &&
@@ -156,17 +152,14 @@ cd(old)
 Stan.jl really only consists of 2 functions, StanModel() and stan().
 
 Stanmodel() is used to define basic attributes for a model:
-
 ```
 monitor = ["theta", "lp__", "accept_stat__"]
 stanmodel = Stanmodel(name="bernoulli", model=bernoulli, monitors=monitor);
 stanmodel
 ````
-
 Shows all parameters in the model, in this case (by default) a sample model.
 
-Notice that compared to the call to Stanmodel() above, the keyword argument monitors has been added. This mean after the simulation is complete, only the monitored variables will be read in from the .csv file produced by Stan. This can be useful if many nodes are being observed.
-
+Notice that compared to the call to Stanmodel() above, the keyword argument monitors has been added. This means that after the simulation is complete, only the monitored variables will be read in from the .csv file produced by Stan. This can be useful if many nodes are being observed.
 ```
 stanmodel2 = Stanmodel(Sample(adapt=Adapt(delta=0.9)), name="bernoulli2", nchains=6)
 ```
