@@ -102,11 +102,12 @@ draw(p, ncol=4, filename="$(stanmodel.name)-summaryplot", fmt=:svg)
 draw(p, ncol=4, filename="$(stanmodel.name)-summaryplot", fmt=:pdf)
 
 # Below will only work on OSX, please adjust for your environment.
-if length(JULIASVGBROWSER) > 0
-  @osx ? for i in 1:4
-    isfile("$(stanmodel.name)-summaryplot-$(i).svg") &&
-      run(`open -a $(JULIASVGBROWSER) "$(stanmodel.name)-summaryplot-$(i).svg"`)
-  end : println()
-end
+# JULIASVGBROWSER is set from environment variable JULIA_SVG_BROWSER
+@osx ? if length(JULIASVGBROWSER) > 0
+        for i in 1:4
+          isfile("$(stanmodel.name)-summaryplot-$(i).svg") &&
+            run(`open -a $(JULIASVGBROWSER) "$(stanmodel.name)-summaryplot-$(i).svg"`)
+        end
+      end : println()
 
 cd(old)

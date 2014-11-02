@@ -2,6 +2,7 @@
 
 [![Stan](http://pkg.julialang.org/badges/Stan_release.svg)](http://pkg.julialang.org/?pkg=Stan&ver=release)
 
+
 ## Purpose
 
 A package to use Stan (as an external program) from Julia. 
@@ -12,18 +13,26 @@ For more info on Mamba, please go to <http://mambajl.readthedocs.org/en/latest/>
 
 This version will be kept as the Github branch Stan-j0.3-v0.1.0
 
+
 ## What's new
 
 ### Version 0.1.0
 
 The two most important features introduced in version 0.1.0 are:
 
-1. Using Mamba to display and diagnose simulation results.
+1. Using Mamba to display and diagnose simulation results. The call to stan() to sample now returns a Mamba Chains object (previously it returned a dictionary).
 2. The ability to select which variables to extract form Stan's output .csv file(s).
 
 ### Version 0.0.3
 
 The main feature introduced is inline definition of model and data in the .jl file
+
+### Versions 0.0.2 and earlier
+
+1. Parsing structure for input arguments to Stan.
+2. Parallel execution of Stan simulations.
+3. Read created .csv file by Stan back in to Julia.
+
 
 ## Requirements
 
@@ -33,18 +42,18 @@ This version of the Stan.jl package assumes that:
 
 2. Mamba (see <https://github.com/brian-j-smith/Mamba.jl>) is installed. At this moment Mamba has not been registered on METADATA.jl yet. It can be installed using Pkg.clone("git://github.com/brian-j-smith/Mamba.jl.git")
 
-3. Only on OSX Stan-j03-v0.1.0 examples use the environment variable JULIA_SVG_BROWSER to automatically display simulation results after creating .svg files in a browser. For other systems the final lines in the Examples/xxxx.jl files may need to be adjusted or removed. Both an .svg and a .pdf file will be created. If the environment variable JULIA_SVG_BROWSER is not found, "Google Chrome.app" is assumed.
+3. On OSX, all Stan-j03-v0.1.0 examples check the environment variable JULIA_SVG_BROWSER to automatically display (in a browser) the simulation results (after creating .svg files), e.g. on my system I have exported JULIA_SVG_BROWSER="Google Chrome.app". For other platforms the final lines in the Examples/xxxx.jl files may need to be adjusted (or removed). In any case, on all platforms, both a .svg and a .pdf file will be created and left behind in the working directory.
 
-The package has been tested on Mac OSX 10.10, Julia 0.3.2 and CmStan 2.5.0.
+This version of the package has primarily been tested on Mac OSX 10.10, Julia 0.3.2 and CmStan 2.5.0. A limited amount of testing has taken place on other platforms by other users of the package (see note 2 in the 'To Do' section below).
 
 To test and run the examples:
 
 **julia >** ``Pkg.test("Stan")``
 
+
 ## A walk-through example
 
-To run the Bernoulli example:
-
+To run the Bernoulli example, start by concatenating the home directory and project directory:
 ```
 using Compat, Mamba, Stan
 
@@ -52,9 +61,9 @@ old = pwd()
 ProjDir = Pkg.dir("Stan", "Examples", "Bernoulli")
 cd(ProjDir)
 ```
-Concatenate home directory and project directory.
+'ProjDir' is the path where permanent and transient files will be created.
 
-Variable 'bernoullistanmodel' holds the Stan model definition:
+Next define the variable 'bernoullistanmodel' to hold the Stan model definition:
 ```
 const bernoullistanmodel = "
 data { 
@@ -70,14 +79,15 @@ model {
 }
 "
 ```
-The model is given a name while the Stan model is passed in using the model keyword argument:
+The next step is to create a Stanmodel object. The most common way to create such an object is
+by giving the model a name while the Stan model is passed in, both through keyword (hence optional) arguments:
 ```
 stanmodel = Stanmodel(name="bernoulli", model=bernoullistanmodel);
 stanmodel |> display
 ```
-The Stanmodel() call creates a default model for sampling. See other examples for methods optimize and diagnose in the Bernoulli example directory and below for some more details.
+Above Stanmodel() call creates a default model for sampling. See other examples for methods optimize and diagnose in the Bernoulli example directory and below for some more possible Stanmodel() arguments.
 
-The input data is defined below (using the future Julia 0.4 dictionary syntax). Package Compat.jl provides the @Compat.Dict macro to support this on Julia 0.3. By default 4 chains will be simulated. Below initialization of 'data' is an array of 4 dictionaries, a dictionary for each chain. If the array length is not equal to the number of chains, only the first elemnt of the array will be used for all chains.
+The input data is defined below (using the future Julia 0.4 dictionary syntax). Package Compat.jl provides the @Compat.Dict macro to support this on Julia 0.3. By default 4 chains will be simulated. Below initialization of 'bernoullidata' creates an array of 4 dictionaries, a dictionary for each chain. If the array length is not equal to the number of chains, only the first elemnt of the array will be used as initialization for all chains.
 ```
 const bernoullidata = [
   @Compat.Dict("N" => 10, "y" => [0, 1, 0, 1, 0, 0, 0, 0, 0, 1]),
@@ -89,20 +99,30 @@ println("Input observed data, an array of dictionaries:")
 bernoullidata |> display
 println()
 ```
-Run the simulation by calling stan(), passing in the data and the intended working directory (where output files created by Stan will be stored). Describe the results (describe() is a Mamba.jl function):
+Run the simulation by calling stan(), passing in the data and the intended working directory (where output files created by Stan will be stored). To get a summary describtion of the results, describe() is called (describe() is a Mamba.jl function):
 ```
 sim1 = stan(stanmodel, bernoullidata, ProjDir)
 describe(sim1)
 ```
-'stan()' is the work horse, the first time it will compile the model and create the executable. 
+The first time (or when updates to to model or data have been made) stan() will compile the model and create the executable. 
 
-By default it will run 4 chains, display a combined summary and returns a Mamba Chain for a sampler. Other methods return a dictionary.
+By default it will run 4 chains, optionally display a combined summary and returns a Mamba Chains object for a sampler. Other methods return a dictionary.
+
+In this case 'sim1' is a Mamba Chains object. We can inspect sim1 as follows:
+```
+typeof(sim1) |> display
+names(sim1) |> display
+sim1.names |> display
+```
+To inspect the simulation results we can't use all monitored variables by Stan. In this example a good subset is selected as follows and stored in 'sim':
 ```
 println("Subset Sampler Output")
 sim = sim1[1:1000, ["lp__", "theta", "accept_stat__"], :]
 describe(sim)
 println()
 ```
+Notice that in this example samples all 7 variables are read in but only 3 are used for diagnostics and posterior inference. In some cases Stan can monitor 100s or even 1000s of variables in which case it might be better to use the monitors keyword argument to stan(), see the next section for more details.
+
 The following diagnostics and Gadfly based plot functions from Mamba.jl are available:
 ```
 println("Brooks, Gelman and Rubin Convergence Diagnostic")
@@ -136,12 +156,14 @@ p = plot(sim, [:trace, :mean, :density, :autocor], legend=true);
 draw(p, ncol=4, filename="summaryplot", fmt=:svg)
 draw(p, ncol=4, filename="summaryplot", fmt=:pdf)
 ```
-On OSX, with e.g. Google's Chrome installed:
+Finally, e.g. on OSX, with e.g. Google's Chrome installed:
 ```
-@osx ? for i in 1:4
-  isfile("summaryplot-$(i).svg") &&
-    run(`open -a "Google Chrome.app" "summaryplot-$(i).svg"`)
-end : println()
+if length(JULIASVGBROWSER) > 0
+  @osx ? for i in 1:4
+    isfile("summaryplot-$(i).svg") &&
+      run(`open -a $(JULIASVGBROWSER) "summaryplot-$(i).svg"`)
+  end : println()
+end
 
 cd(old)
 ```
