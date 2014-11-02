@@ -31,7 +31,7 @@ The main feature introduced is inline definition of model and data in the .jl fi
 
 1. Parsing structure for input arguments to Stan.
 2. Parallel execution of Stan simulations.
-3. Read created .csv file by Stan back in to Julia.
+3. Read created .csv file by Stan back into Julia.
 
 
 ## Requirements
@@ -104,7 +104,7 @@ Run the simulation by calling stan(), passing in the data and the intended worki
 sim1 = stan(stanmodel, bernoullidata, ProjDir)
 describe(sim1)
 ```
-The first time (or when updates to to model or data have been made) stan() will compile the model and create the executable. 
+The first time (or when updates to the model or data have been made) stan() will compile the model and create the executable. 
 
 By default it will run 4 chains, optionally display a combined summary and returns a Mamba Chains object for a sampler. Other methods return a dictionary.
 
@@ -121,7 +121,7 @@ sim = sim1[1:1000, ["lp__", "theta", "accept_stat__"], :]
 describe(sim)
 println()
 ```
-Notice that in this example samples all 7 variables are read in but only 3 are used for diagnostics and posterior inference. In some cases Stan can monitor 100s or even 1000s of variables in which case it might be better to use the monitors keyword argument to stan(), see the next section for more details.
+Notice that in this example 7 variables are read in but only 3 are used for diagnostics and posterior inference. In some cases Stan can monitor 100s or even 1000s of variables in which case it might be better to use the monitors keyword argument to stan(), see the next section for more details.
 
 The following diagnostics and Gadfly based plot functions from Mamba.jl are available:
 ```
@@ -181,11 +181,11 @@ stanmodel
 ````
 Shows all parameters in the model, in this case (by default) a sample model.
 
-Notice that compared to the call to Stanmodel() above, the keyword argument monitors has been added. This means that after the simulation is complete, only the monitored variables will be read in from the .csv file produced by Stan. This can be useful if many nodes are being observed.
+Compared to the call to Stanmodel() above, the keyword argument monitors has been added. This means that after the simulation is complete, only the monitored variables will be read in from the .csv file produced by Stan. This can be useful if many, e.g. 100s, nodes are being observed.
 ```
 stanmodel2 = Stanmodel(Sample(adapt=Adapt(delta=0.9)), name="bernoulli2", nchains=6)
 ```
-An example of updating default model values when creating a model. The format is slightly different from CmdStan, but the parameters are as described in the CmdStan Interface User's Guide (v2.5.0, October 20th 2014). 
+An example of updating default model values when creating a model. The format is slightly different from CmdStan, but the parameters are as described in the CmdStan Interface User's Guide (v2.5.0, October 20th 2014). This is also the case for the Stanmodel() optional arguments random, init and output (refresh only).
 
 Now stanmodel2 will look like:
 ```
@@ -220,7 +220,6 @@ After a Stanmodel has been created, the workhorse function stan() is called to r
 The stan() call uses 'make' to create (or update when needed) an executable with the given model.name, e.g. bernoulli in the above example. If no model String (or of zero length) is found, a message will be shown.
 
 If the Julia REPL is started in the correct directory, stan(model) is sufficient for a model that does not require a data file. See the Binormal example.
-
 
 The full signature of stan() is:
 ```
