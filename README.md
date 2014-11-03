@@ -106,7 +106,7 @@ describe(sim1)
 ```
 The first time (or when updates to the model or data have been made) stan() will compile the model and create the executable. 
 
-By default it will run 4 chains, optionally display a combined summary and returns a Mamba Chains object for a sampler. Other methods return a dictionary.
+As stated above, by default it will run 4 chains, optionally display a combined summary and returns a Mamba Chains object for a sampler. Other methods return a dictionary.
 
 In this case 'sim1' is a Mamba Chains object. We can inspect sim1 as follows:
 ```
@@ -156,10 +156,10 @@ p = plot(sim, [:trace, :mean, :density, :autocor], legend=true);
 draw(p, ncol=4, filename="summaryplot", fmt=:svg)
 draw(p, ncol=4, filename="summaryplot", fmt=:pdf)
 ```
-Finally, e.g. on OSX, with e.g. Google's Chrome installed:
+On OSX, if e.g. JULIA_SVG_BROWSER="Google's Chrome.app" is exported as an environment variable, the .svg files can be displayed as follows:
 ```
 if length(JULIA_SVG_BROWSER) > 0
-  @osx ? for i in 1:4
+  @osx ? for i in 1:3
     isfile("summaryplot-$(i).svg") &&
       run(`open -a $(JULIA_SVG_BROWSER) "summaryplot-$(i).svg"`)
   end : println()
