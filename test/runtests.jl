@@ -22,7 +22,7 @@ for my_test in code_tests
     include(my_test)
 end
 
-if STANDIR != "" && CMDSTANDIR != ""
+if STAN_HOME != "" && CMDSTAN_HOME != ""
   println("STAN_HOME and CMDSTAN_HOME found! Try to run bernoulli.")
   try
     for my_test in execution_tests

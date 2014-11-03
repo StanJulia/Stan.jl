@@ -20,21 +20,21 @@ module Stan
     bytestring(val)
   end
 
-  STANDIR = ""
-  CMDSTANDIR = ""
-  JULIASVGBROWSER = ""
+  STAN_HOME = ""
+  CMDSTAN_HOME = ""
+  JULIA_SVG_BROWSER = ""
   try
-    STANDIR = getenv("STAN_HOME");
+    STAN_HOME = getenv("STAN_HOME");
   catch e
     println("Environment variable STAN_HOME not found.")
   end
   try
-    CMDSTANDIR = getenv("CMDSTAN_HOME");
+    CMDSTAN_HOME = getenv("CMDSTAN_HOME");
   catch e
     println("Environment variable CMDSTAN_HOME not found.")
   end
   try
-    JULIASVGBROWSER = getenv("JULIA_SVG_BROWSER");
+    JULIA_SVG_BROWSER = getenv("JULIA_SVG_BROWSER");
   catch e
     println("Environment variable JULIA_SVG_BROWSER not found.")
     println("Produced .svg files in examples will not be automatically displaye.")
@@ -47,9 +47,9 @@ module Stan
     stan_summary,
     read_stanfit,
     read_stanfit_samples,
-    CMDSTANDIR,
-    STANDIR,
-    JULIASVGBROWSER,
+    CMDSTAN_HOME,
+    STAN_HOME,
+    JULIA_SVG_BROWSER,
   # From stanmodel.jl
     Stanmodel,
     Data,

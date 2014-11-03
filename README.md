@@ -158,10 +158,10 @@ draw(p, ncol=4, filename="summaryplot", fmt=:pdf)
 ```
 Finally, e.g. on OSX, with e.g. Google's Chrome installed:
 ```
-if length(JULIASVGBROWSER) > 0
+if length(JULIA_SVG_BROWSER) > 0
   @osx ? for i in 1:4
     isfile("summaryplot-$(i).svg") &&
-      run(`open -a $(JULIASVGBROWSER) "summaryplot-$(i).svg"`)
+      run(`open -a $(JULIA_SVG_BROWSER) "summaryplot-$(i).svg"`)
   end : println()
 end
 
@@ -229,7 +229,7 @@ function stan(
   ProjDir=pwd();
   summary=true, 
   diagnostics=false, 
-  StanDir=CMDSTANDIR)
+  StanDir=CMDSTAN_HOME)
 ```
 All parameters to compile and run the Stan script are implicitly passed in through the model argument. 
 

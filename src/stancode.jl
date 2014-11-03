@@ -8,7 +8,7 @@ function stan(
   ProjDir=pwd();
   summary=true, 
   diagnostics=false, 
-  StanDir=CMDSTANDIR)
+  StanDir=CMDSTAN_HOME)
   
   old = pwd()
   println()
