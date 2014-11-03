@@ -48,4 +48,3 @@ function par(cmd::Array{String, 1})
   end
   res
 end
-

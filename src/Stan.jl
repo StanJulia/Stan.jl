@@ -46,6 +46,7 @@ module Stan
     getenv,
     stan_summary,
     read_stanfit,
+    read_stanfit_samples,
     CMDSTANDIR,
     STANDIR,
     JULIASVGBROWSER,
@@ -78,6 +79,5 @@ module Stan
     Gradient,
   # From cmdline.jl
     cmdline
-    
 
 end # module

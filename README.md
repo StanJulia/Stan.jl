@@ -20,12 +20,12 @@ This version will be kept as the Github branch Stan-j0.3-v0.1.0
 
 The two most important features introduced in version 0.1.0 are:
 
-1. Using Mamba to display and diagnose simulation results. The call to stan() to sample now returns a Mamba Chains object (previously it returned a dictionary).
+1. Using Mamba to display and diagnose simulation results. The call to stan() to sample now returns a Mamba Chains object (previously it returned a dictionary). 
 2. The ability to select which variables to extract form Stan's output .csv file(s).
 
 ### Version 0.0.3
 
-The main feature introduced is inline definition of model and data in the .jl file
+1. Inline definition of model and data in the .jl file
 
 ### Versions 0.0.2 and earlier
 
@@ -38,13 +38,13 @@ The main feature introduced is inline definition of model and data in the .jl fi
 
 This version of the Stan.jl package assumes that:
 
-1. CmdStan (see <http://mc-stan.org>) is installed and the environment variables STAN_HOME and CMDSTAN_HOME are set accordingly (pointing to the Stan and CmdStan directories, e.g. /Users/rob/Projects/Stan/cmdstan/stan and /Users/rob/Projects/Stan/cmdstan on my system).
+1. CmdStan (see <http://mc-stan.org>) is installed and both environment variables STAN_HOME and CMDSTAN_HOME are set accordingly (pointing to the Stan and CmdStan directories, e.g. /Users/rob/Projects/Stan/cmdstan/stan and /Users/rob/Projects/Stan/cmdstan on my system).
 
-2. Mamba (see <https://github.com/brian-j-smith/Mamba.jl>) is installed. At this moment Mamba has not been registered on METADATA.jl yet. It can be installed using Pkg.clone("git://github.com/brian-j-smith/Mamba.jl.git")
+2. Mamba (see <https://github.com/brian-j-smith/Mamba.jl>) is installed. It can be installed using Pkg.add("Mamba")
 
 3. On OSX, all Stan-j03-v0.1.0 examples check the environment variable JULIA_SVG_BROWSER to automatically display (in a browser) the simulation results (after creating .svg files), e.g. on my system I have exported JULIA_SVG_BROWSER="Google Chrome.app". For other platforms the final lines in the Examples/xxxx.jl files may need to be adjusted (or removed). In any case, on all platforms, both a .svg and a .pdf file will be created and left behind in the working directory.
 
-This version of the package has primarily been tested on Mac OSX 10.10, Julia 0.3.2 and CmStan 2.5.0. A limited amount of testing has taken place on other platforms by other users of the package (see note 2 in the 'To Do' section below).
+This version of the package has primarily been tested on Mac OSX 10.10, Julia 0.3.2, CmStan 2.5.0 and Mamba 0.3.7. A limited amount of testing has taken place on other platforms by other users of the package (see note 2 in the 'To Do' section below).
 
 To test and run the examples:
 
