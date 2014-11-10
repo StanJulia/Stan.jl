@@ -6,10 +6,7 @@ module Stan
 
   include("stanmodel.jl")
   include("stancode.jl")
-  
-  if !isdefined(Main, :Jags)
-    include("utilities.jl")
-  end
+  include("utilities.jl")
   
   function getenv(var::String)
     val = ccall( (:getenv, "libc"),

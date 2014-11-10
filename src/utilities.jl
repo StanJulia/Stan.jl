@@ -1,23 +1,25 @@
-function *(c1::Cmd, c2::Cmd)
-  res = deepcopy(c1)
-  for i in 1:length(c2.exec)
-    push!(res.exec, c2.exec[i])
+if !isdefined(MAIN, :Jags)
+  function *(c1::Cmd, c2::Cmd)
+    res = deepcopy(c1)
+    for i in 1:length(c2.exec)
+      push!(res.exec, c2.exec[i])
+    end
+    res
   end
-  res
-end
 
-function *(c1::Cmd, sa::Array{ASCIIString, 1})
-  res = deepcopy(c1)
-  for i in 1:length(sa)
-    push!(res.exec, sa[i])
+  function *(c1::Cmd, sa::Array{ASCIIString, 1})
+    res = deepcopy(c1)
+    for i in 1:length(sa)
+      push!(res.exec, sa[i])
+    end
+    res
   end
-  res
-end
 
-function *(c1::Cmd, s::String)
-  res = deepcopy(c1)
-  push!(res.exec, s)
-  res
+  function *(c1::Cmd, s::String)
+    res = deepcopy(c1)
+    push!(res.exec, s)
+    res
+  end
 end
 
 function par(cmds::Array{Base.AbstractCmd,1})

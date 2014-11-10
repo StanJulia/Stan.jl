@@ -171,7 +171,7 @@ cd(old)
 
 ## Running a Stan script, some details
 
-Stan.jl really only consists of 2 functions, StanModel() and stan().
+Stan.jl really only consists of 2 functions, Stanmodel() and stan().
 
 Stanmodel() is used to define basic attributes for a model:
 ```
