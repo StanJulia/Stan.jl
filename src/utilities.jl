@@ -1,4 +1,4 @@
-if !isdefined(MAIN, :Jags)
+if !isdefined(Main, :Jags)
   function *(c1::Cmd, c2::Cmd)
     res = deepcopy(c1)
     for i in 1:length(c2.exec)
