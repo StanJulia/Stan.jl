@@ -299,7 +299,7 @@ function read_stanfit_samples(m::Stanmodel, diagnostics=false)
     Chains(sr, start=m.method.num_warmup, thin=m.method.thin, names=idx[indvec], chains=[i for i in 1:m.nchains])
   else  
     sr = getindex(a3d, [1:m.method.thin:size(a3d, 1)], [1:size(a3d, 2)], [1:size(a3d, 3)])
-    Chains(sr, start=1, thin=m.method.thin, names=idx[indvec], chains=[i for i in 1:m.nchains])
+    Chains(sr, start=1, thin=m.thin, names=idx[indvec], chains=[i for i in 1:m.nchains])
   end
 end
 

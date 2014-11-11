@@ -30,7 +30,7 @@ const bernoullidata = [
 const monitor = ["theta", "lp__", "accept_stat__"]
 
 #stanmodel = Stanmodel(name="bernoulli", model=bernoullimodel, monitors=monitor);
-stanmodel = Stanmodel(name="bernoulli", model=bernoullimodel);
+stanmodel = Stanmodel(update=1200, thin=2, name="bernoulli", model=bernoullimodel);
 
 println("\nStanmodel that will be used:")
 stanmodel |> display
@@ -41,7 +41,7 @@ println()
 sim1 = stan(stanmodel, bernoullidata, ProjDir, diagnostics=false);
 
 ## Subset Sampler Output
-sim = sim1[1:1000, monitor, :]
+sim = sim1[1:stanmodel.update, monitor, :]
 #sim = sim1
 describe(sim)
 println()
@@ -49,7 +49,7 @@ println()
 
 ## Brooks, Gelman and Rubin Convergence Diagnostic
 try
-  gelmandiag(sim1, mpsrf=true, transform=true) |> display
+  gelmandiag(sim, mpsrf=true, transform=true) |> display
 catch e
   #println(e)
   gelmandiag(sim, mpsrf=false, transform=true) |> display

@@ -29,6 +29,7 @@ type Stanmodel
   nchains::Int
   adapt::Int
   update::Int
+  thin::Int
   id::Int
   model::String
   model_file::String
@@ -49,6 +50,7 @@ function Stanmodel(
   nchains=4,
   adapt=1000, 
   update=1000,
+  thin=1,
   model="",
   monitors=ASCIIString[],
   data=Dict{ASCIIString, Any}[], 
@@ -66,8 +68,16 @@ function Stanmodel(
   data_file::String=""
   cmdarray = fill(``, nchains)
   
+  if update != 1000
+    method.num_samples=update
+  end
+  
+  if adapt != 1000
+    method.num_warmup=adapt
+  end
+  
   Stanmodel(name, nchains, 
-    adapt, update,
+    adapt, update, thin,
     id, model, model_file, monitors,
     data, data_file_array, data_file,
     cmdarray, method, random, init, output);
@@ -90,6 +100,9 @@ end
 function model_show(io::IO, m::Stanmodel, compact::Bool)
   println("  name =                    \"$(m.name)\"")
   println("  nchains =                 $(m.nchains)")
+  println("  update =                   $(m.update)")
+  println("  adapt =                    $(m.adapt)")
+  println("  thin =                     $(m.thin)")
   println("  monitors =                $(m.monitors)")
   println("  model_file =              \"$(m.model_file)\"")
   println("  data_file =                \"$(m.data_file)\"")
