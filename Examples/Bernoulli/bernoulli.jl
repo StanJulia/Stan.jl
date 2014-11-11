@@ -54,6 +54,7 @@ catch e
   #println(e)
   gelmandiag(sim, mpsrf=false, transform=true) |> display
 end
+println()
 
 ## Geweke Convergence Diagnostic
 gewekediag(sim) |> display
