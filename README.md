@@ -206,6 +206,7 @@ function Stanmodel(
   nchains=4,
   adapt=1000, 
   update=1000,
+  thin=1,
   model="",
   monitors=ASCIIString[],
   data=Dict{ASCIIString, Any}[], 
@@ -213,7 +214,7 @@ function Stanmodel(
   init=Init(),
   output=Output())
 ```
-All arguments have default values, although usually at least the name and model arguments will be provided.
+All arguments have default values, although usually at least the name and model arguments will be provided. Notice that 'thin' as an argument to Jagsmodel() works slightly different from passing it through the Sample() argument to Jagsmodel. In the first case the thinning is applied after Stan has finished, the second case asks Stan to handle the thinning. For Mamba post-processing of the results, the thin argument to Jagsmodel() is the preferred option.
 
 After a Stanmodel has been created, the workhorse function stan() is called to run the simulation.
 
