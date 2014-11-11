@@ -76,6 +76,6 @@ show(d2)
 println()
 m.command
 
-isfile("bernoulli.stan") && rm("bernoulli.stan")
+isdir("tmp") && rm("tmp", recursive=true)
 
 cd(old)

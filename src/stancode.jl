@@ -11,6 +11,7 @@ function stan(
   StanDir=CMDSTAN_HOME)
   
   old = pwd()
+  
   println()
   if length(model.model) == 0
     println("\nNo proper model specified in \"$(model.name).stan\".")
@@ -23,9 +24,11 @@ function stan(
     isfile("$(model.name)_run.log") && rm("$(model.name)_run.log")
 
     cd(string(Pkg.dir(StanDir)))
-    run(`make $(ProjDir)/$(model.name)` .> "$(ProjDir)/$(model.name)_build.log")
+    local tmpmodelname::String = Pkg.dir(model.tmpdir, model.name)
+    
+    run(`make $(tmpmodelname)` .> "$(tmpmodelname)_build.log")
 
-    cd(string(Pkg.dir("$(ProjDir)")))
+    cd(model.tmpdir)
     if data != Nothing && isa(data, Array{Dict{ASCIIString, Any}, 1}) && length(data) > 0
       if length(data) == model.nchains
         for i in 1:model.nchains

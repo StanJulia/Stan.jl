@@ -42,6 +42,7 @@ type Stanmodel
   random::Random
   init::Init
   output::Output
+  tmpdir::String
 end
 
 function Stanmodel(
@@ -56,11 +57,19 @@ function Stanmodel(
   data=Dict{ASCIIString, Any}[], 
   random=Random(),
   init=Init(),
-  output=Output())
+  output=Output(),
+  pdir::String=pwd())
     
+  cd(pdir)
+  
+  tmpdir = Pkg.dir(pdir, "tmp")
+  if !isdir(tmpdir)
+    mkdir(tmpdir)
+  end
+  
   model_file = "$(name).stan"
   if length(model) > 0
-    update_model_file("$(name).stan", strip(model))
+    update_model_file(Pkg.dir(tmpdir, "$(name).stan"), strip(model))
   end
   
   id::Int=0
@@ -80,7 +89,7 @@ function Stanmodel(
     adapt, update, thin,
     id, model, model_file, monitors,
     data, data_file_array, data_file,
-    cmdarray, method, random, init, output);
+    cmdarray, method, random, init, output, tmpdir);
 end
 
 function update_model_file(file::String, str::String)
