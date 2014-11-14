@@ -11,10 +11,17 @@ For more info on Stan, please go to <http://mc-stan.org>.
 
 For more info on Mamba, please go to <http://mambajl.readthedocs.org/en/latest/>.
 
-This version will be kept as the Github branch Stan-j0.3-v0.1.0
+This version will be kept as the Github branch Stan-j0.3-v0.1.1
 
 
 ## What's new
+
+### Version 0.1.1
+
+Minor updates:
+
+1. Stores Stan's input & output files in a subdirectory of the working directory.
+2. Fixed handling of adapt, update and thin when passed in through Stanmodel().
 
 ### Version 0.1.0
 
