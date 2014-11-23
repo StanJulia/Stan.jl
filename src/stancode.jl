@@ -139,7 +139,7 @@ function update_R_file(file::String, dct::Dict{ASCIIString, Any}; replaceNaNs::B
   close(strmout)
 end
 
-function stan_summary(file::String; StanDir=getenv("CMDSTAN_HOME"))
+function stan_summary(file::String; StanDir=CMDSTAN_HOME)
   try
     pstring = Pkg.dir("$(StanDir)", "bin", "print")
     cmd = `$(pstring) $(file)`
@@ -149,7 +149,7 @@ function stan_summary(file::String; StanDir=getenv("CMDSTAN_HOME"))
   end
 end
 
-function stan_summary(filecmd::Cmd; StanDir=getenv("CMDSTAN_HOME"))
+function stan_summary(filecmd::Cmd; StanDir=CMDSTAN_HOME)
   try
     pstring = Pkg.dir("$(StanDir)", "bin", "print")
     cmd = `$(pstring) $(filecmd)`

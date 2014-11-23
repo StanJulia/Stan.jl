@@ -8,39 +8,37 @@ module Stan
   include("stancode.jl")
   include("utilities.jl")
   
-  function getenv(var::String)
-    val = ccall( (:getenv, "libc"),
-      Ptr{Uint8}, (Ptr{Uint8},), bytestring(var))
-    if val == C_NULL
-     error("getenv: undefined variable: ", var)
+  if !isdefined(Main, :STAN_HOME_)
+    STAN_HOME = ""
+    try
+      STAN_HOME = ENV["STAN_HOME"]
+    catch e
+      println("Environment variable STAN_HOME not found.")
     end
-    bytestring(val)
   end
-
-  STAN_HOME = ""
-  CMDSTAN_HOME = ""
-  JULIA_SVG_BROWSER = ""
-  try
-    STAN_HOME = getenv("STAN_HOME");
-  catch e
-    println("Environment variable STAN_HOME not found.")
+  
+  if !isdefined(Main, :CMDSTAN_HOME_)
+    CMDSTAN_HOME = ""
+    try
+      CMDSTAN_HOME = ENV["CMDSTAN_HOME"]
+    catch e
+      println("Environment variable CMDSTAN_HOME not found.")
+    end
   end
-  try
-    CMDSTAN_HOME = getenv("CMDSTAN_HOME");
-  catch e
-    println("Environment variable CMDSTAN_HOME not found.")
+  
+  if !isdefined(Main, :JULIA_SVG_BROWSER)
+    JULIA_SVG_BROWSER = ""
+    try
+      JULIA_SVG_BROWSER = ENV["JULIA_SVG_BROWSER"]
+    catch e
+      println("Environment variable JULIA_SVG_BROWSER not found.")
+      println("Produced .svg files in examples will not be automatically displayed.")
+    end
   end
-  try
-    JULIA_SVG_BROWSER = getenv("JULIA_SVG_BROWSER");
-  catch e
-    println("Environment variable JULIA_SVG_BROWSER not found.")
-    println("Produced .svg files in examples will not be automatically displaye.")
-  end
-
+  
   export
   # From stancode.jl
     stan,
-    getenv,
     stan_summary,
     read_stanfit,
     read_stanfit_samples,
