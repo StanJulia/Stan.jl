@@ -76,6 +76,8 @@ show(d2)
 println()
 m.command
 
-isdir("tmp") && rm("tmp", recursive=true)
+cd(ProjDir)
+isdir("tmp") &&
+  rm("tmp", recursive=true);
 
 cd(old)
