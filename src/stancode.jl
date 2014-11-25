@@ -24,7 +24,8 @@ function stan(
     isfile("$(model.name)_run.log") && rm("$(model.name)_run.log")
 
     cd(string(Pkg.dir(StanDir)))
-    local tmpmodelname::String = Pkg.dir(model.tmpdir, model.name)
+    local tmpmodelname::String
+    tmpmodelname = @windows ? Pkg.dir(model.tmpdir, model.name)*".exe" : Pkg.dir(model.tmpdir, model.name)
     
     run(`make $(tmpmodelname)` .> "$(tmpmodelname)_build.log")
 

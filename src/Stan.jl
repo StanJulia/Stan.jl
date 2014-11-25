@@ -9,27 +9,27 @@ module Stan
   include("utilities.jl")
   
   if !isdefined(Main, :STAN_HOME_)
-    STAN_HOME = ""
+    global STAN_HOME = ""
     try
-      STAN_HOME = ENV["STAN_HOME"]
+      global STAN_HOME = ENV["STAN_HOME"]
     catch e
       println("Environment variable STAN_HOME not found.")
     end
   end
   
   if !isdefined(Main, :CMDSTAN_HOME_)
-    CMDSTAN_HOME = ""
+    global CMDSTAN_HOME = ""
     try
-      CMDSTAN_HOME = ENV["CMDSTAN_HOME"]
+      global CMDSTAN_HOME = ENV["CMDSTAN_HOME"]
     catch e
       println("Environment variable CMDSTAN_HOME not found.")
     end
   end
   
   if !isdefined(Main, :JULIA_SVG_BROWSER)
-    JULIA_SVG_BROWSER = ""
+    global JULIA_SVG_BROWSER = ""
     try
-      JULIA_SVG_BROWSER = ENV["JULIA_SVG_BROWSER"]
+      global JULIA_SVG_BROWSER = ENV["JULIA_SVG_BROWSER"]
     catch e
       println("Environment variable JULIA_SVG_BROWSER not found.")
       println("Produced .svg files in examples will not be automatically displayed.")
@@ -42,9 +42,9 @@ module Stan
     stan_summary,
     read_stanfit,
     read_stanfit_samples,
-    CMDSTAN_HOME,
-    STAN_HOME,
-    JULIA_SVG_BROWSER,
+    #CMDSTAN_HOME,
+    #STAN_HOME,
+    #JULIA_SVG_BROWSER,
   # From stanmodel.jl
     Stanmodel,
     Data,
