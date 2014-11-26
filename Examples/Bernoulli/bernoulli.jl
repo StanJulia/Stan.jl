@@ -6,7 +6,7 @@ old = pwd()
 ProjDir = Pkg.dir("Stan", "Examples", "Bernoulli")
 cd(ProjDir)
 
-const bernoullimodel = "
+bernoullimodel = "
 data { 
   int<lower=0> N; 
   int<lower=0,upper=1> y[N];
@@ -20,14 +20,14 @@ model {
 }
 "
 
-const bernoullidata = [
+bernoullidata = [
   @Compat.Dict("N" => 10, "y" => [0, 1, 0, 1, 0, 0, 0, 0, 0, 1]),
   @Compat.Dict("N" => 10, "y" => [0, 1, 0, 0, 0, 0, 1, 0, 0, 1]),
   @Compat.Dict("N" => 10, "y" => [0, 0, 0, 0, 0, 0, 1, 0, 1, 1]),
   @Compat.Dict("N" => 10, "y" => [0, 0, 0, 1, 0, 0, 0, 1, 0, 1])
 ]
 
-const monitor = ["theta", "lp__", "accept_stat__"]
+monitor = ["theta", "lp__", "accept_stat__"]
 
 #stanmodel = Stanmodel(name="bernoulli", model=bernoullimodel, monitors=monitor);
 stanmodel = Stanmodel(update=1200, thin=2, name="bernoulli", model=bernoullimodel);

@@ -314,8 +314,7 @@ function cmdline(m)
   cmd = ``
   if isa(m, Stanmodel)
     # Handle the model name field for unix and windows
-    cmd = @unix ? `./` : ``
-    cmd = @unix ? `$cmd$(getfield(m, :name))` : `cmd /c $cmd$(getfield(m, :name)).exe`
+    cmd = @unix ? `./$(getfield(m, :name))` : `cmd /c $(getfield(m, :name)).exe`
 
     # Method (sample, optimize and diagnose) specific portion of the model
     cmd = `$cmd $(cmdline(getfield(m, :method)))`
