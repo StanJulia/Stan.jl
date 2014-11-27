@@ -25,7 +25,7 @@ function stan(
 
     cd(string(Pkg.dir(StanDir)))
     local tmpmodelname::String
-    tmpmodelname = @windows ? Pkg.dir(model.tmpdir, model.name)*".exe" : Pkg.dir(model.tmpdir, model.name)*".exe1"
+    tmpmodelname = @windows ? Pkg.dir(model.tmpdir, model.name)*".exe" : Pkg.dir(model.tmpdir, model.name)
     println("Compile using make $(tmpmodelname) .> $(tmpmodelname)_build.log")
         
     run(`make $(tmpmodelname)` .> "$(tmpmodelname)_build.log")
