@@ -28,7 +28,7 @@ function stan(
     tmpmodelname = @windows ? Pkg.dir(model.tmpdir, model.name)*".exe" : Pkg.dir(model.tmpdir, model.name)
     println("Compile using make $(tmpmodelname)")
         
-    @windows ? run(`make $(tmpmodelname)`) :run(`make $(tmpmodelname)` .> "$(tmpmodelname)_build.log")
+    @windows ? run(`make $(tmpmodelname)`) : run(`make $(tmpmodelname)` .> "$(tmpmodelname)_build.log")
 
     cd(model.tmpdir)
     if data != Nothing && isa(data, Array{Dict{ASCIIString, Any}, 1}) && length(data) > 0
