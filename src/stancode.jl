@@ -8,7 +8,7 @@ function stan(
   ProjDir=pwd();
   summary=true, 
   diagnostics=false, 
-  StanDir=CMDSTAN_HOME)
+  CmdStanDir=CMDSTAN_HOME)
   
   old = pwd()
   
@@ -23,16 +23,16 @@ function stan(
     isfile("$(model.name)_build.log") && rm("$(model.name)_build.log")
     isfile("$(model.name)_run.log") && rm("$(model.name)_run.log")
 
-    cd(string(Pkg.dir(StanDir)))
+    cd(CmdStanDir)
     local tmpmodelname::String
     if @windows ? true : false
       tmpmodelname = replace(Pkg.dir(model.tmpdir, model.name)*".exe", "\\", "/")
-      run(`make $(tmpmodelname)`)
     else
       tmpmodelname = Pkg.dir(model.tmpdir, model.name)
-      run(`make $(tmpmodelname)` .> "$(tmpmodelname)_build.log")
     end
+    println("Current working dir: $(pwd())")
     println("Compile using make $(tmpmodelname)")
+    run(`make $(tmpmodelname)` .> "$(tmpmodelname)_build.log")
         
     cd(model.tmpdir)
     if data != Nothing && isa(data, Array{Dict{ASCIIString, Any}, 1}) && length(data) > 0
@@ -145,9 +145,9 @@ function update_R_file(file::String, dct::Dict{ASCIIString, Any}; replaceNaNs::B
   close(strmout)
 end
 
-function stan_summary(file::String; StanDir=CMDSTAN_HOME)
+function stan_summary(file::String; CmdStanDir=CMDSTAN_HOME)
   try
-    pstring = Pkg.dir("$(StanDir)", "bin", "print")
+    pstring = Pkg.dir("$(CmdStanDir)", "bin", "print")
     cmd = `$(pstring) $(file)`
     print(open(readall, cmd, "r"))
   catch e
@@ -155,9 +155,9 @@ function stan_summary(file::String; StanDir=CMDSTAN_HOME)
   end
 end
 
-function stan_summary(filecmd::Cmd; StanDir=CMDSTAN_HOME)
+function stan_summary(filecmd::Cmd; CmdStanDir=CMDSTAN_HOME)
   try
-    pstring = Pkg.dir("$(StanDir)", "bin", "print")
+    pstring = Pkg.dir("$(CmdStanDir)", "bin", "print")
     cmd = `$(pstring) $(filecmd)`
     print(open(readall, cmd, "r"))
   catch e
