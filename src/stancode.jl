@@ -25,7 +25,7 @@ function stan(
 
     cd(string(Pkg.dir(StanDir)))
     local tmpmodelname::String
-    if windows ? true : false
+    if @windows ? true : false
       tmpmodelname = replace(Pkg.dir(model.tmpdir, model.name)*".exe", "\\", "/")
     else
       tmpmodelname = Pkg.dir(model.tmpdir, model.name)
