@@ -27,13 +27,13 @@ function stan(
     local tmpmodelname::String
     if @windows ? true : false
       tmpmodelname = replace(Pkg.dir(model.tmpdir, model.name)*".exe", "\\", "/")
+      run(`make $(tmpmodelname)`)
     else
       tmpmodelname = Pkg.dir(model.tmpdir, model.name)
+      run(`make $(tmpmodelname)` .> "$(tmpmodelname)_build.log")
     end
     println("Compile using make $(tmpmodelname)")
         
-    @windows ? run(`make $(tmpmodelname)`) : run(`make $(tmpmodelname)` .> "$(tmpmodelname)_build.log")
-
     cd(model.tmpdir)
     if data != Nothing && isa(data, Array{Dict{ASCIIString, Any}, 1}) && length(data) > 0
       if length(data) == model.nchains
