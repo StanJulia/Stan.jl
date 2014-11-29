@@ -24,9 +24,9 @@ function stan(
     isfile("$(model.name)_run.log") && rm("$(model.name)_run.log")
 
     println("Current working dir: $(pwd())")
-    println("Moving to dir: $(string(CmdStanDir))")
+    println("Moving to dir: $(CmdStanDir)")
     
-    cd(string(CmdStanDir))
+    cd(CmdStanDir)
     local tmpmodelname::String
     tmpmodelname = Pkg.dir(model.tmpdir, model.name)
     if @windows ? true : false
