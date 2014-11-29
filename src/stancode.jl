@@ -23,12 +23,14 @@ function stan(
     isfile("$(model.name)_build.log") && rm("$(model.name)_build.log")
     isfile("$(model.name)_run.log") && rm("$(model.name)_run.log")
 
-    cd(CmdStanDir)
+    println("Current working dir: $(pwd())")
+    println("Moving to dir: $(string(CmdStanDir))")
+    
+    cd(string(CmdStanDir))
     local tmpmodelname::String
+    tmpmodelname = Pkg.dir(model.tmpdir, model.name)
     if @windows ? true : false
-      tmpmodelname = replace(Pkg.dir(model.tmpdir, model.name)*".exe", "\\", "/")
-    else
-      tmpmodelname = Pkg.dir(model.tmpdir, model.name)
+      tmpmodelname = replace(tmpmodelname*".exe", "\\", "/")
     end
     println("Current working dir: $(pwd())")
     println("Compile using make $(tmpmodelname)")
