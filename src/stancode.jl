@@ -87,14 +87,13 @@ function stan(
   local res = Dict[]
   local ftype
 
-  if isa(model.method, Sample) && summary
-    stan_summary(par(samplefiles), CmdStanDir=CmdStanDir)
-  end
-  
   if isa(model.method, Sample)
     ftype = diagnostics ? "diagnostics" : "samples"
     for i in 1:model.nchains
       push!(samplefiles, "$(model.name)_$(ftype)_$(i).csv")
+    end
+    if isa(model.method, Sample) && summary
+      stan_summary(par(samplefiles), CmdStanDir=CmdStanDir)
     end
     res = read_stanfit_samples(model, diagnostics)
   elseif isa(model.method, Optimize)
@@ -103,6 +102,10 @@ function stan(
     res = read_stanfit(model)
   else
     println("Unknown method.")
+  end
+  
+  if isa(model.method, Sample) && summary
+    stan_summary(par(samplefiles), CmdStanDir=CmdStanDir)
   end
   
   cd(old)
