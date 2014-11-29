@@ -30,7 +30,7 @@ bernoullidata = [
 monitor = ["theta", "lp__", "accept_stat__"]
 
 #stanmodel = Stanmodel(name="bernoulli", model=bernoullimodel, monitors=monitor);
-stanmodel = Stanmodel(update=1200, thin=2, name="bernoulli", model=bernoullimodel, CmdStanDir=CMDSTAN_HOME);
+stanmodel = Stanmodel(update=1200, thin=2, name="bernoulli", model=bernoullimodel);
 
 println("\nStanmodel that will be used:")
 stanmodel |> display
@@ -38,7 +38,7 @@ println("Input observed data dictionary:")
 bernoullidata |> display
 println()
 
-sim1 = stan(stanmodel, bernoullidata, ProjDir, diagnostics=false);
+sim1 = stan(stanmodel, bernoullidata, ProjDir, diagnostics=false, CmdStanDir=CMDSTAN_HOME);
 
 ## Subset Sampler Output
 sim = sim1[1:stanmodel.update, monitor, :]
