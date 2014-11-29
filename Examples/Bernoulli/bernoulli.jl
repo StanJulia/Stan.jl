@@ -30,7 +30,7 @@ bernoullidata = [
 monitor = ["theta", "lp__", "accept_stat__"]
 
 #stanmodel = Stanmodel(name="bernoulli", model=bernoullimodel, monitors=monitor);
-stanmodel = Stanmodel(update=1200, thin=2, name="bernoulli", model=bernoullimodel);
+stanmodel = Stanmodel(update=1200, thin=2, name="bernoulli", model=bernoullimodel, CmdStanDir=CMDSTAN_HOME);
 
 println("\nStanmodel that will be used:")
 stanmodel |> display
