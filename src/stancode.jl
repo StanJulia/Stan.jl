@@ -104,10 +104,6 @@ function stan(
     println("Unknown method.")
   end
   
-  if isa(model.method, Sample) && summary
-    stan_summary(par(samplefiles), CmdStanDir=CmdStanDir)
-  end
-  
   cd(old)
   res
 end
