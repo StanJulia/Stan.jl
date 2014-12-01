@@ -191,14 +191,26 @@ function read_stanfit(model::Stanmodel)
           skipchars(instream, isspace, linecomment='#')
           i = 0
           tdict = Dict()
+          skipchars(instream, isspace, linecomment='#')
           while true
             i += 1 
             line = readline(instream)
             #println(i, ": ", line)
+            if length(line) <= 1 
+              break
+            end
             if i == 1
-              tdict = merge(tdict, [:lp => [float(split(line[1:(length(line)-1)], "=")[2])]])
+              if length(line) > 1 && line[length(line)-1] == '\r'
+                tdict = merge(tdict, [:lp => [float(split(line[1:(length(line)-2)], "=")[2])]])
+              else
+                tdict = merge(tdict, [:lp => [float(split(line[1:(length(line)-1)], "=")[2])]])
+              end
             elseif i == 3
-              sa = split(line)
+              if length(line) > 1 && line[length(line)-1] == '\r'
+                sa = split(line[1:(length(line)-2)])
+              else
+                sa = split(line[1:(length(line)-1)])
+              end
               tdict = merge(tdict, [:var_id => [int(sa[1])], :value => [float(sa[2])]])
               tdict = merge(tdict, [:model => [float(sa[3])], :finite_dif => [float(sa[4])]])
               tdict = merge(tdict, [:error => [float(sa[5])]])
@@ -222,13 +234,18 @@ function read_stanfit(model::Stanmodel)
             j += 1
             skipchars(instream, isspace, linecomment='#')
             line = readline(instream)
+            flds = Float64[]
             #res_type == "optimize" && println(line)
             if eof(instream) && length(line) == 0
               #println("EOF detected")
               close(instream)
               break
             else
-              flds = float(split(line[1:length(line)-1], ","))
+              if line[length(line)-1] == '\r'
+                flds = float(split(line[1:length(line)-2], ","))
+              else
+                flds = float(split(line[1:length(line)-1], ","))
+              end
               #res_type == "optimize" && println(flds)
               for k in 1:length(index)
                 if j ==1
@@ -296,7 +313,11 @@ function read_stanfit_samples(m::Stanmodel, diagnostics=false)
           close(instream)
           break
         else
-          flds = float(split(line[1:length(line)-1], ","))
+          if line[length(line)-1] == '\r'
+            flds = float(split(line[1:length(line)-2], ","))
+          else
+            flds = float(split(line[1:length(line)-1], ","))
+          end
           flds = reshape(flds[indvec], 1, length(indvec))
           a3d[j,:,i] = flds
         end
