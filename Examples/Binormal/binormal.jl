@@ -28,7 +28,7 @@ model {
 
 stanmodel = Stanmodel(name="binormal", model=binorm);
 
-sim1 = stan(stanmodel)
+sim1 = stan(stanmodel, CmdStanDir=CMDSTAN_HOME)
 
 ## Subset Sampler Output
 sim = sim1[1:1000, ["lp__", "y.1", "y.2"], :]

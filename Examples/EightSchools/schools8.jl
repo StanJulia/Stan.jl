@@ -37,7 +37,7 @@ const schools8data = [
 ]
 
 stanmodel = Stanmodel(name="schools8", model=eightschools);
-sim1 = stan(stanmodel, schools8data, ProjDir)
+sim1 = stan(stanmodel, schools8data, ProjDir, CmdStanDir=CMDSTAN_HOME)
 
 nodesubset = ["lp__", "accept_stat__", "mu", "tau", "theta.1", "theta.2", "theta.3", "theta.4", "theta.5", "theta.6", "theta.7", "theta.8"]
 

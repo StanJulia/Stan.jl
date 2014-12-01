@@ -62,7 +62,7 @@ const dyesdata = [
 ]
 
 stanmodel = Stanmodel(name="dyes", model=dyes);
-sim1 = stan(stanmodel, dyesdata, ProjDir)
+sim1 = stan(stanmodel, dyesdata, ProjDir, CmdStanDir=CMDSTAN_HOME)
 
 nodesubset = ["theta", "mu.1", "mu.2", "mu.3", "mu.4", "mu.5", "mu.6", "sigma_between", "sigma_within"]
 ## Subset Sampler Output

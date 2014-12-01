@@ -11,16 +11,16 @@ For more info on Stan, please go to <http://mc-stan.org>.
 
 For more info on Mamba, please go to <http://mambajl.readthedocs.org/en/latest/>.
 
-This version will, once published on METADATA be kept as the Github branch Stan-j0.3-v0.1.3
+This version, once tagged/published in METADATA, will be kept as the Github branch Stan-j0.3-v0.1.3
 
 
 ## What's new
 
 ### Version 0.1.3
 
-1. Fix for several other issues on Windows, e.g. CRLF.
-2. Handling of CMDSTAN_HOME is still being studied.
-3. For now removed Julia upper bound 0.4- (although Gadfly on 0.4 is needed).
+1. Fix for several additional issues on Windows, e.g. CRLF.
+2. Handling of obtaining and passing CMDSTAN_HOME is still being studied.
+3. For now the Julia upper bound 0.4- has been removed, although several dependencies are not yet available on Julia 0.4.
 
 ### Version 0.1.2
 
@@ -57,7 +57,7 @@ The two most important features introduced in version 0.1.0 are:
 
 This version of the Stan.jl package assumes that:
 
-1. CmdStan and Stan (see <http://mc-stan.org>) are properly installed.
+1. CmdStan (see <http://mc-stan.org>) is properly installed.
 
 2. Mamba (see <https://github.com/brian-j-smith/Mamba.jl>) is installed. It can be installed using Pkg.add("Mamba")
 
@@ -65,10 +65,8 @@ This version of the Stan.jl package assumes that:
 
 In order for Stan.jl to find the CmdStan executable you can either
 
-1.1) set both environment variables STAN_HOME and CMDSTAN_HOME to point to the Stan and CmdStan directories, e.g. add lines like
+1.1) set the environment variable CMDSTAN_HOME to point to the CmdStan directory, e.g. add lines like
 ```
-export STAN_HOME=/Users/rob/Projects/Stan/cmdstan/stan
-launchctl setenv STAN_HOME /Users/rob/Projects/Stan/cmdstan/stan
 export CMDSTAN_HOME=/Users/rob/Projects/Stan/cmdstan
 launchctl setenv CMDSTAN_HOME /Users/rob/Projects/Stan/cmdstan
 export JULIA_SVG_BROWSER="Google Chrome.app"
@@ -78,10 +76,9 @@ to ~/.bash_profile (the launchctl lines are OSX specific and only neededfor shel
 
 Or, alternatively,
 
-1.2) define STAN_HOME and CMDSTAN_HOME in ~/.juliarc.jl, e.g. append lines like 
+1.2) define CMDSTAN_HOME in ~/.juliarc.jl, e.g. append lines like 
 ```
 CMDSTAN_HOME = "/Users/rob/Projects/Stan/cmdstan"
-STAN_HOME = "/Users/rob/Projects/Stan/cmdstan/stan"
 JULIA_SVG_BROWSER = "Google Chrome.app"
 ```
 to ~/.juliarc.jl.
@@ -149,10 +146,12 @@ println()
 ```
 Run the simulation by calling stan(), passing in the data and the intended working directory (where output files created by Stan will be stored). To get a summary describtion of the results, describe() is called (describe() is a Mamba.jl function):
 ```
-sim1 = stan(stanmodel, bernoullidata, ProjDir)
+sim1 = stan(stanmodel, bernoullidata, ProjDir, CmdStanDir=CMDSTAN_HOME)
 describe(sim1)
 ```
-The first time (or when updates to the model or data have been made) stan() will compile the model and create the executable. 
+The first time (or when updates to the model or data have been made) stan() will compile the model and create the executable.
+
+On Windows, the CmdStanDir argument appears needed (this is still being investigated). On OSX/Unix CmdStanDir is obtained from either ~/.juliarc.jl or an environment variable (see the Requirements section).
 
 As stated above, by default it will run 4 chains, optionally display a combined summary and returns a Mamba Chains object for a sampler. Other methods return a dictionary.
 

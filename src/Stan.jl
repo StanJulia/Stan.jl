@@ -8,15 +8,6 @@ module Stan
   include("stancode.jl")
   include("utilities.jl")
   
-  if !isdefined(Main, :STAN_HOME_)
-    global STAN_HOME = ""
-    try
-      global STAN_HOME = ENV["STAN_HOME"]
-    catch e
-      println("Environment variable STAN_HOME not found.")
-    end
-  end
-  
   if !isdefined(Main, :CMDSTAN_HOME_)
     global CMDSTAN_HOME = ""
     try
@@ -42,9 +33,6 @@ module Stan
     stan_summary,
     read_stanfit,
     read_stanfit_samples,
-    #CMDSTAN_HOME,
-    #STAN_HOME,
-    #JULIA_SVG_BROWSER,
   # From stanmodel.jl
     Stanmodel,
     Data,

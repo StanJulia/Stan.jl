@@ -180,7 +180,7 @@ const kiddata = [
 
 stanmodel = Stanmodel(name="kid", model=kid);
 println()
-sim1 = stan(stanmodel, kiddata, ProjDir)
+sim1 = stan(stanmodel, kiddata, ProjDir, CmdStanDir=CMDSTAN_HOME)
 
 ## Subset Sampler Output
 sim = sim1[1:1000, ["lp__", "accept_stat__", "sigma", "beta.1", "beta.2", "beta.3"], :]

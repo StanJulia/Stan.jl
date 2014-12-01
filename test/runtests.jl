@@ -1,4 +1,4 @@
-# Run these tests if CmdStan is installed and STAN_HOME is set correctly.
+# Run these tests if CmdStan is installed and CMDSTAN_HOME is set correctly.
 
 using Base.Test
 
@@ -22,20 +22,20 @@ for my_test in code_tests
     include(my_test)
 end
 
-if STAN_HOME != "" && CMDSTAN_HOME != ""
-  println("STAN_HOME and CMDSTAN_HOME found! Try to run bernoulli.")
+if CMDSTAN_HOME != ""
+  println("CMDSTAN_HOME found! Try to run bernoulli.")
   try
     for my_test in execution_tests
         println("\n  * $(my_test) *")
         include(my_test)
     end
   catch e
-     println("STAN_HOME and CMDSTAN_HOME found, but Stan not installed properly.")
+     println("CMDSTAN_HOME found, but CmdStan not installed properly.")
      println(e)
      println("No simulation runs have been performed.")
   end 
 else
-  println("STAN_HOME and CMDSTAN_HOME not found!")  
+  println("CMDSTAN_HOME not found!")  
 end
 
 println("\n")

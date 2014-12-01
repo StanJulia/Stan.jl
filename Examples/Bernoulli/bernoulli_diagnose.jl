@@ -29,7 +29,7 @@ data = [
 
 stanmodel = Stanmodel(Diagnose(Gradient(epsilon=1e-6)), name="bernoulli", model=bernoulli, data=data);
 
-diags = stan(stanmodel, data, ProjDir);
+diags = stan(stanmodel, data, ProjDir, CmdStanDir=CMDSTAN_HOME);
 diags[1]["diagnose"] |> display
 
 cd(old)
