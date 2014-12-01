@@ -11,10 +11,16 @@ For more info on Stan, please go to <http://mc-stan.org>.
 
 For more info on Mamba, please go to <http://mambajl.readthedocs.org/en/latest/>.
 
-This version will be kept as the Github branch Stan-j0.3-v0.1.2
+This version will, once published on METADATA be kept as the Github branch Stan-j0.3-v0.1.3
 
 
 ## What's new
+
+### Version 0.1.3
+
+1. Fix for several other issues on Windows, e.g. CRLF.
+2. Handling of CMDSTAN_HOME is still being studied.
+3. For now removed Julia upper bound 0.4- (although Gadfly on 0.4 is needed).
 
 ### Version 0.1.2
 
@@ -79,6 +85,12 @@ STAN_HOME = "/Users/rob/Projects/Stan/cmdstan/stan"
 JULIA_SVG_BROWSER = "Google Chrome.app"
 ```
 to ~/.juliarc.jl.
+
+On Windows this could look like:
+
+```
+CMDSTAN_HOME = "C:\\cmdstan"
+```
 
 This version of the package has primarily been tested on Mac OSX 10.10, Julia 0.3.2, CmStan 2.5.0 and Mamba 0.3.7. A limited amount of testing has taken place on other platforms by other users of the package (see note 2 in the 'To Do' section below).
 
