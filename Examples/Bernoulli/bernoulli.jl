@@ -41,7 +41,7 @@ println()
 sim1 = stan(stanmodel, bernoullidata, ProjDir, diagnostics=false, CmdStanDir=CMDSTAN_HOME);
 
 ## Subset Sampler Output
-sim = sim1[1:stanmodel.update, monitor, :]
+sim = sim1[:, monitor, :]
 #sim = sim1
 describe(sim)
 println()

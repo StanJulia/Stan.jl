@@ -23,8 +23,8 @@ function stan(
     isfile("$(model.name)_build.log") && rm("$(model.name)_build.log")
     isfile("$(model.name)_run.log") && rm("$(model.name)_run.log")
 
-    println("Current working dir: $(pwd())")
-    println("Moving to dir: $(CmdStanDir)")
+    #println("Current working dir: $(pwd())")
+    #println("Moving to dir: $(CmdStanDir)")
     
     cd(CmdStanDir)
     local tmpmodelname::String
@@ -32,8 +32,8 @@ function stan(
     if @windows ? true : false
       tmpmodelname = replace(tmpmodelname*".exe", "\\", "/")
     end
-    println("Current working dir: $(pwd())")
-    println("Compile using make $(tmpmodelname)")
+    #println("Current working dir: $(pwd())")
+    #println("Compile using make $(tmpmodelname)")
     run(`make $(tmpmodelname)` .> "$(tmpmodelname)_build.log")
         
     cd(model.tmpdir)
@@ -86,7 +86,7 @@ function stan(
   local samplefiles = String[]
   local res = Dict[]
   local ftype
-
+  
   if isa(model.method, Sample)
     ftype = diagnostics ? "diagnostics" : "samples"
     for i in 1:model.nchains
@@ -95,6 +95,7 @@ function stan(
     if isa(model.method, Sample) && summary
       stan_summary(par(samplefiles), CmdStanDir=CmdStanDir)
     end
+    #cd(pwd()*"1"); println(pwd())
     res = read_stanfit_samples(model, diagnostics)
   elseif isa(model.method, Optimize)
     res = read_stanfit(model)
@@ -225,7 +226,11 @@ function read_stanfit(model::Stanmodel)
           skipchars(instream, isspace, linecomment='#')
           line = readline(instream)
           #res_type == "optimize" && println(line)
-          idx = split(line[1:length(line)-1], ",")
+          if line[length(line)-1] == '\r'
+            idx = split(line[1:length(line)-2], ",")
+          else
+            idx = split(line[1:length(line)-1], ",")
+          end
           index = [idx[k] for k in 1:length(idx)]
           #res_type == "optimize" && println(index)
           j = 0
@@ -295,7 +300,11 @@ function read_stanfit_samples(m::Stanmodel, diagnostics=false)
       instream = open("$(m.name)_$(ftype)_$(i).csv")
       skipchars(instream, isspace, linecomment='#')
       line = readline(instream)
-      idx = split(line[1:length(line)-1], ",")
+      if line[length(line)-1] == '\r'
+        idx = split(line[1:length(line)-2], ",")
+      else
+        idx = split(line[1:length(line)-1], ",")
+      end
       index = [idx[k] for k in 1:length(idx)]
       if length(m.monitors) == 0
         indvec = 1:length(index)
