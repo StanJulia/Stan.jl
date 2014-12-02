@@ -40,12 +40,10 @@ println()
 
 sim1 = stan(stanmodel, bernoullidata, ProjDir, diagnostics=false, CmdStanDir=CMDSTAN_HOME);
 
-## Subset Sampler Output
+## Subset Sampler Output to variables suitable for describe().
 sim = sim1[:, monitor, :]
-#sim = sim1
 describe(sim)
 println()
-
 
 ## Brooks, Gelman and Rubin Convergence Diagnostic
 try
@@ -70,7 +68,6 @@ autocor(sim) |> display
 
 ## Deviance Information Criterion
 #dic(sim) |> display
-
 
 ## Plotting
 p = plot(sim, [:trace, :mean, :density, :autocor], legend=true);

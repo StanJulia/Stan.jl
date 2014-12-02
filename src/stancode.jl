@@ -195,23 +195,11 @@ function read_stanfit(model::Stanmodel)
           skipchars(instream, isspace, linecomment='#')
           while true
             i += 1 
-            line = readline(instream)
-            #println(i, ": ", line)
-            if length(line) <= 1 
-              break
-            end
+            line = normalize_string(readline(instream), newline2lf=true)
             if i == 1
-              if length(line) > 1 && line[length(line)-1] == '\r'
-                tdict = merge(tdict, [:lp => [float(split(line[1:(length(line)-2)], "=")[2])]])
-              else
-                tdict = merge(tdict, [:lp => [float(split(line[1:(length(line)-1)], "=")[2])]])
-              end
+              tdict = merge(tdict, [:lp => [float(split(line[1:(length(line)-1)], "=")[2])]])
             elseif i == 3
-              if length(line) > 1 && line[length(line)-1] == '\r'
-                sa = split(line[1:(length(line)-2)])
-              else
-                sa = split(line[1:(length(line)-1)])
-              end
+              sa = split(line[1:(length(line)-1)])
               tdict = merge(tdict, [:var_id => [int(sa[1])], :value => [float(sa[2])]])
               tdict = merge(tdict, [:model => [float(sa[3])], :finite_dif => [float(sa[4])]])
               tdict = merge(tdict, [:error => [float(sa[5])]])
@@ -224,13 +212,8 @@ function read_stanfit(model::Stanmodel)
         else
           tdict = Dict()
           skipchars(instream, isspace, linecomment='#')
-          line = readline(instream)
-          #res_type == "optimize" && println(line)
-          if line[length(line)-1] == '\r'
-            idx = split(line[1:length(line)-2], ",")
-          else
-            idx = split(line[1:length(line)-1], ",")
-          end
+          line = normalize_string(readline(instream), newline2lf=true)
+          idx = split(line[1:length(line)-1], ",")
           index = [idx[k] for k in 1:length(idx)]
           #res_type == "optimize" && println(index)
           j = 0
@@ -238,7 +221,7 @@ function read_stanfit(model::Stanmodel)
           while true
             j += 1
             skipchars(instream, isspace, linecomment='#')
-            line = readline(instream)
+            line = normalize_string(readline(instream), newline2lf=true)
             flds = Float64[]
             #res_type == "optimize" && println(line)
             if eof(instream) && length(line) == 0
@@ -246,11 +229,7 @@ function read_stanfit(model::Stanmodel)
               close(instream)
               break
             else
-              if line[length(line)-1] == '\r'
-                flds = float(split(line[1:length(line)-2], ","))
-              else
-                flds = float(split(line[1:length(line)-1], ","))
-              end
+              flds = float(split(line[1:length(line)-1], ","))
               #res_type == "optimize" && println(flds)
               for k in 1:length(index)
                 if j ==1
@@ -299,12 +278,8 @@ function read_stanfit_samples(m::Stanmodel, diagnostics=false)
     if isfile("$(m.name)_$(ftype)_$(i).csv")
       instream = open("$(m.name)_$(ftype)_$(i).csv")
       skipchars(instream, isspace, linecomment='#')
-      line = readline(instream)
-      if line[length(line)-1] == '\r'
-        idx = split(line[1:length(line)-2], ",")
-      else
-        idx = split(line[1:length(line)-1], ",")
-      end
+      line = normalize_string(readline(instream), newline2lf=true)
+      idx = split(line[1:length(line)-1], ",")
       index = [idx[k] for k in 1:length(idx)]
       if length(m.monitors) == 0
         indvec = 1:length(index)
@@ -317,16 +292,12 @@ function read_stanfit_samples(m::Stanmodel, diagnostics=false)
       skipchars(instream, isspace, linecomment='#')
       for j in 1:m.method.num_samples
         skipchars(instream, isspace, linecomment='#')
-        line = readline(instream)
+        line = normalize_string(readline(instream), newline2lf=true)
         if eof(instream) && length(line) == 0
           close(instream)
           break
         else
-          if line[length(line)-1] == '\r'
-            flds = float(split(line[1:length(line)-2], ","))
-          else
-            flds = float(split(line[1:length(line)-1], ","))
-          end
+          flds = float(split(line[1:length(line)-1], ","))
           flds = reshape(flds[indvec], 1, length(indvec))
           a3d[j,:,i] = flds
         end
