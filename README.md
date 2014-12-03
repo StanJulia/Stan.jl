@@ -22,6 +22,8 @@ This version, once tagged/published in METADATA, will be kept as the Github bran
 2. Handling of obtaining and passing CMDSTAN_HOME is still being studied.
 3. For now the Julia upper bound 0.4- has been removed, although several dependencies are not yet available on Julia 0.4.
 
+I would like to thank Kentarou Matsuura for helping out with the Windows issues. Hopefully most aspects have been tested, any remaining issues are of course my responsibility.
+
 ### Version 0.1.2
 
 Bug fix:
@@ -272,7 +274,8 @@ If the Julia REPL is started in the correct directory, stan(model) is sufficient
 The full signature of stan() is:
 ```
 function stan(
-  model::Stanmodel, 
+  model::Stanmodel,
+  model_file::String="", 
   data=Nothing, 
   ProjDir=pwd();
   summary=true, 
