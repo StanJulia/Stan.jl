@@ -257,13 +257,18 @@ function Stanmodel(
   update=1000,
   thin=1,
   model="",
+  model_file::String="", 
   monitors=ASCIIString[],
   data=Dict{ASCIIString, Any}[], 
   random=Random(),
   init=Init(),
   output=Output())
 ```
-All arguments have default values, although usually at least the name and model arguments will be provided. Notice that 'thin' as an argument to Jagsmodel() works slightly different from passing it through the Sample() argument to Jagsmodel. In the first case the thinning is applied after Stan has finished, the second case asks Stan to handle the thinning. For Mamba post-processing of the results, the thin argument to Jagsmodel() is the preferred option.
+All arguments have default values, although usually at least the name and model arguments will be provided.
+
+An external stan model file can be specified by leaving model="" (the default value) and specifying a model_file name.
+
+Notice that 'thin' as an argument to Jagsmodel() works slightly different from passing it through the Sample() argument to Jagsmodel. In the first case the thinning is applied after Stan has finished, the second case asks Stan to handle the thinning. For Mamba post-processing of the results, the thin argument to Jagsmodel() is the preferred option.
 
 After a Stanmodel has been created, the workhorse function stan() is called to run the simulation.
 
@@ -275,7 +280,6 @@ The full signature of stan() is:
 ```
 function stan(
   model::Stanmodel,
-  model_file::String="", 
   data=Nothing, 
   ProjDir=pwd();
   summary=true, 
