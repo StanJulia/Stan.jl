@@ -22,7 +22,7 @@ for my_test in code_tests
     include(my_test)
 end
 
-if CMDSTAN_HOME != ""
+if isdefined(Main, :CMDSTAN_HOME) && length(CMDSTAN_HOME) > 0
   println("CMDSTAN_HOME found! Try to run bernoulli.")
   try
     for my_test in execution_tests
@@ -35,7 +35,7 @@ if CMDSTAN_HOME != ""
      println("No simulation runs have been performed.")
   end 
 else
-  println("CMDSTAN_HOME not found!")  
+  println("\n\nCMDSTAN_HOME not found. Skipping all tests that depend on CmdStan!\n")  
 end
 
 println("\n")

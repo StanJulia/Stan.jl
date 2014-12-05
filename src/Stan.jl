@@ -14,6 +14,7 @@ module Stan
       global CMDSTAN_HOME = ENV["CMDSTAN_HOME"]
     catch e
       println("Environment variable CMDSTAN_HOME not found.")
+      global CMDSTAN_HOME = ""
     end
   end
   
@@ -23,7 +24,7 @@ module Stan
       global JULIA_SVG_BROWSER = ENV["JULIA_SVG_BROWSER"]
     catch e
       println("Environment variable JULIA_SVG_BROWSER not found.")
-      println("Produced .svg files in examples will not be automatically displayed.")
+      global JULIA_SVG_BROWSER = ""
     end
   end
   
