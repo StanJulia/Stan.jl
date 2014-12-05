@@ -8,7 +8,7 @@ module Stan
   include("stancode.jl")
   include("utilities.jl")
   
-  if !isdefined(Main, :CMDSTAN_HOME_)
+  if !isdefined(Main, :CMDSTAN_HOME)
     global CMDSTAN_HOME = ""
     try
       global CMDSTAN_HOME = ENV["CMDSTAN_HOME"]
