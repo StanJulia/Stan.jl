@@ -2,7 +2,7 @@
 
 using Base.Test
 
-Main.CMDSTAN_HOME = isdefined(Main, :CMDSTAN_HOME) ? CMDSTAN_HOME : ENV["CMDSTAN_HOME"]
+Stan.CMDSTAN_HOME = isdefined(Main, :CMDSTAN_HOME) ? CMDSTAN_HOME : ENV["CMDSTAN_HOME"]
 
 code_tests = [
   "test_utilities.jl",
