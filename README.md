@@ -11,14 +11,20 @@ For more info on Stan, please go to <http://mc-stan.org>.
 
 For more info on Mamba, please go to <http://mambajl.readthedocs.org/en/latest/>.
 
-This version, once tagged/published in METADATA, will be kept as the Github branch Stan-j0.3-v0.1.5
+This version, once tagged/published in METADATA, will be kept as the Github branch Stan-j0.3-v0.1.6
 
 
 ## What's new
 
+### Version 0.1.6
+
+1. Two more notebooks have been added in the Examples/Notebooks directory, StanBernoulliJB includes notebook cells with explanations and some introductory notes.
+2. Removed an earlier addition to runtests.jl needed for testing on JuliaBox. Caused problems in tests on pkg.julialang.org.
+3. The runtests.jl script now reports which version is being tested.
+
 ### Version 0.1.5
 
-1. Demonstrate running Stan on JuliaBox. A Notebook example has been added in the Examples/Notebook directory.
+1. Demonstrate running Stan on JuliaBox. A notebook example has been added in the Examples/Notebook directory.
 
 ### Version 0.1.4
 
@@ -65,7 +71,13 @@ The two most important features introduced in version 0.1.0 are:
 
 ## Requirements
 
-CmdStan has been installed on JuliaBox (see https://www.juliabox.org ). If you have a JuliaBox account, you should be able to run the StanBernoulli.ipynb Notebook in the Examples/Notebooks directory on JuliaBox.
+CmdStan has been installed on JuliaBox (see https://www.juliabox.org ). If you have a JuliaBox account, you should be able to run the StanBernoulliJB.ipynb notebook in the Examples/Notebooks directory, e.g. do 
+```
+cd(Pkg.dir("Stan", "Examples", "Notebooks"))
+```
+to see a list of included notebooks.
+
+The two additional notebooks provided test all examples on JuliaBox or in iJulia and a notebook that shows how to run the examples included in Stan.jl.
 
 To run this version of the Stan.jl package on your local machine, it assumes that:
 
@@ -73,7 +85,7 @@ To run this version of the Stan.jl package on your local machine, it assumes tha
 
 2. Mamba (see <https://github.com/brian-j-smith/Mamba.jl>) is installed. It can be installed using Pkg.add("Mamba")
 
-3. On OSX, all Stan-j03-v0.1.5 examples check the environment variable JULIA_SVG_BROWSER to automatically display (in a browser) the simulation results (after creating .svg files), e.g. on my system I have exported JULIA_SVG_BROWSER="Google Chrome.app". For other platforms the final lines in the Examples/xxxx.jl files may need to be adjusted (or removed). In any case, on all platforms, both a .svg and a .pdf file will be created and left behind in the working directory.
+3. On OSX, all Stan-j03-v0.1.6 examples check the environment variable JULIA_SVG_BROWSER to automatically display (in a browser) the simulation results (after creating .svg files), e.g. on my system I have exported JULIA_SVG_BROWSER="Google Chrome.app". For other platforms the final lines in the Examples/xxxx.jl files may need to be adjusted (or removed). In any case, on all platforms, both a .svg and a .pdf file will be created and left behind in the working directory.
 
 In order for Stan.jl to find the CmdStan executable you can either
 
