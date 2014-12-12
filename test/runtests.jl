@@ -15,7 +15,7 @@ execution_tests = [
   "test_kidscore.jl"  
 ]
 
-println("Running tests:")
+println("Running tests for Stan-j03-v0.1.6:")
 
 for my_test in code_tests
     println("\n  * $(my_test) *")
