@@ -16,6 +16,10 @@ This version, once tagged/published in METADATA, will be kept as the Github bran
 
 ## What's new
 
+### Version 0.1.7
+
+1. Updated .travis.yml
+
 ### Version 0.1.6
 
 1. Two more notebooks have been added in the Examples/Notebooks directory, StanBernoulliJB includes notebook cells with explanations and some introductory notes.
