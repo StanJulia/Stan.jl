@@ -2,6 +2,7 @@
 
 [![Stan](http://pkg.julialang.org/badges/Stan_release.svg)](http://pkg.julialang.org/?pkg=Stan&ver=release)
 
+[![Build Status](https://travis-ci.org/goedman/Stan.jl.svg?branch=master)](https://travis-ci.org/goedman/Stan.jl)
 
 ## Purpose
 
