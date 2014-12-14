@@ -1,12 +1,14 @@
-# Run these tests if CmdStan is installed and CMDSTAN_HOME is set correctly.
-
+# Top level test script for Stan.jl
 using Base.Test
+
+println("Running tests for Stan-j0.3-v0.1.6:")
 
 code_tests = [
   "test_utilities.jl",
   "test_cmdtype.jl"
 ]
 
+# Run execution_tests only if CmdStan is installed and CMDSTAN_HOME is set correctly.
 execution_tests = [
   "test_bernoulli.jl",
   "test_binormal.jl",
@@ -14,8 +16,6 @@ execution_tests = [
   "test_dyes.jl",
   "test_kidscore.jl"  
 ]
-
-println("Running tests for Stan-j03-v0.1.6:")
 
 for my_test in code_tests
     println("\n  * $(my_test) *")
