@@ -1,8 +1,8 @@
 # Stan
 
 [![Stan](http://pkg.julialang.org/badges/Stan_release.svg)](http://pkg.julialang.org/?pkg=Stan&ver=release)
-
 [![Build Status](https://travis-ci.org/goedman/Stan.jl.svg?branch=master)](https://travis-ci.org/goedman/Stan.jl)
+[![Documentation Status](https://readthedocs.org/projects/stanjl/badge/?version=latest)](https://readthedocs.org/projects/stanjl/?badge=latest)
 
 ## Purpose
 
@@ -12,10 +12,15 @@ For more info on Stan, please go to <http://mc-stan.org>.
 
 For more info on Mamba, please go to <http://mambajl.readthedocs.org/en/latest/>.
 
-This version, once tagged/published in METADATA, will be kept as the Github branch Stan-j0.3-v0.1.6
+This version, once tagged/published in METADATA, will be kept as the Github branch Stan-j0.3-v0.2.0
 
 
 ## What's new
+
+### Version 0.2.0
+
+1. Added travis & documentation badges
+2. Fixes to CMDSTAN_HOME handling in Stan.jl
 
 ### Version 0.1.7
 
@@ -90,7 +95,7 @@ To run this version of the Stan.jl package on your local machine, it assumes tha
 
 2. Mamba (see <https://github.com/brian-j-smith/Mamba.jl>) is installed. It can be installed using Pkg.add("Mamba")
 
-3. On OSX, all Stan-j03-v0.1.6 examples check the environment variable JULIA_SVG_BROWSER to automatically display (in a browser) the simulation results (after creating .svg files), e.g. on my system I have exported JULIA_SVG_BROWSER="Google Chrome.app". For other platforms the final lines in the Examples/xxxx.jl files may need to be adjusted (or removed). In any case, on all platforms, both a .svg and a .pdf file will be created and left behind in the working directory.
+3. On OSX, all Stan-j03-v0.2.0 examples check the environment variable JULIA_SVG_BROWSER to automatically display (in a browser) the simulation results (after creating .svg files), e.g. on my system I have exported JULIA_SVG_BROWSER="Google Chrome.app". For other platforms the final lines in the Examples/xxxx.jl files may need to be adjusted (or removed). In any case, on all platforms, both a .svg and a .pdf file will be created and left behind in the working directory.
 
 In order for Stan.jl to find the CmdStan executable you can either
 
