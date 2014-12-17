@@ -20,6 +20,7 @@ This version, once tagged/published in METADATA, will be kept as the Github bran
 ### Version 0.2.1
 
 1. Several Julia 0.4 fixes
+2. Added the ODE example from the Stan manual to Examples. Please read the comments on ode.jl.
 
 ### Version 0.2.0
 
