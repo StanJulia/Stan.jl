@@ -65,7 +65,7 @@ model {
 "
 
 #Just store date in ho.csv, drop the header
-ho_data = readcsv("ho.csv", header=true)[1];
+ho_data = readcsv("ho.csv.data", header=true)[1];
 
 #Extract initial values in row 1 of ho_data
 t0 = ho_data[1, 1]
