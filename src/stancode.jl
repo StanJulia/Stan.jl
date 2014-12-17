@@ -348,13 +348,13 @@ function cmdline(m)
     # The 'recursive' part
     #println(lowercase(string(typeof(m))))
     if isa(m, Algorithm)
-      cmd = `$cmd algorithm=$(lowercase(string(typeof(m))))`
+      cmd = `$cmd algorithm=$(split(lowercase(string(typeof(m))), '.')[end])`
     elseif isa(m, Engine)
-      cmd = `$cmd engine=$(lowercase(string(typeof(m))))`
+      cmd = `$cmd engine=$(split(lowercase(string(typeof(m))), '.')[end])`
     elseif isa(m, Diagnostics)
-      cmd = `$cmd test=$(lowercase(string(typeof(m))))`
+      cmd = `$cmd test=$(split(lowercase(string(typeof(m))), '.')[end])`
     else
-      cmd = `$cmd $(lowercase(string(typeof(m))))`
+      cmd = `$cmd $(split(lowercase(string(typeof(m))), '.')[end])`
     end
     #println(cmd)
     for name in names(m)
@@ -366,7 +366,7 @@ function cmdline(m)
           cmd = `$cmd $(name)=$(getfield(m, name) ? 1 : 0)`
         else
           if name == :metric || isa(getfield(m, name), DataType) 
-            cmd = `$cmd $(name)=$(typeof(getfield(m, name)))`
+            cmd = `$cmd $(name)=$(split(lowercase(string(typeof(getfield(m, name)))), '.')[end])`
           else
             cmd = `$cmd $(name)=$(getfield(m, name))`
           end
