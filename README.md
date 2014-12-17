@@ -12,10 +12,14 @@ For more info on Stan, please go to <http://mc-stan.org>.
 
 For more info on Mamba, please go to <http://mambajl.readthedocs.org/en/latest/>.
 
-This version, once tagged/published in METADATA, will be kept as the Github branch Stan-j0.3-v0.2.0
+This version, once tagged/published in METADATA, will be kept as the Github branch Stan-j0.3-v0.2.1
 
 
 ## What's new
+
+### Version 0.2.1
+
+1. Several Julia 0.4 fixes
 
 ### Version 0.2.0
 
@@ -95,7 +99,7 @@ To run this version of the Stan.jl package on your local machine, it assumes tha
 
 2. Mamba (see <https://github.com/brian-j-smith/Mamba.jl>) is installed. It can be installed using Pkg.add("Mamba")
 
-3. On OSX, all Stan-j03-v0.2.0 examples check the environment variable JULIA_SVG_BROWSER to automatically display (in a browser) the simulation results (after creating .svg files), e.g. on my system I have exported JULIA_SVG_BROWSER="Google Chrome.app". For other platforms the final lines in the Examples/xxxx.jl files may need to be adjusted (or removed). In any case, on all platforms, both a .svg and a .pdf file will be created and left behind in the working directory.
+3. On OSX, all Stan-j03-v0.2.1 examples check the environment variable JULIA_SVG_BROWSER to automatically display (in a browser) the simulation results (after creating .svg files), e.g. on my system I have exported JULIA_SVG_BROWSER="Google Chrome.app". For other platforms the final lines in the Examples/xxxx.jl files may need to be adjusted (or removed). In any case, on all platforms, both a .svg and a .pdf file will be created and left behind in the working directory.
 
 In order for Stan.jl to find the CmdStan executable you can either
 
@@ -125,7 +129,7 @@ CMDSTAN_HOME = "C:\\cmdstan"
 
 This version of the package has primarily been tested on Mac OSX 10.10, Julia 0.3.3, CmStan 2.5.0 and Mamba 0.4.3. A limited amount of testing has taken place on other platforms by other users of the package (see note 2 in the 'To Do' section below).
 
-Stan 0.2.0 does run on Julia 0.4 (tested on Julia 0.4.0-dev+2267) but will produce many, many warnings! Your mileage may vary and no promises!
+Stan 0.2.1 does run on Julia 0.4 (tested on Julia 0.4.0-dev+2267) but will produce many, many warnings! Your mileage may vary and no promises!
 
 To test and run the examples:
 

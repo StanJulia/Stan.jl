@@ -31,6 +31,6 @@ data = [
 stanmodel = Stanmodel(Optimize(), name="bernoulli", model=bernoulli, data=data);
 
 optim = stan(stanmodel, data, ProjDir, CmdStanDir=CMDSTAN_HOME);
-optim[1] |> display
+optim |> display
 
 cd(old)

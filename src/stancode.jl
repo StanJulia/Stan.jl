@@ -197,14 +197,15 @@ function read_stanfit(model::Stanmodel)
             i += 1 
             line = normalize_string(readline(instream), newline2lf=true)
             if i == 1
-              tdict = merge(tdict, [:lp => [float(split(line[1:(length(line)-1)], "=")[2])]])
+              tdict = merge(tdict, @Compat.Dict(:lp => [float(split(line[1:(length(line)-1)], "=")[2])]))
             elseif i == 3
               sa = split(line[1:(length(line)-1)])
-              tdict = merge(tdict, [:var_id => [int(sa[1])], :value => [float(sa[2])]])
-              tdict = merge(tdict, [:model => [float(sa[3])], :finite_dif => [float(sa[4])]])
-              tdict = merge(tdict, [:error => [float(sa[5])]])
+              tdict = merge(tdict, @Compat.Dict(:var_id => [int(sa[1])], :value => [float(sa[2])]))
+              tdict = merge(tdict, @Compat.Dict(:model => [float(sa[3])], :finite_dif => [float(sa[4])]))
+              tdict = merge(tdict, @Compat.Dict(:error => [float(sa[5])]))
             end
             if eof(instream)
+              close(instream)
               break
             end
             skipchars(instream, isspace, linecomment='#')
@@ -227,13 +228,14 @@ function read_stanfit(model::Stanmodel)
             if eof(instream) && length(line) < 2
               #println("EOF detected")
               close(instream)
-              return(tdict)
+              #return(tdict)
+              break
             else
               flds = float(split(line[1:length(line)-1], ","))
               #res_type == "optimize" && println(flds)
               for k in 1:length(index)
                 if j ==1
-                  tdict = merge(tdict, [index[k] => [flds[k]]])
+                  tdict = merge(tdict, @Compat.Dict(index[k] => [flds[k]]))
                 else
                   tdict[index[k]] = push!(tdict[index[k]], flds[k])
                 end
