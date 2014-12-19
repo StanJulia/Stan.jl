@@ -92,7 +92,7 @@ cd(Pkg.dir("Stan", "Examples", "Notebooks"))
 ```
 to see a list of included notebooks.
 
-The two additional notebooks provided test all examples on JuliaBox or in iJulia and a notebook that shows how to run the examples included in Stan.jl.
+The two additional notebooks provided test all examples on JuliaBox (or in iJulia) and a notebook that shows how to run the examples included in Stan.jl.
 
 To run this version of the Stan.jl package on your local machine, it assumes that:
 
@@ -130,7 +130,7 @@ CMDSTAN_HOME = "C:\\cmdstan"
 
 This version of the package has primarily been tested on Mac OSX 10.10, Julia 0.3.3, CmStan 2.5.0 and Mamba 0.4.3. A limited amount of testing has taken place on other platforms by other users of the package (see note 2 in the 'To Do' section below).
 
-Stan 0.2.1 does run on Julia 0.4 (tested on Julia 0.4.0-dev+2267) but will produce many, many warnings! Your mileage may vary and no promises!
+Stan 0.2.1 does run on 64-bit Julia 0.4 (tested on Julia 0.4.0-dev+2267) but will produce many, many warnings! Your mileage may vary and no promises! At least one report indicates it does not run on 32-bit Julia 0.4.0-dev+2267.
 
 To test and run the examples:
 

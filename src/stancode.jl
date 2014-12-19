@@ -295,7 +295,7 @@ function read_stanfit_samples(m::Stanmodel, diagnostics=false)
       for j in 1:m.method.num_samples
         skipchars(instream, isspace, linecomment='#')
         line = normalize_string(readline(instream), newline2lf=true)
-        if eof(instream) && length(line) == 0
+        if eof(instream) && length(line) < 2
           close(instream)
           break
         else
