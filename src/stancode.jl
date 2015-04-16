@@ -120,6 +120,9 @@ function update_R_file(file::String, dct::Dict{ASCIIString, Any}; replaceNaNs::B
     if length(val)==1 && length(size(val))==0
       # Scalar
       str = str*"$(val)\n"
+    elseif length(val)==1 && length(size(val))==1
+      # Single element vector
+      str = str*"$(val[1])\n"
     elseif length(val)>1 && length(size(val))==1
       # Vector
       str = str*"structure(c("
@@ -359,7 +362,7 @@ function cmdline(m)
       cmd = `$cmd $(split(lowercase(string(typeof(m))), '.')[end])`
     end
     #println(cmd)
-    for name in names(m)
+    for name in fieldnames(m)
       #println("$(name) = $(getfield(m, name)) ($(typeof(getfield(m, name))))")
       if  isa(getfield(m, name), String) || isa(getfield(m, name), Tuple)
         cmd = `$cmd $(name)=$(getfield(m, name))`

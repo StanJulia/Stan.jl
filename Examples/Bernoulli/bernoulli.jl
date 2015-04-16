@@ -8,7 +8,7 @@ cd(ProjDir)
 
 bernoullimodel = "
 data { 
-  int<lower=0> N; 
+  int<lower=1> N; 
   int<lower=0,upper=1> y[N];
 } 
 parameters {
@@ -16,7 +16,7 @@ parameters {
 } 
 model {
   theta ~ beta(1,1);
-    y ~ bernoulli(theta);
+  y ~ bernoulli(theta);
 }
 "
 
