@@ -105,7 +105,8 @@ sim1 = stan(stanmodel, [odedict], ProjDir, diagnostics=false, CmdStanDir=CMDSTAN
 
 ## Subset Sampler Output to variables suitable for describe().
 monitor = ["theta.1", "lp__", "accept_stat__"]
-sim = sim1[:, monitor, :]
+sim = sim1[1:size(sim1, 1), monitor, 1:size(sim1, 3)]
+
 describe(sim)
 println()
 

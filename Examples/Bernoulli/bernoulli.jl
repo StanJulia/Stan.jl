@@ -41,7 +41,7 @@ println()
 sim1 = stan(stanmodel, bernoullidata, ProjDir, diagnostics=false, CmdStanDir=CMDSTAN_HOME);
 
 ## Subset Sampler Output to variables suitable for describe().
-sim = sim1[:, monitor, :]
+sim = sim1[1:size(sim1, 1), monitor, 1:size(sim1, 3)]
 describe(sim)
 println()
 

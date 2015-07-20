@@ -140,7 +140,7 @@ draw(p, ncol=4, filename="$(stanmodel.name)-summaryplot", fmt=:pdf)
 
 ## Subset Sampler Output to variables suitable for describe().
 monitor = ["y0.1", "y0.2", "sigma.1", "sigma.2"]
-sim = sim1[:, monitor, :]
+sim = sim1[1:size(sim1, 1), monitor, 1:size(sim1, 3)]
 describe(sim)
 println()
 

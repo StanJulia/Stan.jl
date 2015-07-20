@@ -31,7 +31,8 @@ stanmodel = Stanmodel(name="binormal", model=binorm);
 sim1 = stan(stanmodel, CmdStanDir=CMDSTAN_HOME)
 
 ## Subset Sampler Output
-sim = sim1[1:1000, ["lp__", "y.1", "y.2"], :]
+sim = sim1[1:size(sim1, 1), ["lp__", "y.1", "y.2"], 1:size(sim1, 3)]
+
 describe(sim)
 println()
 

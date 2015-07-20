@@ -42,7 +42,8 @@ sim1 = stan(stanmodel, schools8data, ProjDir, CmdStanDir=CMDSTAN_HOME)
 nodesubset = ["lp__", "accept_stat__", "mu", "tau", "theta.1", "theta.2", "theta.3", "theta.4", "theta.5", "theta.6", "theta.7", "theta.8"]
 
 ## Subset Sampler Output
-sim = sim1[1:1000, nodesubset, :]
+sim = sim1[1:size(sim1, 1), nodesubset, 1:size(sim1, 3)]
+
 describe(sim)
 println()
 

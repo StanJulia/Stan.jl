@@ -183,7 +183,7 @@ println()
 sim1 = stan(stanmodel, kiddata, ProjDir, CmdStanDir=CMDSTAN_HOME)
 
 ## Subset Sampler Output
-sim = sim1[1:1000, ["lp__", "accept_stat__", "sigma", "beta.1", "beta.2", "beta.3"], :]
+sim = sim1[1:size(sim1, 1), ["lp__", "accept_stat__", "sigma", "beta.1", "beta.2", "beta.3"], 1:size(sim1, 3)]
 describe(sim)
 println()
 
