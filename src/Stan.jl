@@ -63,6 +63,8 @@ module Stan
     Diagnose,
     Diagnostics,
     Gradient,
+  # From variationaltype.jl
+    Variational,
   # From cmdline.jl
     cmdline
 

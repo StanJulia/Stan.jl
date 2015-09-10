@@ -69,6 +69,9 @@ function stan(
       elseif isa(model.method, Optimize)
         isfile("$(model.name)_optimize_$(i).csv") && rm("$(model.name)_optimize_$(i).csv")
         model.output.file = model.name*"_optimize_$(i).csv"
+      elseif isa(model.method, Variational)
+        isfile("$(model.name)_variational_$(i).csv") && rm("$(model.name)_variational_$(i).csv")
+        model.output.file = model.name*"_variational_$(i).csv"
       elseif isa(model.method, Diagnose)
         isfile("$(model.name)_diagnose_$(i).csv") && rm("$(model.name)_diagnose_$(i).csv")
         model.output.file = model.name*"_diagnose_$(i).csv"
@@ -93,6 +96,16 @@ function stan(
       push!(samplefiles, "$(model.name)_$(ftype)_$(i).csv")
     end
     if isa(model.method, Sample) && summary
+      stan_summary(par(samplefiles), CmdStanDir=CmdStanDir)
+    end
+    #cd(pwd()*"1"); println(pwd())
+    res = read_stanfit_samples(model, diagnostics)
+  elseif isa(model.method, Variational)
+    ftype = "variational"
+    for i in 1:model.nchains
+      push!(samplefiles, "$(model.name)_$(ftype)_$(i).csv")
+    end
+    if isa(model.method, Variational) && summary
       stan_summary(par(samplefiles), CmdStanDir=CmdStanDir)
     end
     #cd(pwd()*"1"); println(pwd())
@@ -176,9 +189,9 @@ function read_stanfit(model::Stanmodel)
   
   chainarray = Dict[]
   
-  ## Each chain dictionary can contain up to 4 types of results ##
+  ## Each chain dictionary can contain up to 5 types of results ##
   
-  result_type_files = ["samples", "diagnostics", "optimize", "diagnose"]
+  result_type_files = ["samples", "diagnostics", "optimize", "diagnose", "variational"]
   rtdict = Dict()
   
   ## tdict contains the arrays of values ##
@@ -214,6 +227,7 @@ function read_stanfit(model::Stanmodel)
             skipchars(instream, isspace, linecomment='#')
           end
         else
+          #println("Type of result file is $(res_type)")
           tdict = Dict()
           skipchars(instream, isspace, linecomment='#')
           line = normalize_string(readline(instream), newline2lf=true)
@@ -328,7 +342,7 @@ function cmdline(m)
     # Handle the model name field for unix and windows
     cmd = @unix ? `./$(getfield(m, :name))` : `cmd /c $(getfield(m, :name)).exe`
 
-    # Method (sample, optimize and diagnose) specific portion of the model
+    # Method (sample, optimize, variational and diagnose) specific portion of the model
     cmd = `$cmd $(cmdline(getfield(m, :method)))`
     
     # Common to all models

@@ -5,6 +5,7 @@ abstract Methods
 include("./sampletype.jl")
 include("./optimizetype.jl")
 include("./diagnosetype.jl")
+include("./variationaltype.jl")
 
 type Init
   init::Int64
@@ -123,6 +124,8 @@ function model_show(io::IO, m::Stanmodel, compact::Bool)
     sample_show(io, m.method, compact)
   elseif isa(m.method, Optimize)
     optimize_show(io, m.method, compact)
+  elseif isa(m.method, Variational)
+    variational_show(io, m.method, compact)
   else
     diagnose_show(io, m.method, compact)
   end
