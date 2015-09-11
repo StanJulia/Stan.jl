@@ -1,6 +1,7 @@
 # Stan
 
-[![Stan](http://pkg.julialang.org/badges/Stan_release.svg)](http://pkg.julialang.org/?pkg=Stan&ver=release)
+[![Stan](http://pkg.julialang.org/badges/Stan_0.3.svg)](http://pkg.julialang.org/?pkg=Stan&ver=0.3)
+[![Stan](http://pkg.julialang.org/badges/Stan_0.4.svg)](http://pkg.julialang.org/?pkg=Stan&ver=0.4)
 [![Build Status](https://travis-ci.org/goedman/Stan.jl.svg?branch=master)](https://travis-ci.org/goedman/Stan.jl)
 [![Documentation Status](https://readthedocs.org/projects/stanjl/badge/?version=latest)](https://readthedocs.org/projects/stanjl/?badge=latest)
 
