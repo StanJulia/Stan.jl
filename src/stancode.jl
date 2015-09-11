@@ -34,7 +34,7 @@ function stan(
     end
     #println("Current working dir: $(pwd())")
     #println("Compile using make $(tmpmodelname)")
-    run(`make $(tmpmodelname)` .> "$(tmpmodelname)_build.log")
+    run(pipeline(`make $(tmpmodelname)`, stderr="$(tmpmodelname)_build.log"))
         
     cd(model.tmpdir)
     if data != Nothing && isa(data, Array{Dict{ASCIIString, Any}, 1}) && length(data) > 0
@@ -79,7 +79,7 @@ function stan(
       model.command[i] = cmdline(model)
     end
     println()
-    run(par(model.command) >> "$(model.name)_run.log")
+    run(pipeline(par(model.command), stdout="$(model.name)_run.log"))
   catch e
     println(e)
     cd(old)
@@ -380,7 +380,7 @@ function cmdline(m)
       #println("$(name) = $(getfield(m, name)) ($(typeof(getfield(m, name))))")
       if  isa(getfield(m, name), String) || isa(getfield(m, name), Tuple)
         cmd = `$cmd $(name)=$(getfield(m, name))`
-      elseif length(names(typeof(getfield(m, name)))) == 0
+      elseif length(fieldnames(typeof(getfield(m, name)))) == 0
         if isa(getfield(m, name), Bool)
           cmd = `$cmd $(name)=$(getfield(m, name) ? 1 : 0)`
         else
