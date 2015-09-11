@@ -216,7 +216,7 @@ function read_stanfit(model::Stanmodel)
               tdict = merge(tdict, @Compat.Dict(:lp => [float(split(line[1:(length(line)-1)], "=")[2])]))
             elseif i == 3
               sa = split(line[1:(length(line)-1)])
-              tdict = merge(tdict, @Compat.Dict(:var_id => [int(sa[1])], :value => [float(sa[2])]))
+              tdict = merge(tdict, @Compat.Dict(:var_id => [parse(Int, sa[1])], :value => [float(sa[2])]))
               tdict = merge(tdict, @Compat.Dict(:model => [float(sa[3])], :finite_dif => [float(sa[4])]))
               tdict = merge(tdict, @Compat.Dict(:error => [float(sa[5])]))
             end
