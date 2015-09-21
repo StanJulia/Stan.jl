@@ -109,7 +109,7 @@ function stan(
       stan_summary(par(samplefiles), CmdStanDir=CmdStanDir)
     end
     #cd(pwd()*"1"); println(pwd())
-    res = read_stanfit_samples(model, diagnostics)
+    res = read_stanfit_variational_samples(model)
   elseif isa(model.method, Optimize)
     res = read_stanfit(model)
   elseif isa(model.method, Diagnose)
@@ -165,7 +165,7 @@ end
 
 function stan_summary(file::String; CmdStanDir=CMDSTAN_HOME)
   try
-    pstring = Pkg.dir("$(CmdStanDir)", "bin", "print")
+    pstring = Pkg.dir("$(CmdStanDir)", "bin", "stansummary")
     cmd = `$(pstring) $(file)`
     print(open(readall, cmd, "r"))
   catch e
@@ -175,7 +175,7 @@ end
 
 function stan_summary(filecmd::Cmd; CmdStanDir=CMDSTAN_HOME)
   try
-    pstring = Pkg.dir("$(CmdStanDir)", "bin", "print")
+    pstring = Pkg.dir("$(CmdStanDir)", "bin", "stansummary")
     cmd = `$(pstring) $(filecmd)`
     print(open(readall, cmd, "r"))
   catch e
@@ -292,7 +292,7 @@ function read_stanfit_samples(m::Stanmodel, diagnostics=false)
   local a3d, monitors, index, idx, indvec, ftype
   
   ftype = diagnostics ? "diagnostics" : "samples"
-  
+	
   for i in 1:m.nchains
     if isfile("$(m.name)_$(ftype)_$(i).csv")
       instream = open("$(m.name)_$(ftype)_$(i).csv")
@@ -331,6 +331,47 @@ function read_stanfit_samples(m::Stanmodel, diagnostics=false)
     sr = getindex(a3d, [1:m.method.thin:size(a3d, 1);], [1:size(a3d, 2);], [1:size(a3d, 3);])
     Chains(sr, start=1, thin=m.thin, names=idx[indvec], chains=[i for i in 1:m.nchains])
   end
+end
+
+function read_stanfit_variational_samples(m::Stanmodel)
+
+  local a3d, monitors, index, idx, indvec, ftype
+  ftype = "variational"
+  
+  for i in 1:m.nchains
+    if isfile("$(m.name)_$(ftype)_$(i).csv")
+      instream = open("$(m.name)_$(ftype)_$(i).csv")
+      skipchars(instream, isspace, linecomment='#')
+      line = normalize_string(readline(instream), newline2lf=true)
+      idx = split(line[1:length(line)-1], ",")
+      index = [idx[k] for k in 1:length(idx)]
+      if length(m.monitors) == 0
+        indvec = 1:length(index)
+      else
+        indvec = findin(index, m.monitors)
+      end
+      if i == 1
+        a3d = fill(0.0, m.method.output_samples, length(indvec), m.nchains)
+      end
+      skipchars(instream, isspace, linecomment='#')
+      for j in 1:m.method.output_samples
+        skipchars(instream, isspace, linecomment='#')
+        line = normalize_string(readline(instream), newline2lf=true)
+        if eof(instream) && length(line) < 2
+          close(instream)
+          break
+        else
+          flds = float(split(line[1:length(line)-1], ","))
+          flds = reshape(flds[indvec], 1, length(indvec))
+          a3d[j,:,i] = flds
+        end
+      end
+    end
+  end
+  
+  sr = getindex(a3d, [1:1:size(a3d, 1);], [1:size(a3d, 2);], [1:size(a3d, 3);])
+  Chains(sr, start=1, thin=1, names=idx[indvec], chains=[i for i in 1:m.nchains])
+	
 end
 
 
