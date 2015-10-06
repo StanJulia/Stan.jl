@@ -13,21 +13,17 @@ For more info on Stan, please go to <http://mc-stan.org>.
 
 For more info on Mamba, please go to <http://mambajl.readthedocs.org/en/latest/>.
 
-This version, once tagged/published in METADATA, will be kept as the Github branch Stan-j0.4-v0.2.8
+This version, once tagged/published in METADATA, will be kept as the Github branch Stan-j0.4-v0.2.1
 
 
 ## What's new
 
-### Version 0.2.8
+### Version 0.2.1
 
 1. Several Julia 0.4 fixes (tested up the Julia 0.4-rc4)
 2. This version only runs on Julia 0.4
 3. Added initial support for variational-bayes in Stan 2.8.0.
-
-### Version 0.2.1
-
-1. Several Julia 0.4 fixes
-2. Added the ODE example from the Stan manual to Examples. Please read the comments on ode.jl.
+4. Added the ODE example from the Stan manual to Examples. Please read the comments on ode.jl.
 
 ### Version 0.2.0
 
