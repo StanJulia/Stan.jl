@@ -5,22 +5,27 @@
 
 ## Purpose
 
-A package to use Stan (as an external program) from Julia (v0.4). 
+A package to use Stan 2.8.0 (as an external program) from Julia (v0.4). 
 
 For more info on Stan, please go to <http://mc-stan.org>.
 
 For more info on Mamba, please go to <http://mambajl.readthedocs.org/en/latest/>.
 
-This version, once tagged/published in METADATA, will be kept as the Github branch Stan-j0.4-v0.3.0
+This version, once tagged/published in METADATA, will be kept as the Github branch Stan-j0.4-v0.3.1
 
 
 ## What's new
 
+### Version 0.3.1
+
+1. Cleaned up shown badges in README (both Travis and ReadTheDocs)
+2. Removed 0.3 testing in the new Julia format .travis.yml file
+
 ### Version 0.3.0
 
-1. As this is Julia 0.4 only, :minor needs to be bumped.
-2. Several Julia 0.4 fixes (tested up the Julia 0.4-rc4)
-3. Added initial support for variational-bayes in Stan 2.8.0.
+1. Version 0.3.0 is Julia 0.4 only.
+2. Julia 0.4 fixes have been tested up the Julia 0.4-rc4.
+3. Added support for variational-bayes in Stan 2.8.0.
 4. Added the ODE example from the Stan manual to Examples. Please read the comments on ode.jl.
 
 ### Version 0.2.0
