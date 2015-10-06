@@ -25,4 +25,10 @@ cd(ProjDir)
 isdir("tmp") &&
   rm("tmp", recursive=true);
 
+include(Pkg.dir(ProjDir, "bernoulli_variational.jl"))
+
+cd(ProjDir)
+isdir("tmp") &&
+  rm("tmp", recursive=true);
+
 cd(old)

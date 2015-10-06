@@ -52,7 +52,7 @@ model {
 "
 
 odedict =
-  @Compat.Dict(
+  Dict(
     "T" => 100, 
     "M" => 2,
     "t0" => 0,

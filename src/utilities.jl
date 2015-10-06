@@ -15,7 +15,21 @@ if !isdefined(Main, :Jags)
     res
   end
 
-  function *(c1::Cmd, s::String)
+  function *(c1::Cmd, s::ASCIIString)
+    res = deepcopy(c1)
+    push!(res.exec, s)
+    res
+  end
+
+  function *(c1::Cmd, sa::Array{ASCIIString, 1})
+    res = deepcopy(c1)
+    for i in 1:length(sa)
+      push!(res.exec, sa[i])
+    end
+    res
+  end
+
+  function *(c1::Cmd, s::ASCIIString)
     res = deepcopy(c1)
     push!(res.exec, s)
     res
@@ -43,7 +57,7 @@ function par(cmd::Base.AbstractCmd, n::Number)
   res
 end
 
-function par(cmd::Array{String, 1})
+function par(cmd::Array{ASCIIString, 1})
   res = `$(cmd[1])`
   for i in 2:length(cmd)
     res = res*` $(cmd[i])`

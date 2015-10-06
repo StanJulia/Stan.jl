@@ -174,13 +174,13 @@ stanmodel |> display
 ```
 Above Stanmodel() call creates a default model for sampling. See other examples for methods optimize and diagnose in the Bernoulli example directory and below for some more possible Stanmodel() arguments.
 
-The input data is defined below (using the future Julia 0.4 dictionary syntax). Package Compat.jl provides the @Compat.Dict macro to support this on Julia 0.3. By default 4 chains will be simulated. Below initialization of 'bernoullidata' creates an array of 4 dictionaries, a dictionary for each chain. If the array length is not equal to the number of chains, only the first elemnt of the array will be used as initialization for all chains.
+The input data is defined below (using the future Julia 0.4 dictionary syntax). Package Compat.jl provides the Dict macro to support this on Julia 0.3. By default 4 chains will be simulated. Below initialization of 'bernoullidata' creates an array of 4 dictionaries, a dictionary for each chain. If the array length is not equal to the number of chains, only the first elemnt of the array will be used as initialization for all chains.
 ```
 const bernoullidata = [
-  @Compat.Dict("N" => 10, "y" => [0, 1, 0, 1, 0, 0, 0, 0, 0, 1]),
-  @Compat.Dict("N" => 10, "y" => [0, 1, 0, 0, 0, 0, 1, 0, 0, 1]),
-  @Compat.Dict("N" => 10, "y" => [0, 1, 0, 0, 0, 0, 0, 0, 1, 1]),
-  @Compat.Dict("N" => 10, "y" => [0, 0, 0, 1, 0, 0, 0, 1, 0, 1])
+  Dict("N" => 10, "y" => [0, 1, 0, 1, 0, 0, 0, 0, 0, 1]),
+  Dict("N" => 10, "y" => [0, 1, 0, 0, 0, 0, 1, 0, 0, 1]),
+  Dict("N" => 10, "y" => [0, 1, 0, 0, 0, 0, 0, 0, 1, 1]),
+  Dict("N" => 10, "y" => [0, 0, 0, 1, 0, 0, 0, 1, 0, 1])
 ]
 println("Input observed data, an array of dictionaries:")
 bernoullidata |> display
@@ -297,7 +297,7 @@ function Stanmodel(
   update=1000,
   thin=1,
   model="",
-  model_file::String="", 
+  model_file::ASCIIString="", 
   monitors=ASCIIString[],
   data=Dict{ASCIIString, Any}[], 
   random=Random(),

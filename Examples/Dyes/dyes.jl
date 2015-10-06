@@ -48,7 +48,7 @@ generated quantities {
 "
 
 const dyesdata = [
-  @Compat.Dict("BATCHES" => 6,
+  Dict("BATCHES" => 6,
     "SAMPLES" => 5,
     "y" => reshape([
       [1545, 1540, 1595, 1445, 1595]; 

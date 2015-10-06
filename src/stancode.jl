@@ -4,7 +4,7 @@
 
 function stan(
   model::Stanmodel, 
-  data=Nothing, 
+  data=Void, 
   ProjDir=pwd();
   summary=true, 
   diagnostics=false, 
@@ -27,7 +27,7 @@ function stan(
     #println("Moving to dir: $(CmdStanDir)")
     
     cd(CmdStanDir)
-    local tmpmodelname::String
+    local tmpmodelname::ASCIIString
     tmpmodelname = Pkg.dir(model.tmpdir, model.name)
     if @windows ? true : false
       tmpmodelname = replace(tmpmodelname*".exe", "\\", "/")
@@ -37,7 +37,7 @@ function stan(
     run(pipeline(`make $(tmpmodelname)`, stderr="$(tmpmodelname)_build.log"))
         
     cd(model.tmpdir)
-    if data != Nothing && isa(data, Array{Dict{ASCIIString, Any}, 1}) && length(data) > 0
+    if data != Void && isa(data, Array{Dict{ASCIIString, Any}, 1}) && length(data) > 0
       if length(data) == model.nchains
         for i in 1:model.nchains
           if length(keys(data[i])) > 0
@@ -86,7 +86,7 @@ function stan(
     return
   end
   
-  local samplefiles = String[]
+  local samplefiles = ASCIIString[]
   local res = Dict[]
   local ftype
   
@@ -122,7 +122,7 @@ function stan(
   res
 end
 
-function update_R_file(file::String, dct::Dict{ASCIIString, Any}; replaceNaNs::Bool=true)
+function update_R_file(file::ASCIIString, dct::Dict{ASCIIString, Any}; replaceNaNs::Bool=true)
   isfile(file) && rm(file)
   strmout = open(file, "w")
   
@@ -163,7 +163,7 @@ function update_R_file(file::String, dct::Dict{ASCIIString, Any}; replaceNaNs::B
   close(strmout)
 end
 
-function stan_summary(file::String; CmdStanDir=CMDSTAN_HOME)
+function stan_summary(file::ASCIIString; CmdStanDir=CMDSTAN_HOME)
   try
     pstring = Pkg.dir("$(CmdStanDir)", "bin", "stansummary")
     cmd = `$(pstring) $(file)`
@@ -213,12 +213,12 @@ function read_stanfit(model::Stanmodel)
             i += 1 
             line = normalize_string(readline(instream), newline2lf=true)
             if i == 1
-              tdict = merge(tdict, @Compat.Dict(:lp => [float(split(line[1:(length(line)-1)], "=")[2])]))
+              tdict = merge(tdict, Dict(:lp => [float(split(line[1:(length(line)-1)], "=")[2])]))
             elseif i == 3
               sa = split(line[1:(length(line)-1)])
-              tdict = merge(tdict, @Compat.Dict(:var_id => [parse(Int, sa[1])], :value => [float(sa[2])]))
-              tdict = merge(tdict, @Compat.Dict(:model => [float(sa[3])], :finite_dif => [float(sa[4])]))
-              tdict = merge(tdict, @Compat.Dict(:error => [float(sa[5])]))
+              tdict = merge(tdict, Dict(:var_id => [parse(Int, sa[1])], :value => [float(sa[2])]))
+              tdict = merge(tdict, Dict(:model => [float(sa[3])], :finite_dif => [float(sa[4])]))
+              tdict = merge(tdict, Dict(:error => [float(sa[5])]))
             end
             if eof(instream)
               close(instream)
@@ -252,7 +252,7 @@ function read_stanfit(model::Stanmodel)
               #res_type == "optimize" && println(flds)
               for k in 1:length(index)
                 if j ==1
-                  tdict = merge(tdict, @Compat.Dict(index[k] => [flds[k]]))
+                  tdict = merge(tdict, Dict(index[k] => [flds[k]]))
                 else
                   tdict[index[k]] = push!(tdict[index[k]], flds[k])
                 end
@@ -268,7 +268,7 @@ function read_stanfit(model::Stanmodel)
       
       if length(keys(tdict)) > 0
         #println("Merging $(res_type) with keys $(keys(tdict))")
-        rtdict = merge(rtdict, [res_type => tdict])
+        rtdict = merge(rtdict, Dict(res_type => tdict))
         tdict = Dict()
       end
     end
@@ -419,7 +419,7 @@ function cmdline(m)
     #println(cmd)
     for name in fieldnames(m)
       #println("$(name) = $(getfield(m, name)) ($(typeof(getfield(m, name))))")
-      if  isa(getfield(m, name), String) || isa(getfield(m, name), Tuple)
+      if  isa(getfield(m, name), ASCIIString) || isa(getfield(m, name), Tuple)
         cmd = `$cmd $(name)=$(getfield(m, name))`
       elseif length(fieldnames(typeof(getfield(m, name)))) == 0
         if isa(getfield(m, name), Bool)

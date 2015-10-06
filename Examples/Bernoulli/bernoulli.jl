@@ -1,6 +1,6 @@
 ######### Stan program example  ###########
 
-using Mamba, Stan, Compat
+using Mamba, Stan
 
 old = pwd()
 ProjDir = Pkg.dir("Stan", "Examples", "Bernoulli")
@@ -21,15 +21,14 @@ model {
 "
 
 bernoullidata = [
-  @Compat.Dict("N" => 10, "y" => [0, 1, 0, 1, 0, 0, 0, 0, 0, 1]),
-  @Compat.Dict("N" => 10, "y" => [0, 1, 0, 0, 0, 0, 1, 0, 0, 1]),
-  @Compat.Dict("N" => 10, "y" => [0, 0, 0, 0, 0, 0, 1, 0, 1, 1]),
-  @Compat.Dict("N" => 10, "y" => [0, 0, 0, 1, 0, 0, 0, 1, 0, 1])
+  Dict("N" => 10, "y" => [0, 1, 0, 1, 0, 0, 0, 0, 0, 1]),
+  Dict("N" => 10, "y" => [0, 1, 0, 0, 0, 0, 1, 0, 0, 1]),
+  Dict("N" => 10, "y" => [0, 0, 0, 0, 0, 0, 1, 0, 1, 1]),
+  Dict("N" => 10, "y" => [0, 0, 0, 1, 0, 0, 0, 1, 0, 1])
 ]
 
 monitor = ["theta", "lp__", "accept_stat__"]
 
-#stanmodel = Stanmodel(name="bernoulli", model=bernoullimodel, monitors=monitor);
 stanmodel = Stanmodel(update=1200, thin=2, name="bernoulli", model=bernoullimodel);
 
 println("\nStanmodel that will be used:")

@@ -85,7 +85,7 @@ noise = [rand(Normal(0, sigma)) for i in 1:T, j in 1:M]
 y = ho_data + noise
 
 odedict =
-  @Compat.Dict(
+  Dict(
     "T" => T, 
     "M" => M,
     "t0" => t0,
