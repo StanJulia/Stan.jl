@@ -7,16 +7,21 @@
 
 ## Purpose
 
-A package to use Stan (as an external program) from Julia. 
+A package to use Stan (as an external program) from Julia (v0.4). 
 
 For more info on Stan, please go to <http://mc-stan.org>.
 
 For more info on Mamba, please go to <http://mambajl.readthedocs.org/en/latest/>.
 
-This version, once tagged/published in METADATA, will be kept as the Github branch Stan-j0.3-v0.2.1
+This version, once tagged/published in METADATA, will be kept as the Github branch Stan-j0.4-v0.2.8
 
 
 ## What's new
+
+### Version 0.2.8
+
+1. Several Julia 0.4 fixes (tested up the Julia 0.4-rc4)
+2. 
 
 ### Version 0.2.1
 
@@ -142,7 +147,7 @@ To test and run the examples:
 
 To run the Bernoulli example, start by concatenating the home directory and project directory:
 ```
-using Compat, Mamba, Stan
+using Mamba, Stan
 
 old = pwd()
 ProjDir = Pkg.dir("Stan", "Examples", "Bernoulli")

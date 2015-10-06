@@ -1,6 +1,6 @@
 ######### Stan program example  ###########
 
-using Stan, Compat
+using Stan
 
 old = pwd()
 ProjDir = Pkg.dir("Stan", "Examples", "Bernoulli")

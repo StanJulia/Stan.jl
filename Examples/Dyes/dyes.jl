@@ -1,6 +1,6 @@
 ######### Stan batch program example  ###########
 
-using Compat, Stan, Mamba
+using Stan, Mamba
 
 old = pwd()
 ProjDir = Pkg.dir("Stan", "Examples", "Dyes")

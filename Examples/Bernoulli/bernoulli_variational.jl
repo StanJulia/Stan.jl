@@ -1,6 +1,6 @@
 ######### Stan program example  ###########
 
-using Mamba, Stan, Compat
+using Mamba, Stan
 
 old = pwd()
 ProjDir = Pkg.dir("Stan", "Examples", "Bernoulli")
@@ -37,15 +37,15 @@ println()
 
 ## Plotting
 p = plot(sim, [:trace, :mean, :density, :autocor], legend=true);
-draw(p, ncol=4, filename="$(stanmodel.name)-summaryplot", fmt=:svg)
-draw(p, ncol=4, filename="$(stanmodel.name)-summaryplot", fmt=:pdf)
+draw(p, ncol=4, filename="$(stanmodel.name)-variationalplot", fmt=:svg)
+draw(p, ncol=4, filename="$(stanmodel.name)-variationalplot", fmt=:pdf)
 
 # Below will only work on OSX, please adjust for your environment.
 # JULIA_SVG_BROWSER is set from environment variable JULIA_SVG_BROWSER
 @osx ? if isdefined(Main, :JULIA_SVG_BROWSER) && length(JULIA_SVG_BROWSER) > 0
         for i in 1:4
-          isfile("$(stanmodel.name)-summaryplot-$(i).svg") &&
-            run(`open -a $(JULIA_SVG_BROWSER) "$(stanmodel.name)-summaryplot-$(i).svg"`)
+          isfile("$(stanmodel.name)-variationalplot-$(i).svg") &&
+            run(`open -a $(JULIA_SVG_BROWSER) "$(stanmodel.name)-variationalplot-$(i).svg"`)
         end
       end : println()
 

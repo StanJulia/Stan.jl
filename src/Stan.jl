@@ -2,7 +2,7 @@ module Stan
 
 # package code goes here
 
-  using Mamba, Compat
+  using Mamba
 
   include("stanmodel.jl")
   include("stancode.jl")

@@ -1,4 +1,4 @@
-using Stan, Compat
+using Stan
 using Base.Test
 
 old = pwd()

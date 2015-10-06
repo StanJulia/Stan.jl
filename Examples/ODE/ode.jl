@@ -13,7 +13,7 @@
 # guaranteed improvements in successful completion of the simulation.
 #
 
-using Mamba, Stan, Distributions, Compat
+using Mamba, Stan, Distributions
 
 old = pwd()
 ProjDir = Pkg.dir("Stan", "Examples", "ODE")

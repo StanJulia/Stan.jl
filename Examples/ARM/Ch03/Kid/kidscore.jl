@@ -1,6 +1,6 @@
 ######### ARM Ch03: kid score example  ###########
 
-using Compat, Stan, Mamba
+using Stan, Mamba
 
 old = pwd()
 ProjDir = Pkg.dir("Stan", "Examples", "ARM", "Ch03", "Kid")
