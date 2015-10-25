@@ -37,8 +37,8 @@ println()
 
 ## Plotting
 p = plot(sim, [:trace, :mean, :density, :autocor], legend=true);
-draw(p, ncol=4, filename="$(stanmodel.name)-variationalplot", fmt=:svg)
-draw(p, ncol=4, filename="$(stanmodel.name)-variationalplot", fmt=:pdf)
+draw(p, ncol=1, nrow=4, filename="$(stanmodel.name)-variationalplot", fmt=:svg)
+draw(p, ncol=1, nrow=4, filename="$(stanmodel.name)-variationalplot", fmt=:pdf)
 
 # Below will only work on OSX, please adjust for your environment.
 # JULIA_SVG_BROWSER is set from environment variable JULIA_SVG_BROWSER
