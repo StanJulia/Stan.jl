@@ -16,6 +16,11 @@ This version, once tagged/published in METADATA, will be kept as the Github bran
 
 ## What's new
 
+### Version 0.3.2
+
+1. Cleaned up message in Pkg.test("Stan")
+2. Added experimental use of Mamba.contour() to bernoulli.jl (this requires Mamba 0.7.1+)
+
 ### Version 0.3.1
 
 1. Cleaned up shown badges in README (both Travis and ReadTheDocs)

@@ -82,4 +82,19 @@ draw(p, ncol=4, filename="$(stanmodel.name)-summaryplot", fmt=:pdf)
         end
       end : println()
 
+if Pkg.installed("Mamba") > v"0.7.1"
+	# Pairwise contour plots
+	simmod = ModelChains(sim,Mamba.Model())
+	p = plot(simmod, :contour)
+	draw(p, nrow=2, ncol=2, filename="$(stanmodel.name)-contourplot.svg")
+	draw(p, nrow=2, ncol=2, filename="$(stanmodel.name)-contourplot.pdf", fmt=:pdf)
+
+	# Below will only work on OSX, please adjust for your environment.
+	# JULIA_SVG_BROWSER is set from environment variable JULIA_SVG_BROWSER
+	@osx ? if isdefined(Main, :JULIA_SVG_BROWSER) && length(JULIA_SVG_BROWSER) > 0
+	        isfile("$(stanmodel.name)-contourplot.svg") &&
+	          run(`open -a $(JULIA_SVG_BROWSER) "$(stanmodel.name)-contourplot.svg"`)
+	      end : println()
+end
+
 cd(old)
