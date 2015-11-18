@@ -5,148 +5,13 @@
 
 ## Purpose
 
-A package to use Stan 2.8.0 (as an external program) from Julia (v0.4). 
+A package to use Stan 2.8.0 (as an external program) from Julia (v0.4). CmdStan needs to be installed separatedly. Please see the 'Requirements' section below.
 
 For more info on Stan, please go to <http://mc-stan.org>.
 
 For more info on Mamba, please go to <http://mambajl.readthedocs.org/en/latest/>.
 
 This version, once tagged/published in METADATA, will be kept as the Github branch Stan-j0.4-v0.3.1
-
-
-## What's new
-
-### Version 0.3.2
-
-1. Cleaned up message in Pkg.test("Stan")
-2. Added experimental use of Mamba.contour() to bernoulli.jl (this requires Mamba 0.7.1+)
-
-### Version 0.3.1
-
-1. Cleaned up shown badges in README (both Travis and ReadTheDocs)
-2. Removed 0.3 testing in the new Julia format .travis.yml file
-
-### Version 0.3.0
-
-1. Version 0.3.0 is Julia 0.4 only.
-2. Julia 0.4 fixes have been tested up the Julia 0.4-rc4.
-3. Added support for variational-bayes in Stan 2.8.0.
-4. Added the ODE example from the Stan manual to Examples. Please read the comments on ode.jl.
-
-### Version 0.2.0
-
-1. Added travis & documentation badges
-2. Fixes to CMDSTAN_HOME handling in Stan.jl
-
-### Version 0.1.7
-
-1. Updated .travis.yml
-
-### Version 0.1.6
-
-1. Two more notebooks have been added in the Examples/Notebooks directory, StanBernoulliJB includes notebook cells with explanations and some introductory notes.
-2. Removed an earlier addition to runtests.jl needed for testing on JuliaBox. Caused problems in tests on pkg.julialang.org.
-3. The runtests.jl script now reports which version is being tested.
-
-### Version 0.1.5
-
-1. Demonstrate running Stan on JuliaBox. A notebook example has been added in the Examples/Notebook directory.
-
-### Version 0.1.4
-
-1. Fix for the case where CmdStan is not installed (e.g. in tests on pkg.julialang.org)
-
-### Version 0.1.3
-
-1. Fix for several additional issues on Windows, e.g. CRLF.
-2. Handling of obtaining and passing CMDSTAN_HOME is still being studied.
-3. For now the Julia upper bound 0.4- has been removed, although several dependencies are not yet available on Julia 0.4.
-
-I would like to thank Kentarou Matsuura for helping out with the Windows issues. Hopefully most aspects have been tested, any remaining issues are of course my responsibility.
-
-### Version 0.1.2
-
-Bug fix:
-
-1. Fix for access to environment variables on Windows.
-
-### Version 0.1.1
-
-Minor updates:
-
-1. Stores Stan's input & output files in a subdirectory of the working directory.
-2. Fixed handling of adapt, update and thin when passed in through Stanmodel().
-
-### Version 0.1.0
-
-The two most important features introduced in version 0.1.0 are:
-
-1. Using Mamba to display and diagnose simulation results. The call to stan() to sample now returns a Mamba Chains object (previously it returned a dictionary). 
-2. The ability to select which variables to extract form Stan's output .csv file(s).
-
-### Version 0.0.3
-
-1. Inline definition of model and data in the .jl file
-
-### Versions 0.0.2 and earlier
-
-1. Parsing structure for input arguments to Stan.
-2. Parallel execution of Stan simulations.
-3. Read created .csv file by Stan back into Julia.
-
-
-## Requirements
-
-CmdStan has been installed on JuliaBox (see https://www.juliabox.org ). If you have a JuliaBox account, you should be able to run the StanBernoulliJB.ipynb notebook in the Examples/Notebooks directory, e.g. do 
-```
-cd(Pkg.dir("Stan", "Examples", "Notebooks"))
-```
-to see a list of included notebooks.
-
-The two additional notebooks provided test all examples on JuliaBox (or in iJulia) and a notebook that shows how to run the examples included in Stan.jl.
-
-To run this version of the Stan.jl package on your local machine, it assumes that:
-
-1. CmdStan (see <http://mc-stan.org>) is properly installed.
-
-2. Mamba (see <https://github.com/brian-j-smith/Mamba.jl>) is installed. It can be installed using Pkg.add("Mamba")
-
-3. On OSX, all Stan-j03-v0.2.1 examples check the environment variable JULIA_SVG_BROWSER to automatically display (in a browser) the simulation results (after creating .svg files), e.g. on my system I have exported JULIA_SVG_BROWSER="Google Chrome.app". For other platforms the final lines in the Examples/xxxx.jl files may need to be adjusted (or removed). In any case, on all platforms, both a .svg and a .pdf file will be created and left behind in the working directory.
-
-In order for Stan.jl to find the CmdStan executable you can either
-
-1.1) set the environment variable CMDSTAN_HOME to point to the CmdStan directory, e.g. add lines like
-```
-export CMDSTAN_HOME=/Users/rob/Projects/Stan/cmdstan
-launchctl setenv CMDSTAN_HOME /Users/rob/Projects/Stan/cmdstan
-export JULIA_SVG_BROWSER="Google Chrome.app"
-launchctl setenv JULIA_SVG_BROWSER "Google Chrome.app"
-```
-to ~/.bash_profile (the launchctl lines are OSX specific and only needed for shells started from a GUI application).
-
-Or, alternatively,
-
-1.2) define CMDSTAN_HOME in ~/.juliarc.jl, e.g. append lines like 
-```
-CMDSTAN_HOME = "/Users/rob/Projects/Stan/cmdstan"
-JULIA_SVG_BROWSER = "Google Chrome.app"
-```
-to ~/.juliarc.jl.
-
-On Windows this could look like:
-
-```
-CMDSTAN_HOME = "C:\\cmdstan"
-```
-
-This version of the package has primarily been tested on Mac OSX 10.10, Julia 0.3.3, CmStan 2.5.0 and Mamba 0.4.3. A limited amount of testing has taken place on other platforms by other users of the package (see note 2 in the 'To Do' section below).
-
-Stan 0.2.1 does run on 64-bit Julia 0.4 (tested on Julia 0.4.0-dev+2267) but will produce many, many warnings! Your mileage may vary and no promises! At least one report indicates it does not run on 32-bit Julia 0.4.0-dev+2267.
-
-To test and run the examples:
-
-**julia >** ``Pkg.test("Stan")``
-
 
 ## A walk-through example
 
@@ -337,6 +202,140 @@ function stan(
   StanDir=CMDSTAN_HOME)
 ```
 All parameters to compile and run the Stan script are implicitly passed in through the model argument. 
+
+
+## What's new
+
+### Version 0.3.2
+
+1. Cleaned up message in Pkg.test("Stan")
+2. Added experimental use of Mamba.contour() to bernoulli.jl (this requires Mamba 0.7.1+)
+
+### Version 0.3.1
+
+1. Cleaned up shown badges in README (both Travis and ReadTheDocs)
+2. Removed 0.3 testing in the new Julia format .travis.yml file
+
+### Version 0.3.0
+
+1. Version 0.3.0 is Julia 0.4 only.
+2. Julia 0.4 fixes have been tested up the Julia 0.4-rc4.
+3. Added support for variational-bayes in Stan 2.8.0.
+4. Added the ODE example from the Stan manual to Examples. Please read the comments on ode.jl.
+
+### Version 0.2.0
+
+1. Added travis & documentation badges
+2. Fixes to CMDSTAN_HOME handling in Stan.jl
+
+### Version 0.1.7
+
+1. Updated .travis.yml
+
+### Version 0.1.6
+
+1. Two more notebooks have been added in the Examples/Notebooks directory, StanBernoulliJB includes notebook cells with explanations and some introductory notes.
+2. Removed an earlier addition to runtests.jl needed for testing on JuliaBox. Caused problems in tests on pkg.julialang.org.
+3. The runtests.jl script now reports which version is being tested.
+
+### Version 0.1.5
+
+1. Demonstrate running Stan on JuliaBox. A notebook example has been added in the Examples/Notebook directory.
+
+### Version 0.1.4
+
+1. Fix for the case where CmdStan is not installed (e.g. in tests on pkg.julialang.org)
+
+### Version 0.1.3
+
+1. Fix for several additional issues on Windows, e.g. CRLF.
+2. Handling of obtaining and passing CMDSTAN_HOME is still being studied.
+3. For now the Julia upper bound 0.4- has been removed, although several dependencies are not yet available on Julia 0.4.
+
+I would like to thank Kentarou Matsuura for helping out with the Windows issues. Hopefully most aspects have been tested, any remaining issues are of course my responsibility.
+
+### Version 0.1.2
+
+Bug fix:
+
+1. Fix for access to environment variables on Windows.
+
+### Version 0.1.1
+
+Minor updates:
+
+1. Stores Stan's input & output files in a subdirectory of the working directory.
+2. Fixed handling of adapt, update and thin when passed in through Stanmodel().
+
+### Version 0.1.0
+
+The two most important features introduced in version 0.1.0 are:
+
+1. Using Mamba to display and diagnose simulation results. The call to stan() to sample now returns a Mamba Chains object (previously it returned a dictionary). 
+2. The ability to select which variables to extract form Stan's output .csv file(s).
+
+### Version 0.0.3
+
+1. Inline definition of model and data in the .jl file
+
+### Versions 0.0.2 and earlier
+
+1. Parsing structure for input arguments to Stan.
+2. Parallel execution of Stan simulations.
+3. Read created .csv file by Stan back into Julia.
+
+
+## Requirements
+
+To run this version of the Stan.jl package on your local machine, it assumes that:
+
+1. CmdStan (see <http://mc-stan.org>) is properly installed.
+
+2. Mamba (see <https://github.com/brian-j-smith/Mamba.jl>) is installed. It can be installed using Pkg.add("Mamba")
+
+3. On OSX, all Stan-j03-v0.2.1 examples check the environment variable JULIA_SVG_BROWSER to automatically display (in a browser) the simulation results (after creating .svg files), e.g. on my system I have exported JULIA_SVG_BROWSER="Google Chrome.app". For other platforms the final lines in the Examples/xxxx.jl files may need to be adjusted (or removed). In any case, on all platforms, both a .svg and a .pdf file will be created and left behind in the working directory.
+
+In order for Stan.jl to find the CmdStan executable you can either
+
+1.1) set the environment variable CMDSTAN_HOME to point to the CmdStan directory, e.g. add lines like
+```
+export CMDSTAN_HOME=/Users/rob/Projects/Stan/cmdstan
+launchctl setenv CMDSTAN_HOME /Users/rob/Projects/Stan/cmdstan
+export JULIA_SVG_BROWSER="Google Chrome.app"
+launchctl setenv JULIA_SVG_BROWSER "Google Chrome.app"
+```
+to ~/.bash_profile (the launchctl lines are OSX specific and only needed for shells started from a GUI application).
+
+Or, alternatively,
+
+1.2) define CMDSTAN_HOME in ~/.juliarc.jl, e.g. append lines like 
+```
+CMDSTAN_HOME = "/Users/rob/Projects/Stan/cmdstan"
+JULIA_SVG_BROWSER = "Google Chrome.app"
+```
+to ~/.juliarc.jl.
+
+On Windows this could look like:
+
+```
+CMDSTAN_HOME = "C:\\cmdstan"
+```
+
+This version of the package has primarily been tested on Mac OSX 10.11, Julia 0.4+, CmStan 2.8.0 and Mamba 0.7+. A limited amount of testing has taken place on other platforms by other users of the package (see note 2 in the 'To Do' section below).
+
+Stan 0.2.1 does run on 64-bit Julia 0.4 (tested on Julia 0.4.0-dev+2267) but will produce many, many warnings! Your mileage may vary and no promises! At least one report indicates it does not run on 32-bit Julia 0.4.0-dev+2267.
+
+To test and run the examples:
+
+**julia >** ``Pkg.test("Stan")``
+
+CmdStan has been installed on JuliaBox (see https://www.juliabox.org ). If you have a JuliaBox account, you should be able to run the StanBernoulliJB.ipynb notebook in the Examples/Notebooks directory, e.g. do 
+```
+cd(Pkg.dir("Stan", "Examples", "Notebooks"))
+```
+to see a list of included notebooks.
+
+The two additional notebooks provided test all examples on JuliaBox (or in iJulia) and a notebook that shows how to run the examples included in Stan.jl.
 
 
 ## To do
