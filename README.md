@@ -5,13 +5,15 @@
 
 ## Purpose
 
-A package to use Stan 2.8.0 (as an external program) from Julia (v0.4). CmdStan needs to be installed separatedly. Please see the 'Requirements' section below.
+A package to use Stan 2.9.0 (as an external program) from Julia (v0.4.2). CmdStan needs to be installed separatedly. Please see the 'Requirements' section below.
 
 For more info on Stan, please go to <http://mc-stan.org>.
 
 For more info on Mamba, please go to <http://mambajl.readthedocs.org/en/latest/>.
 
-This version, once tagged/published in METADATA, will be kept as the Github branch Stan-j0.4-v0.3.1
+This version, once tagged/published in METADATA, will be kept as the Github branch Stan-j0.4-v0.3.2
+
+This version of the package has primarily been tested on Mac OSX 10.11, Julia 0.4.2, CmdStan 2.9.0 and Mamba 0.7+. A limited amount of testing has taken place on other platforms by other users of the package (see note 2 in the 'To Do' section below).
 
 ## A walk-through example
 
@@ -183,7 +185,7 @@ All arguments have default values, although usually at least the name and model 
 
 An external stan model file can be specified by leaving model="" (the default value) and specifying a model_file name.
 
-Notice that 'thin' as an argument to Jagsmodel() works slightly different from passing it through the Sample() argument to Jagsmodel. In the first case the thinning is applied after Stan has finished, the second case asks Stan to handle the thinning. For Mamba post-processing of the results, the thin argument to Jagsmodel() is the preferred option.
+Notice that 'thin' as an argument to Stanmodel() works slightly different from passing it through the Sample() argument to Stanmodel. In the first case the thinning is applied after Stan has finished, the second case asks Stan to handle the thinning. For Mamba post-processing of the results, the thin argument to Jagsmodel() is the preferred option.
 
 After a Stanmodel has been created, the workhorse function stan() is called to run the simulation.
 
@@ -320,10 +322,6 @@ On Windows this could look like:
 ```
 CMDSTAN_HOME = "C:\\cmdstan"
 ```
-
-This version of the package has primarily been tested on Mac OSX 10.11, Julia 0.4+, CmStan 2.8.0 and Mamba 0.7+. A limited amount of testing has taken place on other platforms by other users of the package (see note 2 in the 'To Do' section below).
-
-Stan 0.2.1 does run on 64-bit Julia 0.4 (tested on Julia 0.4.0-dev+2267) but will produce many, many warnings! Your mileage may vary and no promises! At least one report indicates it does not run on 32-bit Julia 0.4.0-dev+2267.
 
 To test and run the examples:
 
