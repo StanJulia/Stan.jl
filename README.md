@@ -77,7 +77,7 @@ As stated above, by default it will run 4 chains, optionally display a combined 
 In this case 'sim1' is a Mamba Chains object. We can inspect sim1 as follows:
 ```
 typeof(sim1) |> display
-names(sim1) |> display
+fieldnames(sim1) |> display
 sim1.names |> display
 ```
 To inspect the simulation results we can't use all monitored variables by Stan. In this example a good subset is selected as follows and stored in 'sim':
