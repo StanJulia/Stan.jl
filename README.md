@@ -5,7 +5,7 @@
 
 ## Purpose
 
-A package to use Stan 2.9.0 (as an external program) from Julia (v0.4.2). CmdStan needs to be installed separatedly. Please see the 'Requirements' section below.
+A package to use Stan 2.9.0 (as an external program) from Julia (v0.4.3). CmdStan needs to be installed separatedly. Please see the 'Requirements' section below.
 
 For more info on Stan, please go to <http://mc-stan.org>.
 
@@ -295,8 +295,24 @@ To run this version of the Stan.jl package on your local machine, it assumes tha
 
 2. Mamba (see <https://github.com/brian-j-smith/Mamba.jl>) is installed. It can be installed using Pkg.add("Mamba")
 
-3. On OSX, all Stan-j03-v0.2.1 examples check the environment variable JULIA_SVG_BROWSER to automatically display (in a browser) the simulation results (after creating .svg files), e.g. on my system I have exported JULIA_SVG_BROWSER="Google Chrome.app". For other platforms the final lines in the Examples/xxxx.jl files may need to be adjusted (or removed). In any case, on all platforms, both a .svg and a .pdf file will be created and left behind in the working directory.
+3. On OSX, all Stan-j03-v0.x.x examples check the environment variable JULIA_SVG_BROWSER to automatically display (in a browser) the simulation results (after creating .svg files), e.g. on my system I have exported JULIA_SVG_BROWSER="Google Chrome.app". For other platforms the final lines in the Examples/xxxx.jl files may need to be adjusted (or removed). In any case, on all platforms, both a .svg and a .pdf file will be created and left behind in the working directory.
 
+4. On OSX, in addition to the user following the steps in Stan's CmdStan User's Guide, CmdStan can also be installed using brew or Julia's Homebrew.
+
+	 Executing in a terminal:
+	 ```
+	 brew tap homebrew/science
+	 brew install cmdstan
+	 ```
+	 should install cmdstan_2.9.0 in /usr/local/Cellar/cmdstan/2.9.0.
+	 
+	 Or, from within the Julia REPL:
+	 ```
+	 using Homebrew
+	 Homebrew.add("cmdstan") or Homebrew.add("homebrew/science/cmdstan")
+	 ```
+	 will install CmdStan in ~/.julia/v0.x/Homebrew/deps/usr/Cellar/cmdstan/2.9.0.
+	 
 In order for Stan.jl to find the CmdStan executable you can either
 
 1.1) set the environment variable CMDSTAN_HOME to point to the CmdStan directory, e.g. add lines like
