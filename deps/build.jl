@@ -9,5 +9,5 @@ cmdstan = library_dependency("cmdstan")
     end
     
     using Homebrew
-    provides( Homebrew.HB, "cmdstan", cmdstan, os = :Darwin )
+    provides( Homebrew.HB, "homebrew/science/cmdstan", cmdstan, os = :Darwin )
 end

@@ -317,8 +317,8 @@ In order for Stan.jl to find the CmdStan executable you can either
 
 1.1) set the environment variable CMDSTAN_HOME to point to the CmdStan directory, e.g. add lines like
 ```
-export CMDSTAN_HOME=/Users/rob/Projects/Stan/cmdstan
-launchctl setenv CMDSTAN_HOME /Users/rob/Projects/Stan/cmdstan
+export CMDSTAN_HOME=~/.julia/v0.x/Homebrew/deps/usr/Cellar/cmdstan/2.9.0
+launchctl setenv CMDSTAN_HOME ~/.julia/v0.x/Homebrew/deps/usr/Cellar/cmdstan/2.9.0
 export JULIA_SVG_BROWSER="Google Chrome.app"
 launchctl setenv JULIA_SVG_BROWSER "Google Chrome.app"
 ```
