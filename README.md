@@ -206,6 +206,14 @@ All parameters to compile and run the Stan script are implicitly passed in throu
 
 ## What's new
 
+### Version 0.3.4
+
+1. Updated Pkg.test("Stan") message to Stan-j0.4-v0.3.4
+
+### Version 0.3.3
+
+1. Added BinDeps to REQUIRE
+
 ### Version 0.3.2
 
 1. Cleaned up message in Pkg.test("Stan")
