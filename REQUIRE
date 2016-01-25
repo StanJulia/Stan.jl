@@ -1,4 +1,5 @@
 julia 0.4
 Mamba
 Gadfly
+BinDeps
 @osx Homebrew
