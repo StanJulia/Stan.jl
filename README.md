@@ -1,19 +1,18 @@
 # Stan
 
-[![Stan](http://pkg.julialang.org/badges/Stan_0.3.svg)](http://pkg.julialang.org/?pkg=Stan&ver=0.3)
 [![Stan](http://pkg.julialang.org/badges/Stan_0.4.svg)](http://pkg.julialang.org/?pkg=Stan&ver=0.4)
 
 ## Purpose
 
-A package to use Stan 2.9.0 (as an external program) from Julia (v0.4.3). CmdStan needs to be installed separatedly. Please see the 'Requirements' section below.
+A package to use Stan (as an external program) from Julia.
+
+CmdStan needs to be installed separatedly. Please see the 'Requirements' section below.
 
 For more info on Stan, please go to <http://mc-stan.org>.
 
 For more info on Mamba, please go to <http://mambajl.readthedocs.org/en/latest/>.
 
-This version, once tagged/published in METADATA, will be kept as the Github branch Stan-j0.4-v0.3.2
-
-This version of the package has primarily been tested on Mac OSX 10.11, Julia 0.4.2, CmdStan 2.9.0 and Mamba 0.7+. A limited amount of testing has taken place on other platforms by other users of the package (see note 2 in the 'To Do' section below).
+This version of the package has primarily been tested on Mac OSX 10.11, Julia 0.4.3, CmdStan 2.9.0 and Mamba 0.8+. A limited amount of testing has taken place on other platforms by other users of the package (see note 2 in the 'To Do' section below).
 
 ## A walk-through example
 
@@ -25,7 +24,7 @@ old = pwd()
 ProjDir = Pkg.dir("Stan", "Examples", "Bernoulli")
 cd(ProjDir)
 ```
-'ProjDir' is the path where permanent and transient files will be created.
+'ProjDir' is the path where permanent and transient files will be created (in a subdirectory /tmp of ProjDir).
 
 Next define the variable 'bernoullistanmodel' to hold the Stan model definition:
 ```
@@ -49,9 +48,9 @@ by giving the model a name while the Stan model is passed in, both through keywo
 stanmodel = Stanmodel(name="bernoulli", model=bernoullistanmodel);
 stanmodel |> display
 ```
-Above Stanmodel() call creates a default model for sampling. See other examples for methods optimize and diagnose in the Bernoulli example directory and below for some more possible Stanmodel() arguments.
+Above Stanmodel() call creates a default model for sampling. See the other examples for methods optimize, diagnose and variational in the Bernoulli example directory and below for some more possible Stanmodel() arguments.
 
-The input data is defined below (using the future Julia 0.4 dictionary syntax). Package Compat.jl provides the Dict macro to support this on Julia 0.3. By default 4 chains will be simulated. Below initialization of 'bernoullidata' creates an array of 4 dictionaries, a dictionary for each chain. If the array length is not equal to the number of chains, only the first element of the array will be used as initialization for all chains.
+The input data is defined below. By default 4 chains will be simulated. Below initialization of 'bernoullidata' creates an array of 4 dictionaries, a dictionary for each chain. If the array length is not equal to the number of chains, only the first element of the array will be used as initialization for all chains.
 ```
 const bernoullidata = [
   Dict("N" => 10, "y" => [0, 1, 0, 1, 0, 0, 0, 0, 0, 1]),
@@ -63,7 +62,7 @@ println("Input observed data, an array of dictionaries:")
 bernoullidata |> display
 println()
 ```
-Run the simulation by calling stan(), passing in the data and the intended working directory (where output files created by Stan will be stored). To get a summary describtion of the results, describe() is called (describe() is a Mamba.jl function):
+Run the simulation by calling stan(), passing in the data and the intended working directory. To get a summary description of the results, describe() is called (describe() is a Mamba.jl function):
 ```
 sim1 = stan(stanmodel, bernoullidata, ProjDir, CmdStanDir=CMDSTAN_HOME)
 describe(sim1)
@@ -72,7 +71,7 @@ The first time (or when updates to the model or data have been made) stan() will
 
 On Windows, the CmdStanDir argument appears needed (this is still being investigated). On OSX/Unix CmdStanDir is obtained from either ~/.juliarc.jl or an environment variable (see the Requirements section).
 
-As stated above, by default it will run 4 chains, optionally display a combined summary and returns a Mamba Chains object for a sampler. Other methods return a dictionary.
+As stated above, by default it will run 4 chains, optionally display a combined summary and returns a Mamba Chains object for a sampler. Some other Stan methods, e.g. optimize, return a dictionary.
 
 In this case 'sim1' is a Mamba Chains object. We can inspect sim1 as follows:
 ```
@@ -80,7 +79,7 @@ typeof(sim1) |> display
 fieldnames(sim1) |> display
 sim1.names |> display
 ```
-To inspect the simulation results we can't use all monitored variables by Stan. In this example a good subset is selected as follows and stored in 'sim':
+To inspect the simulation results by Mamba's describe() we can't use all monitored variables by Stan. In this example a good subset is selected as follows and stored in 'sim':
 ```
 println("Subset Sampler Output")
 sim = sim1[1:1000, ["lp__", "theta", "accept_stat__"], :]
@@ -89,7 +88,7 @@ println()
 ```
 Notice that in this example 7 variables are read in but only 3 are used for diagnostics and posterior inference. In some cases Stan can monitor 100s or even 1000s of variables in which case it might be better to use the monitors keyword argument to stan(), see the next section for more details.
 
-The following diagnostics and Gadfly based plot functions from Mamba.jl are available:
+The following diagnostics and Gadfly based plot functions (all from Mamba.jl) are available:
 ```
 println("Brooks, Gelman and Rubin Convergence Diagnostic")
 try
@@ -151,14 +150,13 @@ Compared to the call to Stanmodel() above, the keyword argument monitors has bee
 ```
 stanmodel2 = Stanmodel(Sample(adapt=Adapt(delta=0.9)), name="bernoulli2", nchains=6)
 ```
-An example of updating default model values when creating a model. The format is slightly different from CmdStan, but the parameters are as described in the CmdStan Interface User's Guide (v2.5.0, October 20th 2014). This is also the case for the Stanmodel() optional arguments random, init and output (refresh only).
+An example of updating default model values when creating a model. The format is slightly different from CmdStan, but the parameters are as described in the CmdStan Interface User's Guide. This is also the case for the Stanmodel() optional arguments random, init and output (refresh only).
 
 Now stanmodel2 will look like:
 ```
 stanmodel2
 ````
 After the Stanmodel object has been created fields can be updated, e.g.
-
 ```
 stanmodel2.method.adapt.delta=0.85
 ```
@@ -185,7 +183,7 @@ All arguments have default values, although usually at least the name and model 
 
 An external stan model file can be specified by leaving model="" (the default value) and specifying a model_file name.
 
-Notice that 'thin' as an argument to Stanmodel() works slightly different from passing it through the Sample() argument to Stanmodel. In the first case the thinning is applied after Stan has finished, the second case asks Stan to handle the thinning. For Mamba post-processing of the results, the thin argument to Jagsmodel() is the preferred option.
+Notice that 'thin' as an argument to Stanmodel() works slightly different from passing it through the Sample() argument to Stanmodel. In the first case the thinning is applied after Stan has finished, the second case asks Stan to handle the thinning. For Mamba post-processing of the results, the thin argument to Stanmodel() is the preferred option.
 
 After a Stanmodel has been created, the workhorse function stan() is called to run the simulation.
 
@@ -212,6 +210,7 @@ All parameters to compile and run the Stan script are implicitly passed in throu
 
 1. Cleaned up message in Pkg.test("Stan")
 2. Added experimental use of Mamba.contour() to bernoulli.jl (this requires Mamba 0.7.1+)
+3. Introduce the use of Homebrew to install CmdStan on OSX
 
 ### Version 0.3.1
 
@@ -295,9 +294,9 @@ To run this version of the Stan.jl package on your local machine, it assumes tha
 
 2. Mamba (see <https://github.com/brian-j-smith/Mamba.jl>) is installed. It can be installed using Pkg.add("Mamba")
 
-3. On OSX, all Stan-j03-v0.x.x examples check the environment variable JULIA_SVG_BROWSER to automatically display (in a browser) the simulation results (after creating .svg files), e.g. on my system I have exported JULIA_SVG_BROWSER="Google Chrome.app". For other platforms the final lines in the Examples/xxxx.jl files may need to be adjusted (or removed). In any case, on all platforms, both a .svg and a .pdf file will be created and left behind in the working directory.
+3. On OSX, all examples check the environment variable JULIA_SVG_BROWSER to automatically display (in a browser) the simulation results (after creating .svg files), e.g. on my system I have exported JULIA_SVG_BROWSER="Google Chrome.app". For other platforms the final lines in the Examples/xxxx.jl files may need to be adjusted (or removed). In any case, on all platforms, both a .svg and a .pdf file will be created and left behind in the working directory.
 
-4. On OSX, in addition to the user following the steps in Stan's CmdStan User's Guide, CmdStan can also be installed using brew or Julia's Homebrew.
+4. Thanks to Robert Feldt and the brew/Homebrew.jl folks, on OSX, in addition to the user following the steps in Stan's CmdStan User's Guide, CmdStan can also be installed using brew or Julia's Homebrew.
 
 	 Executing in a terminal:
 	 ```
@@ -309,7 +308,7 @@ To run this version of the Stan.jl package on your local machine, it assumes tha
 	 Or, from within the Julia REPL:
 	 ```
 	 using Homebrew
-	 Homebrew.add("cmdstan") or Homebrew.add("homebrew/science/cmdstan")
+	 Homebrew.add("homebrew/science/cmdstan")
 	 ```
 	 will install CmdStan in ~/.julia/v0.x/Homebrew/deps/usr/Cellar/cmdstan/2.9.0.
 	 
@@ -328,13 +327,12 @@ Or, alternatively,
 
 1.2) define CMDSTAN_HOME in ~/.juliarc.jl, e.g. append lines like 
 ```
-CMDSTAN_HOME = "/Users/rob/Projects/Stan/cmdstan"
+CMDSTAN_HOME = "/Users/rob/Projects/Stan/cmdstan" # Choose the appropriate directory here
 JULIA_SVG_BROWSER = "Google Chrome.app"
 ```
 to ~/.juliarc.jl.
 
 On Windows this could look like:
-
 ```
 CMDSTAN_HOME = "C:\\cmdstan"
 ```
@@ -358,4 +356,6 @@ More features will be added as requested by users and as time permits. Please fi
 
 **Note 1:** Few problems related to installing CmdStan have been reported on the Stan mailing list (but maybe most folks use RStan or Pystan).
 
-**Note 2:** In order to support platforms other than OS X, help is needed to test on such platforms.
+**Note 2:** Work is in progress to auto-install CmdStan on OSX during Pkg.add("Stan").
+
+**Note 3:** In order to support platforms other than OS X, help is needed to test on such platforms.
