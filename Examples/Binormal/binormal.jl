@@ -26,7 +26,7 @@ model {
 }
 "
 
-stanmodel = Stanmodel(name="binormal", model=binorm);
+stanmodel = Stanmodel(name="binormal", model=binorm, Sample(save_warmup=true));
 
 sim1 = stan(stanmodel, CmdStanDir=CMDSTAN_HOME)
 
@@ -75,5 +75,6 @@ draw(p, ncol=4, filename="$(stanmodel.name)-summaryplot", fmt=:pdf)
             run(`open -a $(JULIA_SVG_BROWSER) "$(stanmodel.name)-summaryplot-$(i).svg"`)
         end
       end : println()
+
 
 cd(old)

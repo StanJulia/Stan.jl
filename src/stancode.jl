@@ -295,6 +295,7 @@ function read_stanfit_samples(m::Stanmodel, diagnostics=false)
 	
   for i in 1:m.nchains
     if isfile("$(m.name)_$(ftype)_$(i).csv")
+      noofsamples = 0
       instream = open("$(m.name)_$(ftype)_$(i).csv")
       skipchars(instream, isspace, linecomment='#')
       line = normalize_string(readline(instream), newline2lf=true)
@@ -305,11 +306,16 @@ function read_stanfit_samples(m::Stanmodel, diagnostics=false)
       else
         indvec = findin(index, m.monitors)
       end
+      if m.method.save_warmup
+        noofsamples = m.method.num_samples+m.method.num_warmup
+      else
+        noofsamples = m.method.num_samples
+      end
       if i == 1
-        a3d = fill(0.0, m.method.num_samples, length(indvec), m.nchains)
+        a3d = fill(0.0, noofsamples, length(indvec), m.nchains)
       end
       skipchars(instream, isspace, linecomment='#')
-      for j in 1:m.method.num_samples
+      for j in 1:noofsamples
         skipchars(instream, isspace, linecomment='#')
         line = normalize_string(readline(instream), newline2lf=true)
         if eof(instream) && length(line) < 2
@@ -325,10 +331,13 @@ function read_stanfit_samples(m::Stanmodel, diagnostics=false)
   end
   
   if m.method.save_warmup
-    sr = getindex(a3d, [m.method.num_warmup:m.method.thin:size(a3d, 1);], [1:size(a3d, 2);], [1:size(a3d, 3);])
-    Chains(sr, start=m.method.num_warmup, thin=m.method.thin, names=idx[indvec], chains=[i for i in 1:m.nchains])
+    sr = getindex(a3d, [m.method.num_warmup:m.method.thin:size(a3d, 1);], 
+      [1:size(a3d, 2);], [1:size(a3d, 3);])
+    Chains(sr, start=m.method.num_warmup, thin=m.method.thin, names=idx[indvec], 
+      chains=[i for i in 1:m.nchains])
   else  
-    sr = getindex(a3d, [1:m.method.thin:size(a3d, 1);], [1:size(a3d, 2);], [1:size(a3d, 3);])
+    sr = getindex(a3d, [1:m.method.thin:size(a3d, 1);], 
+      [1:size(a3d, 2);], [1:size(a3d, 3);])
     Chains(sr, start=1, thin=m.thin, names=idx[indvec], chains=[i for i in 1:m.nchains])
   end
 end
