@@ -185,6 +185,11 @@ An external stan model file can be specified by leaving model="" (the default va
 
 Notice that 'thin' as an argument to Stanmodel() works slightly different from passing it through the Sample() argument to Stanmodel. In the first case the thinning is applied after Stan has finished, the second case asks Stan to handle the thinning. For Mamba post-processing of the results, the thin argument to Stanmodel() is the preferred option.
 
+If the method=Sample(save_warmup=true) is used, it is possible to retrieve just the warmup samples by calling
+```
+read_stanfit_warmup_samples(stanmodel)
+```
+ 
 After a Stanmodel has been created, the workhorse function stan() is called to run the simulation.
 
 The stan() call uses 'make' to create (or update when needed) an executable with the given model.name, e.g. bernoulli in the above example. If no model String (or of zero length) is found, a message will be shown.

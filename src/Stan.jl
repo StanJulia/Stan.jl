@@ -34,6 +34,7 @@ module Stan
     stan_summary,
     read_stanfit,
     read_stanfit_samples,
+    read_stanfit_warmup_samples,
     CMDSTAN_HOME,
     JULIA_SVG_BROWSER,
   # From stanmodel.jl

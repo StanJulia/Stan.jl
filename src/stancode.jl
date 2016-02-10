@@ -285,11 +285,18 @@ function read_stanfit(model::Stanmodel)
 end
 
 
-#### Create a Mamba::Chains result
+#### Create a Mamba::Chains for results or warmup samples
 
-function read_stanfit_samples(m::Stanmodel, diagnostics=false)
+function read_stanfit_warmup_samples(m::Stanmodel, diagnostics=false)
+  if !m.method.save_warmup
+    println("Saving of warmup samples not requested in StanModel. Returning samples.")
+  end
+  Stan.read_stanfit_samples(m::Stanmodel, diagnostics, true)
+end
 
-  local a3d, monitors, index, idx, indvec, ftype
+function read_stanfit_samples(m::Stanmodel, diagnostics=false, warmup_samples=false)
+
+  global a3d, monitors, index, idx, indvec, ftype
   
   ftype = diagnostics ? "diagnostics" : "samples"
 	
@@ -331,10 +338,17 @@ function read_stanfit_samples(m::Stanmodel, diagnostics=false)
   end
   
   if m.method.save_warmup
-    sr = getindex(a3d, [m.method.num_warmup:m.method.thin:size(a3d, 1);], 
-      [1:size(a3d, 2);], [1:size(a3d, 3);])
-    Chains(sr, start=m.method.num_warmup, thin=m.method.thin, names=idx[indvec], 
-      chains=[i for i in 1:m.nchains])
+    if warmup_samples
+      sr = getindex(a3d, [1:1:m.method.num_warmup;], 
+        [1:size(a3d, 2);], [1:size(a3d, 3);])
+      Chains(sr, start=1, thin=1, names=idx[indvec], 
+        chains=[i for i in 1:m.nchains])
+    else
+      sr = getindex(a3d, [m.method.num_warmup+1:m.method.thin:size(a3d, 1);], 
+        [1:size(a3d, 2);], [1:size(a3d, 3);])
+      Chains(sr, start=m.method.num_warmup+1, thin=m.method.thin, names=idx[indvec], 
+        chains=[i for i in 1:m.nchains])
+    end
   else  
     sr = getindex(a3d, [1:m.method.thin:size(a3d, 1);], 
       [1:size(a3d, 2);], [1:size(a3d, 3);])
