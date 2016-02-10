@@ -36,7 +36,7 @@ sim = sim1[1:size(sim1, 1), ["lp__", "y.1", "y.2"], 1:size(sim1, 3)]
 describe(sim)
 println()
 
-#=
+
 ## Brooks, Gelman and Rubin Convergence Diagnostic
 try
   gelmandiag(sim1, mpsrf=true, transform=true) |> display
@@ -75,6 +75,6 @@ draw(p, ncol=4, filename="$(stanmodel.name)-summaryplot", fmt=:pdf)
             run(`open -a $(JULIA_SVG_BROWSER) "$(stanmodel.name)-summaryplot-$(i).svg"`)
         end
       end : println()
-=#
+
 
 cd(old)
