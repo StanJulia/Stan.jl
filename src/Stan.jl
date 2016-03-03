@@ -9,22 +9,20 @@ module Stan
   include("utilities.jl")
   
   if !isdefined(Main, :CMDSTAN_HOME)
-    CMDSTAN_HOME = ""
-    try
-      CMDSTAN_HOME = ENV["CMDSTAN_HOME"]
-    catch e
-      println("Environment variable CMDSTAN_HOME not found.")
+    if haskey(ENV, "CMDSTAN_HOME")
+       global const CMDSTAN_HOME = ENV["CMDSTAN_HOME"]
+    else
       CMDSTAN_HOME = ""
+      error("Environment variable CMDSTAN_HOME not found.")
     end
   end
   
   if !isdefined(Main, :JULIA_SVG_BROWSER)
-    JULIA_SVG_BROWSER = ""
-    try
-      JULIA_SVG_BROWSER = ENV["JULIA_SVG_BROWSER"]
-    catch e
-      println("Environment variable JULIA_SVG_BROWSER not found.")
+    if haskey(ENV, "JULIA_SVG_BROWSER")
+       global const JULIA_SVG_BROWSER = ENV["JULIA_SVG_BROWSER"]
+    else
       JULIA_SVG_BROWSER = ""
+      error("Environment variable JULIA_SVG_BROWSER not found.")
     end
   end
   
