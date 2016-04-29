@@ -1,3 +1,5 @@
+using Stan
+
 ## testing accessors to CMDSTAN_HOME
 let oldpath = Stan.CMDSTAN_HOME
     newpath = Stan.CMDSTAN_HOME * "##test##"
