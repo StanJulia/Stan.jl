@@ -9,4 +9,9 @@ isdir("tmp") &&
 
 include(Pkg.dir(ProjDir, "binomial.jl"))
 
+cd(ProjDir)
+isdir("tmp") &&
+  rm("tmp", recursive=true);
+
+
 cd(old)
