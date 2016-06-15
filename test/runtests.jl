@@ -10,6 +10,7 @@ code_tests = ["test_env.jl",
 # Run execution_tests only if CmdStan is installed and CMDSTAN_HOME is set correctly.
 execution_tests = [
   "test_bernoulli.jl",
+  "test_binomial.jl",
   "test_binormal.jl",
   "test_schools8.jl",
   "test_dyes.jl",
