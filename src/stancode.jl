@@ -2,6 +2,15 @@
 # Basic definitions
 #
 
+function check_data_type(data)
+  if typeof(data) <: Array && length(data) > 0
+    if keytype(data[1]) == ASCIIString && valtype(data[1]) <: Any
+      return true
+    end
+  end
+  return false
+end
+
 function stan(
   model::Stanmodel, 
   data=Void, 
@@ -37,7 +46,7 @@ function stan(
     run(pipeline(`make $(tmpmodelname)`, stderr="$(tmpmodelname)_build.log"))
         
     cd(model.tmpdir)
-    if data != Void && isa(data, Array{Dict{ASCIIString, Any}, 1}) && length(data) > 0
+    if data != Void && check_data_type(data)
       if length(data) == model.nchains
         for i in 1:model.nchains
           if length(keys(data[i])) > 0
@@ -122,7 +131,7 @@ function stan(
   res
 end
 
-function update_R_file(file::ASCIIString, dct::Dict{ASCIIString, Any}; replaceNaNs::Bool=true)
+function update_R_file{T<:Any}(file::ASCIIString, dct::Dict{ASCIIString, T}; replaceNaNs::Bool=true)
   isfile(file) && rm(file)
   strmout = open(file, "w")
   
