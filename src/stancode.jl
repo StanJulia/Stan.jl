@@ -230,6 +230,7 @@ function read_stanfit(model::Stanmodel)
             tdict = merge(tdict, Dict(:finite_dif => [parse(Float64, sstr[93])]))
             tdict = merge(tdict, Dict(:error => [parse(Float64, sstr[94])]))
           else
+            instream = open("$(model.name)_$(res_type)_$(i).csv")
             skipchars(instream, isspace, linecomment='#')
             i = 0
             skipchars(instream, isspace, linecomment='#')
