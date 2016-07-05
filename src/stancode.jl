@@ -212,28 +212,44 @@ function read_stanfit(model::Stanmodel)
         ## A result type file for chain i is present ##
         ## Result type diagnose needs special treatment ##
         instream = open("$(model.name)_$(res_type)_$(i).csv")
-        
         if res_type == "diagnose"
-          skipchars(instream, isspace, linecomment='#')
-          i = 0
           tdict = Dict()
-          skipchars(instream, isspace, linecomment='#')
-          while true
-            i += 1 
-            line = normalize_string(readline(instream), newline2lf=true)
-            if i == 1
-              tdict = merge(tdict, Dict(:lp => [float(split(line[1:(length(line)-1)], "=")[2])]))
-            elseif i == 3
-              sa = split(line[1:(length(line)-1)])
-              tdict = merge(tdict, Dict(:var_id => [parse(Int, sa[1])], :value => [float(sa[2])]))
-              tdict = merge(tdict, Dict(:model => [float(sa[3])], :finite_dif => [float(sa[4])]))
-              tdict = merge(tdict, Dict(:error => [float(sa[5])]))
-            end
-            if eof(instream)
-              close(instream)
-              break
-            end
+          str = readall(instream)
+          sstr = split(str)
+          tdict = merge(tdict, Dict(:stan_major_version => [parse(Int, sstr[4])]))
+          tdict = merge(tdict, Dict(:stan_minor_version => [parse(Int, sstr[8])]))
+          tdict = merge(tdict, Dict(:stan_patch_version => [parse(Int, sstr[12])]))
+          if tdict[:stan_minor_version][1] >= 10
+            # Stan minor version >= 10
+            sstr_lp = sstr[79]
+            sstr_lp = parse(Float64, split(sstr_lp, '=')[2])
+            tdict = merge(tdict, Dict(:lp => [sstr_lp]))
+            tdict = merge(tdict, Dict(:var_id => [parse(Int, sstr[90])]))
+            tdict = merge(tdict, Dict(:value => [parse(Float64, sstr[91])]))
+            tdict = merge(tdict, Dict(:model => [parse(Float64, sstr[92])]))
+            tdict = merge(tdict, Dict(:finite_dif => [parse(Float64, sstr[93])]))
+            tdict = merge(tdict, Dict(:error => [parse(Float64, sstr[94])]))
+          else
             skipchars(instream, isspace, linecomment='#')
+            i = 0
+            skipchars(instream, isspace, linecomment='#')
+            while true
+              i += 1 
+              line = normalize_string(readline(instream), newline2lf=true)
+              if i == 1
+                tdict = merge(tdict, Dict(:lp => [float(split(line[1:(length(line)-1)], "=")[2])]))
+              elseif i == 3
+                sa = split(line[1:(length(line)-1)])
+                tdict = merge(tdict, Dict(:var_id => [parse(Int, sa[1])], :value => [float(sa[2])]))
+                tdict = merge(tdict, Dict(:model => [float(sa[3])], :finite_dif => [float(sa[4])]))
+                tdict = merge(tdict, Dict(:error => [float(sa[5])]))
+              end
+              if eof(instream)
+                close(instream)
+                break
+              end
+              skipchars(instream, isspace, linecomment='#')
+            end
           end
         else
           #println("Type of result file is $(res_type)")

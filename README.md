@@ -211,6 +211,11 @@ All parameters to compile and run the Stan script are implicitly passed in throu
 
 ## What's new
 
+### Version 0.4.0
+
+1. Tested with Stan 2.10.0 (fixed a change in the diagnose .csv file format)
+2. Updated how CMDSTAN_HOME is retrieved from ENV (see also REQUIREMENTS section below)
+
 ### Version 0.3.2
 
 1. Cleaned up message in Pkg.test("Stan")
