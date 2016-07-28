@@ -20,7 +20,7 @@ end
 
 """Set the path for `CMDSTAN`.
     
-Example: `set_CMDSTAN_HOME!(homedir() * "/src/src/cmdstan-2.9.0/")`"""
+Example: `set_CMDSTAN_HOME!(homedir() * "/src/src/cmdstan-2.11.0/")`"""
 set_CMDSTAN_HOME!(path) = global CMDSTAN_HOME=path
 
 if !isdefined(Main, :JULIA_SVG_BROWSER)
