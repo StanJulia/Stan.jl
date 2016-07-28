@@ -12,7 +12,9 @@ For more info on Stan, please go to <http://mc-stan.org>.
 
 For more info on Mamba, please go to <http://mambajl.readthedocs.org/en/latest/>.
 
-This version of the package has primarily been tested on Mac OSX 10.11, Julia 0.4.3, CmdStan 2.9.0 and Mamba 0.8+. A limited amount of testing has taken place on other platforms by other users of the package (see note 2 in the 'To Do' section below).
+This version of the package has primarily been tested on Mac OSX 10.11, Julia 0.4.6, CmdStan 2.11.0 and Mamba 0.9+.
+
+A limited amount of testing has taken place on other platforms by other users of the package (see note 2 in the 'To Do' section below).
 
 ## A walk-through example
 
@@ -213,7 +215,7 @@ All parameters to compile and run the Stan script are implicitly passed in throu
 
 ### Version 0.4.0
 
-1. Tested with Stan 2.10.0 (fixed a change in the diagnose .csv file format)
+1. Tested with Stan 2.11.0 (fixed a change in the diagnose .csv file format)
 2. Updated how CMDSTAN_HOME is retrieved from ENV (see also REQUIREMENTS section below)
 
 ### Version 0.3.2
@@ -306,7 +308,7 @@ To run this version of the Stan.jl package on your local machine, it assumes tha
 
 3. On OSX, all examples check the environment variable JULIA_SVG_BROWSER to automatically display (in a browser) the simulation results (after creating .svg files), e.g. on my system I have exported JULIA_SVG_BROWSER="Google Chrome.app". For other platforms the final lines in the Examples/xxxx.jl files may need to be adjusted (or removed). In any case, on all platforms, both a .svg and a .pdf file will be created and left behind in the working directory.
 
-4. Thanks to Robert Feldt and the brew/Homebrew.jl folks, on OSX, in addition to the user following the steps in Stan's CmdStan User's Guide, CmdStan can also be installed using brew or Julia's Homebrew.
+4. Thanks to Robert Feldt and the brew/Homebrew.jl folks, on OSX, in addition to the user following the steps in Stan's CmdStan User's Guide, CmdStan can also be installed using brew or Julia's Homebrew (Note: Currently this is stall at version CmdStan 2.9.0).
 
 	 Executing in a terminal:
 	 ```
@@ -325,6 +327,14 @@ To run this version of the Stan.jl package on your local machine, it assumes tha
 In order for Stan.jl to find the CmdStan executable you can either
 
 1.1) set the environment variable CMDSTAN_HOME to point to the CmdStan directory, e.g. add lines like
+
+```
+export CMDSTAN_HOME=/Users/rob/Projects/Stan/cmdstan
+launchctl setenv CMDSTAN_HOME /Users/rob/Projects/Stan/cmdstan
+```
+
+or for Homebrew:
+
 ```
 export CMDSTAN_HOME=~/.julia/v0.x/Homebrew/deps/usr/Cellar/cmdstan/2.9.0
 launchctl setenv CMDSTAN_HOME ~/.julia/v0.x/Homebrew/deps/usr/Cellar/cmdstan/2.9.0
@@ -332,6 +342,8 @@ export JULIA_SVG_BROWSER="Google Chrome.app"
 launchctl setenv JULIA_SVG_BROWSER "Google Chrome.app"
 ```
 to ~/.bash_profile (the launchctl lines are OSX specific and only needed for shells started from a GUI application).
+
+I typically prefer not to include the cmdstan version number in the path so no update is needed when CmdStan is updated.
 
 Or, alternatively,
 
