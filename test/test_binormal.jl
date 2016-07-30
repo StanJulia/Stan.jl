@@ -1,16 +1,15 @@
-old = pwd()
-ProjDir = Pkg.dir("Stan", "Examples", "Binormal")
-cd(ProjDir)
+ProjDir = joinpath(dirname(@__FILE__), "..", "Examples", "Binormal")
+cd(ProjDir) do
 println("Moving to directory: $(ProjDir)")
 
 cd(ProjDir)
 isdir("tmp") &&
   rm("tmp", recursive=true);
 
-include(Pkg.dir(ProjDir, "binormal.jl"))
+include(joinpath(ProjDir, "binormal.jl"))
 
 cd(ProjDir)
 isdir("tmp") &&
   rm("tmp", recursive=true);
 
-cd(old);
+end # cd

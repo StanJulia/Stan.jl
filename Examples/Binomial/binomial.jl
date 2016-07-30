@@ -4,9 +4,8 @@
 
 using Mamba, Stan
 
-old = pwd()
-ProjDir = Pkg.dir("Stan", "Examples", "Binomial")
-cd(ProjDir)
+ProjDir = dirname(@__FILE__)
+cd(ProjDir) do
 
 const binomialstanmodel = "
 // Inferring a Rate
@@ -59,4 +58,4 @@ if length(JULIA_SVG_BROWSER) > 0
   end : println()
 end
 
-cd(old)
+end # cd

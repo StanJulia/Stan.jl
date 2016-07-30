@@ -11,15 +11,14 @@ end
 
 # Go to the Stan.jl package directory
 
-old = pwd()
-ProjDir = Pkg.dir("Stan", "Examples", "Bernoulli")
-cd(ProjDir)
+ProjDir = joinpath(dirname(@__FILE__), "..", "Examples", "Bernoulli")
+cd(ProjDir) do
 
 isdir("tmp") &&
   rm("tmp", recursive=true);
 
 try
-  include(Pkg.dir(ProjDir, "bernoulli.jl"))
+  include(joinpath(ProjDir, "bernoulli.jl"))
 catch e
   println(e)
 end
@@ -31,6 +30,5 @@ println()
 println(stanmodel.command)
 println()
 
-cd(old)
-
+end # cd
 

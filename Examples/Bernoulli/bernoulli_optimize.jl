@@ -2,9 +2,8 @@
 
 using Stan
 
-old = pwd()
-ProjDir = Pkg.dir("Stan", "Examples", "Bernoulli")
-cd(ProjDir)
+ProjDir = dirname(@__FILE__)
+cd(ProjDir) do
 
 bernoulli = "
 data { 
@@ -32,4 +31,4 @@ stanmodel = Stanmodel(Optimize(), name="bernoulli", model=bernoulli);
 optim = stan(stanmodel, bernoullidata, ProjDir, CmdStanDir=CMDSTAN_HOME);
 optim |> display
 
-cd(old)
+end # cd

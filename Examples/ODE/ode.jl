@@ -15,9 +15,8 @@
 
 using Mamba, Stan, Distributions
 
-old = pwd()
-ProjDir = Pkg.dir("Stan", "Examples", "ODE")
-cd(ProjDir)
+ProjDir = dirname(@__FILE__)
+cd(ProjDir) do
 
 odemodel = "
 functions {
@@ -135,4 +134,4 @@ draw(p, nrow=4, ncol=4, filename="$(stanmodel.name)-sigmaplot", fmt=:pdf)
         end
       end : println()
 
-cd(old)
+end # cd

@@ -1,9 +1,8 @@
 using Stan
 using Base.Test
 
-old = pwd()
-ProjDir = Pkg.dir("Stan", "test")
-cd(ProjDir)
+ProjDir = dirname(@__FILE__)
+cd(ProjDir) do
 
 bernoulli = "
 data { 
@@ -79,4 +78,4 @@ cd(ProjDir)
 isdir("tmp") &&
   rm("tmp", recursive=true);
 
-cd(old)
+end # cd

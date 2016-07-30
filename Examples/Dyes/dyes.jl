@@ -2,9 +2,8 @@
 
 using Stan, Mamba
 
-old = pwd()
-ProjDir = Pkg.dir("Stan", "Examples", "Dyes")
-cd(ProjDir)
+ProjDir = dirname(@__FILE__)
+cd(ProjDir) do
 
 const dyes ="
 data {
@@ -111,4 +110,4 @@ draw(p, ncol=4, filename="$(stanmodel.name)-summaryplot", fmt=:pdf)
         end
       end : println()
 
-cd(old)
+end # cd

@@ -1,34 +1,33 @@
-old = pwd()
-ProjDir = Pkg.dir("Stan", "Examples", "Bernoulli")
-cd(ProjDir)
+ProjDir = joinpath(dirname(@__FILE__), "..", "Examples", "Bernoulli")
+cd(ProjDir) do
 println("Moving to directory: $(ProjDir)")
 
 cd(ProjDir)
 isdir("tmp") &&
   rm("tmp", recursive=true);
 
-include(Pkg.dir(ProjDir, "bernoulli.jl"))
+include(joinpath(ProjDir, "bernoulli.jl"))
 
 cd(ProjDir)
 isdir("tmp") &&
   rm("tmp", recursive=true);
 
-include(Pkg.dir(ProjDir, "bernoulli_optimize.jl"))
+include(joinpath(ProjDir, "bernoulli_optimize.jl"))
 
 cd(ProjDir)
 isdir("tmp") &&
   rm("tmp", recursive=true);
 
-include(Pkg.dir(ProjDir, "bernoulli_diagnose.jl"))
+include(joinpath(ProjDir, "bernoulli_diagnose.jl"))
 
 cd(ProjDir)
 isdir("tmp") &&
   rm("tmp", recursive=true);
 
-include(Pkg.dir(ProjDir, "bernoulli_variational.jl"))
+include(joinpath(ProjDir, "bernoulli_variational.jl"))
 
 cd(ProjDir)
 isdir("tmp") &&
   rm("tmp", recursive=true);
 
-cd(old)
+end # cd
