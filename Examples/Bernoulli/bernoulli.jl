@@ -2,9 +2,8 @@
 
 using Mamba, Stan
 
-old = pwd()
-ProjDir = Pkg.dir("Stan", "Examples", "Bernoulli")
-cd(ProjDir)
+ProjDir = dirname(@__FILE__)
+cd(ProjDir) do
 
 bernoullimodel = "
 data { 
@@ -97,4 +96,4 @@ if Pkg.installed("Mamba") > v"0.7.1"
 	      end : println()
 end
 
-cd(old)
+end # cd

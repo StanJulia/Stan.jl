@@ -2,9 +2,8 @@
 
 using Mamba, Stan
 
-old = pwd()
-ProjDir = Pkg.dir("Stan", "Examples", "Bernoulli")
-cd(ProjDir)
+ProjDir = dirname(@__FILE__)
+cd(ProjDir) do
 
 bernoulli = "
 data { 
@@ -49,4 +48,4 @@ draw(p, ncol=1, nrow=4, filename="$(stanmodel.name)-variationalplot", fmt=:pdf)
         end
       end : println()
 
-cd(old)
+end # cd

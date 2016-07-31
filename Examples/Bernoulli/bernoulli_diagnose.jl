@@ -2,9 +2,8 @@
 
 using Stan
 
-old = pwd()
-ProjDir = Pkg.dir("Stan", "Examples", "Bernoulli")
-cd(ProjDir)
+ProjDir = dirname(@__FILE__)
+cd(ProjDir) do
 
 bernoulli = "
 data { 
@@ -32,4 +31,4 @@ stanmodel = Stanmodel(Diagnose(Gradient(epsilon=1e-6)), name="bernoulli", model=
 diags = stan(stanmodel, bernoullidata, ProjDir, CmdStanDir=CMDSTAN_HOME);
 diags[1]["diagnose"] |> display
 
-cd(old)
+end # cd
