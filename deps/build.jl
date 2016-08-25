@@ -3,7 +3,7 @@ using BinDeps
 @BinDeps.setup
 cmdstan = library_dependency("cmdstan")
 
-@static is_apple() begin
+@osx begin
     if Pkg.installed("Homebrew") === nothing
         error("Homebrew package not installed, please run Pkg.add(\"Homebrew\")")
     end
