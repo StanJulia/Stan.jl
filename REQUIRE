@@ -2,4 +2,4 @@ julia 0.4
 Mamba
 Gadfly
 BinDeps
-@osx Homebrew
+@static is_apple() Homebrew

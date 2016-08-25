@@ -4,7 +4,7 @@
 
 function check_data_type(data)
   if typeof(data) <: Array && length(data) > 0
-    if keytype(data[1]) == ASCIIString && valtype(data[1]) <: Any
+    if keytype(data[1]) == String && valtype(data[1]) <: Any
       return true
     end
   end
@@ -36,9 +36,9 @@ function stan(
     #println("Moving to dir: $(CmdStanDir)")
     
     cd(CmdStanDir)
-    local tmpmodelname::ASCIIString
+    local tmpmodelname::String
     tmpmodelname = Pkg.dir(model.tmpdir, model.name)
-    if @windows ? true : false
+    if @static is_windows() ? true : false
       tmpmodelname = replace(tmpmodelname*".exe", "\\", "/")
     end
     #println("Current working dir: $(pwd())")
@@ -95,7 +95,7 @@ function stan(
     return
   end
   
-  local samplefiles = ASCIIString[]
+  local samplefiles = String[]
   local res = Dict[]
   local ftype
   
@@ -131,7 +131,7 @@ function stan(
   res
 end
 
-function update_R_file{T<:Any}(file::ASCIIString, dct::Dict{ASCIIString, T}; replaceNaNs::Bool=true)
+function update_R_file{T<:Any}(file::String, dct::Dict{String, T}; replaceNaNs::Bool=true)
   isfile(file) && rm(file)
   strmout = open(file, "w")
   
@@ -172,7 +172,7 @@ function update_R_file{T<:Any}(file::ASCIIString, dct::Dict{ASCIIString, T}; rep
   close(strmout)
 end
 
-function stan_summary(file::ASCIIString; CmdStanDir=CMDSTAN_HOME)
+function stan_summary(file::String; CmdStanDir=CMDSTAN_HOME)
   try
     pstring = Pkg.dir("$(CmdStanDir)", "bin", "stansummary")
     cmd = `$(pstring) $(file)`
@@ -468,7 +468,7 @@ function cmdline(m)
     #println(cmd)
     for name in fieldnames(m)
       #println("$(name) = $(getfield(m, name)) ($(typeof(getfield(m, name))))")
-      if  isa(getfield(m, name), ASCIIString) || isa(getfield(m, name), Tuple)
+      if  isa(getfield(m, name), String) || isa(getfield(m, name), Tuple)
         cmd = `$cmd $(name)=$(getfield(m, name))`
       elseif length(fieldnames(typeof(getfield(m, name)))) == 0
         if isa(getfield(m, name), Bool)

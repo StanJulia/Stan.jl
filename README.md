@@ -126,7 +126,7 @@ draw(p, ncol=4, filename="summaryplot", fmt=:pdf)
 On OSX, if e.g. JULIA_SVG_BROWSER="Google's Chrome.app" is exported as an environment variable, the .svg files can be displayed as follows:
 ```
 if length(JULIA_SVG_BROWSER) > 0
-  @osx ? for i in 1:3
+  @static is_apple() ? for i in 1:3
     isfile("summaryplot-$(i).svg") &&
       run(`open -a $(JULIA_SVG_BROWSER) "summaryplot-$(i).svg"`)
   end : println()
@@ -174,9 +174,9 @@ function Stanmodel(
   update=1000,
   thin=1,
   model="",
-  model_file::ASCIIString="", 
-  monitors=ASCIIString[],
-  data=Dict{ASCIIString, Any}[], 
+  model_file::String="", 
+  monitors=String[],
+  data=Dict{String, Any}[], 
   random=Random(),
   init=Init(),
   output=Output())

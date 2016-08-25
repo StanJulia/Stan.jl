@@ -125,7 +125,7 @@ draw(p, nrow=4, ncol=4, filename="$(stanmodel.name)-sigmaplot", fmt=:pdf)
 
 # Below will only work on OSX, please adjust for your environment.
 # JULIA_SVG_BROWSER is set from environment variable JULIA_SVG_BROWSER
-@osx ? if isdefined(Main, :JULIA_SVG_BROWSER) && length(JULIA_SVG_BROWSER) > 0
+@static is_apple() ? if isdefined(Main, :JULIA_SVG_BROWSER) && length(JULIA_SVG_BROWSER) > 0
         for i in 1:4
           isfile("$(stanmodel.name)-thetaplot-$(i).svg") &&
             run(`open -a $(JULIA_SVG_BROWSER) "$(stanmodel.name)-thetaplot-$(i).svg"`)

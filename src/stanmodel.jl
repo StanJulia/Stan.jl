@@ -18,32 +18,32 @@ end
 Random(;seed::Number=-1) = Random(seed)
 
 type Output
-  file::ASCIIString
-  diagnostic_file::ASCIIString
+  file::String
+  diagnostic_file::String
   refresh::Int64
 end
-Output(;file::ASCIIString="", diagnostic_file::ASCIIString="", refresh::Number=100) =
+Output(;file::String="", diagnostic_file::String="", refresh::Number=100) =
   Output(file, diagnostic_file, refresh)
 
 type Stanmodel
-  name::ASCIIString
+  name::String
   nchains::Int
   adapt::Int
   update::Int
   thin::Int
   id::Int
-  model::ASCIIString
-  model_file::ASCIIString
-  monitors::Vector{ASCIIString}
-  data::Array{Dict{ASCIIString, Any}, 1}
-  data_file_array::Array{ASCIIString, 1}
-  data_file::ASCIIString
+  model::String
+  model_file::String
+  monitors::Vector{String}
+  data::Array{Dict{String, Any}, 1}
+  data_file_array::Array{String, 1}
+  data_file::String
   command::Array{Base.AbstractCmd, 1}
   method::Methods
   random::Random
   init::Init
   output::Output
-  tmpdir::ASCIIString
+  tmpdir::String
 end
 
 function Stanmodel(
@@ -54,12 +54,12 @@ function Stanmodel(
   update=1000,
   thin=1,
   model="",
-  monitors=ASCIIString[],
-  data=Dict{ASCIIString, Any}[], 
+  monitors=String[],
+  data=Dict{String, Any}[], 
   random=Random(),
   init=Init(),
   output=Output(),
-  pdir::ASCIIString=pwd())
+  pdir::String=pwd())
     
   cd(pdir)
   
@@ -74,8 +74,8 @@ function Stanmodel(
   end
   
   id::Int=0
-  data_file_array::Vector{ASCIIString}=ASCIIString[]
-  data_file::ASCIIString=""
+  data_file_array::Vector{String}=String[]
+  data_file::String=""
   cmdarray = fill(``, nchains)
   
   if update != 1000
@@ -93,10 +93,10 @@ function Stanmodel(
     cmdarray, method, random, init, output, tmpdir);
 end
 
-function update_model_file(file::ASCIIString, str::ASCIIString)
+function update_model_file(file::String, str::String)
   str2 = ""
   if isfile(file)
-    str2 = open(readall, file, "r")
+    str2 = open(readstring, file, "r")
     str != str2 && rm(file)
   end
   if str != str2

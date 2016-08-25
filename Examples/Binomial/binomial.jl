@@ -52,7 +52,7 @@ p = plot(predk_sim, [:bar], legend=false)
 draw(p, ncol=2, nrow=2, filename="$(stanmodel.name)-predictiv", fmt=:svg)
 
 if length(JULIA_SVG_BROWSER) > 0
-  @osx ? for fn in readdir()
+  @static is_apple() ? for fn in readdir()
     match(r".*\.svg", fn) != nothing &&
       run(`open -a $(JULIA_SVG_BROWSER) "$fn"`)
   end : println()
