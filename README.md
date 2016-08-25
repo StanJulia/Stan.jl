@@ -1,6 +1,6 @@
 # Stan
 
-[![Stan](http://pkg.julialang.org/badges/Stan_0.4.svg)](http://pkg.julialang.org/?pkg=Stan&ver=0.4)
+[![Stan](http://pkg.julialang.org/badges/Stan_0.5.svg)](http://pkg.julialang.org/?pkg=Stan&ver=0.5)
 
 ## Purpose
 
@@ -12,7 +12,7 @@ For more info on Stan, please go to <http://mc-stan.org>.
 
 For more info on Mamba, please go to <http://mambajl.readthedocs.org/en/latest/>.
 
-This version of the package has primarily been tested on Mac OSX 10.11, Julia 0.4.6, CmdStan 2.11.0 and Mamba 0.9+.
+This version of the package has primarily been tested on Mac OSX 10.11&12, Julia 0.5-, CmdStan 2.11.0 and Mamba 0.10.0.
 
 A limited amount of testing has taken place on other platforms by other users of the package (see note 2 in the 'To Do' section below).
 
@@ -213,10 +213,13 @@ All parameters to compile and run the Stan script are implicitly passed in throu
 
 ## What's new
 
-### Version 0.4.0
+### Version 1.0.0
 
 1. Tested with Stan 2.11.0 (fixed a change in the diagnose .csv file format)
 2. Updated how CMDSTAN_HOME is retrieved from ENV (see also REQUIREMENTS section below)
+3. Compatible with Julia 0.5
+4. Requires Mamba 0.10.0
+5. Mamba needs updates to Graphs.jl (will produce warnings otherwise)
 
 ### Version 0.3.2
 
@@ -304,7 +307,7 @@ To run this version of the Stan.jl package on your local machine, it assumes tha
 
 1. CmdStan (see <http://mc-stan.org>) is properly installed.
 
-2. Mamba (see <https://github.com/brian-j-smith/Mamba.jl>) is installed. It can be installed using Pkg.add("Mamba")
+2. Mamba (see <https://github.com/brian-j-smith/Mamba.jl>) is installed. It can be installed using Pkg.add("Mamba"). It requires Mamba v"0.10.0"
 
 3. On OSX, all examples check the environment variable JULIA_SVG_BROWSER to automatically display (in a browser) the simulation results (after creating .svg files), e.g. on my system I have exported JULIA_SVG_BROWSER="Google Chrome.app". For other platforms the final lines in the Examples/xxxx.jl files may need to be adjusted (or removed). In any case, on all platforms, both a .svg and a .pdf file will be created and left behind in the working directory.
 
@@ -376,8 +379,4 @@ The two additional notebooks provided test all examples on JuliaBox (or in iJuli
 
 More features will be added as requested by users and as time permits. Please file an issue on github.
 
-**Note 1:** Few problems related to installing CmdStan have been reported on the Stan mailing list (but maybe most folks use RStan or Pystan).
-
-**Note 2:** Work is in progress to auto-install CmdStan on OSX during Pkg.add("Stan").
-
-**Note 3:** In order to support platforms other than OS X, help is needed to test on such platforms.
+**Note 1:** In order to support platforms other than OS X, help is needed to test on such platforms.
