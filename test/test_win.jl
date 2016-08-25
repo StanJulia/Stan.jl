@@ -1,7 +1,7 @@
 # Test script to test Stan on Windows
 
 try
-  global CMDSTAN_HOME = @windows ? "C:\\cmdstan" : CMDSTAN_HOME
+  global CMDSTAN_HOME = @static is_windows() ? "C:\\cmdstan" : CMDSTAN_HOME
   Pkg.rm("Stan")
   Pkg.rm("Stan")
   Pkg.clone("Stan")
