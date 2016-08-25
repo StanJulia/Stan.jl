@@ -1,4 +1,4 @@
-julia 0.5-
+julia 0.4
 Mamba 0.9
 Gadfly 0.4.3
 BinDeps 0.4.3
