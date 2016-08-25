@@ -32,6 +32,7 @@ stanmodel = Stanmodel(update=1200, thin=2, name="bernoulli", model=bernoullimode
 
 println("\nStanmodel that will be used:")
 stanmodel |> display
+println()
 println("Input observed data dictionary:")
 bernoullidata |> display
 println()

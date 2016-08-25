@@ -176,7 +176,7 @@ function stan_summary(file::String; CmdStanDir=CMDSTAN_HOME)
   try
     pstring = Pkg.dir("$(CmdStanDir)", "bin", "stansummary")
     cmd = `$(pstring) $(file)`
-    print(open(readall, cmd, "r"))
+    print(open(readstring, cmd, "r"))
   catch e
     println(e)
   end
@@ -186,7 +186,7 @@ function stan_summary(filecmd::Cmd; CmdStanDir=CMDSTAN_HOME)
   try
     pstring = Pkg.dir("$(CmdStanDir)", "bin", "stansummary")
     cmd = `$(pstring) $(filecmd)`
-    print(open(readall, cmd, "r"))
+    print(open(readstring, cmd, "r"))
   catch e
     println(e)
   end
@@ -214,7 +214,7 @@ function read_stanfit(model::Stanmodel)
         instream = open("$(model.name)_$(res_type)_$(i).csv")
         if res_type == "diagnose"
           tdict = Dict()
-          str = readall(instream)
+          str = readstring(instream)
           sstr = split(str)
           tdict = merge(tdict, Dict(:stan_major_version => [parse(Int, sstr[4])]))
           tdict = merge(tdict, Dict(:stan_minor_version => [parse(Int, sstr[8])]))
@@ -430,7 +430,7 @@ function cmdline(m)
   cmd = ``
   if isa(m, Stanmodel)
     # Handle the model name field for unix and windows
-    cmd = @unix ? `./$(getfield(m, :name))` : `cmd /c $(getfield(m, :name)).exe`
+    cmd = @static is_unix() ? `./$(getfield(m, :name))` : `cmd /c $(getfield(m, :name)).exe`
 
     # Method (sample, optimize, variational and diagnose) specific portion of the model
     cmd = `$cmd $(cmdline(getfield(m, :method)))`

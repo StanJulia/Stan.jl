@@ -11,7 +11,7 @@ type Diagnose <: Methods
   diagnostic::Diagnostics
 end
 Diagnose(;d=Gradient()) = Diagnose(d)
-Diagnose(d=Gradient()) = Diagnose(d)
+#Diagnose(d=Gradient()) = Diagnose(d)
 
 function diagnose_show(io::IO, d::Diagnose, compact::Bool)
   if compact

@@ -1,6 +1,5 @@
 ProjDir = joinpath(dirname(@__FILE__), "..", "Examples", "Dyes")
 cd(ProjDir) do
-println("Moving to directory: $(ProjDir)")
 
 cd(ProjDir)
 isdir("tmp") &&
