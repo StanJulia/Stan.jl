@@ -16,7 +16,7 @@ For more info on Mamba, please go to <http://mambajl.readthedocs.org/en/latest/>
 
 This version of the package has primarily been tested on Mac OSX 10.11&12, Julia 0.5-, CmdStan 2.11.0 and Mamba 0.10.0.
 
-A limited amount of testing has taken place on other platforms by other users of the package (see note 2 in the 'To Do' section below).
+A limited amount of testing has taken place on other platforms by other users of the package (see note 1 in the 'To Do' section below).
 
 ## A walk-through example
 
@@ -219,7 +219,7 @@ All parameters to compile and run the Stan script are implicitly passed in throu
 
 1. Tested with Stan 2.11.0 (fixed a change in the diagnose .csv file format)
 2. Updated how CMDSTAN_HOME is retrieved from ENV (see also REQUIREMENTS section below)
-3. Compatible with Julia 0.5
+3. Requires Julia 0.5
 4. Requires Mamba 0.10.0
 5. Mamba needs updates to Graphs.jl (will produce warnings otherwise)
 
@@ -228,80 +228,8 @@ All parameters to compile and run the Stan script are implicitly passed in throu
 1. Cleaned up message in Pkg.test("Stan")
 2. Added experimental use of Mamba.contour() to bernoulli.jl (this requires Mamba 0.7.1+)
 3. Introduce the use of Homebrew to install CmdStan on OSX
-
-### Version 0.3.1
-
-1. Cleaned up shown badges in README (both Travis and ReadTheDocs)
-2. Removed 0.3 testing in the new Julia format .travis.yml file
-
-### Version 0.3.0
-
-1. Version 0.3.0 is Julia 0.4 only.
-2. Julia 0.4 fixes have been tested up the Julia 0.4-rc4.
-3. Added support for variational-bayes in Stan 2.8.0.
-4. Added the ODE example from the Stan manual to Examples. Please read the comments on ode.jl.
-
-### Version 0.2.0
-
-1. Added travis & documentation badges
-2. Fixes to CMDSTAN_HOME handling in Stan.jl
-
-### Version 0.1.7
-
-1. Updated .travis.yml
-
-### Version 0.1.6
-
-1. Two more notebooks have been added in the Examples/Notebooks directory, StanBernoulliJB includes notebook cells with explanations and some introductory notes.
-2. Removed an earlier addition to runtests.jl needed for testing on JuliaBox. Caused problems in tests on pkg.julialang.org.
-3. The runtests.jl script now reports which version is being tested.
-
-### Version 0.1.5
-
-1. Demonstrate running Stan on JuliaBox. A notebook example has been added in the Examples/Notebook directory.
-
-### Version 0.1.4
-
-1. Fix for the case where CmdStan is not installed (e.g. in tests on pkg.julialang.org)
-
-### Version 0.1.3
-
-1. Fix for several additional issues on Windows, e.g. CRLF.
-2. Handling of obtaining and passing CMDSTAN_HOME is still being studied.
-3. For now the Julia upper bound 0.4- has been removed, although several dependencies are not yet available on Julia 0.4.
-
-I would like to thank Kentarou Matsuura for helping out with the Windows issues. Hopefully most aspects have been tested, any remaining issues are of course my responsibility.
-
-### Version 0.1.2
-
-Bug fix:
-
-1. Fix for access to environment variables on Windows.
-
-### Version 0.1.1
-
-Minor updates:
-
-1. Stores Stan's input & output files in a subdirectory of the working directory.
-2. Fixed handling of adapt, update and thin when passed in through Stanmodel().
-
-### Version 0.1.0
-
-The two most important features introduced in version 0.1.0 are:
-
-1. Using Mamba to display and diagnose simulation results. The call to stan() to sample now returns a Mamba Chains object (previously it returned a dictionary). 
-2. The ability to select which variables to extract form Stan's output .csv file(s).
-
-### Version 0.0.3
-
-1. Inline definition of model and data in the .jl file
-
-### Versions 0.0.2 and earlier
-
-1. Parsing structure for input arguments to Stan.
-2. Parallel execution of Stan simulations.
-3. Read created .csv file by Stan back into Julia.
-
+4. Pkg.test("Stan") will give an error on variational bayes
+5. Last version update for Julia 0.4
 
 ## Requirements
 
@@ -367,15 +295,6 @@ CMDSTAN_HOME = "C:\\cmdstan"
 To test and run the examples:
 
 **julia >** ``Pkg.test("Stan")``
-
-CmdStan has been installed on JuliaBox (see https://www.juliabox.org ). If you have a JuliaBox account, you should be able to run the StanBernoulliJB.ipynb notebook in the Examples/Notebooks directory, e.g. do 
-```
-cd(Pkg.dir("Stan", "Examples", "Notebooks"))
-```
-to see a list of included notebooks.
-
-The two additional notebooks provided test all examples on JuliaBox (or in iJulia) and a notebook that shows how to run the examples included in Stan.jl.
-
 
 ## To do
 
