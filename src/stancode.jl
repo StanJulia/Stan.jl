@@ -38,7 +38,7 @@ function stan(
     cd(CmdStanDir)
     local tmpmodelname::String
     tmpmodelname = Pkg.dir(model.tmpdir, model.name)
-    if @static is_windows() ? true : false
+    if @windows ? true : false
       tmpmodelname = replace(tmpmodelname*".exe", "\\", "/")
     end
     #println("Current working dir: $(pwd())")
@@ -430,7 +430,7 @@ function cmdline(m)
   cmd = ``
   if isa(m, Stanmodel)
     # Handle the model name field for unix and windows
-    cmd = @static is_unix() ? `./$(getfield(m, :name))` : `cmd /c $(getfield(m, :name)).exe`
+    cmd = @unix ? `./$(getfield(m, :name))` : `cmd /c $(getfield(m, :name)).exe`
 
     # Method (sample, optimize, variational and diagnose) specific portion of the model
     cmd = `$cmd $(cmdline(getfield(m, :method)))`
