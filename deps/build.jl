@@ -1,4 +1,4 @@
-using BinDeps
+using BinDeps, Homebrew
 
 @BinDeps.setup
 cmdstan = library_dependency("cmdstan")
@@ -8,7 +8,6 @@ function install_cmdstan()
       error("Homebrew package not installed, please run Pkg.add(\"Homebrew\")")
   end
   
-  using Homebrew
   provides( Homebrew.HB, "homebrew/science/cmdstan", cmdstan, os = :Darwin )
 end  
   
