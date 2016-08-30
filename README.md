@@ -250,14 +250,14 @@ To run this version of the Stan.jl package on your local machine, it assumes tha
 	 brew tap homebrew/science
 	 brew install cmdstan
 	 ```
-	 should install cmdstan_2.9.0 in /usr/local/Cellar/cmdstan/2.9.0.
+	 should install cmdstan_2.11.0 in /usr/local/Cellar/cmdstan/2.11.0.
 	 
 	 Or, from within the Julia REPL:
 	 ```
 	 using Homebrew
 	 Homebrew.add("homebrew/science/cmdstan")
 	 ```
-	 will install CmdStan in ~/.julia/v0.x/Homebrew/deps/usr/Cellar/cmdstan/2.9.0.
+	 will install CmdStan in ~/.julia/v0.x/Homebrew/deps/usr/Cellar/cmdstan/2.11.0.
 	 
 In order for Stan.jl to find the CmdStan executable you can either
 
@@ -271,8 +271,8 @@ launchctl setenv CMDSTAN_HOME /Users/rob/Projects/Stan/cmdstan
 or for Homebrew:
 
 ```
-export CMDSTAN_HOME=~/.julia/v0.x/Homebrew/deps/usr/Cellar/cmdstan/2.9.0
-launchctl setenv CMDSTAN_HOME ~/.julia/v0.x/Homebrew/deps/usr/Cellar/cmdstan/2.9.0
+export CMDSTAN_HOME=~/.julia/v0.x/Homebrew/deps/usr/Cellar/cmdstan/2.11.0
+launchctl setenv CMDSTAN_HOME ~/.julia/v0.x/Homebrew/deps/usr/Cellar/cmdstan/2.11.0
 export JULIA_SVG_BROWSER="Google Chrome.app"
 launchctl setenv JULIA_SVG_BROWSER "Google Chrome.app"
 ```
