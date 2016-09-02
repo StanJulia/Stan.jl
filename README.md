@@ -217,10 +217,11 @@ All parameters to compile and run the Stan script are implicitly passed in throu
 
 ## What's new
 
-### Version 1.0.1
+### Version 1.0.2
 
 1. Bumped REQUIRE for Julia to v"0.5.0-rc3"
 2. Updated Homebrew section as CmdStan 2.11.0 is now available from Homebrew
+3. Updated .travis.yml to just test on Julia 0.5
 
 ### Version 1.0.0
 
