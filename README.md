@@ -16,7 +16,7 @@ For more info on Stan, please go to <http://mc-stan.org>.
 
 For more info on Mamba, please go to <http://mambajl.readthedocs.org/en/latest/>.
 
-This version of the package has primarily been tested on Mac OSX 10.11&12, Julia 0.5-, CmdStan 2.11.0 and Mamba 0.10.0.
+This version of the package has primarily been tested on Mac OSX 10.11&12, Julia 0.5.0-rc3, CmdStan 2.11.0 and Mamba 0.10.0.
 
 A limited amount of testing has taken place on other platforms by other users of the package (see note 1 in the 'To Do' section below).
 
@@ -216,6 +216,11 @@ All parameters to compile and run the Stan script are implicitly passed in throu
 
 
 ## What's new
+
+### Version 1.0.1
+
+1. Bumped REQUIRE for Julia to v"0.5.0-rc3"
+2. Updated Homebrew section as CmdStan 2.11.0 is now available from Homebrew
 
 ### Version 1.0.0
 
