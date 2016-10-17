@@ -131,7 +131,7 @@ function stan(
   res
 end
 
-function update_R_file{T<:Any}(file::String, dct::Dict{String, T}; replaceNaNs::Bool=true)
+function update_R_file{T<:Any}(file::String, dct::Dict{String, T})
     isfile(file) && rm(file)
     strmout = open(file, "w")
   
@@ -174,7 +174,7 @@ function update_R_file{T<:Any}(file::String, dct::Dict{String, T}; replaceNaNs::
     close(strmout)
 end
 
-function update_R_file_old{T<:Any}(file::String, dct::Dict{String, T}; replaceNaNs::Bool=true)
+function update_R_file_old{T<:Any}(file::String, dct::Dict{String, T})
   isfile(file) && rm(file)
   strmout = open(file, "w")
   
