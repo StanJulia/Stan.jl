@@ -217,7 +217,12 @@ All parameters to compile and run the Stan script are implicitly passed in throu
 
 ## What's new
 
-### Version 1.0.2
+### Version 1.0 3 (next)
+ 
+1. Thanks to Jon Alm Erikson the performance of update_R_file() has been improved tremendously.
+2. Bumped REQUIRE for Julia to v"0.5.0"
+
+### Version 1.0.2 (current tagged version)
 
 1. Bumped REQUIRE for Julia to v"0.5.0-rc3"
 2. Updated Homebrew section as CmdStan 2.11.0 is now available from Homebrew
