@@ -11,6 +11,38 @@ function check_data_type(data)
   return false
 end
 
+function prepare_init(model::Stanmodel, init::Init{Int})
+    # do nothing
+end
+function prepare_init(model::Stanmodel, init::Init{Float64})
+    # do nothing
+end
+function prepare_init(model::Stanmodel, init::Init{Vector{DataDict}})
+  init.init_files = String[]
+  init_data = init.init
+  if length(init_data) == model.nchains
+    for i in 1:model.nchains
+      if length(keys(init_data[i])) > 0
+        init_file="$(model.name)_$(i).init.R"
+        push!(init.init_files, init_file)
+        update_R_file(init_file, init_data[i])
+      end
+    end
+  else
+    for i in 1:model.nchains
+      if length(keys(init_data[1])) > 0
+        if i == 1
+          println("\nLength of init array is not equal to nchains,")
+          println("all chains will use the first init dictionary.")
+        end
+        init_file="$(model.name)_$(i).init.R"
+        push!(init.init_files, init_file)
+        update_R_file(init_file, init_data[1])
+      end
+    end
+  end
+end
+
 function stan(
   model::Stanmodel, 
   data=Void, 
@@ -65,9 +97,13 @@ function stan(
         end
       end
     end
+    prepare_init(model, model.init)
     for i in 1:model.nchains
       model.id = i
       model.data_file ="$(model.name)_$(i).data.R"
+      if length(model.init.init_files) > 0
+          model.init.init_file = model.init.init_files[i]
+      end
       if isa(model.method, Sample)
         model.output.file = model.name*"_samples_$(i).csv"
         isfile("$(model.name)_samples_$(i).csv") && rm("$(model.name)_samples_$(i).csv")
@@ -467,8 +503,17 @@ function read_stanfit_variational_samples(m::Stanmodel)
 end
 
 
-"Recursively parse the model to construct command line"
+function init_cmdline(init::Init{Int})
+  return `init=$(init.init)`
+end
+function init_cmdline(init::Init{Float64})
+  return `init=$(init.init)`
+end
+function init_cmdline(init::Init{Vector{DataDict}})
+  return `init=$(init.init_file)`
+end
 
+"Recursively parse the model to construct command line"
 function cmdline(m)
   cmd = ``
   if isa(m, Stanmodel)
@@ -480,7 +525,7 @@ function cmdline(m)
     
     # Common to all models
     cmd = `$cmd $(cmdline(getfield(m, :random)))`
-    cmd = `$cmd init=$(getfield(m, :init).init)`
+    cmd = `$cmd $(init_cmdline(m.init))`
     
     # Data file required?
     if length(m.data_file) > 0

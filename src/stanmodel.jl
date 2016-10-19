@@ -7,10 +7,13 @@ include("./optimizetype.jl")
 include("./diagnosetype.jl")
 include("./variationaltype.jl")
 
-type Init
-  init::Int64
+typealias DataDict Dict{String, Any}
+type Init{I<:Union{Int,Float64, Vector{DataDict}}}
+  init::I
+  init_files::Vector{String}
+  init_file::String
 end
-Init(;init::Number=2) = Init(init)
+Init(;init::Union{Int,Float64, Vector{DataDict}}=2) = Init(init, String[], "")
 
 type Random
   seed::Int64
@@ -35,10 +38,10 @@ type Stanmodel
   model::String
   model_file::String
   monitors::Vector{String}
-  data::Array{Dict{String, Any}, 1}
-  data_file_array::Array{String, 1}
+  data::Vector{DataDict}
+  data_file_array::Vector{String}
   data_file::String
-  command::Array{Base.AbstractCmd, 1}
+  command::Vector{Base.AbstractCmd}
   method::Methods
   random::Random
   init::Init
@@ -55,7 +58,7 @@ function Stanmodel(
   thin=1,
   model="",
   monitors=String[],
-  data=Dict{String, Any}[], 
+  data=DataDict[],
   random=Random(),
   init=Init(),
   output=Output(),
