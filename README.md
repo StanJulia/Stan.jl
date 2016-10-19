@@ -220,7 +220,8 @@ All parameters to compile and run the Stan script are implicitly passed in throu
 ### Version 1.0 3 (next)
  
 1. Thanks to Jon Alm Erikson the performance of update_R_file() has been improved tremendously.
-2. Bumped REQUIRE for Julia to v"0.5.0"
+2. Thanks to Maxime Rischard it is now possible for parameter values to be passed to a Stanmodel as an array of data dictionaries.
+3. Bumped REQUIRE for Julia to v"0.5.0"
 
 ### Version 1.0.2 (current tagged version)
 
