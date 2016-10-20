@@ -202,49 +202,6 @@ function update_R_file{T<:Any}(file::String, dct::Dict{String, T}; replaceNaNs::
 	close(strmout)
 end
 
-function update_R_file_jon{T<:Any}(file::String, dct::Dict{String, T})
-  isfile(file) && rm(file)
-  strmout = open(file, "w")
-  
-  for entry in dct
-    line = Any["\"", entry[1], "\"", " <- "]
-    val = entry[2]
-    if length(val)==1 && length(size(val))==0
-      # Scalar
-      push!(line,val)
-    elseif length(val)==1 && length(size(val))==1
-      # Single element vector
-      push!(line,val[1])
-    elseif length(val)>1 && length(size(val))==1
-      # Vector
-      push!(line, "structure(c(")
-      for i in 1:length(val)
-        push!(line,val[i])
-        if i < length(val)
-          push!(line,", ")
-        end
-      end
-      push!(line,"), .Dim=c(")
-      push!(line,length(val))
-      push!(line,"))")
-    elseif length(val)>1 && length(size(val))>1
-      # Array             
-      push!(line,"structure(c(" )
-      for i in 1:length(val)
-        push!(line,val[i])              
-        if i < length(val)
-          push!(line,", ")
-        end
-      end
-      push!(line, "), .Dim=c")
-      push!(line, size(val))
-      push!(line, ")")
-    end
-    println(strmout, line...)
-  end
-  close(strmout)
-end
-
 function stan_summary(file::String; CmdStanDir=CMDSTAN_HOME)
   try
     pstring = Pkg.dir("$(CmdStanDir)", "bin", "stansummary")
