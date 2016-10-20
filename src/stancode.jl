@@ -167,7 +167,42 @@ function stan(
   res
 end
 
-function update_R_file{T<:Any}(file::String, dct::Dict{String, T})
+function update_R_file{T<:Any}(file::String, dct::Dict{String, T}; replaceNaNs::Bool=true)
+	isfile(file) && rm(file)
+	strmout = open(file, "w")
+	
+	str = ""
+	for entry in dct
+		str = "\""entry[1]"\""" <- "
+		val = entry[2]
+		if length(val)==1 && length(size(val))==0
+			# Scalar
+			str = str*"$(val)\n"
+		elseif length(val)==1 && length(size(val))==1
+			# Single element vector
+			str = str*"$(val[1])\n"
+		elseif length(val)>1 && length(size(val))==1
+			# Vector
+			str = str*"structure(c("
+			write(strmout, str)
+			str = ""
+			writecsv(strmout, val');
+			str = str*"), .Dim=c($(length(val))))\n"
+		elseif length(val)>1 && length(size(val))>1
+			# Array
+			str = str*"structure(c("
+			write(strmout, str)
+			str = ""
+			writecsv(strmout, val[:]');
+			dimstr = "c"*string(size(val))
+			str = str*"), .Dim=$(dimstr))\n"
+		end
+		write(strmout, str)
+	end
+	close(strmout)
+end
+
+function update_R_file_jon{T<:Any}(file::String, dct::Dict{String, T})
   isfile(file) && rm(file)
   strmout = open(file, "w")
   
@@ -206,47 +241,6 @@ function update_R_file{T<:Any}(file::String, dct::Dict{String, T})
       push!(line, ")")
     end
     println(strmout, line...)
-  end
-  close(strmout)
-end
-
-function update_R_file_old{T<:Any}(file::String, dct::Dict{String, T})
-  isfile(file) && rm(file)
-  strmout = open(file, "w")
-  
-  str = ""
-  for entry in dct
-    str = "\""*entry[1]*"\""*" <- "
-    val = entry[2]
-    if length(val)==1 && length(size(val))==0
-      # Scalar
-      str = str*"$(val)\n"
-    elseif length(val)==1 && length(size(val))==1
-      # Single element vector
-      str = str*"$(val[1])\n"
-    elseif length(val)>1 && length(size(val))==1
-      # Vector
-      str = str*"structure(c("
-      for i in 1:length(val)
-        str = str*"$(val[i])"
-        if i < length(val)
-          str = str*", "
-        end
-      end
-      str = str*"), .Dim=c($(length(val))))\n"
-    elseif length(val)>1 && length(size(val))>1
-      # Array
-      str = str*"structure(c("
-      for i in 1:length(val)
-        str = str*"$(val[i])"
-        if i < length(val)
-          str = str*", "
-        end
-      end
-      dimstr = "c"*string(size(val))
-      str = str*"), .Dim=$(dimstr))\n"
-    end
-    write(strmout, str)
   end
   close(strmout)
 end
