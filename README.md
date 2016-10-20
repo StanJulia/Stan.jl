@@ -214,6 +214,7 @@ function stan(
 ```
 All parameters to compile and run the Stan script are implicitly passed in through the model argument. 
 
+In Stan.jl v"1.0.3" an example has been added to show passing in parameter values to Stanmodel (see below version release note 2). The example can be found in directory Examples/BernoulliInitTheta.
 
 ## What's new
 
