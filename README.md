@@ -224,7 +224,7 @@ In Stan.jl v"1.0.3" an example has been added to show passing in parameter value
 2. Thanks to Maxime Rischard it is now possible for parameter values to be passed to a Stanmodel as an array of data dictionaries.
 3. Bumped REQUIRE for Julia to v"0.5.0"
 
-### Version 1.0.2 (current tagged version)
+### Version 1.0.2 (currently tagged version)
 
 1. Bumped REQUIRE for Julia to v"0.5.0-rc3"
 2. Updated Homebrew section as CmdStan 2.11.0 is now available from Homebrew
