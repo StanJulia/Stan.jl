@@ -123,7 +123,6 @@ function stan(
       end
       model.command[i] = cmdline(model)
     end
-    println()
     run(pipeline(par(model.command), stdout="$(model.name)_run.log"))
   catch e
     println(e)
@@ -356,6 +355,7 @@ function read_stanfit_samples(m::Stanmodel, diagnostics=false, warmup_samples=fa
   
   ftype = diagnostics ? "diagnostics" : "samples"
 	
+  println("In read_stanfit_samples")
   for i in 1:m.nchains
     if isfile("$(m.name)_$(ftype)_$(i).csv")
       noofsamples = 0
@@ -370,7 +370,7 @@ function read_stanfit_samples(m::Stanmodel, diagnostics=false, warmup_samples=fa
         indvec = findin(index, m.monitors)
       end
       if m.method.save_warmup
-        noofsamples = floor(Int, m.method.num_samples/m.method.thin)+m.method.num_warmup
+        noofsamples = floor(Int, (m.method.num_samples+m.method.num_warmup)/m.method.thin)
       else
         noofsamples = floor(Int, m.method.num_samples/m.method.thin)
       end
@@ -394,15 +394,17 @@ function read_stanfit_samples(m::Stanmodel, diagnostics=false, warmup_samples=fa
   end
   
   if m.method.save_warmup
+    println(size(a3d))
     if warmup_samples
-      sr = getindex(a3d, [1:1:m.method.num_warmup;], 
+      sr = getindex(a3d, [1:1:size(a3d, 1);], 
         [1:size(a3d, 2);], [1:size(a3d, 3);])
       Chains(sr, start=1, thin=1, names=idx[indvec], 
         chains=[i for i in 1:m.nchains])
     else
-      sr = getindex(a3d, [m.method.num_warmup+1:m.thin:size(a3d, 1);], 
+      skip_warmup_indx = floor(Int, m.method.num_warmup/m.method.thin) + 1
+      sr = getindex(a3d, [skip_warmup_indx:m.method.thin:size(a3d, 1);], 
         [1:size(a3d, 2);], [1:size(a3d, 3);])
-      Chains(sr, start=m.method.num_warmup+1, thin=m.thin, names=idx[indvec], 
+      Chains(sr, start=m.method.num_warmup+1, thin=m.method.thin, names=idx[indvec], 
         chains=[i for i in 1:m.nchains])
     end
   else  
