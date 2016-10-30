@@ -8,4 +8,5 @@ notifications:
   email: true
 script:
   - if [[ -a .git/shallow ]]; then git fetch --unshallow; fi
+  - julia -e 'Pkg.add("Homebrew");Pkg.add("DualNumbers")'
   - julia -e 'Pkg.clone(pwd()); Pkg.build("Stan"); Pkg.test("Stan")'

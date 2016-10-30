@@ -10,7 +10,7 @@ cd(ProjDir) #do
   "
 
   stanmodel = Stanmodel(Sample(save_warmup=true, thin=2), name="simple", model=simplecode);
-  #stanmodel = Stanmodel(thin=5, name="simple", model=simplecode);
   sim = stan(stanmodel, [Dict("sigma" => 1.)], CmdStanDir=CMDSTAN_HOME);
+  describe(sim)
 
   #end
