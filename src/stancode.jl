@@ -215,9 +215,17 @@ function stan_summary(filecmd::Cmd; CmdStanDir=CMDSTAN_HOME)
   try
     pstring = Pkg.dir("$(CmdStanDir)", "bin", "stansummary")
     cmd = `$(pstring) $(filecmd)`
+    println()
+    println("Calling $(pstring) to infer across chains.")
+    println()
     print(open(readstring, cmd, "r"))
   catch e
-    println(e)
+    println()
+    println("Stan.jl caught above exception in Stan's 'stansummary' program.")
+    println("This is a usually caused by the setting:")
+    println("  Sample(save_warmup=true, thin=n)")
+    println("in the call to stanmodel() with n > 1.")
+    println()
   end
 end
 
@@ -353,9 +361,10 @@ function read_stanfit_samples(m::Stanmodel, diagnostics=false, warmup_samples=fa
 
   global a3d, monitors, index, idx, indvec, ftype
   
+  local noofsamples
+  
   ftype = diagnostics ? "diagnostics" : "samples"
 	
-  println("In read_stanfit_samples")
   for i in 1:m.nchains
     if isfile("$(m.name)_$(ftype)_$(i).csv")
       noofsamples = 0
@@ -377,6 +386,7 @@ function read_stanfit_samples(m::Stanmodel, diagnostics=false, warmup_samples=fa
       if i == 1
         a3d = fill(0.0, noofsamples, length(indvec), m.nchains)
       end
+      #println(size(a3d))
       skipchars(instream, isspace, linecomment='#')
       for j in 1:noofsamples
         skipchars(instream, isspace, linecomment='#')
@@ -394,7 +404,6 @@ function read_stanfit_samples(m::Stanmodel, diagnostics=false, warmup_samples=fa
   end
   
   if m.method.save_warmup
-    println(size(a3d))
     if warmup_samples
       sr = getindex(a3d, [1:1:size(a3d, 1);], 
         [1:size(a3d, 2);], [1:size(a3d, 3);])
@@ -402,10 +411,10 @@ function read_stanfit_samples(m::Stanmodel, diagnostics=false, warmup_samples=fa
         chains=[i for i in 1:m.nchains])
     else
       skip_warmup_indx = floor(Int, m.method.num_warmup/m.method.thin) + 1
-      sr = getindex(a3d, [skip_warmup_indx:m.method.thin:size(a3d, 1);], 
+      sr = getindex(a3d, [skip_warmup_indx:1:noofsamples;], 
         [1:size(a3d, 2);], [1:size(a3d, 3);])
-      Chains(sr, start=m.method.num_warmup+1, thin=m.method.thin, names=idx[indvec], 
-        chains=[i for i in 1:m.nchains])
+      Chains(sr, start=skip_warmup_indx, thin=1, 
+        names=idx[indvec], chains=[i for i in 1:m.nchains])
     end
   else  
     sr = getindex(a3d, [1:m.thin:size(a3d, 1);], 

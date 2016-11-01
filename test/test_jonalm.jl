@@ -1,7 +1,7 @@
-using Stan
+using Mamba, Stan
 
 ProjDir = dirname(@__FILE__)
-cd(ProjDir) do
+cd(ProjDir) #do
 
   const simplecode = "
   data {real sigma;}
@@ -9,11 +9,17 @@ cd(ProjDir) do
   model {y ~ normal(0,sigma);}
   "
 
-  stanmodel = Stanmodel(Sample(save_warmup=true, thin=2), name="simple", model=simplecode);
-  sim = stan(stanmodel, [Dict("sigma" => 1.)], CmdStanDir=CMDSTAN_HOME);
-  describe(sim)
+  stanmodel1 = Stanmodel(Sample(save_warmup=false, thin=5), name="simple", model=simplecode);
+  sim1 = stan(stanmodel1, [Dict("sigma" => 1.)], CmdStanDir=CMDSTAN_HOME);
+  describe(sim1)
   
-  isdir("tmp") &&
-    rm("tmp", recursive=true);
-
-end
+  stanmodel2 = Stanmodel(Sample(save_warmup=true, thin=1), name="simple", 
+    thin=5, model=simplecode);
+  sim2 = stan(stanmodel2, [Dict("sigma" => 1.)], CmdStanDir=CMDSTAN_HOME);
+  describe(sim2)
+  
+  stanmodel3 = Stanmodel(Sample(save_warmup=true, thin=5), name="simple", model=simplecode);
+  sim3 = stan(stanmodel3, [Dict("sigma" => 1.)], CmdStanDir=CMDSTAN_HOME);
+  describe(sim3)
+  
+#end
