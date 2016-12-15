@@ -490,7 +490,7 @@ function cmdline(m)
     cmd = `$cmd $(init_cmdline(m.init))`
     
     # Data file required?
-    if length(m.data_file) > 0
+    if length(m.data_file) > 0 && isfile(m.data_file)
       cmd = `$cmd id=$(m.id) data file=$(m.data_file)`
     end
     

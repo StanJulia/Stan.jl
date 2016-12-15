@@ -3,7 +3,7 @@
 using Stan, Mamba
 
 ProjDir = dirname(@__FILE__)
-cd(ProjDir) do
+cd(ProjDir) #do
 
 const binorm = "
 transformed data {
@@ -76,4 +76,4 @@ draw(p, ncol=4, filename="$(stanmodel.name)-summaryplot", fmt=:pdf)
       end : println()
 
 
-end # cd
+#end # cd
