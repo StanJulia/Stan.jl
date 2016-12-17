@@ -177,10 +177,10 @@ function update_R_file{T<:Any}(file::String, dct::Dict{String, T}; replaceNaNs::
 		if length(val)==1 && length(size(val))==0
 			# Scalar
 			str = str*"$(val)\n"
-		elseif length(val)==1 && length(size(val))==1
+      #elseif length(val)==1 && length(size(val))==1
 			# Single element vector
-			str = str*"$(val[1])\n"
-		elseif length(val)>1 && length(size(val))==1
+			#str = str*"$(val[1])\n"
+		elseif length(val)>=1 && length(size(val))==1
 			# Vector
 			str = str*"structure(c("
 			write(strmout, str)

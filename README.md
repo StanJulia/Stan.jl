@@ -222,8 +222,9 @@ In Stan.jl v"1.0.3" an example has been added to show passing in parameter value
  
 1. Thanks to Jon Alm Eriksen the performance of update_R_file() has been improved tremendously. A further suggestion by Michael Prange to directly write to the R file also prevents a Julia segmentation trap for very large arrays (N > 10^6).
 2. Thanks to Maxime Rischard it is now possible for parameter values to be passed to a Stanmodel as an array of data dictionaries.
-3. Bumped REQUIRE for Julia to v"0.5.0"
-4. Fix for Stan 2.13.1 (for runs without a data file)
+3. Bumped REQUIRE for Julia to v"0.5.0".
+4. Fix for Stan 2.13.1 (for runs without a data file).
+5. Added Marco Cox' fix for scalar data elements.
 
 ### Version 1.0.2 (currently tagged version)
 
