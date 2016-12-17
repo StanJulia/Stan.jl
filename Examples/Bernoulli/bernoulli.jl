@@ -19,7 +19,14 @@ model {
 }
 "
 
-bernoullidata = [
+bernoullidata_1 = [
+  Dict("N" => 1, "y" => [0]),
+  Dict("N" => 1, "y" => [0]),
+  Dict("N" => 1, "y" => [0]),
+  Dict("N" => 1, "y" => [0]),
+]
+
+bernoullidata_10 = [
   Dict("N" => 10, "y" => [0, 1, 0, 1, 0, 0, 0, 0, 0, 1]),
   Dict("N" => 10, "y" => [0, 1, 0, 0, 0, 0, 1, 0, 0, 1]),
   Dict("N" => 10, "y" => [0, 0, 0, 0, 0, 0, 1, 0, 1, 1]),
@@ -30,17 +37,30 @@ monitor = ["theta", "lp__", "accept_stat__"]
 
 stanmodel = Stanmodel(update=1200, thin=2, name="bernoulli", model=bernoullimodel);
 
+## Test with single datapoint
 println("\nStanmodel that will be used:")
 stanmodel |> display
 println()
 println("Input observed data dictionary:")
-bernoullidata |> display
+bernoullidata_1 |> display
 println()
 
-sim1 = stan(stanmodel, bernoullidata, ProjDir, diagnostics=false, CmdStanDir=CMDSTAN_HOME);
+sim1 = stan(stanmodel, bernoullidata_1, ProjDir, diagnostics=false, CmdStanDir=CMDSTAN_HOME);
+isa(sim1, Void) && error("Stan run failed")
+
+## Test with 10 datapoints
+println("\nStanmodel that will be used:")
+stanmodel |> display
+println()
+println("Input observed data dictionary:")
+bernoullidata_10 |> display
+println()
+
+sim10 = stan(stanmodel, bernoullidata_10, ProjDir, diagnostics=false, CmdStanDir=CMDSTAN_HOME);
+isa(sim10, Void) && error("Stan run failed")
 
 ## Subset Sampler Output to variables suitable for describe().
-sim = sim1[1:size(sim1, 1), monitor, 1:size(sim1, 3)]
+sim = sim10[1:size(sim10, 1), monitor, 1:size(sim10, 3)]
 describe(sim)
 println()
 
