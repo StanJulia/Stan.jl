@@ -13,7 +13,7 @@ execution_tests = [
   "test_bernoulli_optimize.jl",
   "test_bernoulli_diagnose.jl",
   "test_bernoulli_variational.jl",
-  #"test_bernoulliinittheta.jl",
+  "test_bernoulliinittheta.jl",
   "test_bernoulliscalar.jl",
   "test_binomial.jl",
   "test_binormal.jl",
