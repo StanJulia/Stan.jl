@@ -1,7 +1,7 @@
 using Mamba,Stan,Distributions,Gadfly,DataFrames,Compat
 
 ProjDir = dirname(@__FILE__)
-cd(ProjDir) #do
+cd(ProjDir) do
 
   #############################
   #    Load Stan Model        #
@@ -9,7 +9,7 @@ cd(ProjDir) #do
 
   include("ModelFunctions.jl")
   
-  Nchains = 2
+  Nchains = 4
   subjParm = ["theta"]
   hyperParm = ["kappa", "omega"]
   subjVal = Any[[.5,3]]
@@ -49,6 +49,6 @@ cd(ProjDir) #do
 
   @time sim = stan(stanmodel, SimData, ProjDir, diagnostics=false)
 
-  #describe(sim)
+  describe(sim)
 
-#end
+end
