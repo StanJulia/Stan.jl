@@ -1,5 +1,9 @@
 using Mamba,Stan,Distributions,Gadfly,DataFrames,Compat
 
+# Note: This example, due to Chris Fisher, only runs on the latest development
+#       version of CmdStan & Stan, i.e. the version post (Cmd)Stan 2.14.0.
+#       Daniel (Lee, from the Stan team) has confirmed this.
+
 ProjDir = dirname(@__FILE__)
 cd(ProjDir) do
 
