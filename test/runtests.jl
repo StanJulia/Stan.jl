@@ -23,7 +23,7 @@ execution_tests = [
 ]
 
 for my_test in code_tests
-    println("\n  * $(my_test) *")
+    println("\n\n\n  * $(my_test) *")
     include(my_test)
 end
 
@@ -35,12 +35,14 @@ if CMDSTAN_HOME != ""
         include(my_test)
     end
   catch e
-     println("CMDSTAN_HOME initialized, but CmdStan not installed properly.")
+     println("CMDSTAN_HOME initialized, but either")
+     println("CmdStan is not installed properly or an error occurred")
+     println("during the execution of CmdStan.")
      println(e)
-     println("No simulation runs have been performed.")
   end 
 else
-  println("\n\nCMDSTAN_HOME not initialized. Skipping all tests that depend on CmdStan!\n")
+  println("\n\nCMDSTAN_HOME not set or found.")
+  println("Skipping all tests that depend on CmdStan!\n")
 end
 
 println("\n")
