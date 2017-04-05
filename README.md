@@ -16,9 +16,13 @@ For more info on Stan, please go to <http://mc-stan.org>.
 
 For more info on Mamba, please go to <http://mambajl.readthedocs.org/en/latest/>.
 
-This version of the package has primarily been tested on Mac OSX 10.11&12, Julia 0.5.0, CmdStan 2.12.0 and Mamba 0.10.0.
+This version of the package has primarily been tested on Mac OSX 10.11&12, Julia 0.5.0, CmdStan 2.14.0 and Mamba 0.10.0.
 
 A limited amount of testing has taken place on other platforms by other users of the package (see note 1 in the 'To Do' section below).
+
+## Updates for Julia 0.6
+
+Also decouple Mamba & Gadfly from testing newer Julia versions.
 
 ## A walk-through example
 
