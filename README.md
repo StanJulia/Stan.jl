@@ -22,7 +22,7 @@ A limited amount of testing has taken place on other platforms by other users of
 
 ## Updates for Julia 0.6
 
-Also decouple Mamba & Gadfly from testing newer Julia versions.
+Also decouple Mamba & Gadfly from testing newer Julia versions. For now this work will be done in branch Stan.jl.2.0.0
 
 ## A walk-through example
 
