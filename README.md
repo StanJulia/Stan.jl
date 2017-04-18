@@ -224,6 +224,7 @@ In Stan.jl v"1.0.3" an example has been added to show passing in parameter value
 3. Bumped REQUIRE for Julia to v"0.5.0".
 4. Fix for Stan 2.13.1 (for runs without a data file).
 5. Added Marco Cox' fix for scalar data elements.
+6. Updates to README suggested by Frederik Beaujean.
 
 ### Version 1.0.2 (currently tagged version)
 
