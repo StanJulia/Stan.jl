@@ -60,15 +60,10 @@ stanmodel |> display
 ```
 Above Stanmodel() call creates a default model for sampling. See the other examples for methods optimize, diagnose and variational in the Bernoulli example directory and below for some more possible Stanmodel() arguments.
 
-The input data is defined below. By default 4 chains will be simulated. Below initialization of 'bernoullidata' creates an array of 4 dictionaries, a dictionary for each chain. If the array length is not equal to the number of chains, only the first element of the array will be used as initialization for all chains.
+The input data is defined below.
 ```
-const bernoullidata = [
-  Dict("N" => 10, "y" => [0, 1, 0, 1, 0, 0, 0, 0, 0, 1]),
-  Dict("N" => 10, "y" => [0, 1, 0, 0, 0, 0, 1, 0, 0, 1]),
-  Dict("N" => 10, "y" => [0, 1, 0, 0, 0, 0, 0, 0, 1, 1]),
-  Dict("N" => 10, "y" => [0, 0, 0, 1, 0, 0, 0, 1, 0, 1])
-]
-println("Input observed data, an array of dictionaries:")
+const bernoullidata = Dict("N" => 10, "y" => [0, 1, 0, 1, 0, 0, 0, 0, 0, 1])
+println("Input observed data")
 bernoullidata |> display
 println()
 ```
@@ -81,7 +76,7 @@ The first time (or when updates to the model or data have been made) stan() will
 
 On Windows, the CmdStanDir argument appears needed (this is still being investigated). On OSX/Unix CmdStanDir is obtained from either ~/.juliarc.jl or an environment variable (see the Requirements section).
 
-As stated above, by default it will run 4 chains, optionally display a combined summary and returns a Mamba Chains object for a sampler. Some other Stan methods, e.g. optimize, return a dictionary.
+By default it will run 4 chains, optionally display a combined summary and returns a Mamba Chains object for a sampler. Some other Stan methods, e.g. optimize, return a dictionary.
 
 In this case 'sim1' is a Mamba Chains object. We can inspect sim1 as follows:
 ```
@@ -102,7 +97,7 @@ The following diagnostics and Gadfly based plot functions (all from Mamba.jl) ar
 ```
 println("Brooks, Gelman and Rubin Convergence Diagnostic")
 try
-  gelmandiag(sim1, mpsrf=true, transform=true) |> display
+  gelmandiag(sim, mpsrf=true, transform=true) |> display
 catch e
   #println(e)
   gelmandiag(sim, mpsrf=false, transform=true) |> display
