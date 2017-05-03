@@ -16,13 +16,11 @@ For more info on Stan, please go to <http://mc-stan.org>.
 
 For more info on Mamba, please go to <http://mambajl.readthedocs.org/en/latest/>.
 
+For more info on Gadfly, please go to <https://github.com/GiovineItalia/Gadfly.jl>
+
 This version of the package has primarily been tested on Mac OSX 10.12, Julia 0.5.1, CmdStan 2.15.0, Mamba 0.10.0 and Gadfly 0.6.1
 
 A limited amount of testing has taken place on other platforms by other users of the package (see note 1 in the 'To Do' section below).
-
-## Updates for Julia 0.6
-
-Also decouple Mamba & Gadfly from testing newer Julia versions. For now this work will be done in branch Stan.jl.2.0.0
 
 ## A walk-through example
 
@@ -215,7 +213,11 @@ All parameters to compile and run the Stan script are implicitly passed in throu
 
 In Stan.jl v"1.0.3" an example has been added to show passing in parameter values to Stanmodel (see below version release note 2). The example can be found in directory Examples/BernoulliInitTheta.
 
-## What's new
+## What's new and planned
+
+### Version 2.0.0 (Currently slated for late 2017 and possibly Julia 1.0)
+
+Please see the "Future of Stan.jl" [issue](https://github.com/goedman/Stan.jl/issues/40)
 
 ### Version 1.0 3 (next)
  
