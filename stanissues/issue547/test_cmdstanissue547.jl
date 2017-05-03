@@ -1,0 +1,23 @@
+# This is a test for CmdStan issue #547 (thanks to chris fisher & bob)
+
+using Mamba, Stan
+
+ProjDir = dirname(@__FILE__)
+cd(ProjDir) #do
+
+  const simplecode = "
+  parameters {
+    real y;
+  }
+  model {
+    y ~ normal(0, 1);
+  }  "
+
+  stanmodel = Stanmodel(Sample(save_warmup=true, thin=1), name="simple", model=simplecode);
+  sim = stan(stanmodel, [Dict("y" => 0.)], CmdStanDir=CMDSTAN_HOME);
+  describe(sim)
+  
+  
+#end
+
+# The first sample for y (in e.g. tmp/simple_samples_1.csv, ~line 39) should be 0.
