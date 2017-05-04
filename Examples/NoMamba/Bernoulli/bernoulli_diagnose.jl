@@ -1,9 +1,9 @@
 ######## Stan diagnose example  ###########
 
-using Stan, Base.Test
+using Compat, Stan, Base.Test
 
 ProjDir = dirname(@__FILE__)
-cd(ProjDir) do
+cd(ProjDir) #do
 
 bernoulli = "
 data { 
@@ -37,6 +37,10 @@ println()
 tmp = diags[1]["diagnose"][:value]
 println("diags[1][diagnose][:value]: $(tmp)")
 
-@test tmp ≈ [1.7] atol=0.3
+if VERSION.minor == 6
+  @test tmp ≈ [1.7] atol=0.3
+else
+  @test tmp == [1.7]
+end
 
-end # cd
+#end # cd

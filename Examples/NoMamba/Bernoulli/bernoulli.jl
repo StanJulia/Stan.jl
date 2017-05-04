@@ -1,6 +1,6 @@
 ######### Stan program example  ###########
 
-using Stan
+using Compat, Stan, Base.Test
 
 ProjDir = dirname(@__FILE__)
 cd(ProjDir) #do
@@ -41,9 +41,10 @@ println()
 sim = stan(stanmodel, bernoullidata, ProjDir, diagnostics=false,
   CmdStanDir=CMDSTAN_HOME);
 
-## Subset Sampler Output to variables suitable for describe().
-#sim = sim1[1:size(sim1, 1), monitor, 1:size(sim1, 3)]
 
-sim |> display
+sim[1:10,:,1] |> display
+println()
+
+@test round(mean(sim[:,8,:]), 1) ≈ 0.3
 
 #end # cd

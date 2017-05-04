@@ -31,4 +31,9 @@ stanmodel = Stanmodel(Variational(), name="bernoulli",
 
 sim = stan(stanmodel, bernoullidata, ProjDir, CmdStanDir=CMDSTAN_HOME)
 
+sim[1:10,:,1] |> display
+println()
+
+@test round(mean(sim[:,2,:]), 1) ≈ 0.3
+
 #end # cd

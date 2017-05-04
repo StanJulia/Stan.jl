@@ -1,6 +1,6 @@
 ######### ARM Ch03: kid score example  ###########
 
-using Stan, Base.Test
+using Compat, Stan, Base.Test
 
 ProjDir = dirname(@__FILE__)
 cd(ProjDir) do
@@ -182,6 +182,6 @@ println()
 sim = stan(stanmodel, kiddata, ProjDir, CmdStanDir=CMDSTAN_HOME)
 
 println("Mean of beta[1]: $(mean(sim[:,8,:]))")
-@test mean(sim[:,8,:]) ≈ 26.0 atol=1.0
+@test round(mean(sim[:,8,:]), 0) ≈ 26.0
 
 end # cd
