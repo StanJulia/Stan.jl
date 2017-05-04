@@ -1,5 +1,7 @@
 module Stan
 
+using Compat
+
 """The directory which contains the executable `bin/stanc`. Inferred
 from `Main.CMDSTAN_HOME` or `ENV["CMDSTAN_HOME"]` when available. Use
 `set_CMDSTAN_HOME!` to modify."""

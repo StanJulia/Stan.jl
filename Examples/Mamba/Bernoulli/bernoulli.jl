@@ -1,7 +1,6 @@
 ######### Stan program example  ###########
 
-#using Mamba, Stan
-using Stan
+using Mamba, Stan
 
 ProjDir = dirname(@__FILE__)
 cd(ProjDir) do
@@ -30,7 +29,7 @@ bernoullidata = [
 monitor = ["theta", "lp__", "accept_stat__"]
 
 stanmodel = Stanmodel(update=1200, thin=2, name="bernoulli", 
-  model=bernoullimodel, useMamba=false);
+  model=bernoullimodel, useMamba=true);
 
 println("\nStanmodel that will be used:")
 stanmodel |> display
@@ -41,7 +40,7 @@ println()
 
 sim1 = stan(stanmodel, bernoullidata, ProjDir, diagnostics=false, CmdStanDir=CMDSTAN_HOME);
 
-#=
+
 ## Subset Sampler Output to variables suitable for describe().
 sim = sim1[1:size(sim1, 1), monitor, 1:size(sim1, 3)]
 describe(sim)
@@ -75,6 +74,5 @@ autocor(sim) |> display
 p = plot(sim, [:trace, :mean, :density, :autocor], legend=true);
 draw(p, ncol=4, filename="$(stanmodel.name)-summaryplot", fmt=:svg)
 draw(p, ncol=4, filename="$(stanmodel.name)-summaryplot", fmt=:pdf)
-=#
 
 end # cd

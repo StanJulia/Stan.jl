@@ -1,6 +1,6 @@
 importall Base
 
-abstract type Engine end
+@compat abstract type Engine end
 
 type Nuts <: Engine
   max_depth::Int64
@@ -12,7 +12,7 @@ type Static <: Engine
 end
 Static(;int_time::Number=2 * pi) = Static(int_time)
 
-abstract type Metric end
+@compat abstract type Metric end
 type unit_e <: Metric
 end
 type dense_e <: Metric
@@ -20,7 +20,7 @@ end
 type diag_e <: Metric
 end
 
-abstract type Algorithm end
+@compat abstract type Algorithm end
 
 type Hmc <: Algorithm
   engine::Engine

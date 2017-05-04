@@ -1,4 +1,4 @@
-ProjDir = joinpath(dirname(@__FILE__), "..", "Examples", "EightSchools")
+ProjDir = joinpath(dirname(@__FILE__), "..", "Examples", "Mamba", "EightSchools")
 cd(ProjDir) do
 
   isdir("tmp") &&

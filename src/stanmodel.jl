@@ -1,6 +1,6 @@
 import Base: show, showcompact
 
-abstract type Methods end
+@compat abstract type Methods end
 
 include("./sampletype.jl")
 include("./optimizetype.jl")
