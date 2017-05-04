@@ -3,7 +3,7 @@
 using Stan
 
 ProjDir = dirname(@__FILE__)
-cd(ProjDir) do
+cd(ProjDir) #do
 
 bernoullimodel = "
 data { 
@@ -29,7 +29,7 @@ bernoullidata = [
 monitor = ["theta", "lp__", "accept_stat__"]
 
 stanmodel = Stanmodel(update=1200, thin=2, name="bernoulli", 
-  model=bernoullimodel, useMamba=true);
+  model=bernoullimodel, useMamba=false);
 
 println("\nStanmodel that will be used:")
 stanmodel |> display
@@ -38,10 +38,12 @@ println("Input observed data dictionary:")
 bernoullidata |> display
 println()
 
-sim1 = stan(stanmodel, bernoullidata, ProjDir, diagnostics=false,
+sim = stan(stanmodel, bernoullidata, ProjDir, diagnostics=false,
   CmdStanDir=CMDSTAN_HOME);
 
 ## Subset Sampler Output to variables suitable for describe().
 #sim = sim1[1:size(sim1, 1), monitor, 1:size(sim1, 3)]
 
-end # cd
+sim |> display
+
+#end # cd

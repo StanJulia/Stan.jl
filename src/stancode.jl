@@ -346,7 +346,12 @@ function read_stanfit(model::Stanmodel)
 end
 
 
-#### Create a Mamba::Chains for results or warmup samples
+#### Create
+####   if m.useMamba = true
+####     a Mamba::Chains for results or warmup samples
+####   else
+####     an Array
+####   end
 
 function read_stanfit_warmup_samples(m::Stanmodel, diagnostics=false)
   if !m.method.save_warmup
@@ -403,21 +408,33 @@ function read_stanfit_samples(m::Stanmodel, diagnostics=false, warmup_samples=fa
   
   if m.method.save_warmup
     if warmup_samples
-      sr = getindex(a3d, [1:1:size(a3d, 1);], 
-        [1:size(a3d, 2);], [1:size(a3d, 3);])
-      Chains(sr, start=1, thin=1, names=idx[indvec], 
-        chains=[i for i in 1:m.nchains])
+      if m.useMamba
+        sr = getindex(a3d, [1:1:size(a3d, 1);], 
+          [1:size(a3d, 2);], [1:size(a3d, 3);])
+        Chains(sr, start=1, thin=1, names=idx[indvec], 
+          chains=[i for i in 1:m.nchains])
+      else
+        a3d
+      end
     else
       skip_warmup_indx = floor(Int, m.method.num_warmup/m.method.thin) + 1
-      sr = getindex(a3d, [skip_warmup_indx:1:noofsamples;], 
-        [1:size(a3d, 2);], [1:size(a3d, 3);])
-      Chains(sr, start=skip_warmup_indx, thin=1, 
-        names=idx[indvec], chains=[i for i in 1:m.nchains])
+      if m.useMamba
+        sr = getindex(a3d, [skip_warmup_indx:1:noofsamples;], 
+          [1:size(a3d, 2);], [1:size(a3d, 3);])
+        Chains(sr, start=skip_warmup_indx, thin=1, 
+          names=idx[indvec], chains=[i for i in 1:m.nchains])
+      else
+        a3d
+      end
     end
   else  
-    sr = getindex(a3d, [1:m.thin:size(a3d, 1);], 
-      [1:size(a3d, 2);], [1:size(a3d, 3);])
-    Chains(sr, start=1, thin=m.thin, names=idx[indvec], chains=[i for i in 1:m.nchains])
+    if m.useMamba
+      sr = getindex(a3d, [1:m.thin:size(a3d, 1);], 
+        [1:size(a3d, 2);], [1:size(a3d, 3);])
+      Chains(sr, start=1, thin=m.thin, names=idx[indvec], chains=[i for i in 1:m.nchains])
+    else
+      a3d
+    end
   end
 end
 
@@ -457,9 +474,12 @@ function read_stanfit_variational_samples(m::Stanmodel)
     end
   end
   
-  sr = getindex(a3d, [1:1:size(a3d, 1);], [1:size(a3d, 2);], [1:size(a3d, 3);])
-  Chains(sr, start=1, thin=1, names=idx[indvec], chains=[i for i in 1:m.nchains])
-	
+  if useMamba
+    sr = getindex(a3d, [1:1:size(a3d, 1);], [1:size(a3d, 2);], [1:size(a3d, 3);])
+    Chains(sr, start=1, thin=1, names=idx[indvec], chains=[i for i in 1:m.nchains])
+  else
+    a3d
+  end
 end
 
 
