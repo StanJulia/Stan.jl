@@ -10,6 +10,7 @@ code_tests = ["test_env.jl",
 # Run execution_tests only if CmdStan is installed and CMDSTAN_HOME is set correctly.
 execution_tests = [
   "test_bernoulli.jl",
+  #=
   "test_bernoulli_optimize.jl",
   "test_bernoulli_diagnose.jl",
   "test_bernoulli_variational.jl",
@@ -19,7 +20,8 @@ execution_tests = [
   "test_binormal.jl",
   "test_schools8.jl",
   "test_dyes.jl",
-  "test_kidscore.jl"  
+  "test_kidscore.jl"
+  =#  
 ]
 
 for my_test in code_tests
@@ -31,7 +33,7 @@ if CMDSTAN_HOME != ""
   println("CMDSTAN_HOME set. Try to run bernoulli.")
   try
     for my_test in execution_tests
-        println("\n  * $(my_test) *")
+        println("\n\n  * $(my_test) *\n")
         include(my_test)
     end
   catch e
