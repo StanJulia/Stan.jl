@@ -31,6 +31,6 @@ stanmodel = Stanmodel(name="binormal", model=binorm, Sample(save_warmup=true),
 sim = stan(stanmodel, CmdStanDir=CMDSTAN_HOME)
 
 println("Mean of y[1]: $(mean(sim[:,8,:]))")
-#@test round(mean(sim[:,8,:]), 2) ≈ 0.01
+@test round(mean(sim[:,8,:]), 0) ≈ 0.0
 
 end # cd

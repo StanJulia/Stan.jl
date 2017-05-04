@@ -178,7 +178,6 @@ const kiddata = [
 ]
 
 stanmodel = Stanmodel(name="kid", model=kid, useMamba=false);
-println()
 sim = stan(stanmodel, kiddata, ProjDir, CmdStanDir=CMDSTAN_HOME)
 
 println("Mean of beta[1]: $(mean(sim[:,8,:]))")

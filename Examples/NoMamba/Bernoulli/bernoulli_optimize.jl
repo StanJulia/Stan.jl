@@ -1,9 +1,9 @@
 ######### Stan program example  ###########
 
-using Stan, Base.Test
+using Compat, Stan, Base.Test
 
 ProjDir = dirname(@__FILE__)
-cd(ProjDir) do
+cd(ProjDir) #do
 
 bernoulli = "
 data { 
@@ -34,6 +34,6 @@ optim = stan(stanmodel, bernoullidata, ProjDir, CmdStanDir=CMDSTAN_HOME);
 optim[1] |> display
 println()
 
-@test optim[1]["optimize"]["thet"] ≈ [0.3] atol=1.0e-1
+@test round(optim[1]["optimize"]["theta"][1], 1) ≈ 0.3
 
-end # cd
+#end # cd

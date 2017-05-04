@@ -33,8 +33,6 @@ cd(ProjDir) do
     Dict("theta" => 0.9),
   ]
 
-  monitor = ["theta", "lp__", "accept_stat__"]
-
   stanmodel = Stanmodel(name="bernoulli",
     model=bernoullimodel,
     init=Stan.Init(init=bernoulliinit),

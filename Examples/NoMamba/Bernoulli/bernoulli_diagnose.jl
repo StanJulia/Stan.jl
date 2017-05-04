@@ -34,13 +34,9 @@ diags = stan(stanmodel, bernoullidata, ProjDir, CmdStanDir=CMDSTAN_HOME);
 diags[1]["diagnose"] |> display
 println()
 
-tmp = diags[1]["diagnose"][:value]
-println("diags[1][diagnose][:value]: $(tmp)")
+tmp = diags[1]["diagnose"][:model][1]
+println("diags[1][diagnose][:model]: $(tmp)")
 
-if VERSION.minor == 6
-  @test tmp ≈ [1.7] atol=0.3
-else
-  @test tmp == [1.7]
-end
+@test round(tmp, 0) > -3.0
 
 #end # cd
