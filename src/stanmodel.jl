@@ -1,13 +1,14 @@
 import Base: show, showcompact
 
-abstract Methods
+abstract type Methods end
 
 include("./sampletype.jl")
 include("./optimizetype.jl")
 include("./diagnosetype.jl")
 include("./variationaltype.jl")
 
-typealias DataDict Dict{String, Any}
+const DataDict = Dict{String, Any}
+
 type Init{I<:Union{Int,Float64, Vector{DataDict}}}
   init::I
   init_files::Vector{String}
@@ -47,6 +48,7 @@ type Stanmodel
   init::Init
   output::Output
   tmpdir::String
+  useMamba::Bool
 end
 
 function Stanmodel(
@@ -62,9 +64,17 @@ function Stanmodel(
   random=Random(),
   init=Init(),
   output=Output(),
-  pdir::String=pwd())
+  pdir::String=pwd(),
+  useMamba=true)
     
   cd(pdir)
+  
+  if useMamba
+    eval(quote
+      using Mamba
+      using Gadfly
+    end)
+  end
   
   tmpdir = Pkg.dir(pdir, "tmp")
   if !isdir(tmpdir)
@@ -93,7 +103,7 @@ function Stanmodel(
     adapt, update, thin,
     id, model, model_file, monitors,
     data, data_file_array, data_file,
-    cmdarray, method, random, init, output, tmpdir);
+    cmdarray, method, random, init, output, tmpdir, useMamba);
 end
 
 function update_model_file(file::String, str::String)
@@ -113,12 +123,13 @@ end
 function model_show(io::IO, m::Stanmodel, compact::Bool)
   println("  name =                    \"$(m.name)\"")
   println("  nchains =                 $(m.nchains)")
-  println("  update =                   $(m.update)")
-  println("  adapt =                    $(m.adapt)")
-  println("  thin =                     $(m.thin)")
+  println("  update =                  $(m.update)")
+  println("  adapt =                   $(m.adapt)")
+  println("  thin =                    $(m.thin)")
+  println("  useMamba =                $(m.useMamba)")
   println("  monitors =                $(m.monitors)")
   println("  model_file =              \"$(m.model_file)\"")
-  println("  data_file =                \"$(m.data_file)\"")
+  println("  data_file =               \"$(m.data_file)\"")
   println("  output =                  Output()")
   println("    file =                    \"$(m.output.file)\"")
   println("    diagnostics_file =        \"$(m.output.diagnostic_file)\"")

@@ -1,6 +1,7 @@
 importall Base
 
-abstract Diagnostics
+abstract type Diagnostics end
+
 type Gradient <: Diagnostics
   epsilon::Float64
   error::Float64

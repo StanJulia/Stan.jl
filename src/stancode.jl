@@ -142,7 +142,6 @@ function stan(
     if isa(model.method, Sample) && summary
       stan_summary(par(samplefiles), CmdStanDir=CmdStanDir)
     end
-    #cd(pwd()*"1"); println(pwd())
     res = read_stanfit_samples(model, diagnostics)
   elseif isa(model.method, Variational)
     ftype = "variational"
@@ -152,7 +151,6 @@ function stan(
     if isa(model.method, Variational) && summary
       stan_summary(par(samplefiles), CmdStanDir=CmdStanDir)
     end
-    #cd(pwd()*"1"); println(pwd())
     res = read_stanfit_variational_samples(model)
   elseif isa(model.method, Optimize)
     res = read_stanfit(model)
