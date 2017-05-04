@@ -1,7 +1,5 @@
 module Stan
 
-using Mamba
-
 """The directory which contains the executable `bin/stanc`. Inferred
 from `Main.CMDSTAN_HOME` or `ENV["CMDSTAN_HOME"]` when available. Use
 `set_CMDSTAN_HOME!` to modify."""
@@ -23,16 +21,6 @@ end
 Example: `set_CMDSTAN_HOME!(homedir() * "/src/src/cmdstan-2.11.0/")`"""
 set_CMDSTAN_HOME!(path) = global CMDSTAN_HOME=path
 
-if !isdefined(Main, :JULIA_SVG_BROWSER)
-    JULIA_SVG_BROWSER = ""
-    try
-        JULIA_SVG_BROWSER = ENV["JULIA_SVG_BROWSER"]
-    catch e
-        println("Environment variable JULIA_SVG_BROWSER not found.")
-        JULIA_SVG_BROWSER = ""
-    end
-end
-
 include("stanmodel.jl")
 include("stancode.jl")
 include("utilities.jl")
@@ -46,7 +34,6 @@ stan_summary,
 read_stanfit,
 read_stanfit_samples,
 CMDSTAN_HOME,
-JULIA_SVG_BROWSER,
 # From stanmodel.jl
 Stanmodel,
 Data,

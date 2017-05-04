@@ -1,0 +1,3 @@
+using Documenter, Stan
+
+makedocs()
