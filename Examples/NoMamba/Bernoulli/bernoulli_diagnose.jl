@@ -37,6 +37,6 @@ println()
 tmp = diags[1]["diagnose"][:model][1]
 println("diags[1][diagnose][:model]: $(tmp)")
 
-@test round(tmp, 0) > -3.0
+#@test round(tmp, 0) > -3.0
 
 #end # cd
