@@ -1,3 +1,5 @@
+# This is a test for CmdStan issue #510 (thanks to jonalm)
+
 using Mamba, Stan
 
 ProjDir = dirname(@__FILE__)
@@ -23,3 +25,5 @@ cd(ProjDir) #do
   describe(sim3)
   
 #end
+
+# stanmodel3 should not fail.
