@@ -474,7 +474,7 @@ function read_stanfit_variational_samples(m::Stanmodel)
     end
   end
   
-  if useMamba
+  if m.useMamba
     sr = getindex(a3d, [1:1:size(a3d, 1);], [1:size(a3d, 2);], [1:size(a3d, 3);])
     Chains(sr, start=1, thin=1, names=idx[indvec], chains=[i for i in 1:m.nchains])
   else

@@ -1,6 +1,6 @@
 ######### Stan program example  ###########
 
-using Stan
+using Stan, Base.Test
 
 ProjDir = dirname(@__FILE__)
 cd(ProjDir) do
@@ -26,9 +26,14 @@ bernoullidata = [
   Dict("N" => 10, "y" => [0, 0, 0, 1, 0, 0, 0, 1, 0, 1])
 ]
 
-stanmodel = Stanmodel(Optimize(), name="bernoulli", model=bernoulli);
+stanmodel = Stanmodel(Optimize(), name="bernoulli",
+  model=bernoulli, useMamba=false);
 
 optim = stan(stanmodel, bernoullidata, ProjDir, CmdStanDir=CMDSTAN_HOME);
-optim |> display
+
+optim[1] |> display
+println()
+
+@test optim[1]["optimize"]["thet"] ≈ [0.3] atol=1.0e-1
 
 end # cd
