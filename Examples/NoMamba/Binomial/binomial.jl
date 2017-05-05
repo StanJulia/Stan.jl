@@ -2,7 +2,7 @@
 ## Note: Adapted from the Rate_4 example in Bayesian Cognitive Modeling
 ##  https://github.com/stan-dev/example-models/tree/master/Bayesian_Cognitive_Modeling
 
-using Mamba, Stan
+using Compat, Stan, Base.Test
 
 ProjDir = dirname(@__FILE__)
 cd(ProjDir) do
