@@ -6,6 +6,9 @@
 
 [![Stan](http://pkg.julialang.org/badges/Stan_0.5.svg)](http://pkg.julialang.org/?pkg=Stan&ver=0.5)
 
+[![Stan](http://pkg.julialang.org/badges/Stan_0.6.svg)](http://pkg.julialang.org/?pkg=Stan&ver=0.6)
+
+
 ## Purpose
 
 A package to use Stan (as an external program) from Julia.
