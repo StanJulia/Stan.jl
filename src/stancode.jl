@@ -292,7 +292,8 @@ function read_stanfit(model::Stanmodel)
           tdict = Dict()
           skipchars(instream, isspace, linecomment='#')
           line = normalize_string(readline(instream), newline2lf=true)
-          idx = split(line[1:length(line)-1], ",")
+          #idx = split(line[1:length(line)-1], ",")
+          idx = split(strip(line), ",")
           index = [idx[k] for k in 1:length(idx)]
           #res_type == "optimize" && println(index)
           j = 0
@@ -309,7 +310,8 @@ function read_stanfit(model::Stanmodel)
               #return(tdict)
               break
             else
-              flds = float(split(line[1:length(line)-1], ","))
+              #flds = float(split(line[1:length(line)-1], ","))
+              flds = float(split(line, ","))
               println(flds)
               for k in 1:length(index)
                 if j ==1
