@@ -43,7 +43,8 @@ const binomialdata = [
 sim = stan(stanmodel, binomialdata, ProjDir, diagnostics=false,
             CmdStanDir=CMDSTAN_HOME)
 
-println("Mean of theta[1]: $(mean(sim[:,8,:]))")
+println()
+println("Test round(mean(theta[1]), 1) ≈ 0.5")
 @test round(mean(sim[:,8,:]), 1) ≈ 0.5
 
 end # cd

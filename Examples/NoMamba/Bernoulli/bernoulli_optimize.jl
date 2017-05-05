@@ -3,7 +3,7 @@
 using Compat, Stan, Base.Test
 
 ProjDir = dirname(@__FILE__)
-cd(ProjDir) #do
+cd(ProjDir) do
 
 bernoulli = "
 data { 
@@ -34,6 +34,8 @@ optim = stan(stanmodel, bernoullidata, ProjDir, CmdStanDir=CMDSTAN_HOME);
 optim[1] |> display
 println()
 
+println()
+println("Test round(optim[1][\"optimize\"][\"theta\"][1], 1) ≈ 0.3")
 @test round(optim[1]["optimize"]["theta"][1], 1) ≈ 0.3
 
-#end # cd
+end # cd

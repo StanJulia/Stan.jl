@@ -3,7 +3,7 @@
 using Stan, Base.Test
 
 ProjDir = dirname(@__FILE__)
-cd(ProjDir) #do
+cd(ProjDir) do
 
 bernoulli = "
 data { 
@@ -34,6 +34,8 @@ sim = stan(stanmodel, bernoullidata, ProjDir, CmdStanDir=CMDSTAN_HOME)
 sim[1:10,:,1] |> display
 println()
 
+println()
+println("Test round(mean(theta), 1) ≈ 0.3")
 @test round(mean(sim[:,2,:]), 1) ≈ 0.3
 
-#end # cd
+end # cd

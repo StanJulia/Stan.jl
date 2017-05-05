@@ -180,7 +180,7 @@ const kiddata = [
 stanmodel = Stanmodel(name="kid", model=kid, useMamba=false);
 sim = stan(stanmodel, kiddata, ProjDir, CmdStanDir=CMDSTAN_HOME)
 
-println("Mean of beta[1]: $(mean(sim[:,8,:]))")
-@test round(mean(sim[:,8,:]), 0) ≈ 26.0
+println("Test: 25.0 < round(mean(beta[1]), 0) == $(mean(sim[:,8,:])) < 27.0")
+@test 24.0 < round(mean(sim[:,8,:]), 0) < 27.0
 
 end # cd

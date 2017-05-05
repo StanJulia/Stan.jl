@@ -40,7 +40,8 @@ cd(ProjDir) do
 
   sim = stan(stanmodel, bernoullidata, ProjDir, CmdStanDir=CMDSTAN_HOME)
 
-  println("Mean of theta[1]: $(mean(sim[:,8,:]))")
-  #@test round(mean(sim[:,8,:]), 2) ≈ 0.27
+  println()
+  println("Test 0.2 < mean(theta[1]) < 0.7)")
+  @test 0.2 < round(mean(sim[:,8,:]), 1) < 0.7
 
 end # cd
