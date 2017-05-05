@@ -372,7 +372,7 @@ function read_stanfit_samples(m::Stanmodel, diagnostics=false, warmup_samples=fa
       instream = open("$(m.name)_$(ftype)_$(i).csv")
       skipchars(instream, isspace, linecomment='#')
       line = normalize_string(readline(instream), newline2lf=true)
-      idx = split(line[1:length(line)-1], ",")
+      idx = split(strip(line), ",")
       index = [idx[k] for k in 1:length(idx)]
       if length(m.monitors) == 0
         indvec = 1:length(index)
@@ -396,7 +396,7 @@ function read_stanfit_samples(m::Stanmodel, diagnostics=false, warmup_samples=fa
           close(instream)
           break
         else
-          flds = float(split(line[1:length(line)-1], ","))
+          flds = float(split(strip(line), ","))
           flds = reshape(flds[indvec], 1, length(indvec))
           a3d[j,:,i] = flds
         end
@@ -446,7 +446,7 @@ function read_stanfit_variational_samples(m::Stanmodel)
       instream = open("$(m.name)_$(ftype)_$(i).csv")
       skipchars(instream, isspace, linecomment='#')
       line = normalize_string(readline(instream), newline2lf=true)
-      idx = split(line[1:length(line)-1], ",")
+      idx = split(strip(line), ",")
       index = [idx[k] for k in 1:length(idx)]
       if length(m.monitors) == 0
         indvec = 1:length(index)
@@ -464,7 +464,7 @@ function read_stanfit_variational_samples(m::Stanmodel)
           close(instream)
           break
         else
-          flds = float(split(line[1:length(line)-1], ","))
+          flds = float(split(strip(line), ","))
           flds = reshape(flds[indvec], 1, length(indvec))
           a3d[j,:,i] = flds
         end
