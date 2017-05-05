@@ -2,8 +2,6 @@
 
 [![Travis Build Status](https://travis-ci.org/goedman/Stan.jl.svg?branch=master)](https://travis-ci.org/goedman/Stan.jl)
 
-[![Stan](http://pkg.julialang.org/badges/Stan_0.4.svg)](http://pkg.julialang.org/?pkg=Stan&ver=0.4)
-
 [![Stan](http://pkg.julialang.org/badges/Stan_0.5.svg)](http://pkg.julialang.org/?pkg=Stan&ver=0.5)
 
 [![Stan](http://pkg.julialang.org/badges/Stan_0.6.svg)](http://pkg.julialang.org/?pkg=Stan&ver=0.6)
