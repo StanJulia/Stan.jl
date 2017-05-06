@@ -1,7 +1,7 @@
 using Documenter, Stan
 makedocs(
     format = :html,
-    sitename = "Stan.jl",
+    sitename = "Stan",
     pages = Any[
         "Introduction" => "INTRO.md",
         "Getting started" => "GETTINGSTARTED.md",

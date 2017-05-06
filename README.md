@@ -11,7 +11,7 @@
 
 A package to use Stan (as an external program) from Julia.
 
-Documentation can be found [here]()
+Documentation can be found [here](http://goedman.github.io/Stan.jl/latest/INTRO.html)
 
 CmdStan needs to be installed separatedly. Please see the [Getting started]().
 
