@@ -61,6 +61,6 @@ Thanks to Robert Feldt and the brew/Homebrew.jl folks, on OSX, in addition to th
 
 ## Selected examples
 
-1. [Bernoulli](https://github.com/PtFEM/PtFEM.jl/blob/master/docs/src/Bernoulli.md)
-1. [Dyes](https://github.com/PtFEM/PtFEM.jl/blob/master/docs/src/Dyes.md)
-1. [Binormal](https://github.com/PtFEM/PtFEM.jl/blob/master/docs/src/Binormal.md)
+1. [Bernoulli](https://github.com/goedman/Stan/goedman/Stan.jl/blob/master/docs/src/Bernoulli.md)
+1. [Dyes](https://github.com/goedman/Stan/goedman/Stan.jl/blob/master/docs/src/Dyes.md)
+1. [Binormal](https://github.com/goedman/Stan/goedman/Stan.jl/blob/master/docs/src/Binormal.md)

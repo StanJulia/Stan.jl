@@ -1,5 +1,4 @@
-using Documenter, PtFEM
-
+using Documenter, goedman/Stan
 makedocs(
     format = :html,
     sitename = "Stan.jl",
