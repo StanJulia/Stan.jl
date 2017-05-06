@@ -12,3 +12,10 @@ script:
   - if [[ -a .git/shallow ]]; then git fetch --unshallow; fi
   - julia -e 'Pkg.add("Homebrew");Pkg.add("DualNumbers")'
   - julia -e 'Pkg.clone(pwd()); Pkg.build("Stan"); Pkg.test("Stan")'
+after_success:
+  - julia -e 'Pkg.add("Documenter")'
+  - julia -e 'cd(Pkg.dir("PtFEM")); include(joinpath("docs", "make.jl"))'
+  # push coverage results to Coveralls
+  #- julia -e 'cd(Pkg.dir("StanDump")); Pkg.add("Coverage"); using Coverage; Coveralls.submit(Coveralls.process_folder())'
+  # push coverage results to Codecov
+  #- julia -e 'cd(Pkg.dir("StanDump")); Pkg.add("Coverage"); using Coverage; Codecov.submit(Codecov.process_folder())'
