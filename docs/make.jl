@@ -1,4 +1,4 @@
-using Documenter, goedman/Stan
+using Documenter, Stan
 makedocs(
     format = :html,
     sitename = "Stan.jl",
