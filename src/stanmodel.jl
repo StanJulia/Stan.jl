@@ -70,10 +70,28 @@ function Stanmodel(
   cd(pdir)
   
   if useMamba
-    eval(quote
-      using Mamba
-      using Gadfly
-    end)
+    res = ""
+    try
+    	res = Pkg.installed("Mamba")
+    catch
+      println("Package Mamba.jl not installed, please run Pkg.add(\"Mamba\")")
+      return
+    end
+
+    res = ""
+    try
+    	res = Pkg.installed("Gadfly")
+    catch
+      println("Package Gadfly.jl not installed, please run Pkg.add(\"Gadfly\")")
+      return
+    end
+
+    if typeof(res) == VersionNumber
+      eval(quote
+        using Mamba
+        using Gadfly
+      end)
+    end
   end
   
   tmpdir = Pkg.dir(pdir, "tmp")
