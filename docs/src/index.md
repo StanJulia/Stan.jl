@@ -3,11 +3,13 @@
 ## stanmodel()
 
 ```@docs
+Stanmodel
 ```
 
 ## stan()
 
 ```@docs
+stan
 ```
 
 ## Mamba diagnostics

@@ -1,4 +1,4 @@
-# Getting started
+# CmdStan installation
 
 ## Minimal requirement
 

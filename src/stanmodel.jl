@@ -51,6 +51,63 @@ type Stanmodel
   useMamba::Bool
 end
 
+"""
+# Method Stanmodel 
+
+Create a Stanmodel. 
+
+### Constructors
+```julia
+Stanmodel(
+  method=Sample();
+  name="noname", 
+  nchains=4,
+  adapt=1000, 
+  update=1000,
+  thin=1,
+  model="",
+  monitors=String[],
+  data=DataDict[],
+  random=Random(),
+  init=Init(),
+  output=Output(),
+  pdir::String=pwd(),
+  useMamba=true,
+  mambaThinning=1)
+)
+```
+### Required arguments
+```julia
+* `method=Sample()`            : See ?Methods
+```
+
+### Optional arguments
+```julia
+* name="noname"                : Name for model
+* nchains=4                    : Number of (parallel) chains
+* adapt=1000                   : Number of samples used for adaptation 
+* update=1000                  : Samples used for inference
+* thin=1                       : Stan thinning factor
+* model=""                     : Stan program
+* monitors=String[]            : Filter for variables used in Mamba post-processing
+* data=DataDict[]              : Input data
+* random=Random()              : Random seed settings
+* init=Init()                  : Initial values
+* output=Output()              : File output options
+* pdir::String=pwd()           : Working directory
+* useMamba=true                : Use Mamba Chains for diagnostics and graphics
+* mambaThinning=1)             : Additional thinning factor in Mamba Chains
+```
+
+### Related help
+```julia
+?stan                          : List of available structural element types
+?Sample                        : List of available structural element types
+?Methods                       : List of available structural element types
+?Output                        : List of available structural element types
+?DataDict                      : List of available structural element types
+```
+"""
 function Stanmodel(
   method=Sample();
   name="noname", 
@@ -65,7 +122,8 @@ function Stanmodel(
   init=Init(),
   output=Output(),
   pdir::String=pwd(),
-  useMamba=true)
+  useMamba=true,
+  mambaThinning=1)
     
   cd(pdir)
   
@@ -121,7 +179,8 @@ function Stanmodel(
     adapt, update, thin,
     id, model, model_file, monitors,
     data, data_file_array, data_file,
-    cmdarray, method, random, init, output, tmpdir, useMamba);
+    cmdarray, method, random, init, output, tmpdir,
+    useMamba, mambaThinning);
 end
 
 function update_model_file(file::String, str::String)

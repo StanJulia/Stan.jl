@@ -4,7 +4,7 @@ makedocs(
     sitename = "Stan",
     pages = Any[
         "Introduction" => "INTRO.md",
-        "Getting started" => "GETTINGSTARTED.md",
+        "Installation" => "INSTALLATION.md",
         "Example walkthrough" => "WALKTHROUGH.md",
         "Examples" => "EXAMPLES.md",
         "Versions" => "VERSIONS.md",
