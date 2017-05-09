@@ -49,6 +49,7 @@ type Stanmodel
   output::Output
   tmpdir::String
   useMamba::Bool
+  mambaThinning::Int
 end
 
 """

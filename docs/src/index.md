@@ -12,16 +12,6 @@ Stanmodel
 stan
 ```
 
-## Mamba diagnostics
-
-```@docs
-```
-
-## Mamba/Gadfly graphics
-
-```@docs
-```
-
 ## Index
 ```@index
 ```

@@ -52,49 +52,31 @@ Execute a Stan model.
 ### Method
 ```julia
 stan(
-  method=Sample();
-  name="noname", 
-  nchains=4,
-  adapt=1000, 
-  update=1000,
-  thin=1,
-  model="",
-  monitors=String[],
-  data=DataDict[],
-  random=Random(),
-  init=Init(),
-  output=Output(),
-  pdir::String=pwd(),
-  useMamba=true,
-  mambaThinning=1)
+  model::Stanmodel, 
+  data=Void, 
+  ProjDir=pwd();
+  summary=true, 
+  diagnostics=false, 
+  CmdStanDir=CMDSTAN_HOME
 )
 ```
 ### Required arguments
 ```julia
-* `method=Sample()`            : See ?Methods
+* `model::Stanmodel`            : See ?Methods
+* data=Void, 
+* ProjDir=pwd()
 ```
 
 ### Optional arguments
 ```julia
-* name="noname"                : Name for model
-* nchains=4                    : Number of (parallel) chains
-* adapt=1000                   : Number of samples used for adaptation 
-* update=1000                  : Samples used for inference
-* thin=1                       : Stan thinning factor
-* model=""                     : Stan program
-* monitors=String[]            : Filter for variables used in Mamba post-processing
-* data=DataDict[]              : Input data
-* random=Random()              : Random seed settings
-* init=Init()                  : Initial values
-* output=Output()              : File output options
-* pdir::String=pwd()           : Working directory
-* useMamba=true                : Use Mamba Chains for diagnostics and graphics
-* mambaThinning=1)             : Additional thinning factor in Mamba Chains
+* summary=true                  : Use CmdStan's stansummary to display results
+* diagnostics=false             : Generate diagnostics file
+* CmdStanDir=CMDSTAN_HOME       : Location of CmdStan directory
 ```
 
 ### Related help
 ```julia
-?stanmodel                     : List of available structural element types
+?Stanmodel                      : Create a StanModel
 ```
 """
 function stan(
