@@ -22,7 +22,6 @@ Or, alternatively,
 1.2) define CMDSTAN_HOME in ~/.juliarc.jl, e.g. append lines like 
 ```
 CMDSTAN_HOME = "/Users/rob/Projects/Stan/cmdstan" # Choose the appropriate directory here
-JULIA_SVG_BROWSER = "Google Chrome.app"
 ```
 to ~/.juliarc.jl.
 
@@ -33,12 +32,14 @@ CMDSTAN_HOME = "C:\\cmdstan"
 
 ## Optional requirements
 
-Stan.jl uses Mamba.jl for diagnostics and graphics.
+By default Stan.jl uses Mamba.jl for diagnostics and graphics.
 
 2. [Mamba] (https://github.com/brian-j-smith/Mamba.jl). 
 3. [Gadfly]()
 
 Both packages can be installed using Pkg.add(), e.g. Pkg.add("Mamba"). It requires Mamba v"0.10.0". Mamba will install Gadfly.jl.
+
+The Stanmodel field useMamba can be set to false to disable the use of Mamba and Gadfly.
 
 ## Additional OSX options
 
@@ -57,10 +58,3 @@ Thanks to Robert Feldt and the brew/Homebrew.jl folks, on OSX, in addition to th
 	 Homebrew.add("homebrew/science/cmdstan")
 	 ```
 	 will install CmdStan in ~/.julia/v0.x/Homebrew/deps/usr/Cellar/cmdstan/x.x.x.
-	 
-
-## Selected examples
-
-1. [Bernoulli](https://github.com/goedman/Stan/goedman/Stan.jl/blob/master/docs/src/Bernoulli.md)
-1. [Dyes](https://github.com/goedman/Stan/goedman/Stan.jl/blob/master/docs/src/Dyes.md)
-1. [Binormal](https://github.com/goedman/Stan/goedman/Stan.jl/blob/master/docs/src/Binormal.md)

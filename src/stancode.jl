@@ -62,9 +62,9 @@ stan(
 ```
 ### Required arguments
 ```julia
-* `model::Stanmodel`            : See ?Methods
-* data=Void, 
-* ProjDir=pwd()
+* model::Stanmodel              : See ?Methods
+* data=Void                     : Input data dictionary 
+* ProjDir=pwd()                 : Project working directory
 ```
 
 ### Optional arguments
