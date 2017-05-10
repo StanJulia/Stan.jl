@@ -1,50 +1,5 @@
 import Base:*
 
-#
-# Basic definitions
-#
-
-function check_data_type(data)
-  if typeof(data) <: Array && length(data) > 0
-    if keytype(data[1]) == String && valtype(data[1]) <: Any
-      return true
-    end
-  end
-  return false
-end
-
-function prepare_init(model::Stanmodel, init::Init{Int})
-    # do nothing
-end
-function prepare_init(model::Stanmodel, init::Init{Float64})
-    # do nothing
-end
-function prepare_init(model::Stanmodel, init::Init{Vector{DataDict}})
-  init.init_files = String[]
-  init_data = init.init
-  if length(init_data) == model.nchains
-    for i in 1:model.nchains
-      if length(keys(init_data[i])) > 0
-        init_file="$(model.name)_$(i).init.R"
-        push!(init.init_files, init_file)
-        update_R_file(init_file, init_data[i])
-      end
-    end
-  else
-    for i in 1:model.nchains
-      if length(keys(init_data[1])) > 0
-        if i == 1
-          println("\nLength of init array is not equal to nchains,")
-          println("all chains will use the first init dictionary.")
-        end
-        init_file="$(model.name)_$(i).init.R"
-        push!(init.init_files, init_file)
-        update_R_file(init_file, init_data[1])
-      end
-    end
-  end
-end
-
 """
 
 # Method stan 
@@ -513,6 +468,37 @@ function read_stanfit_variational_samples(m::Stanmodel)
   end
 end
 
+function prepare_init(model::Stanmodel, init::Init{Int})
+    # do nothing
+end
+function prepare_init(model::Stanmodel, init::Init{Float64})
+    # do nothing
+end
+function prepare_init(model::Stanmodel, init::Init{Vector{DataDict}})
+  init.init_files = String[]
+  init_data = init.init
+  if length(init_data) == model.nchains
+    for i in 1:model.nchains
+      if length(keys(init_data[i])) > 0
+        init_file="$(model.name)_$(i).init.R"
+        push!(init.init_files, init_file)
+        update_R_file(init_file, init_data[i])
+      end
+    end
+  else
+    for i in 1:model.nchains
+      if length(keys(init_data[1])) > 0
+        if i == 1
+          println("\nLength of init array is not equal to nchains,")
+          println("all chains will use the first init dictionary.")
+        end
+        init_file="$(model.name)_$(i).init.R"
+        push!(init.init_files, init_file)
+        update_R_file(init_file, init_data[1])
+      end
+    end
+  end
+end
 
 function init_cmdline(init::Init{Int})
   return `init=$(init.init)`
