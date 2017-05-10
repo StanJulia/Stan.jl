@@ -23,10 +23,12 @@ end
 Example: `set_CMDSTAN_HOME!(homedir() * "/Projects/Stan/cmdstan/")`"""
 set_CMDSTAN_HOME!(path) = global CMDSTAN_HOME=path
 
-include("stanmodel.jl")
-include("stancode.jl")
-include("parallel.jl")
-include("utilities.jl")
+include("main/stanmodel.jl")
+include("main/stancode.jl")
+include("utilities/parallel.jl")
+include("utilities/createcmdline.jl")
+include("utilities/createrfiles.jl")
+include("utilities/readstanfiles.jl")
 include("types/sampletype.jl")
 include("types/optimizetype.jl")
 include("types/diagnosetype.jl")
