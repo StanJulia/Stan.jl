@@ -1,11 +1,30 @@
-# Run most Stan.jl examples, leave tmp dir in place.
+# Run most Stan.jl examples, remlove tmp dirs.
 
 println("Running Stan.jl examples:")
 
+function rmtmpdirs()
+  dirs = [
+    "Examples/Mamba/Bernoulli",
+    "Examples/Mamba/BernoulliInitTheta",
+    "Examples/Mamba/BernoulliScalar",
+    "Examples/Mamba/Binomial",
+    "Examples/Mamba/Binormal",
+    "Examples/Mamba/EightSchools",
+    "Examples/Mamba/Dyes",
+    "Examples/Mamba/ARM/Ch03/Kid"
+  ]
+
+  for dir in dirs
+    cd(joinpath(Pkg.dir("Stan"), dir)) do
+      isdir("tmp") && rm("tmp", recursive=true)
+    end
+  end
+end
+
 examples = [
   "../Examples/Mamba/Bernoulli/bernoulli.jl",
-  #"../Examples/Mamba/Bernoulli/bernoulli_optimize.jl",
-  #"../Examples/Mamba/Bernoulli/bernoulli_diagnose.jl",
+  "../Examples/Mamba/Bernoulli/bernoulli_optimize.jl",
+  "../Examples/Mamba/Bernoulli/bernoulli_diagnose.jl",
   "../Examples/Mamba/Bernoulli/bernoulli_variational.jl",
   "../Examples/Mamba/BernoulliInitTheta/bernoulliinittheta.jl",
   "../Examples/Mamba/BernoulliScalar/bernoulliscalar.jl",
@@ -19,23 +38,8 @@ examples = [
 for example in examples
     println("\n\n\n  * $(example) *")
     include(example)
+    rmtmpdirs()
 end
 
 println("\n")
 
-dirs = [
-  "../Examples/Mamba/Bernoulli",
-  "../Examples/Mamba/BernoulliInitTheta",
-  "../Examples/Mamba/BernoulliScalar",
-  "../Examples/Mamba/Binomial",
-  "../Examples/Mamba/Binormal",
-  "../Examples/Mamba/EightSchools",
-  "../Examples/Mamba/Dyes",
-  "../Examples/Mamba/ARM/Ch03/Kid"
-]
-
-for dir in dirs
-  cd(dir) do
-    isdir(tmp) $$ rm(tmp, recursive=true)
-  end
-end

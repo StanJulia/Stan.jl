@@ -79,7 +79,8 @@ function read_stanfit(model::Stanmodel)
               #return(tdict)
               break
             else
-              flds = float(split(line, ","))
+              #println(split(strip(line)))
+              flds = float(split(strip(line), ","))
               for k in 1:length(index)
                 if j ==1
                   tdict = merge(tdict, Dict(index[k] => [flds[k]]))
