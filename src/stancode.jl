@@ -1,3 +1,5 @@
+import Base:*
+
 #
 # Basic definitions
 #
@@ -100,17 +102,12 @@ function stan(
     isfile("$(model.name)_build.log") && rm("$(model.name)_build.log")
     isfile("$(model.name)_run.log") && rm("$(model.name)_run.log")
 
-    #println("Current working dir: $(pwd())")
-    #println("Moving to dir: $(CmdStanDir)")
-    
     cd(CmdStanDir)
     local tmpmodelname::String
     tmpmodelname = Pkg.dir(model.tmpdir, model.name)
     if @static is_windows() ? true : false
       tmpmodelname = replace(tmpmodelname*".exe", "\\", "/")
     end
-    #println("Current working dir: $(pwd())")
-    #println("Compile using make $(tmpmodelname)")
     run(pipeline(`make $(tmpmodelname)`, stderr="$(tmpmodelname)_build.log"))
         
     cd(model.tmpdir)

@@ -1,5 +1,3 @@
-importall Base
-
 type Variational <: Methods
   algorithm::Symbol
   grad_samples::Int64

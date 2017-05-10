@@ -26,7 +26,7 @@ bernoullidata = [
   Dict("N" => 10, "y" => [0, 0, 0, 1, 0, 0, 0, 1, 0, 1])
 ]
 
-stanmodel = Stanmodel(Diagnose(Gradient(epsilon=1e-6)), name="bernoulli", model=bernoulli);
+stanmodel = Stanmodel(Diagnose(Stan.Gradient(epsilon=1e-6)), name="bernoulli", model=bernoulli);
 
 diags = stan(stanmodel, bernoullidata, ProjDir, CmdStanDir=CMDSTAN_HOME);
 diags[1]["diagnose"] |> display

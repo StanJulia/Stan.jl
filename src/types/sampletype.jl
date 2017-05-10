@@ -1,5 +1,3 @@
-importall Base
-
 @compat abstract type Engine end
 
 type Nuts <: Engine

@@ -20,52 +20,33 @@ end
 
 """Set the path for `CMDSTAN`.
     
-Example: `set_CMDSTAN_HOME!(homedir() * "/src/src/cmdstan-2.11.0/")`"""
+Example: `set_CMDSTAN_HOME!(homedir() * "/Projects/Stan/cmdstan/")`"""
 set_CMDSTAN_HOME!(path) = global CMDSTAN_HOME=path
 
 include("stanmodel.jl")
 include("stancode.jl")
+include("parallel.jl")
 include("utilities.jl")
+include("types/sampletype.jl")
+include("types/optimizetype.jl")
+include("types/diagnosetype.jl")
+include("types/variationaltype.jl")
 
 export
 # from this file
 set_CMDSTAN_HOME!,
-# From stancode.jl
-stan,
-stan_summary,
-read_stanfit,
-read_stanfit_samples,
 CMDSTAN_HOME,
 # From stanmodel.jl
 Stanmodel,
-Data,
-RNG,
-Output,
+# From stancode.jl
+stan,
 # From sampletype.jl
 Sample,
-Hmc,
-diag_e,
-unit_e,
-dense_e,
-Engine,
-Nuts,
-Static,
-Metrics,
-SampleAlgorithm,
-Fixed_param,
-Adapt,
 # From optimizetype.jl
 Optimize,
-Lbfgs,
-Bfgs,
-Newton,
 # From diagnosetype.jl
 Diagnose,
-Diagnostics,
-Gradient,
 # From variationaltype.jl
-Variational,
-# From cmdline.jl
-cmdline
+Variational
 
 end # module

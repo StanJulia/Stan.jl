@@ -2,11 +2,6 @@ import Base: show, showcompact
 
 @compat abstract type Methods end
 
-include("./sampletype.jl")
-include("./optimizetype.jl")
-include("./diagnosetype.jl")
-include("./variationaltype.jl")
-
 const DataDict = Dict{String, Any}
 
 type Init{I<:Union{Int,Float64, Vector{DataDict}}}

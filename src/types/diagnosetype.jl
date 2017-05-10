@@ -1,5 +1,3 @@
-importall Base
-
 @compat abstract type Diagnostics end
 
 type Gradient <: Diagnostics

@@ -1,6 +1,4 @@
-importall Base
-
-#abstract Algorithm
+@compat abstract type Algorithm end
 
 type Lbfgs <: Algorithm
   init_alpha::Float64
