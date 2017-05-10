@@ -18,8 +18,49 @@ end
 type diag_e <: Metric
 end
 
+"""
+
+# Algorithm
+
+### Available sampling algorithms
+
+Currently limites to Hmc().
+
+""" 
 @compat abstract type Algorithm end
 
+"""
+
+# Hmc type and constructor
+
+Settings for algorithm=Hmc() in Sample(). 
+
+### Method
+```julia
+Hmc(;
+  engine=Nuts(),
+  metric=Stan.diag_e,
+  stepsize=1.0,
+  stepsize_jitter=1.0
+)
+```
+### Optional arguments
+```julia
+* `engine::Engine`            : Engine for Hamiltonian Monte Carlo
+* `metric::Metric`            : Geometry for base manifold
+* `stepsize::Float64`         : Stepsize for discrete evolutions
+* `stepsize_jitter::Float64`  : Uniform random jitter of the stepsize [%]
+```
+
+### Related help
+```julia
+?Sample                        : Sampling settings
+?Engine                        : Engine for Hamiltonian Monte Carlo
+?Nuts                          : Settings for Nuts
+?Static                        : Settings for Static
+?Metric                        : Base manifold geometries
+```
+"""
 type Hmc <: Algorithm
   engine::Engine
   metric::Metric
@@ -31,6 +72,42 @@ Hmc(;engine::Engine=Nuts(), metric::DataType=diag_e,
     Hmc(engine, metric(), stepsize, stepsize_jitter)
 Hmc(engine::Engine) = Hmc(engine, diag_e(), 1.0, 1.0)
 
+"""
+
+# Adapt type and constructor
+
+Settings for adapt=Adapt() in Sample(). 
+
+### Method
+```julia
+Adapt(;
+  engaged=true,
+  gamma=0.05,
+  delta=0.8,
+  kappa=0.75,
+  t0=10.0,
+  init_buffer=75,
+  term_buffer=50,
+  window::25
+)
+```
+### Optional arguments
+```julia
+* `engaged::Bool`              : Adaptation engaged?
+* `gamma::Float64`             : Adaptation regularization scale
+* `delta::Float64`             : Adaptation target acceptance statistic
+* `kappa::Float64`             : Adaptation relaxation exponent
+* `t0::Float64`                : Adaptation iteration offset
+* `init_buffer::Int64`         : Width of initial adaptation interval
+* `term_buffer::Int64`         : Width of final fast adaptation interval
+* `window::Int64`              : Initial width of slow adaptation interval
+```
+
+### Related help
+```julia
+?Sample                        : Sampling settings
+```
+"""
 type Adapt
   engaged::Bool
   gamma::Float64

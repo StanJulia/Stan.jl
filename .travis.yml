@@ -10,7 +10,10 @@ notifications:
   email: true
 script:
   - if [[ -a .git/shallow ]]; then git fetch --unshallow; fi
-  - julia -e 'Pkg.add("Homebrew");Pkg.add("DualNumbers")'
+  - cd $HOME; if [[ ! -d cmdstan ]]; then git clone https://github.com/stan-dev/cmdstan.git; fi
+  - cd $HOME/cmdstan; git checkout v2.15.0; make stan-update; make build
+  - export CMDSTAN_HOME=$HOME/cmdstan
+  - cd $TRAVIS_BUILD_DIR  - julia -e 'Pkg.add("Homebrew");Pkg.add("DualNumbers")'
   - julia -e 'Pkg.clone(pwd()); Pkg.build("Stan"); Pkg.test("Stan")'
 after_success:
   - julia -e 'Pkg.add("Documenter")'

@@ -25,6 +25,9 @@ set_cmdstan_home!
 ## types
 ```@docs
 Sample
+Stan.Adapt
+Stan.Algorithm
+Stan.Hmc
 ```
 
 ## utilities
