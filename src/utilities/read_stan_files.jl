@@ -201,7 +201,8 @@ function read_stanfit_samples(m::Stanmodel, diagnostics=false, warmup_samples=fa
     if m.useMamba
       sr = getindex(a3d, [1:m.thin:size(a3d, 1);], 
         [1:size(a3d, 2);], [1:size(a3d, 3);])
-      Chains(sr, start=1, thin=m.thin, names=idx[indvec], chains=[i for i in 1:m.nchains])
+      Chains(sr, start=1, thin=m.mambaThinning, names=idx[indvec],
+        chains=[i for i in 1:m.nchains])
     else
       a3d
     end
@@ -246,7 +247,8 @@ function read_stanfit_variational_samples(m::Stanmodel)
   
   if m.useMamba
     sr = getindex(a3d, [1:1:size(a3d, 1);], [1:size(a3d, 2);], [1:size(a3d, 3);])
-    Chains(sr, start=1, thin=1, names=idx[indvec], chains=[i for i in 1:m.nchains])
+    Chains(sr, start=1, thin=m.mambaThinning, names=idx[indvec],
+      chains=[i for i in 1:m.nchains])
   else
     a3d
   end

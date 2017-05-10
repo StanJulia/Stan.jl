@@ -2,9 +2,11 @@ module Stan
 
 using Compat, Documenter
 
-"""The directory which contains the executable `bin/stanc`. Inferred
+"""
+The directory which contains the executable `bin/stanc`. Inferred
 from `Main.CMDSTAN_HOME` or `ENV["CMDSTAN_HOME"]` when available. Use
-`set_CMDSTAN_HOME!` to modify."""
+`set_cmdstan_home!` to modify.
+"""
 CMDSTAN_HOME=""
 
 function __init__()
@@ -13,22 +15,23 @@ function __init__()
     elseif haskey(ENV, "CMDSTAN_HOME")
         ENV["CMDSTAN_HOME"]
     else
-        warn("Environment variable CMDSTAN_HOME not found. Use set_CMDSTAN_HOME!.")
+        warn("Environment variable CMDSTAN_HOME not found. Use set_cmdstan_home!.")
         ""
     end
 end
 
-"""Set the path for `CMDSTAN`.
+"""Set the path for the `CMDSTAN_HOME` environment variable.
     
-Example: `set_CMDSTAN_HOME!(homedir() * "/Projects/Stan/cmdstan/")`"""
-set_CMDSTAN_HOME!(path) = global CMDSTAN_HOME=path
+Example: `set_cmdstan_home!(homedir() * "/Projects/Stan/cmdstan/")`
+"""
+set_cmdstan_home!(path) = global CMDSTAN_HOME=path
 
 include("main/stanmodel.jl")
 include("main/stancode.jl")
 include("utilities/parallel.jl")
-include("utilities/createcmdline.jl")
-include("utilities/createrfiles.jl")
-include("utilities/readstanfiles.jl")
+include("utilities/create_cmd_line.jl")
+include("utilities/create_r_files.jl")
+include("utilities/read_stan_files.jl")
 include("types/sampletype.jl")
 include("types/optimizetype.jl")
 include("types/diagnosetype.jl")
@@ -36,7 +39,7 @@ include("types/variationaltype.jl")
 
 export
 # from this file
-set_CMDSTAN_HOME!,
+set_cmdstan_home!,
 CMDSTAN_HOME,
 # From stanmodel.jl
 Stanmodel,

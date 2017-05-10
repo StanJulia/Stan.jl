@@ -28,7 +28,7 @@ bernoullidata = [
 
 monitor = ["theta", "lp__", "accept_stat__"]
 
-stanmodel = Stanmodel(update=1200, thin=2, name="bernoulli", 
+stanmodel = Stanmodel(num_samples=1200, thin=2, name="bernoulli", 
   model=bernoullimodel, useMamba=true);
 
 println("\nStanmodel that will be used:")

@@ -31,8 +31,8 @@ stanmodel = Stanmodel(Variational(), name="bernoulli",
 
 sim = stan(stanmodel, bernoullidata, ProjDir, CmdStanDir=CMDSTAN_HOME)
 
-sim[1:10,:,1] |> display
-println()
+#sim[1:10,:,1] |> display
+#println()
 
 println()
 println("Test round(mean(theta), 1) ≈ 0.3")

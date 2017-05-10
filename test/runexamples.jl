@@ -1,4 +1,4 @@
-# Run most Stan.jl examples, remlove tmp dirs.
+# Run most Stan.jl examples, remove all tmp dirs.
 
 println("Running Stan.jl examples:")
 
@@ -39,7 +39,5 @@ for example in examples
     println("\n\n\n  * $(example) *")
     include(example)
     rmtmpdirs()
+    println("\n$(example) done!\n")
 end
-
-println("\n")
-

@@ -36,7 +36,7 @@ cd(ProjDir) do
   stanmodel = Stanmodel(name="bernoulli",
     model=bernoullimodel,
     init=Stan.Init(init=bernoulliinit),
-    adapt=1, useMamba=false);
+    num_warmup=1, useMamba=false);
 
   sim = stan(stanmodel, bernoullidata, ProjDir, CmdStanDir=CMDSTAN_HOME)
 
