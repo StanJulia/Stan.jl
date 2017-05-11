@@ -1,15 +1,91 @@
+"""
+
+# Engine types
+
+Engine for Hamiltonian Monte Carlo
+
+### Types defined
+```julia
+* Nuts       : No-U-Tyrn sampler
+* Static     : Static integration time
+```
+""" 
 @compat abstract type Engine end
 
+"""
+
+# Available sampling algorithms
+
+Currently limited to Hmc().
+
+""" 
+@compat abstract type SamplingAlgorithm end
+
+"""
+
+# Nuts type and constructor
+
+Settings for engine=Nuts() in Hmc(). 
+
+### Method
+```julia
+Nuts(;max_depth=10)
+```
+### Optional arguments
+```julia
+* `max_depth::Number`           : Maximum tree depth
+```
+
+### Related help
+```julia
+?Sample                        : Sampling settings
+?Engine                        : Engine for Hamiltonian Monte Carlo
+```
+"""
 type Nuts <: Engine
   max_depth::Int64
 end
 Nuts(;max_depth::Number=10) = Nuts(max_depth)
 
+"""
+
+# Static type and constructor
+
+Settings for engine=Static() in Hmc(). 
+
+### Method
+```julia
+Static(;int_time=2 * pi)
+```
+### Optional arguments
+```julia
+* `;int_time::Number`          : Static integration time
+```
+
+### Related help
+```julia
+?Sample                        : Sampling settings
+?Engine                        : Engine for Hamiltonian Monte Carlo
+```
+"""
 type Static <: Engine
   int_time::Float64
 end
 Static(;int_time::Number=2 * pi) = Static(int_time)
 
+"""
+
+# Metric types
+
+Geometry of base manifold
+
+### Types defined
+```julia
+* unit_e::Metric      : Euclidean manifold with unit metric
+* dense_e::Metric     : Euclidean manifold with dense netric
+* diag_e::Metric      : Euclidean manifold with diag netric
+```
+""" 
 @compat abstract type Metric end
 type unit_e <: Metric
 end
@@ -18,16 +94,6 @@ end
 type diag_e <: Metric
 end
 
-"""
-
-# Algorithm
-
-### Available sampling algorithms
-
-Currently limites to Hmc().
-
-""" 
-@compat abstract type Algorithm end
 
 """
 
@@ -61,7 +127,7 @@ Hmc(;
 ?Metric                        : Base manifold geometries
 ```
 """
-type Hmc <: Algorithm
+type Hmc <: SamplingAlgorithm
   engine::Engine
   metric::Metric
   stepsize::Float64
@@ -137,17 +203,17 @@ Sample(;
   save_warmup=false,
   thin=1,
   adapt=Adapt(),
-  algorithm=Algorithm()
+  algorithm=SamplingAlgorithm()
 )
 ```
 ### Optional arguments
 ```julia
-* `num_samples::Int64`        : Number of sampling iterations ( >= 0 )
-* `num_warmup::Int64`         : Number of warmup iterations ( >= 0 )
-* `save_warmup::Bool`         : Include warmup samples in output
-* `thin::Int64`               : Period between saved samples
-* `adapt::Adapt`              : Warmup adaptation settings
-* `algorithm::Algorithm`      : Sampling algorithm
+* `num_samples::Int64`          : Number of sampling iterations ( >= 0 )
+* `num_warmup::Int64`           : Number of warmup iterations ( >= 0 )
+* `save_warmup::Bool`           : Include warmup samples in output
+* `thin::Int64`                 : Period between saved samples
+* `adapt::Adapt`                : Warmup adaptation settings
+* `algorithm::SamplingAlgorithm`: Sampling algorithm
 
 ```
 
@@ -155,7 +221,7 @@ Sample(;
 ```julia
 ?Stanmodel                      : Create a StanModel
 ?Adapt
-?Algorithm
+?SamplingAlgorithm
 ```
 """
 type Sample <: Methods
@@ -164,11 +230,11 @@ type Sample <: Methods
   save_warmup::Bool
   thin::Int64
   adapt::Adapt
-  algorithm::Algorithm
+  algorithm::SamplingAlgorithm
 end
 Sample(;num_samples::Number=1000, num_warmup::Number=1000,
   save_warmup::Bool=false, thin::Number=1, 
-  adapt::Adapt=Adapt(), algorithm::Algorithm=Hmc()) = 
+  adapt::Adapt=Adapt(), algorithm::SamplingAlgorithm=Hmc()) = 
     Sample(num_samples, num_warmup, save_warmup, thin, adapt, algorithm)
 
 function sample_show(io::IO, s::Sample, compact::Bool)

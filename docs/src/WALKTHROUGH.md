@@ -2,14 +2,12 @@
 
 ## Bernoulli example
 
-To run the Bernoulli example, start by concatenating the home directory and project directory:
+In this walk-through, it is assumed that 'ProjDir' holds a path to where transient files will be created (in a subdirectory /tmp of ProjDir).
+
+Make Stan.jl and Mamba diagnostics and graphics available:
 ```
 using Mamba, Stan
-
-ProjDir = dirname()@__FILE)
-cd(ProjDir) do
 ```
-'ProjDir' is the path where permanent and transient files will be created (in a subdirectory /tmp of ProjDir).
 
 Next define the variable 'bernoullistanmodel' to hold the Stan model definition:
 ```
@@ -28,8 +26,7 @@ model {
 "
 ```
 
-The next step is to create a Stanmodel object. The most common way to create such an object is
-by giving the model a name while the Stan model is passed in, both through keyword (hence optional) arguments:
+The next step is to create a Stanmodel object. The most common way to create such an object is by giving the model a name while the Stan model is passed in, both through keyword (hence optional) arguments:
 ```
 stanmodel = Stanmodel(name="bernoulli", model=bernoullistanmodel);
 stanmodel |> display

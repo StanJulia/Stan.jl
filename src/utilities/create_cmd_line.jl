@@ -39,7 +39,7 @@ function cmdline(m)
   else
     # The 'recursive' part
     #println(lowercase(string(typeof(m))))
-    if isa(m, Algorithm)
+    if isa(m, SamplingAlgorithm) || isa(m, OptimizeAlgorithm)
       cmd = `$cmd algorithm=$(split(lowercase(string(typeof(m))), '.')[end])`
     elseif isa(m, Engine)
       cmd = `$cmd engine=$(split(lowercase(string(typeof(m))), '.')[end])`

@@ -22,15 +22,29 @@ CMDSTAN_HOME
 set_cmdstan_home!
 ```
 
-## types
+## Types
 ```@docs
-Sample
+Stan.Methods
+Stan.Sample
 Stan.Adapt
-Stan.Algorithm
+Stan.SamplingAlgorithm
 Stan.Hmc
+Stan.Metric
+Stan.Engine
+Stan.Nuts
+Stan.Static
+Stan.Diagnostics
+Stan.Gradient
+Stan.Diagnose
+Stan.OptimizeAlgorithm
+Stan.Optimize
+Stan.Lbfgs
+Stan.Bfgs
+Stan.Newton
+Stan.Variational
 ```
 
-## utilities
+## Utilities
 ```@docs
 ```
 

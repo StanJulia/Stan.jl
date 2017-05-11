@@ -1,11 +1,57 @@
+"""
+
+# Available method diagnostics
+
+Currently limited to Gradient().
+
+""" 
 @compat abstract type Diagnostics end
 
+"""
+
+# Gradient type and constructor
+
+Settings for diagnostic=Gradient() in Diagnose(). 
+
+### Method
+```julia
+Gradient(;epsilon=1e-6, error=1e-6)
+```
+### Optional arguments
+```julia
+* `epsilon::Float64`           : Finite difference step size
+* `error::Float64`             : Error threshold
+```
+
+### Related help
+```julia
+?Diagnose                      : Diagnostic method
+```
+"""
 type Gradient <: Diagnostics
   epsilon::Float64
   error::Float64
 end
 Gradient(;epsilon=1e-6, error=1e-6) = Gradient(epsilon, error)
 
+"""
+
+# Diagnose type and constructor
+
+### Method
+```julia
+Diagnose(;d=Gradient())
+```
+### Optional arguments
+```julia
+* `d::Diagnostics`            : Finite difference step size
+```
+
+### Related help
+```julia
+?Diagnostics                  : Diagnostic methods
+?Gradient                     : Currently sole diagnostic method
+"""
 type Diagnose <: Methods
   diagnostic::Diagnostics
 end

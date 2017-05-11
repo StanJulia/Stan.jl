@@ -1,5 +1,17 @@
 import Base: show, showcompact
 
+"""
+
+# Available top level Methods
+
+### Methods
+```julia
+*  Sample::Methods             : Sampling
+*  Optimize::Methods           : Optimization
+*  Diagnose::Methods           : Diagnostics
+*  Variational::Methods        : Variational Bayes
+```
+""" 
 @compat abstract type Methods end
 
 const DataDict = Dict{String, Any}
