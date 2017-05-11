@@ -4,20 +4,21 @@
 
 A version of a Julia package is labeled (tagged) as v"major.minor.patch".
 
-My intention is to update the patch level whenever I make updates to programs which are not
-visible to the then existing examples. This also includes adding new chapters and examples.
+My intention is to update the patch level whenever I make updates which are not visible to the existing examples. This includes adding new examples and tests. 
 
-Changes that require updates to some examples bump the minor level.
+Changes that require updates to some examples bump the minor level. Introduction of new arguments - even if they default to previous behavior, e.g. in v"1.1.0" the useMamba and init arguments to Stanmodel() - also bump the minor level.
 
 Updates for new releases of Julia bump the major level.
 
 ## Testing
 
-This version of the package has primarily been tested on Mac OSX 10.12, Julia 0.5 and 0.6, CmdStan 2.15.0, Mamba 0.10.0 and Gadfly 0.6.1
+This version of the package has primarily been tested on Mac OSX 10.12, Julia 0.5 and 0.6, CmdStan 2.15.0, Mamba 0.10.0 and Gadfly 0.6.1.
+
+Note that at this point in time Mamba and Gadfly are not yet available for Julia 0.6-, thus only the NoMamba examples will work.
 
 A limited amount of testing has taken place on other platforms by other users of the package (see note 1 in the 'To Do' section below).
 
-## Version 2.0.0 (Currently slated for late 2017 and possibly Julia 1.0)
+## Version 1.2.0 (Late 2017 - Julia 1.0?)
 
 Please see the "Future of Stan.jl" [issue](https://github.com/goedman/Stan.jl/issues/40)
 
@@ -30,13 +31,20 @@ Please see the "Future of Stan.jl" [issue](https://github.com/goedman/Stan.jl/is
 1. Fix for Stan 2.13.1 (for runs without a data file).
 1. Added Marco Cox' fix for scalar data elements.
 1. Updates to README suggested by Frederik Beaujean.
-1. Further work on initialization with Chris Fisher
+1. Further work on initialization with Chris Fisher. Added keyword init to Stanmodel(). This needs further work, see below under outstanding issues.
 1. Added 2 tests to track outstanding CmdStan issues (#510 and #547). Slated for Stan 3.0
 1. Fix to not depend on Homebrew on non OSX patforms
 1. Initiated the "Future of Stan.jl" discussion (Stan.jl issue #40).
 1. Compatible with Julia 0.6
 1. Added optional keyward argument useMamba to stanmodel()
 1. All test now set useMamba=false and do not depend on either Mamba or Gadfly
+1. Tamas Papp figured out how to install CmdStan on Travis! This allows proper testing of Stan.jl on various unix/linux versions. Currently Travis tests Julia 0.5, 0.6 and nightlies on both linux and OSX.
+
+### Outstanding for 1.1.0:
+
+1. Complete documentation
+2. Streamline R file creation for observed data and initialization values
+3. Improve error catching
 
 ## Version 1.0.2 (currently tagged version)
 
