@@ -1,4 +1,4 @@
-type Variational <: Methods
+type Variational <: Method
   algorithm::Symbol
   grad_samples::Int64
   elbo_samples::Int64
@@ -45,7 +45,7 @@ Variational(;
 ### Related help
 ```julia
 ?Stanmodel                      : Create a StanModel
-?Stan.Methods                   : Available top level methods
+?Stan.Method                   : Available top level methods
 ?Stan.Adapt                     : Adaptation settings
 ```
 """

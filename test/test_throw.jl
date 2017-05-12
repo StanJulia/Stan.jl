@@ -27,3 +27,6 @@ println()
 run_task() do
    error("This is bad.")
 end
+
+println("Done!")
+

@@ -3,9 +3,9 @@ module Stan
 using Compat, Documenter
 
 """
-The directory which contains the executable `bin/stanc`. Inferred
-from `Main.CMDSTAN_HOME` or `ENV["CMDSTAN_HOME"]` when available. Use
-`set_cmdstan_home!` to modify.
+The directory which contains the CmdStan executables such as `bin/stanc` and 
+`bin/stansummary`. Inferred from `Main.CMDSTAN_HOME` or `ENV["CMDSTAN_HOME"]`
+when available. Use `set_cmdstan_home!` to modify.
 """
 CMDSTAN_HOME=""
 

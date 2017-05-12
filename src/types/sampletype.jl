@@ -189,6 +189,7 @@ Adapt(;engaged::Bool=true, gamma::Number=0.05, delta::Number=0.8,
   init_buffer::Number=75, term_buffer::Number=50, window::Number=25) = 
     Adapt(engaged, gamma, delta, kappa, t0, init_buffer, term_buffer, window)
 
+
 """
 
 # Sample type and constructor
@@ -224,7 +225,7 @@ Sample(;
 ?SamplingAlgorithm
 ```
 """
-type Sample <: Methods
+type Sample <: Method
   num_samples::Int64
   num_warmup::Int64
   save_warmup::Bool

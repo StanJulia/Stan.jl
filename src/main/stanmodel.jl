@@ -2,26 +2,19 @@ import Base: show, showcompact
 
 """
 
-# Available top level Methods
+# Available top level Method
 
-### Methods
+### Method
 ```julia
-*  Sample::Methods             : Sampling
-*  Optimize::Methods           : Optimization
-*  Diagnose::Methods           : Diagnostics
-*  Variational::Methods        : Variational Bayes
+*  Sample::Method             : Sampling
+*  Optimize::Method           : Optimization
+*  Diagnose::Method           : Diagnostics
+*  Variational::Method        : Variational Bayes
 ```
 """ 
-@compat abstract type Methods end
+@compat abstract type Method end
 
 const DataDict = Dict{String, Any}
-
-type Init{I<:Union{Int,Float64, Vector{DataDict}}}
-  init::I
-  init_files::Vector{String}
-  init_file::String
-end
-Init(;init::Union{Int,Float64, Vector{DataDict}}=2) = Init(init, String[], "")
 
 type Random
   seed::Int64
@@ -47,12 +40,12 @@ type Stanmodel
   model_file::String
   monitors::Vector{String}
   data::Vector{DataDict}
-  data_file_array::Vector{String}
   data_file::String
   command::Vector{Base.AbstractCmd}
-  method::Methods
+  method::Method
   random::Random
-  init::Init
+  init::Vector{DataDict}
+  init_file::String
   output::Output
   tmpdir::String
   useMamba::Bool
@@ -77,7 +70,7 @@ Stanmodel(
   monitors=String[],
   data=DataDict[],
   random=Random(),
-  init=Init(),
+  init=DataDict[],
   output=Output(),
   pdir::String=pwd(),
   useMamba=true,
@@ -86,7 +79,7 @@ Stanmodel(
 ```
 ### Required arguments
 ```julia
-* `method::Methods`            : See ?Methods
+* `method::Method`            : See ?Method
 ```
 
 ### Optional arguments
@@ -97,9 +90,9 @@ Stanmodel(
 * `num_samples::Int`           : Sample iterations
 * `thin::Int`                  : Stan thinning factor
 * `model::String`              : Stan program source
-* `data::DataDict[]`           : Input data as an array of Dicts
+* `data::DataDict[]`           : Observed input data as an array of Dicts
 * `random::Random`             : Random seed settings
-* `init::Init`                 : Initial values
+* `init::DataDict[]`           : Initial values for parameters in parameter block
 * `output::Output`             : File output options
 * `pdir::String`               : Working directory
 * `monitors::String[] `        : Filter for variables used in Mamba post-processing
@@ -130,7 +123,7 @@ stanmodel = Stanmodel(num_samples=1200, thin=2, name="bernoulli", model=bernoull
 ```julia
 ?stan                          : Run a Stanmodel
 ?Sample                        : Sampling settings
-?Methods                       : List of available methods
+?Method                       : List of available methods
 ?Output                        : Output file settings
 ?DataDict                      : Input data dictionaries, will be converted to R syntax
 ```
@@ -146,7 +139,7 @@ function Stanmodel(
   monitors=String[],
   data=DataDict[],
   random=Random(),
-  init=Init(),
+  init=DataDict[],
   output=Output(),
   pdir::String=pwd(),
   useMamba=true,
@@ -190,8 +183,8 @@ function Stanmodel(
   end
   
   id::Int=0
-  data_file_array::Vector{String}=String[]
   data_file::String=""
+  init_file::String=""
   cmdarray = fill(``, nchains)
   
   if num_samples != 1000
@@ -209,11 +202,35 @@ function Stanmodel(
   Stanmodel(name, nchains, 
     num_warmup, num_samples, thin,
     id, model, model_file, monitors,
-    data, data_file_array, data_file,
-    cmdarray, method, random, init, output, tmpdir,
+    data, data_file, cmdarray, method, random,
+    init, init_file, output, tmpdir,
     useMamba, mambaThinning);
 end
 
+"""
+
+# Method update_model_file
+
+Update Stan language model file if necessary 
+
+### Method
+```julia
+update_model_file(
+  file::String, 
+  str::String
+)
+```
+### Required arguments
+```julia
+* `file::String`                : File holding existing Stan model
+* `str::String`                 : Stan model string
+```
+
+### Related help
+```julia
+?Stan.Stanmodel                 : Create a StanModel
+```
+"""
 function update_model_file(file::String, str::String)
   str2 = ""
   if isfile(file)

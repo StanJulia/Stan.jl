@@ -1,7 +1,5 @@
 # Programs
 
-## stanmodel()
-
 ## CMDSTAN_HOME
 ```@docs
 CMDSTAN_HOME
@@ -12,19 +10,24 @@ CMDSTAN_HOME
 set_cmdstan_home!
 ```
 
+## stanmodel()
+
 ```@docs
 Stanmodel
+Stan.update_model_file
 ```
 
 ## stan()
 
 ```@docs
 stan
+Stan.stan_summary(filecmd::Cmd; CmdStanDir=CMDSTAN_HOME)
+Stan.stan_summary(file::String; CmdStanDir=CMDSTAN_HOME)
 ```
 
 ## Types
 ```@docs
-Stan.Methods
+Stan.Method
 Stan.Sample
 Stan.Adapt
 Stan.SamplingAlgorithm

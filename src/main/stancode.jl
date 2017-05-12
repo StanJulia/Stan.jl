@@ -2,7 +2,7 @@ import Base:*
 
 """
 
-# Method stan 
+# stan 
 
 Execute a Stan model. 
 
@@ -19,16 +19,17 @@ stan(
 ```
 ### Required arguments
 ```julia
-* model::Stanmodel              : See ?Methods
-* data=Void                     : Input data dictionary 
-* ProjDir=pwd()                 : Project working directory
+* `model::Stanmodel`              : See ?Method
+* `data=Void`                     : Observed input data dictionary 
+* `ProjDir=pwd()`                 : Project working directory
 ```
 
 ### Optional arguments
 ```julia
-* summary=true                  : Use CmdStan's stansummary to display results
-* diagnostics=false             : Generate diagnostics file
-* CmdStanDir=CMDSTAN_HOME       : Location of CmdStan directory
+* `init=Void`                     : Initial parameter value dictionary
+* `summary=true`                  : Use CmdStan's stansummary to display results
+* `diagnostics=false`             : Generate diagnostics file
+* `CmdStanDir=CMDSTAN_HOME`       : Location of CmdStan directory
 ```
 
 ### Related help
@@ -40,6 +41,7 @@ function stan(
   model::Stanmodel, 
   data=Void, 
   ProjDir=pwd();
+  init=Void,
   summary=true, 
   diagnostics=false, 
   CmdStanDir=CMDSTAN_HOME)
@@ -85,12 +87,31 @@ function stan(
         end
       end
     end
-    prepare_init(model, model.init)
+    #prepare_init(model, model.init)
+    if init != Void && check_data_type(init)
+      if length(init) == model.nchains
+        for i in 1:model.nchains
+          if length(keys(init[i])) > 0
+            update_R_file("$(model.name)_$(i).init.R", init[i])
+          end
+        end
+      else
+        for i in 1:model.nchains
+          if length(keys(init[1])) > 0
+            if i == 1
+              println("\nLength of init array is not equal to nchains,")
+              println("all chains will use the first init dictionary.")
+            end
+            update_R_file("$(model.name)_$(i).init.R", init[1])
+          end
+        end
+      end
+    end
     for i in 1:model.nchains
       model.id = i
       model.data_file ="$(model.name)_$(i).data.R"
-      if length(model.init.init_files) > 0
-          model.init.init_file = model.init.init_files[i]
+      if !(model.init == Void)
+          model.init_file = "$(model.name)_$(i).init.R"
       end
       if isa(model.method, Sample)
         model.output.file = model.name*"_samples_$(i).csv"
@@ -152,6 +173,34 @@ function stan(
   res
 end
 
+"""
+
+# Method stan_summary
+
+Display CmdStan summary 
+
+### Method
+```julia
+stan_summary(
+  file::String; 
+  CmdStanDir=CMDSTAN_HOME
+)
+```
+### Required arguments
+```julia
+* `file::String`                : Name of file with samples
+```
+
+### Optional arguments
+```julia
+* CmdStanDir=CMDSTAN_HOME       : CmdStan directory for stansummary program
+```
+
+### Related help
+```julia
+?Stan.stan                      : Execute a StanModel
+```
+"""
 function stan_summary(file::String; CmdStanDir=CMDSTAN_HOME)
   try
     pstring = Pkg.dir("$(CmdStanDir)", "bin", "stansummary")
@@ -162,6 +211,34 @@ function stan_summary(file::String; CmdStanDir=CMDSTAN_HOME)
   end
 end
 
+"""
+
+# Method stan_summary
+
+Display CmdStan summary 
+
+### Method
+```julia
+stan_summary(
+  filecmd::Cmd; 
+  CmdStanDir=CMDSTAN_HOME
+)
+```
+### Required arguments
+```julia
+* `filecmd::Cmd`                : Run command containing names of sample files
+```
+
+### Optional arguments
+```julia
+* CmdStanDir=CMDSTAN_HOME       : CmdStan directory for stansummary program
+```
+
+### Related help
+```julia
+?Stan.stan                      : Create a StanModel
+```
+"""
 function stan_summary(filecmd::Cmd; CmdStanDir=CMDSTAN_HOME)
   try
     pstring = Pkg.dir("$(CmdStanDir)", "bin", "stansummary")

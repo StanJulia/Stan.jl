@@ -19,14 +19,14 @@ cd(ProjDir) do
   }
   "
 
-  bernoullidata = [
+  observeddata = [
     Dict("N" => 10, "y" => [0, 1, 0, 1, 0, 0, 0, 0, 0, 1]),
     Dict("N" => 10, "y" => [0, 1, 0, 0, 0, 0, 1, 0, 0, 1]),
     Dict("N" => 10, "y" => [0, 0, 0, 0, 0, 0, 1, 0, 1, 1]),
     Dict("N" => 10, "y" => [0, 0, 0, 1, 0, 0, 0, 1, 0, 1])
   ]
 
-  bernoulliinit = Dict{String, Any}[
+  initparms = Dict{String, Any}[
     Dict("theta" => 0.1),
     Dict("theta" => 0.4),
     Dict("theta" => 0.5),
@@ -37,9 +37,8 @@ cd(ProjDir) do
 
   stanmodel = Stanmodel(name="bernoulli",
     model=bernoullimodel,
-    init=Stan.Init(init=bernoulliinit),
     num_warmup=1);
 
-    sim1 = stan(stanmodel, bernoullidata, CmdStanDir=CMDSTAN_HOME)
+    sim1 = stan(stanmodel, observeddata, init=initparms, CmdStanDir=CMDSTAN_HOME)
     sim1.value[1, end, :] |> display
 end # cd

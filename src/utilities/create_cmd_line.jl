@@ -1,13 +1,3 @@
-function init_cmdline(init::Init{Int})
-  return `init=$(init.init)`
-end
-function init_cmdline(init::Init{Float64})
-  return `init=$(init.init)`
-end
-function init_cmdline(init::Init{Vector{DataDict}})
-  return `init=$(init.init_file)`
-end
-
 "Recursively parse the model to construct command line"
 function cmdline(m)
   cmd = ``
@@ -20,7 +10,11 @@ function cmdline(m)
     
     # Common to all models
     cmd = `$cmd $(cmdline(getfield(m, :random)))`
-    cmd = `$cmd $(init_cmdline(m.init))`
+    
+    # Init file required?
+    if length(m.init_file) > 0 && isfile(m.init_file)
+      cmd = `$cmd init=$(m.init_file)`
+    end
     
     # Data file required?
     if length(m.data_file) > 0 && isfile(m.data_file)

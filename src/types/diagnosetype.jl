@@ -52,7 +52,7 @@ Diagnose(;d=Gradient())
 ?Diagnostics                  : Diagnostic methods
 ?Gradient                     : Currently sole diagnostic method
 """
-type Diagnose <: Methods
+type Diagnose <: Method
   diagnostic::Diagnostics
 end
 Diagnose(;d=Gradient()) = Diagnose(d)

@@ -34,7 +34,7 @@ Lbfgs(;init_alpha=0.001, tol_obj=1e-8, tol_grad=1e-8, tol_param=1e-8, history_si
 
 ### Related help
 ```julia
-?OptimizeMethods               : List of available optimize methods
+?OptimizeMethod               : List of available optimize methods
 ?Optimize                      : Optimize arguments
 ```
 """
@@ -75,7 +75,7 @@ Bfgs(;init_alpha=0.001, tol_obj=1e-8, tol_rel_obj=1e4,
 
 ### Related help
 ```julia
-?OptimizeMethods               : List of available optimize methods
+?OptimizeMethod               : List of available optimize methods
 ?Optimize                      : Optimize arguments
 ```
 """
@@ -104,7 +104,7 @@ Newton()
 ```
 ### Related help
 ```julia
-?OptimizeMethods               : List of available optimize methods
+?OptimizeMethod               : List of available optimize methods
 ?Optimize                      : Optimize arguments
 ```
 """
@@ -139,7 +139,7 @@ Optimize(;
 ?OptimizeAlgorithm              : Available algorithms
 ```
 """
-type Optimize <: Methods
+type Optimize <: Method
   method::OptimizeAlgorithm
   iter::Int64
   save_iterations::Bool
