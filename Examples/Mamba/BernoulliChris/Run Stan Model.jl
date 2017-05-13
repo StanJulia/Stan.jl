@@ -27,9 +27,10 @@ cd(ProjDir) do
   
   y,SubjIdx = GenerateData(kappa, omega, Nsubj, Ntrials)
 
-  init = InitializeChain(Nsubj, Nchains, subjParm, hyperParm, subjVal, hyperVal)
+  global init, stanmodel, rc, sim
+  initpars = InitializeChain(Nsubj, Nchains, subjParm, hyperParm, subjVal, hyperVal)
   
-  SimData = [
+  observeddata = [
       Dict(
         "Nobs" => Nobs,
         "Nsubj" => Nsubj,
@@ -46,13 +47,10 @@ cd(ProjDir) do
   close(f)
 
   stanmodel = Stanmodel(
-    Sample(num_samples = 1000, num_warmup = 200, adapt = Adapt(delta=0.88)),
-    nchains=Nchains, update=1000, thin=1, name="TestModel", model=TestModel,
-    init=Stan.Init(init=init)
+    Sample(num_samples = 1000, num_warmup = 200, adapt = Stan.Adapt(delta=0.88)),
+    nchains=Nchains, num_samples=1000, thin=1, name="TestModel", model=TestModel
   )
 
-  @time sim = stan(stanmodel, SimData, ProjDir, diagnostics=false)
-
-  describe(sim)
-
+  @time rc, sim = stan(stanmodel, observeddata, ProjDir, init=initpars, diagnostics=false)
+  rc == 0 && describe(sim)
 end

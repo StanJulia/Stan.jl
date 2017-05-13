@@ -35,10 +35,9 @@ cd(ProjDir) do
 
   monitor = ["theta", "lp__", "accept_stat__"]
 
-  stanmodel = Stanmodel(name="bernoulli",
-    model=bernoullimodel,
-    num_warmup=1);
-
-    sim1 = stan(stanmodel, observeddata, init=initparms, CmdStanDir=CMDSTAN_HOME)
-    sim1.value[1, end, :] |> display
+  global stanmodel, rc, sim1
+  stanmodel = Stanmodel(name="bernoulli", model=bernoullimodel, num_warmup=1);
+  rc, sim1 = stan(stanmodel, observeddata, init=initparms, CmdStanDir=CMDSTAN_HOME)
+  
+  rc == 0 && sim1.value[1, end, :] |> display
 end # cd

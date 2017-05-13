@@ -5,6 +5,9 @@ println("Running Stan.jl examples:")
 function rmtmpdirs()
   dirs = [
     "Examples/Mamba/Bernoulli",
+    "Examples/Mamba/BernoulliDiagnose",
+    "Examples/Mamba/BernoulliOptimize",
+    "Examples/Mamba/BernoulliVariational",
     "Examples/Mamba/BernoulliInitTheta",
     "Examples/Mamba/BernoulliScalar",
     "Examples/Mamba/Binomial",
@@ -23,9 +26,9 @@ end
 
 examples = [
   "../Examples/Mamba/Bernoulli/bernoulli.jl",
-  "../Examples/Mamba/Bernoulli/bernoulli_optimize.jl",
-  "../Examples/Mamba/Bernoulli/bernoulli_diagnose.jl",
-  "../Examples/Mamba/Bernoulli/bernoulli_variational.jl",
+  "../Examples/Mamba/BernoulliOptimize/bernoulli_optimize.jl",
+  "../Examples/Mamba/BernoulliDiagnose/bernoulli_diagnose.jl",
+  "../Examples/Mamba/BernoulliVariational/bernoulli_variational.jl",
   "../Examples/Mamba/BernoulliInitTheta/bernoulliinittheta.jl",
   "../Examples/Mamba/BernoulliScalar/bernoulliscalar.jl",
   "../Examples/Mamba/Binomial/binomial.jl",
