@@ -1,4 +1,24 @@
-"Recursively parse the model to construct command line"
+"""
+
+# cmdline 
+
+Recursively parse the model to construct command line. 
+
+### Method
+```julia
+cmdline(m)
+```
+
+### Required arguments
+```julia
+* `m::Stanmodel`                : Stanmodel
+```
+
+### Related help
+```julia
+?Stanmodel                      : Create a StanModel
+```
+"""
 function cmdline(m)
   cmd = ``
   if isa(m, Stanmodel)

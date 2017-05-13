@@ -7,44 +7,46 @@ using Compat, Stan, Base.Test
 ProjDir = dirname(@__FILE__)
 cd(ProjDir) do
 
-const binomialstanmodel = "
-// Inferring a Rate
-data {
-  int<lower=1> n;
-  int<lower=0> k;
-}
-parameters {
-  real<lower=0,upper=1> theta;
-  real<lower=0,upper=1> thetaprior;
-}
-model {
-  // Prior Distribution for Rate Theta
-  theta ~ beta(1, 1);
-  thetaprior ~ beta(1, 1);
+  const binomialstanmodel = "
+  // Inferring a Rate
+  data {
+    int<lower=1> n;
+    int<lower=0> k;
+  }
+  parameters {
+    real<lower=0,upper=1> theta;
+    real<lower=0,upper=1> thetaprior;
+  }
+  model {
+    // Prior Distribution for Rate Theta
+    theta ~ beta(1, 1);
+    thetaprior ~ beta(1, 1);
 
-  // Observed Counts
-  k ~ binomial(n, theta);
-}
-generated quantities {
-  int<lower=0> postpredk;
-  int<lower=0> priorpredk;
+    // Observed Counts
+    k ~ binomial(n, theta);
+  }
+  generated quantities {
+    int<lower=0> postpredk;
+    int<lower=0> priorpredk;
 
-  postpredk <- binomial_rng(n, theta);
-  priorpredk <- binomial_rng(n, thetaprior);
-}
-"
+    postpredk <- binomial_rng(n, theta);
+    priorpredk <- binomial_rng(n, thetaprior);
+  }
+  "
 
-stanmodel = Stanmodel(name="binomial", model=binomialstanmodel, useMamba=false)
+  global stanmodel, rc, sim
+  stanmodel = Stanmodel(name="binomial", model=binomialstanmodel, useMamba=false)
 
-const binomialdata = [
-  Dict("n" => 10, "k" => 5)
-]
+  const binomialdata = [
+    Dict("n" => 10, "k" => 5)
+  ]
 
-sim = stan(stanmodel, binomialdata, ProjDir, diagnostics=false,
-            CmdStanDir=CMDSTAN_HOME)
+  rc, sim = stan(stanmodel, binomialdata, ProjDir, diagnostics=false,
+              CmdStanDir=CMDSTAN_HOME)
 
-println()
-println("Test round(mean(theta[1]), 1) ≈ 0.5")
-@test round(mean(sim[:,8,:]), 1) ≈ 0.5
-
+  if rc == 0
+    println()
+    println("Test round(mean(theta[1]), 1) ≈ 0.5")
+    @test round(mean(sim[:,8,:]), 1) ≈ 0.5
+  end
 end # cd

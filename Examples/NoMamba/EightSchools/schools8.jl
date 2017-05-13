@@ -35,11 +35,13 @@ cd(ProjDir) do
     )
   ]
 
+  global stanmodel, rc, sim
   stanmodel = Stanmodel(name="schools8", model=eightschools, useMamba=false);
-  sim = stan(stanmodel, schools8data, ProjDir, CmdStanDir=CMDSTAN_HOME)
+  rc, sim = stan(stanmodel, schools8data, ProjDir, CmdStanDir=CMDSTAN_HOME)
 
-  println()
-  println("Test round(mean(mu), 0) ≈ 8.0")
-  @test round(mean(sim[:,8,:]), 0) ≈ 8.0
-
+  if rc == 0
+    println()
+    println("Test round(mean(mu), 0) ≈ 8.0")
+    @test round(mean(sim[:,8,:]), 0) ≈ 8.0
+  end
 end # cd

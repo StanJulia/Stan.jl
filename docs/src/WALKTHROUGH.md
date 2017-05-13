@@ -2,6 +2,8 @@
 
 ## Bernoulli example
 
+[`Stan.cmdline`](@ref)
+
 In this walk-through, it is assumed that 'ProjDir' holds a path to where transient files will be created (in a subdirectory /tmp of ProjDir).
 
 Make Stan.jl and Mamba diagnostics and graphics available:

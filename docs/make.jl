@@ -6,7 +6,7 @@ makedocs(
         "Introduction" => "INTRO.md",
         "Installation" => "INSTALLATION.md",
         "Example walkthrough" => "WALKTHROUGH.md",
-        "Examples" => "EXAMPLES.md",
+        "Additional examples" => "EXAMPLES.md",
         "Versions" => "VERSIONS.md",
         "Stan.jl documentation" => "index.md",
     ]

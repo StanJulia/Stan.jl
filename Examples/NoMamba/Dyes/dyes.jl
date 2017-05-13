@@ -60,11 +60,13 @@ cd(ProjDir) do
     )
   ]
 
+  global stanmodel, rc, sim
   stanmodel = Stanmodel(name="dyes", model=dyes, useMamba=false);
-  @time sim = stan(stanmodel, dyesdata, ProjDir, CmdStanDir=CMDSTAN_HOME)
+  @time rc, sim = stan(stanmodel, dyesdata, ProjDir, CmdStanDir=CMDSTAN_HOME)
 
-  println()
-  println("Test round(mean(theta)/100.0, 0) ≈ 15.0")
-  @test round(mean(sim[:,10,:])/100.0, 0) ≈ 15.0
-
+  if rc == 0
+    println()
+    println("Test round(mean(theta)/100.0, 0) ≈ 15.0")
+    @test round(mean(sim[:,10,:])/100.0, 0) ≈ 15.0
+  end
 end # cd

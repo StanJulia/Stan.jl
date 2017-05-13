@@ -26,13 +26,15 @@ cd(ProjDir) do
     Dict("N" => 1, "y" => [0]),
   ]
 
+  global stanmodel, rc, sim
   stanmodel = Stanmodel(num_samples=1200, thin=2, name="bernoulli",
     model=bernoullimodel, useMamba=false);
 
-  sim = stan(stanmodel, bernoullidata, ProjDir, diagnostics=false, CmdStanDir=CMDSTAN_HOME);
+  rc, sim = stan(stanmodel, bernoullidata, ProjDir, diagnostics=false, CmdStanDir=CMDSTAN_HOME);
 
-  println()
-  println("Test round(mean(theta), 1) ≈ 0.3")
-  @test round(mean(sim[:,8,:]), 1) ≈ 0.3
-
+  if rc == 0
+    println()
+    println("Test round(mean(theta), 1) ≈ 0.3")
+    @test round(mean(sim[:,8,:]), 1) ≈ 0.3
+  end
 end # cd

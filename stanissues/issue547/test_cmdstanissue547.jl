@@ -13,8 +13,9 @@ cd(ProjDir) #do
     y ~ normal(0, 1);
   }  "
 
+  global stanmodel, rc, sim
   stanmodel = Stanmodel(Sample(save_warmup=true, thin=1), name="simple", model=simplecode);
-  sim = stan(stanmodel, [Dict("y" => 0.)], CmdStanDir=CMDSTAN_HOME);
+  rc, sim = stan(stanmodel, [Dict("y" => 0.)], CmdStanDir=CMDSTAN_HOME);
   describe(sim)
   
   

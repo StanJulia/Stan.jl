@@ -25,13 +25,15 @@ cd(ProjDir) do
   }
   "
 
+  global stanmodel, rc, sim
   stanmodel = Stanmodel(name="binormal", model=binorm, Sample(save_warmup=true),
    useMamba=false);
 
-  sim = stan(stanmodel, CmdStanDir=CMDSTAN_HOME)
+  rc, sim = stan(stanmodel, CmdStanDir=CMDSTAN_HOME)
 
-  println()
-  println("Test round(mean(y[1]), 0) ≈ 0.0")
-  @test round(mean(sim[:,8,:]), 0) ≈ 0.0
-
+  if rc == 0
+    println()
+    println("Test round(mean(y[1]), 0) ≈ 0.0")
+    @test round(mean(sim[:,8,:]), 0) ≈ 0.0
+  end
 end # cd

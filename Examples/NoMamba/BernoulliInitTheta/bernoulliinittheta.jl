@@ -3,7 +3,7 @@
 using Compat, Stan, Base.Test
 
 ProjDir = dirname(@__FILE__)
-cd(ProjDir) #do
+cd(ProjDir) do
 
   bernoullimodel = "
   data { 
@@ -37,12 +37,14 @@ cd(ProjDir) #do
   stanmodel = Stanmodel(name="bernoulli", model=bernoullimodel,
     num_warmup=1, useMamba=false);
 
-  global sim
-  sim = stan(stanmodel, bernoullidata, ProjDir, 
+  global rc, sim
+  rc, sim = stan(stanmodel, bernoullidata, ProjDir, 
     init=inittheta, CmdStanDir=CMDSTAN_HOME)
+  
+  if rc == 0
+    println()
+    println("Test 0.2 <= mean(theta[1]) <= 0.5)")
+    @test 0.2 <= round(mean(sim[:,8,:]), 1) <= 0.5
+  end
 
-  println()
-  println("Test 0.2 < mean(theta[1]) < 0.5)")
-  @test 0.2 <= round(mean(sim[:,8,:]), 1) <= 0.5
-
-  #end # cd
+end # cd

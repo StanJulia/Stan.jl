@@ -1,3 +1,29 @@
+"""
+
+# read_stanfit 
+
+Rewrite dct to R format in file. 
+
+### Method
+```julia
+par(cmds)
+```
+
+### Required arguments
+```julia
+* `cmds::Array{Base.AbstractCmd,1}`    : Multiple commands to concatenate
+
+or
+
+* `cmd::Base.AbstractCmd`              : Single command to be
+* `n::Number`                            inserted n times into cmd
+
+
+or
+* `cmd::Array{String, 1}`              : Array of cmds as Strings
+```
+
+"""
 function read_stanfit(model::Stanmodel)
   
   ## Collect the results of a chain in an array ##
