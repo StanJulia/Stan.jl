@@ -8,10 +8,11 @@ Execute a Stan model.
 
 ### Method
 ```julia
-stan(
+rc, sim = stan(
   model::Stanmodel, 
   data=Void, 
   ProjDir=pwd();
+  init=Void,
   summary=true, 
   diagnostics=false, 
   CmdStanDir=CMDSTAN_HOME
@@ -30,6 +31,12 @@ stan(
 * `summary=true`                  : Use CmdStan's stansummary to display results
 * `diagnostics=false`             : Generate diagnostics file
 * `CmdStanDir=CMDSTAN_HOME`       : Location of CmdStan directory
+```
+
+### Return values
+```julia
+* `rc::Int`                       : Return code from stan(), rc == 0 if all is well
+* `sim`                           : Chain results
 ```
 
 ### Related help
@@ -73,10 +80,10 @@ function stan(
   try
     run(pipeline(`make $(tmpmodelname)`, stderr="$(tmpmodelname)_build.log"))
   catch
-    println("\nAn error occurred while compiling the Stan program")
+    println("\nAn error occurred while compiling the Stan program.\n")
     print("Please check your Stan program in variable '$(model.name)' ")
-    println("and the contents of $(tmpmodelname)_build.log")
-    return(-3, res)
+    println("and the contents of $(tmpmodelname)_build.log.\n")
+    error("Return code = -3");
   end
         
   cd(model.tmpdir)
@@ -146,11 +153,11 @@ function stan(
   try
     run(pipeline(par(model.command), stdout="$(model.name)_run.log"))
   catch e
-    println("\nAn error occurred while running the previously compiled Stan program.")
+    println("\nAn error occurred while running the previously compiled Stan program.\n")
     print("Please check the contents of file $(tmpmodelname)_run.log and the")
-    println("'command' field in the Stanmodel, e.g. stanmodel.command.")
+    println("'command' field in the Stanmodel, e.g. stanmodel.command.\n")
     cd(old)
-    return(-5, res)
+    error("Return code = -5")
   end
   
   local samplefiles = String[]

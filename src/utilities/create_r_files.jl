@@ -28,7 +28,8 @@ end
 
 # update_R_file 
 
-Rewrite dct to R format in file. 
+Rewrite a dictionary of observed data or initial parameter values in R dump file
+format to a file. 
 
 ### Method
 ```julia
@@ -42,8 +43,7 @@ update_R_file{T<:Any}(file, dct)
 ```
 
 """
-function update_R_file{T<:Any}(file::String, dct::Dict{String, T};
-    replaceNaNs::Bool=true)
+function update_R_file{T<:Any}(file::String, dct::Dict{String, T})
 	isfile(file) && rm(file)
 	strmout = open(file, "w")
 	

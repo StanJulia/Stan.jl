@@ -6,67 +6,69 @@ using Stan, Mamba
 ProjDir = dirname(@__FILE__)
 cd(ProjDir) do
 
-const binorm = "
-transformed data {
-    matrix[2,2] Sigma;
-    vector[2] mu;
+  const binorm = "
+  transformed data {
+      matrix[2,2] Sigma;
+      vector[2] mu;
 
-    mu[1] <- 0.0;
-    mu[2] <- 0.0;
-    Sigma[1,1] <- 1.0;
-    Sigma[2,2] <- 1.0;
-    Sigma[1,2] <- 0.10;
-    Sigma[2,1] <- 0.10;
-}
-parameters {
-    vector[2] y;
-}
-model {
-      y ~ multi_normal(mu,Sigma);
-}
-"
+      mu[1] <- 0.0;
+      mu[2] <- 0.0;
+      Sigma[1,1] <- 1.0;
+      Sigma[2,2] <- 1.0;
+      Sigma[1,2] <- 0.10;
+      Sigma[2,1] <- 0.10;
+  }
+  parameters {
+      vector[2] y;
+  }
+  model {
+        y ~ multi_normal(mu,Sigma);
+  }
+  "
 
-stanmodel = Stanmodel(name="binormal", model=binorm, Sample(save_warmup=true));
+  global stanmodel, rc, sim
+  stanmodel = Stanmodel(name="binormal", model=binorm, Sample(save_warmup=true));
 
-sim1 = stan(stanmodel, CmdStanDir=CMDSTAN_HOME)
+  sim1 = stan(stanmodel, CmdStanDir=CMDSTAN_HOME)
 
-## Subset Sampler Output
-sim = sim1[1:size(sim1, 1), ["lp__", "y.1", "y.2"], 1:size(sim1, 3)]
+  ## Subset Sampler Output
+  rc, sim = sim1[1:size(sim1, 1), ["lp__", "y.1", "y.2"], 1:size(sim1, 3)]
 
-describe(sim)
-println()
-
-
-## Brooks, Gelman and Rubin Convergence Diagnostic
-try
-  gelmandiag(sim1, mpsrf=true, transform=true) |> display
-catch e
-  #println(e)
-  gelmandiag(sim, mpsrf=false, transform=true) |> display
-end
-
-## Geweke Convergence Diagnostic
-gewekediag(sim) |> display
-
-## Highest Posterior Density Intervals
-hpd(sim) |> display
-
-## Cross-Correlations
-cor(sim) |> display
-
-## Lag-Autocorrelations
-autocor(sim) |> display
-
-## Deviance Information Criterion
-#dic(sim) |> display
+  if rc == 0
+    describe(sim)
+    println()
 
 
-## Plotting
+    ## Brooks, Gelman and Rubin Convergence Diagnostic
+    try
+      gelmandiag(sim1, mpsrf=true, transform=true) |> display
+    catch e
+      #println(e)
+      gelmandiag(sim, mpsrf=false, transform=true) |> display
+    end
 
-p = plot(sim, [:trace, :mean, :density, :autocor], legend=true);
-draw(p, ncol=4, filename="$(stanmodel.name)-summaryplot", fmt=:svg)
-draw(p, ncol=4, filename="$(stanmodel.name)-summaryplot", fmt=:pdf)
+    ## Geweke Convergence Diagnostic
+    gewekediag(sim) |> display
 
+    ## Highest Posterior Density Intervals
+    hpd(sim) |> display
+
+    ## Cross-Correlations
+    cor(sim) |> display
+
+    ## Lag-Autocorrelations
+    autocor(sim) |> display
+
+    ## Deviance Information Criterion
+    #dic(sim) |> display
+
+
+    ## Plotting
+
+    p = plot(sim, [:trace, :mean, :density, :autocor], legend=true);
+    draw(p, ncol=4, filename="$(stanmodel.name)-summaryplot", fmt=:svg)
+    draw(p, ncol=4, filename="$(stanmodel.name)-summaryplot", fmt=:pdf)
+  end # rc == 0
 end # cd
 ```
 
