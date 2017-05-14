@@ -30,9 +30,15 @@ A limited amount of testing has taken place on other platforms by other users of
 2. Streamline R file creation for observed data and initialization values
 3. Improve error catching
 
+### Breaking changes:
+
+1. Paraneter initialization values (for parameters in the parameter block) are now passed in as an optional argument to `stan()`.
+1. The main execution method, `stan()`, now returns a tuple consisting of a return code and the simulation results.
+1. The simulation results can either be in the form of Mamba.Chains or as a Array of values (the latter if the argument `useMamba=false` is added to `Stanmodel()`)
+
 ## Version 1.0.3 (next)
 
-Please see the "Future of Stan.jl" [issue](https://github.com/goedman/Stan.jl/issues/40)
+Please see the "Future of Stan.jl" [issue](https://github.com/goedman/Stan.jl/issues/40).
  
 1. Thanks to Jon Alm Eriksen the performance of update_R_file() has been improved tremendously. 
 1. A further suggestion by Michael Prange to directly write to the R file also prevents a Julia segmentation trap for very large arrays (N > 10^6).
