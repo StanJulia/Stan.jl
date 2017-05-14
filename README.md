@@ -8,6 +8,8 @@
 [![Coverage Status](https://coveralls.io/repos/goedman/Stan.jl/badge.svg?branch=Stan.jl.1.1.0&service=github)](https://coveralls.io/github/goedman/Stan.jl?branch=Stan.jl.1.1.0)
 [![codecov.io](http://codecov.io/github/goedman/Stan.jl/coverage.svg?branch=master)](http://codecov.io/github/goedman/Stan.jl?branch=master)
 
+[![codecov](https://codecov.io/gh/goedman/Stan.jl/branch/Stan.jl.1.1.0/graph/badge.svg)](https://codecov.io/gh/goedman/Stan.jl)
+
 ## Purpose
 
 A package to use Stan (as an external program) from Julia.
