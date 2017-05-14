@@ -20,9 +20,19 @@ A limited amount of testing has taken place on other platforms by other users of
 
 ## Version 1.2.0 (Late 2017 - Julia 1.0?)
 
-Please see the "Future of Stan.jl" [issue](https://github.com/goedman/Stan.jl/issues/40)
-
 ## Version 1.1.0 (next)
+
+1. Compatible with Julia 0.6
+1. Added optional keyward argument useMamba to stanmodel()
+1. All test now set useMamba=false and do not depend on either Mamba or Gadfly
+1. Tamas Papp figured out how to install CmdStan on Travis! This allows proper testing of Stan.jl on various unix/linux versions. Currently Travis tests Julia 0.5, 0.6 and nightlies on both linux and OSX.
+1. Complete documentation (initial version, will take additional work)
+2. Streamline R file creation for observed data and initialization values
+3. Improve error catching
+
+## Version 1.0.3 (next)
+
+Please see the "Future of Stan.jl" [issue](https://github.com/goedman/Stan.jl/issues/40)
  
 1. Thanks to Jon Alm Eriksen the performance of update_R_file() has been improved tremendously. 
 1. A further suggestion by Michael Prange to directly write to the R file also prevents a Julia segmentation trap for very large arrays (N > 10^6).
@@ -35,18 +45,8 @@ Please see the "Future of Stan.jl" [issue](https://github.com/goedman/Stan.jl/is
 1. Added 2 tests to track outstanding CmdStan issues (#510 and #547). Slated for Stan 3.0
 1. Fix to not depend on Homebrew on non OSX patforms
 1. Initiated the "Future of Stan.jl" discussion (Stan.jl issue #40).
-1. Compatible with Julia 0.6
-1. Added optional keyward argument useMamba to stanmodel()
-1. All test now set useMamba=false and do not depend on either Mamba or Gadfly
-1. Tamas Papp figured out how to install CmdStan on Travis! This allows proper testing of Stan.jl on various unix/linux versions. Currently Travis tests Julia 0.5, 0.6 and nightlies on both linux and OSX.
 
-### Outstanding for 1.1.0:
-
-1. Complete documentation
-2. Streamline R file creation for observed data and initialization values
-3. Improve error catching
-
-## Version 1.0.2 (currently tagged version)
+## Version 1.0.2
 
 1. Bumped REQUIRE for Julia to v"0.5.0-rc3"
 2. Updated Homebrew section as CmdStan 2.11.0 is now available from Homebrew
