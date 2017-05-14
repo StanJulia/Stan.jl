@@ -22,19 +22,19 @@ A limited amount of testing has taken place on other platforms by other users of
 
 ## Version 1.1.0 (next)
 
-1. Compatible with Julia 0.6
-1. Added optional keyward argument useMamba to stanmodel()
-1. All test now set useMamba=false and do not depend on either Mamba or Gadfly
+1. Compatible with Julia 0.6.
+1. Added optional keyward argument useMamba to stanmodel().
+1. All test now set useMamba=false and do not depend on either Mamba or Gadfly.
 1. Tamas Papp figured out how to install CmdStan on Travis! This allows proper testing of Stan.jl on various unix/linux versions. Currently Travis tests Julia 0.5, 0.6 and nightlies on both linux and OSX.
-1. Complete documentation (initial version, will take additional work)
-2. Streamline R file creation for observed data and initialization values
-3. Improve error catching
+1. Complete documentation (initial version, will take additional work).
+2. Streamline R file creation for observed data and initialization values.
+3. Improve error catching.
 
 ### Breaking changes:
 
-1. Paraneter initialization values (for parameters in the parameter block) are now passed in as an optional argument to `stan()`.
+1. Parameter initialization values (for parameters in the parameter block) are now passed in as an optional keyword argument to `stan()`. See BernoulliInitTheta for an example.
 1. The main execution method, `stan()`, now returns a tuple consisting of a return code and the simulation results.
-1. The simulation results can either be in the form of Mamba.Chains or as a Array of values (the latter if the argument `useMamba=false` is added to `Stanmodel()`)
+1. The simulation results can either be in the form of Mamba.Chains or as a Array of values (the latter if the argument `useMamba=false` is added to `Stanmodel()`).
 
 ## Version 1.0.3 (next)
 
