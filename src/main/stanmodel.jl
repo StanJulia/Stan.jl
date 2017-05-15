@@ -76,6 +76,7 @@ Stanmodel(
   useMamba=true,
   mambaThinning=1
 )
+
 ```
 ### Required arguments
 ```julia
