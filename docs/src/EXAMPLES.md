@@ -1,6 +1,6 @@
 # Examples
 
-## Selected examples
+## Selected additional example scripts
 
 1. [bernoulli.jl](https://github.com/goedman/Stan.jl/blob/master/docs/src/Bernoulli.md)
 1. [dyes.jl](https://github.com//goedman/Stan.jl/blob/master/docs/src/Dyes.md)

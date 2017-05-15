@@ -48,7 +48,7 @@ More documentation on stan() can be found in [`stan`](@ref)
 If the return code rc indicated success (rc == 0), Mamba.jl provides the describe() function. We can't use all monitored variables by Stan. In this example a good subset is selected as below and stored in 'sim'
 ```
 if rc == 0
-  sim1 = stan(stanmodel, bernoullidata, ProjDir, CmdStanDir=CMDSTAN_HOME)
+  sim1 = stan(stanmodel, [bernoullidata], ProjDir, CmdStanDir=CMDSTAN_HOME)
   println("Subset Sampler Output")
   sim = sim1[1:1000, ["lp__", "theta", "accept_stat__"], :]
   describe(sim)
@@ -59,8 +59,6 @@ The first time (or when updates to the model or data have been made) stan() will
 On Windows, the CmdStanDir argument appears needed (this is still being investigated). On OSX/Unix CmdStanDir is obtained from either ~/.juliarc.jl or an environment variable (see the Requirements section).
 
 By default stan() will run 4 chains, optionally display a combined summary and returns a Mamba Chains object for a sampler. Some other Stan methods, e.g. optimize, return a dictionary.
-
-In some cases Stan can monitor 100s or even 1000s of variables in which case it might be better to use the monitors keyword argument to stan(), see the next section for more details.
 
 The following diagnostics and Gadfly based plot functions (all from Mamba.jl) are available:
 ```
@@ -95,7 +93,6 @@ p = plot(sim, [:trace, :mean, :density, :autocor], legend=true);
 draw(p, ncol=4, filename="summaryplot", fmt=:svg)
 draw(p, ncol=4, filename="summaryplot", fmt=:pdf)
 ```
-
 
 ## Running a Stan script, some details
 
