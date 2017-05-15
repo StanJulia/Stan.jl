@@ -21,3 +21,4 @@ For more info on Stan, please go to <http://mc-stan.org>.
 For more info on Mamba, please go to <http://mambajl.readthedocs.org/en/latest/>.
 
 For more info on Gadfly, please go to <https://github.com/GiovineItalia/Gadfly.jl>
+
