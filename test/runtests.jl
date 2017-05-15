@@ -29,11 +29,12 @@ if CMDSTAN_HOME != ""
         println("\n\n\n  * $(my_test) *")
         include(my_test)
     end
-
+    #=
     for my_test in execution_tests
         println("\n\n  * $(my_test) *\n")
         include(my_test)
     end
+    =#
     println("\n")
   end 
 else
