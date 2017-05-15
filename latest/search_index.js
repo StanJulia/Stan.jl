@@ -9,11 +9,35 @@ var documenterSearchIndex = {"docs": [
 },
 
 {
-    "location": "INTRO.html#Stan.jl:-A-Julia-interface-to-CmdStan-1",
+    "location": "INTRO.html#A-Julia-interface-to-CmdStan-1",
     "page": "Introduction",
-    "title": "Stan.jl: A Julia interface to CmdStan",
+    "title": "A Julia interface to CmdStan",
+    "category": "section",
+    "text": ""
+},
+
+{
+    "location": "INTRO.html#Stan.jl-1",
+    "page": "Introduction",
+    "title": "Stan.jl",
     "category": "section",
     "text": "Stan is a system for statistical modeling, data analysis, and prediction. It is extensively used in social, biological, and physical sciences, engineering, and business. The Stan program language and interfaces are documented here.CmdStan is the shell/command line interface to run Stan language programs. Stan.jl wraps CmdStan and captures the samples for further processing."
+},
+
+{
+    "location": "INTRO.html#A-few-other-MCMC-options-in-Julia-1",
+    "page": "Introduction",
+    "title": "A few other MCMC options in Julia",
+    "category": "section",
+    "text": "Mamba.jl and Klara/jl are other Julia packages to run MCMC models (in pure Julia!).Jags.jl is another option, but like CmdStan/Stan.jl, Jags runs as an external program."
+},
+
+{
+    "location": "INTRO.html#References-1",
+    "page": "Introduction",
+    "title": "References",
+    "category": "section",
+    "text": "There is no shortage of good books on Bayesian statistics. A few of my favorites are:Bolstad: Introduction to Bayesian statistics\nBolstad: Understanding Computational Bayesian Statistics\nGelman, Hill\nGelman, Carlin, and others: Bayesian Data Analysis"
 },
 
 {
@@ -37,7 +61,7 @@ var documenterSearchIndex = {"docs": [
     "page": "Installation",
     "title": "Minimal requirement",
     "category": "section",
-    "text": "To run this version of the Stan.jl package on your local machine, it assumes that CmdStan executable is properly installed.In order for Stan.jl to find the CmdStan executable you can either1.1) set the environment variable CMDSTAN_HOME to point to the CmdStan directory, e.g. addexport CMDSTAN_HOME=/Users/rob/Projects/Stan/cmdstan\nlaunchctl setenv CMDSTAN_HOME /Users/rob/Projects/Stan/cmdstanto .bash_profile. I typically prefer not to include the cmdstan version number in the path so no update is needed when CmdStan is updated.Or, alternatively,1.2) define CMDSTAN_HOME in ~/.juliarc.jl, e.g. append lines like CMDSTAN_HOME = \"/Users/rob/Projects/Stan/cmdstan\" # Choose the appropriate directory hereto ~/.juliarc.jl.On Windows this could look like:CMDSTAN_HOME = \"C:\\\\cmdstan\""
+    "text": "To run this version of the Stan.jl package on your local machine, it assumes that the  CmdStan executable is properly installed.In order for Stan.jl to find the CmdStan executable you can either1.1) set the environment variable CMDSTAN_HOME to point to the CmdStan directory, e.g. addexport CMDSTAN_HOME=/Users/rob/Projects/Stan/cmdstan\nlaunchctl setenv CMDSTAN_HOME /Users/rob/Projects/Stan/cmdstanto .bash_profile. I typically prefer not to include the cmdstan version number in the path so no update is needed when CmdStan is updated.Or, alternatively,1.2) define CMDSTAN_HOME in ~/.juliarc.jl, e.g. append lines like CMDSTAN_HOME = \"/Users/rob/Projects/Stan/cmdstan\" # Choose the appropriate directory hereto ~/.juliarc.jl.On Windows this could look like:CMDSTAN_HOME = \"C:\\\\cmdstan\""
 },
 
 {
@@ -93,7 +117,7 @@ var documenterSearchIndex = {"docs": [
     "page": "Example walkthrough",
     "title": "Stanmodel",
     "category": "section",
-    "text": "Stanmodel() is used to define basic attributes for a model:monitor = [\"theta\", \"lp__\", \"accept_stat__\"]\nstanmodel = Stanmodel(name=\"bernoulli\", model=bernoulli, monitors=monitor);\nstanmodel\n````\nShows all parameters in the model, in this case (by default) a sample model.\n\nCompared to the call to Stanmodel() above, the keyword argument monitors has been added. This means that after the simulation is complete, only the monitored variables will be read in from the .csv file produced by Stan. This can be useful if many, e.g. 100s, nodes are being observed.stanmodel2 = Stanmodel(Sample(adapt=Adapt(delta=0.9)), name=\"bernoulli2\", nchains=6)An example of updating default model values when creating a model. The format is slightly different from CmdStan, but the parameters are as described in the CmdStan Interface User's Guide. This is also the case for the Stanmodel() optional arguments random, init and output (refresh only).\n\nNow stanmodel2 will look like:stanmodel2 ```` After the Stanmodel object has been created fields can be updated, e.g.stanmodel2.method.adapt.delta=0.85"
+    "text": "Stanmodel() is used to define the basic attributes for a model:monitor = [\"theta\", \"lp__\", \"accept_stat__\"]\nstanmodel = Stanmodel(name=\"bernoulli\", model=bernoulli, monitors=monitor);\nstanmodel\n````\nShows all parameters in the model, in this case (by default) a sample model.\n\nCompared to the call to Stanmodel() above, the keyword argument monitors has been added. This means that after the simulation is complete, only the monitored variables will be read in from the .csv file produced by Stan. This can be useful if many, e.g. 100s, nodes are being observed.stanmodel2 = Stanmodel(Sample(adapt=Adapt(delta=0.9)), name=\"bernoulli2\", nchains=6)An example of updating default model values when creating a model. The format is slightly different from CmdStan, but the parameters are as described in the CmdStan Interface User's Guide. This is also the case for the Stanmodel() optional arguments random, init and output (refresh only).\n\nNow stanmodel2 will look like:stanmodel2 ```` After the Stanmodel object has been created fields can be updated, e.g.stanmodel2.method.adapt.delta=0.85"
 },
 
 {
@@ -125,7 +149,7 @@ var documenterSearchIndex = {"docs": [
     "page": "Additional examples",
     "title": "Selected additional example scripts",
     "category": "section",
-    "text": "bernoulli.jl\ndyes.jl\nbinormal.jl"
+    "text": "bernoulli.jlThe basic example as used in the walkthrough.dyes.jl\nbinormal.jl"
 },
 
 {
@@ -149,7 +173,7 @@ var documenterSearchIndex = {"docs": [
     "page": "Versions",
     "title": "Approach",
     "category": "section",
-    "text": "A version of a Julia package is labeled (tagged) as v\"major.minor.patch\".My intention is to update the patch level whenever I make updates which are not visible to the existing examples. This includes adding new examples and tests. Changes that require updates to some examples bump the minor level. Introduction of new arguments - even if they default to previous behavior, e.g. in v\"1.1.0\" the useMamba and init arguments to Stanmodel() - also bump the minor level.Updates for new releases of Julia bump the major level."
+    "text": "A version of a Julia package is labeled (tagged) as v\"major.minor.patch\".My intention is to update the patch level whenever I make updates which are not visible to any of the existing examples.New functionality will be introduced in minor level updates. This includes adding new examples, tests and the introduction of new arguments if they default to previous behavior, e.g. in v\"1.1.0\" the useMamba and init arguments to Stanmodel().Changes that require updates to some examples bump the major level.Updates for new releases of Julia and CmdStan bump the appropriate level."
 },
 
 {
@@ -157,15 +181,7 @@ var documenterSearchIndex = {"docs": [
     "page": "Versions",
     "title": "Testing",
     "category": "section",
-    "text": "This version of the package has primarily been tested on Mac OSX 10.12, Julia 0.5 and 0.6, CmdStan 2.15.0, Mamba 0.10.0 and Gadfly 0.6.1.Note that at this point in time Mamba and Gadfly are not yet available for Julia 0.6-RC1, thus only the NoMamba examples will work on Julia 0.6-RC1. A limited amount of testing has taken place on other platforms by other users of the package."
-},
-
-{
-    "location": "VERSIONS.html#Version-x.0.0-(Late-2017-Julia-1.0?)-1",
-    "page": "Versions",
-    "title": "Version x.0.0 (Late 2017 - Julia 1.0?)",
-    "category": "section",
-    "text": ""
+    "text": "This version of the package has primarily been tested on Mac OSX 10.12, Julia 0.5 and 0.6, CmdStan 2.15.0, Mamba 0.10.0 and Gadfly 0.6.1.Note that at this point in time Mamba and Gadfly are not yet available for Julia 0.6-RC1, thus only the NoMamba examples will work on Julia 0.6-RC1. Once Mamba and Gadfly are available for Julia 0.6 I will bump the Stan.jl version.A limited amount of testing has taken place on other platforms by other users of the package."
 },
 
 {
@@ -269,7 +285,7 @@ var documenterSearchIndex = {"docs": [
     "page": "Stan.jl documentation",
     "title": "Stan.Stanmodel",
     "category": "Type",
-    "text": "Method Stanmodel\n\nCreate a Stanmodel. \n\nConstructors\n\nStanmodel(\n  method=Sample();\n  name=\"noname\", \n  nchains=4,\n  num_warmup=1000, \n  num_samples=1000,\n  thin=1,\n  model=\"\",\n  monitors=String[],\n  data=DataDict[],\n  random=Random(),\n  init=DataDict[],\n  output=Output(),\n  pdir::String=pwd(),\n  useMamba=true,\n  mambaThinning=1\n)\n\nRequired arguments\n\n* `method::Method`            : See ?Method\n\nOptional arguments\n\n* `name::String`               : Name for the model\n* `nchains::Int`               : Number of chains, if possible execute in parallel\n* `num_warmup::Int`                 : Number of samples used for num_warmupation \n* `num_samples::Int`           : Sample iterations\n* `thin::Int`                  : Stan thinning factor\n* `model::String`              : Stan program source\n* `data::DataDict[]`           : Observed input data as an array of Dicts\n* `random::Random`             : Random seed settings\n* `init::DataDict[]`           : Initial values for parameters in parameter block\n* `output::Output`             : File output options\n* `pdir::String`               : Working directory\n* `monitors::String[] `        : Filter for variables used in Mamba post-processing\n* `useMamba::Bool`             : Use Mamba Chains for diagnostics and graphics\n* `mambaThinning::Int`         : Additional thinning factor in Mamba Chains\n\nExample\n\nbernoullimodel = \"\ndata { \n  int<lower=1> N; \n  int<lower=0,upper=1> y[N];\n} \nparameters {\n  real<lower=0,upper=1> theta;\n} \nmodel {\n  theta ~ beta(1,1);\n  y ~ bernoulli(theta);\n}\n\"\n\nstanmodel = Stanmodel(num_samples=1200, thin=2, name=\"bernoulli\", model=bernoullimodel);\n\nRelated help\n\n?stan                          : Run a Stanmodel\n?Sample                        : Sampling settings\n?Method                       : List of available methods\n?Output                        : Output file settings\n?DataDict                      : Input data dictionaries, will be converted to R syntax\n\n\n\n"
+    "text": "Method Stanmodel\n\nCreate a Stanmodel. \n\nConstructors\n\nStanmodel(\n  method=Sample();\n  name=\"noname\", \n  nchains=4,\n  num_warmup=1000, \n  num_samples=1000,\n  thin=1,\n  model=\"\",\n  monitors=String[],\n  data=DataDict[],\n  random=Random(),\n  init=DataDict[],\n  output=Output(),\n  pdir::String=pwd(),\n  useMamba=true,\n  mambaThinning=1\n)\n\nRequired arguments\n\n* `method::Method`            : See ?Method\n\nOptional arguments\n\n* `name::String`               : Name for the model\n* `nchains::Int`               : Number of chains, if possible execute in parallel\n* `num_warmup::Int`            : Number of samples used for num_warmupation \n* `num_samples::Int`           : Sample iterations\n* `thin::Int`                  : Stan thinning factor\n* `model::String`              : Stan program source\n* `data::DataDict[]`           : Observed input data as an array of Dicts\n* `random::Random`             : Random seed settings\n* `init::DataDict[]`           : Initial values for parameters in parameter block\n* `output::Output`             : File output options\n* `pdir::String`               : Working directory\n* `monitors::String[] `        : Filter for variables used in Mamba post-processing\n* `useMamba::Bool`             : Use Mamba Chains for diagnostics and graphics\n* `mambaThinning::Int`         : Additional thinning factor in Mamba Chains\n\nExample\n\nbernoullimodel = \"\ndata { \n  int<lower=1> N; \n  int<lower=0,upper=1> y[N];\n} \nparameters {\n  real<lower=0,upper=1> theta;\n} \nmodel {\n  theta ~ beta(1,1);\n  y ~ bernoulli(theta);\n}\n\"\n\nstanmodel = Stanmodel(num_samples=1200, thin=2, name=\"bernoulli\", model=bernoullimodel);\n\nRelated help\n\n?stan                          : Run a Stanmodel\n?Sample                        : Sampling settings\n?Method                       : List of available methods\n?Output                        : Output file settings\n?DataDict                      : Input data dictionaries, will be converted to R syntax\n\n\n\n"
 },
 
 {
