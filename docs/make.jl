@@ -13,7 +13,7 @@ makedocs(
 )
 
 deploydocs(
-    repo = "github.com/goedman/Stan.jl,git",
+    repo = "github.com/goedman/Stan.jl.git",
     target = "build",
     julia = "0.6",
     osname = "linux",
