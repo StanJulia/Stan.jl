@@ -9,3 +9,5 @@ bernoulli.bugs
 bernoulli.data.R
 win_tests_*.jl
 .ipynb_checkpoints
+docs/build/
+docs/site/

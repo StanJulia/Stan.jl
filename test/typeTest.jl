@@ -4,12 +4,12 @@ end
 type Diag_e <: Metrics
 end
 
-abstract Algorithm
-type Hmc <: Algorithm
+abstract SamplingAlgorithm
+type Hmc <: SamplingAlgorithm
   # ...
   metric::Metrics
 end
-type Fixed_param <: Algorithm
+type Fixed_param <: SamplingAlgorithm
 end
 
 Hmc() = Hmc(Diag_e())

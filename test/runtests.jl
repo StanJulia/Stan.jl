@@ -1,7 +1,7 @@
 # Top level test script for Stan.jl
-using Base.Test
+using Stan, Base.Test
 
-println("Running tests for Stan-j0.5-v1.0.2:")
+println("Running tests for Stan-j0.5/6-v1.1.0:")
 
 code_tests = ["test_env.jl",              
               "test_utilities.jl",
@@ -19,26 +19,22 @@ execution_tests = [
   "test_binormal.jl",
   "test_schools8.jl",
   "test_dyes.jl",
-  "test_kidscore.jl"  
+  "test_kidscore.jl"
 ]
 
-for my_test in code_tests
-    println("\n\n\n  * $(my_test) *")
-    include(my_test)
-end
-
 if CMDSTAN_HOME != ""
-  println("CMDSTAN_HOME set. Try to run bernoulli.")
-  try
-    for my_test in execution_tests
-        println("\n  * $(my_test) *")
+  println("CMDSTAN_HOME set. Try to run tests.")
+  @testset "Stan.jl" begin
+    for my_test in code_tests
+        println("\n\n\n  * $(my_test) *")
         include(my_test)
     end
-  catch e
-     println("CMDSTAN_HOME initialized, but either")
-     println("CmdStan is not installed properly or an error occurred")
-     println("during the execution of CmdStan.")
-     println(e)
+
+    for my_test in execution_tests
+        println("\n\n  * $(my_test) *\n")
+        include(my_test)
+    end
+    println("\n")
   end 
 else
   println("\n\nCMDSTAN_HOME not set or found.")

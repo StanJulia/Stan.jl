@@ -11,7 +11,7 @@ end
 
 # Go to the Stan.jl package directory
 
-ProjDir = joinpath(dirname(@__FILE__), "..", "Examples", "Bernoulli")
+ProjDir = joinpath(dirname(@__FILE__), "..", "Examples", "NoMamba", "Bernoulli")
 cd(ProjDir) do
 
 isdir("tmp") &&

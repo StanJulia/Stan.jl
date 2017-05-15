@@ -3,7 +3,7 @@
 using Mamba, Stan
 
 ProjDir = dirname(@__FILE__)
-cd(ProjDir) #do
+cd(ProjDir) do
 
   const simplecode = "
   parameters {
@@ -13,11 +13,11 @@ cd(ProjDir) #do
     y ~ normal(0, 1);
   }  "
 
+  global stanmodel, rc, sim
   stanmodel = Stanmodel(Sample(save_warmup=true, thin=1), name="simple", model=simplecode);
-  sim = stan(stanmodel, [Dict("y" => 0.)], CmdStanDir=CMDSTAN_HOME);
-  describe(sim)
+  rc, sim = stan(stanmodel, [Dict("y" => 0.)], CmdStanDir=CMDSTAN_HOME);
+  rc == 0 && describe(sim)
   
-  
-#end
+end
 
 # The first sample for y (in e.g. tmp/simple_samples_1.csv, ~line 39) should be 0.

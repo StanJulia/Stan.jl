@@ -25,8 +25,9 @@ data = [
   Dict("N" => 10, "y" => [0, 0, 0, 1, 0, 0, 0, 1, 0, 1])
 ]
 
-m = Stanmodel(Optimize(), name="bernoulli", model=bernoulli, data=data);
-m.command[1] = cmdline(m)
+m = Stanmodel(Optimize(), name="bernoulli", model=bernoulli, 
+  data=data, useMamba=false);
+m.command[1] = Stan.cmdline(m)
 
 println()
 showcompact(m)
@@ -42,18 +43,18 @@ showcompact(s1)
 println()
 show(s1)
 
-n1 = Lbfgs()
-n2 = Lbfgs(history_size=15)
+n1 = Stan.Lbfgs()
+n2 = Stan.Lbfgs(history_size=15)
 @assert 3*n1.history_size == n2.history_size
 
-b1 = Bfgs()
-b2 = Bfgs(tol_obj=1//100000000)
+b1 = Stan.Bfgs()
+b2 = Stan.Bfgs(tol_obj=1//100000000)
 @assert b1.tol_obj == b2.tol_obj
 o1 = Optimize()
-o2 = Optimize(Newton())
-o3 = Optimize(Lbfgs(history_size=10))
-o4 = Optimize(Bfgs(tol_obj=1e-9))
-o5 = Optimize(method=Bfgs(tol_obj=1e-9), save_iterations=true)
+o2 = Optimize(Stan.Newton())
+o3 = Optimize(Stan.Lbfgs(history_size=10))
+o4 = Optimize(Stan.Bfgs(tol_obj=1e-9))
+o5 = Optimize(method=Stan.Bfgs(tol_obj=1e-9), save_iterations=true)
 @assert o5.method.tol_obj == o1.method.tol_obj/10
 
 println()
@@ -63,7 +64,7 @@ show(o5)
 
 d1 = Diagnose()
 @assert d1.diagnostic.error == 1e-6
-d2 = Diagnose(Gradient(error=1e-7))
+d2 = Diagnose(Stan.Gradient(error=1e-7))
 @assert d2.diagnostic.error == 1e-7
 
 println()
