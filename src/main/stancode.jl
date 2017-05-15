@@ -186,8 +186,9 @@ function stan(
   elseif isa(model.method, Diagnose)
     res = read_stanfit(model)
   else
-    println("Unknown method.")
-    rc = -10
+    println("\nAn unknown method is specified in the call to stan().")
+    cd(old)
+    error("Return code = -10")
   end
   
   cd(old)

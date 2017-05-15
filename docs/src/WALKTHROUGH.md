@@ -100,7 +100,7 @@ Stan.jl really only consists of 2 functions, Stanmodel() and stan().
 
 ### [`Stanmodel`](@ref)
 
-Stanmodel() is used to define basic attributes for a model:
+Stanmodel() is used to define the basic attributes for a model:
 ```
 monitor = ["theta", "lp__", "accept_stat__"]
 stanmodel = Stanmodel(name="bernoulli", model=bernoulli, monitors=monitor);

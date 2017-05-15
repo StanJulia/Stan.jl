@@ -4,21 +4,21 @@
 
 A version of a Julia package is labeled (tagged) as v"major.minor.patch".
 
-My intention is to update the patch level whenever I make updates which are not visible to the existing examples. This includes adding new examples and tests. 
+My intention is to update the patch level whenever I make updates which are not visible to any of the existing examples.
 
-Changes that require updates to some examples bump the minor level. Introduction of new arguments - even if they default to previous behavior, e.g. in v"1.1.0" the useMamba and init arguments to Stanmodel() - also bump the minor level.
+New functionality will be introduced in minor level updates. This includes adding new examples, tests and the introduction of new arguments if they default to previous behavior, e.g. in v"1.1.0" the useMamba and init arguments to Stanmodel().
 
-Updates for new releases of Julia bump the major level.
+Changes that require updates to some examples bump the major level.
+
+Updates for new releases of Julia and CmdStan bump the appropriate level.
 
 ## Testing
 
 This version of the package has primarily been tested on Mac OSX 10.12, Julia 0.5 and 0.6, CmdStan 2.15.0, Mamba 0.10.0 and Gadfly 0.6.1.
 
-Note that at this point in time Mamba and Gadfly are not yet available for Julia 0.6-RC1, thus only the NoMamba examples will work on Julia 0.6-RC1. 
+Note that at this point in time Mamba and Gadfly are not yet available for Julia 0.6-RC1, thus only the NoMamba examples will work on Julia 0.6-RC1. Once Mamba and Gadfly are available for Julia 0.6 I will bump the Stan.jl version.
 
 A limited amount of testing has taken place on other platforms by other users of the package.
-
-## Version x.0.0 (Late 2017 - Julia 1.0?)
 
 ## Version 2.0.0
 

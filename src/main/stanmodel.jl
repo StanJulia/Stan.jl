@@ -86,7 +86,7 @@ Stanmodel(
 ```julia
 * `name::String`               : Name for the model
 * `nchains::Int`               : Number of chains, if possible execute in parallel
-* `num_warmup::Int`                 : Number of samples used for num_warmupation 
+* `num_warmup::Int`            : Number of samples used for num_warmupation 
 * `num_samples::Int`           : Sample iterations
 * `thin::Int`                  : Stan thinning factor
 * `model::String`              : Stan program source
