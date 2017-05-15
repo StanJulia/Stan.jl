@@ -67,7 +67,7 @@ println()
 ```
 Run the simulation by calling stan(), passing in the data and the intended working directory. To get a summary description of the results, describe() is called (describe() is a Mamba.jl function):
 ```
-sim1 = stan(stanmodel, bernoullidata, ProjDir, CmdStanDir=CMDSTAN_HOME)
+sim1 = stan(stanmodel, [bernoullidata], ProjDir, CmdStanDir=CMDSTAN_HOME)
 describe(sim1)
 ```
 The first time (or when updates to the model or data have been made) stan() will compile the model and create the executable.
