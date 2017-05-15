@@ -14,13 +14,13 @@ Updates for new releases of Julia bump the major level.
 
 This version of the package has primarily been tested on Mac OSX 10.12, Julia 0.5 and 0.6, CmdStan 2.15.0, Mamba 0.10.0 and Gadfly 0.6.1.
 
-Note that at this point in time Mamba and Gadfly are not yet available for Julia 0.6-, thus only the NoMamba examples will work.
+Note that at this point in time Mamba and Gadfly are not yet available for Julia 0.6-RC1, thus only the NoMamba examples will work on Julia 0.6-RC1. 
 
-A limited amount of testing has taken place on other platforms by other users of the package (see note 1 in the 'To Do' section below).
+A limited amount of testing has taken place on other platforms by other users of the package.
 
-## Version 1.2.0 (Late 2017 - Julia 1.0?)
+## Version x.0.0 (Late 2017 - Julia 1.0?)
 
-## Version 1.1.0 (next)
+## Version 2.0.0
 
 1. Compatible with Julia 0.6.
 1. Added optional keyward argument useMamba to stanmodel().
@@ -36,7 +36,7 @@ A limited amount of testing has taken place on other platforms by other users of
 1. The main execution method, `stan()`, now returns a tuple consisting of a return code and the simulation results.
 1. The simulation results can either be in the form of Mamba.Chains or as a Array of values (the latter if the argument `useMamba=false` is added to `Stanmodel()`).
 
-## Version 1.0.3 (next)
+## Version 1.1.0
 
 Please see the "Future of Stan.jl" [issue](https://github.com/goedman/Stan.jl/issues/40).
  
