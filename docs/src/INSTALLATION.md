@@ -2,9 +2,7 @@
 
 ## Minimal requirement
 
-To run this version of the Stan.jl package on your local machine, it assumes that:
-
-1. [CmdStan] (http://mc-stan.org/interfaces/cmdstan.html) is properly installed.
+To run this version of the Stan.jl package on your local machine, it assumes that [CmdStan] (http://mc-stan.org/interfaces/cmdstan.html) executable is properly installed.
 
 In order for Stan.jl to find the CmdStan executable you can either
 
@@ -39,7 +37,7 @@ By default Stan.jl uses Mamba.jl for diagnostics and graphics.
 
 Both packages can be installed using Pkg.add(), e.g. Pkg.add("Mamba"). It requires Mamba v"0.10.0". Mamba will install Gadfly.jl.
 
-The Stanmodel field useMamba can be set to false to disable the use of Mamba and Gadfly.
+The Stanmodel field `useMamba` can be set to false to disable the use of Mamba and Gadfly.
 
 ## Additional OSX options
 

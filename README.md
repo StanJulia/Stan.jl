@@ -6,6 +6,8 @@
 [![Stan](http://pkg.julialang.org/badges/Stan_0.5.svg)](http://pkg.julialang.org/?pkg=Stan&ver=0.5)
 [![Stan](http://pkg.julialang.org/badges/Stan_0.6.svg)](http://pkg.julialang.org/?pkg=Stan&ver=0.6)
 
+Documentation:
+[![](https://img.shields.io/badge/docs-latest-blue.svg)](https://goedman.github.io/Stan.jl/latest)
 [![codecov](https://codecov.io/gh/goedman/Stan.jl/branch/Stan.jl.1.1.0/graph/badge.svg)](https://codecov.io/gh/goedman/Stan.jl)
 
 ## Purpose
