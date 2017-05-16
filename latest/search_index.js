@@ -29,7 +29,7 @@ var documenterSearchIndex = {"docs": [
     "page": "Introduction",
     "title": "A few other MCMC options in Julia",
     "category": "section",
-    "text": "Mamba.jl and Klara/jl are other Julia packages to run MCMC models (in pure Julia!).Jags.jl is another option, but like CmdStan/Stan.jl, Jags runs as an external program."
+    "text": "Mamba.jl and Klara.jl are other Julia packages to run MCMC models (in pure Julia!).Jags.jl is another option, but like CmdStan/Stan.jl, Jags runs as an external program."
 },
 
 {
@@ -37,7 +37,7 @@ var documenterSearchIndex = {"docs": [
     "page": "Introduction",
     "title": "References",
     "category": "section",
-    "text": "There is no shortage of good books on Bayesian statistics. A few of my favorites are:Bolstad: Introduction to Bayesian statistics\nBolstad: Understanding Computational Bayesian Statistics\nGelman, Hill\nGelman, Carlin, and others: Bayesian Data Analysisand a great read:Betancourt: A Conceptual Introduction to Hamiltonian Monte Carlo"
+    "text": "There is no shortage of good books on Bayesian statistics. A few of my favorites are:Bolstad: Introduction to Bayesian statistics\nBolstad: Understanding Computational Bayesian Statistics\nGelman, Hill: Data Analysis using regression and multileve,/hierachical models\nGelman, Carlin, and others: Bayesian Data Analysisand a great read:Betancourt: A Conceptual Introduction to Hamiltonian Monte Carlo"
 },
 
 {
@@ -69,7 +69,7 @@ var documenterSearchIndex = {"docs": [
     "page": "Installation",
     "title": "Optional requirements",
     "category": "section",
-    "text": "By default Stan.jl uses Mamba.jl for diagnostics and graphics.Mamba. \nGadflyBoth packages can be installed using Pkg.add(), e.g. Pkg.add(\"Mamba\"). It requires Mamba v\"0.10.0\". Mamba will install Gadfly.jl.The Stanmodel field useMamba can be set to false to disable the use of Mamba and Gadfly."
+    "text": "By default Stan.jl uses Mamba.jl for diagnostics and graphics.Mamba\nGadflyBoth packages can be installed using Pkg.add(), e.g. Pkg.add(\"Mamba\"). It requires Mamba v\"0.10.0\". Mamba will install Gadfly.jl.The Stanmodel field useMamba can be set to false to disable the use of Mamba and Gadfly."
 },
 
 {
@@ -117,7 +117,7 @@ var documenterSearchIndex = {"docs": [
     "page": "Example walkthrough",
     "title": "Stanmodel",
     "category": "section",
-    "text": "Stanmodel() is used to define the basic attributes for a model:monitor = [\"theta\", \"lp__\", \"accept_stat__\"]\nstanmodel = Stanmodel(name=\"bernoulli\", model=bernoulli, monitors=monitor);\nstanmodel\n````\nShows all parameters in the model, in this case (by default) a sample model.\n\nCompared to the call to Stanmodel() above, the keyword argument monitors has been added. This means that after the simulation is complete, only the monitored variables will be read in from the .csv file produced by Stan. This can be useful if many, e.g. 100s, nodes are being observed.stanmodel2 = Stanmodel(Sample(adapt=Adapt(delta=0.9)), name=\"bernoulli2\", nchains=6)An example of updating default model values when creating a model. The format is slightly different from CmdStan, but the parameters are as described in the CmdStan Interface User's Guide. This is also the case for the Stanmodel() optional arguments random, init and output (refresh only).\n\nNow stanmodel2 will look like:stanmodel2 ```` After the Stanmodel object has been created fields can be updated, e.g.stanmodel2.method.adapt.delta=0.85"
+    "text": "Stanmodel() is used to define the basic attributes for a model:monitor = [\"theta\", \"lp__\", \"accept_stat__\"]\nstanmodel = Stanmodel(name=\"bernoulli\", model=bernoulli, monitors=monitor);\nstanmodelShows all parameters in the model, in this case (by default) a sample model.Compared to the call to Stanmodel() above, the keyword argument monitors has been added. This means that after the simulation is complete, only the monitored variables will be read in from the .csv file produced by Stan. This can be useful if many, e.g. 100s, nodes are being observed.stanmodel2 = Stanmodel(Sample(adapt=Adapt(delta=0.9)), name=\"bernoulli2\", nchains=6)An example of updating default model values when creating a model. The format is slightly different from CmdStan, but the parameters are as described in the CmdStan Interface User's Guide. This is also the case for the Stanmodel() optional arguments random, init and output (refresh only).Now stanmodel2 will look like:stanmodel2After the Stanmodel object has been created fields can be updated, e.g.stanmodel2.method.adapt.delta=0.85"
 },
 
 {
@@ -145,11 +145,11 @@ var documenterSearchIndex = {"docs": [
 },
 
 {
-    "location": "EXAMPLES.html#Selected-additional-example-scripts-1",
+    "location": "EXAMPLES.html#A-few-additional-example-scripts-1",
     "page": "Additional examples",
-    "title": "Selected additional example scripts",
+    "title": "A few additional example scripts",
     "category": "section",
-    "text": "bernoulli.jlThe basic example as used in the walkthrough.dyes.jl\nbinormal.jl"
+    "text": "bernoulli.jl\ndyes.jl\nbinormal.jl"
 },
 
 {
