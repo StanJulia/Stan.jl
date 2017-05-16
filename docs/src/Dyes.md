@@ -107,8 +107,8 @@ cd(ProjDir) do
 end # cd
 ```
 
-[dyes_summary_plot_1](https://github.com/goedman/Stan.jl/blob/master/examples/Dyes/dyes_summary_plot_1.svg)
+[dyes_summary_plot_1](https://github.com/goedman/Stan.jl/blob/master/Examples/Mamba/Dyes/dyes_summary_plot_1.svg)
 
-[dyes_summary_plot_2](https://github.com/goedman/Stan.jl/blob/master/examples/Dyes/dyes_summary_plot_2.svg)
+[dyes_summary_plot_2](https://github.com/goedman/Stan.jl/blob/master/Examples/Mamba/Dyes/dyes_summary_plot_2.svg)
 
-[dyes_summary_plot_3](https://github.com/goedman/Stan.jl/blob/master/examples/Dyes/dyes_summary_plot_3.svg)
+[dyes_summary_plot_3](https://github.com/goedman/Stan.jl/blob/master/Examples/Mamba/Dyes/dyes_summary_plot_3.svg)

@@ -72,5 +72,5 @@ cd(ProjDir) do
 end # cd
 ```
 
-[binorman_summary_plot_1](https://github.com/goedman/Stan.jl/blob/master/examples/Binormal/binormal_summary_plot_1.svg)
+[binorman_summary_plot_1](https://github.com/goedman/Stan.jl/blob/master/Examples/Mamba/Binormal/binormal_summary_plot_1.svg)
 

@@ -105,7 +105,7 @@ Stanmodel() is used to define the basic attributes for a model:
 monitor = ["theta", "lp__", "accept_stat__"]
 stanmodel = Stanmodel(name="bernoulli", model=bernoulli, monitors=monitor);
 stanmodel
-````
+```
 Shows all parameters in the model, in this case (by default) a sample model.
 
 Compared to the call to Stanmodel() above, the keyword argument monitors has been added. This means that after the simulation is complete, only the monitored variables will be read in from the .csv file produced by Stan. This can be useful if many, e.g. 100s, nodes are being observed.
@@ -117,7 +117,7 @@ An example of updating default model values when creating a model. The format is
 Now stanmodel2 will look like:
 ```
 stanmodel2
-````
+```
 After the Stanmodel object has been created fields can be updated, e.g.
 ```
 stanmodel2.method.adapt.delta=0.85

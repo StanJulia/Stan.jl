@@ -1,10 +1,8 @@
-*.pdf
 *.cpp
 *.d
 *.csv
 *.o
 *.log
-*.svg
 bernoulli.bugs
 bernoulli.data.R
 win_tests_*.jl

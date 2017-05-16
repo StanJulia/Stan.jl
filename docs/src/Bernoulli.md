@@ -79,4 +79,4 @@ cd(ProjDir) do
 end # cd
 ```
 
-[bernoulli_summary_plot](https://github.com/goedman/Stan.jl/blob/master/examples/Bernoulli/bernoulli_summary_plot_1.svg)
+[bernoulli_summary_plot](https://github.com/goedman/Stan.jl/blob/master/Examples/Mamba/Bernoulli/bernoulli_summary_plot_1.svg)

@@ -10,9 +10,9 @@
 
 ## A few other MCMC options in Julia
 
-[Mamba.jl](http://mambajl.readthedocs.io/en/latest/) and [Klara/jl](http://klarajl.readthedocs.io/en/latest/) are other Julia packages to run MCMC models (in pure Julia!).
+[Mamba.jl](http://mambajl.readthedocs.io/en/latest/) and [Klara.jl](http://klarajl.readthedocs.io/en/latest/) are other Julia packages to run MCMC models (in pure Julia!).
 
-[Jags.jl]() is another option, but like CmdStan/Stan.jl, Jags runs as an external program.
+[Jags.jl](https://github.com/goedman/Jags.jl) is another option, but like CmdStan/Stan.jl, Jags runs as an external program.
 
 ## References
 
@@ -20,9 +20,9 @@ There is no shortage of good books on Bayesian statistics. A few of my favorites
 
 1. [Bolstad: Introduction to Bayesian statistics](http://www.wiley.com/WileyCDA/WileyTitle/productCd-1118593227.html)
 
-2. [Bolstad: Understanding Computational Bayesian Statistics](http://www.wiley.com/WileyCDA/WileyTitle/productCd-1118593227.html)
+2. [Bolstad: Understanding Computational Bayesian Statistics](http://www.wiley.com/WileyCDA/WileyTitle/productCd-0470046090.html)
 
-3. [Gelman, Hill](http://www.stat.columbia.edu/~gelman/arm/)
+3. [Gelman, Hill: Data Analysis using regression and multileve,/hierachical models](http://www.stat.columbia.edu/~gelman/arm/)
 
 4. [Gelman, Carlin, and others: Bayesian Data Analysis](http://www.stat.columbia.edu/~gelman/book/)
 

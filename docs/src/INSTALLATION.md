@@ -32,8 +32,8 @@ CMDSTAN_HOME = "C:\\cmdstan"
 
 By default Stan.jl uses Mamba.jl for diagnostics and graphics.
 
-2. [Mamba] (https://github.com/brian-j-smith/Mamba.jl). 
-3. [Gadfly]()
+2. [Mamba](https://github.com/brian-j-smith/Mamba.jl)
+3. [Gadfly](https://github.com/GiovineItalia/Gadfly.jl)
 
 Both packages can be installed using Pkg.add(), e.g. Pkg.add("Mamba"). It requires Mamba v"0.10.0". Mamba will install Gadfly.jl.
 
