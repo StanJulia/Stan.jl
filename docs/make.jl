@@ -5,7 +5,7 @@ makedocs(
     pages = Any[
         "Introduction" => "INTRO.md",
         "Installation" => "INSTALLATION.md",
-        "Example walkthrough" => "WALKTHROUGH.md",
+        "Walkthrough" => "WALKTHROUGH.md",
         "Versions" => "VERSIONS.md",
         "Stan.jl documentation" => "index.md",
     ]

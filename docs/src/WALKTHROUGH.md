@@ -34,7 +34,7 @@ stanmodel |> display
 
 Above Stanmodel() call creates a default model for sampling. Other arguments to Stanmodel() can be found in [`Stanmodel`](@ref)
 
-The onserved input data is defined below.
+The observed input data is defined below.
 ```
 const bernoullidata = Dict("N" => 10, "y" => [0, 1, 0, 1, 0, 0, 0, 0, 0, 1])
 ```
@@ -54,7 +54,7 @@ if rc == 0
   describe(sim)
 end
 ```
-The first time (or when updates to the model or data have been made) stan() will compile the model and create the executable.
+The first time (or when updates to the model have been made) stan() will compile the model and create the executable.
 
 On Windows, the CmdStanDir argument appears needed (this is still being investigated). On OSX/Unix CmdStanDir is obtained from either ~/.juliarc.jl or an environment variable (see the Requirements section).
 
@@ -106,7 +106,7 @@ monitor = ["theta", "lp__", "accept_stat__"]
 stanmodel = Stanmodel(name="bernoulli", model=bernoulli, monitors=monitor);
 stanmodel
 ```
-Shows all parameters in the model, in this case (by default) a sample model.
+Above script, in the Julia REPL, shows all parameters in the model, in this case (by default) a sample model.
 
 Compared to the call to Stanmodel() above, the keyword argument monitors has been added. This means that after the simulation is complete, only the monitored variables will be read in from the .csv file produced by Stan. This can be useful if many, e.g. 100s, nodes are being observed.
 ```
@@ -114,7 +114,7 @@ stanmodel2 = Stanmodel(Sample(adapt=Adapt(delta=0.9)), name="bernoulli2", nchain
 ```
 An example of updating default model values when creating a model. The format is slightly different from CmdStan, but the parameters are as described in the CmdStan Interface User's Guide. This is also the case for the Stanmodel() optional arguments random, init and output (refresh only).
 
-Now stanmodel2 will look like:
+Now, in the REPL, the stanmodel2 can be shown by:
 ```
 stanmodel2
 ```
@@ -125,7 +125,7 @@ stanmodel2.method.adapt.delta=0.85
 
 ### [`stan`](@ref)
  
-After a Stanmodel has been created, the workhorse function stan() is called to run the simulation.
+After a Stanmodel has been created, the workhorse function stan() is called to run the simulation. Note that some fields in the Stanmodel are updated by stan().
 
 After the stan() call, the stanmodel.command contains an array of Cmd fields that contain the actual run commands for each chain. These are executed in parallel. The call to stan() might update other info in the StanModel, e.g. the names of diagnostics files.
 
