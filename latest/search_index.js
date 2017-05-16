@@ -129,30 +129,6 @@ var documenterSearchIndex = {"docs": [
 },
 
 {
-    "location": "EXAMPLES.html#",
-    "page": "Additional examples",
-    "title": "Additional examples",
-    "category": "page",
-    "text": ""
-},
-
-{
-    "location": "EXAMPLES.html#Examples-1",
-    "page": "Additional examples",
-    "title": "Examples",
-    "category": "section",
-    "text": ""
-},
-
-{
-    "location": "EXAMPLES.html#A-few-additional-example-scripts-1",
-    "page": "Additional examples",
-    "title": "A few additional example scripts",
-    "category": "section",
-    "text": "bernoulli.jl\ndyes.jl\nbinormal.jl"
-},
-
-{
     "location": "VERSIONS.html#",
     "page": "Versions",
     "title": "Versions",
