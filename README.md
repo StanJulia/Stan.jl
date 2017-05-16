@@ -1,14 +1,13 @@
 # Stan
 
 [![Travis Build Status](https://travis-ci.org/goedman/Stan.jl.svg?branch=master)](https://travis-ci.org/goedman/Stan.jl)
-
-[![Travis Build Status](https://travis-ci.org/goedman/Stan.jl.svg?branch=Stan.jl.1.1.0)](https://travis-ci.org/goedman/Stan.jl?branch=Stan.jl.1.1.0)
 [![Stan](http://pkg.julialang.org/badges/Stan_0.5.svg)](http://pkg.julialang.org/?pkg=Stan&ver=0.5)
 [![Stan](http://pkg.julialang.org/badges/Stan_0.6.svg)](http://pkg.julialang.org/?pkg=Stan&ver=0.6)
 
 Documentation:
 [![](https://img.shields.io/badge/docs-latest-blue.svg)](https://goedman.github.io/Stan.jl/latest)
-[![codecov](https://codecov.io/gh/goedman/Stan.jl/branch/Stan.jl.1.1.0/graph/badge.svg)](https://codecov.io/gh/goedman/Stan.jl)
+[![Coverage Status](https://coveralls.io/repos/goedman/Stan.jl/badge.svg?branch=master&service=github)](https://coveralls.io/github/goedman/Stan.jl?branch=master)
+[![codecov](https://codecov.io/gh/goedman/Stan.jl/branch/master/graph/badge.svg)](https://codecov.io/gh/goedman/Stan.jl?branch=master)
 
 ## Purpose
 
