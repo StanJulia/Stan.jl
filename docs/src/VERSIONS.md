@@ -32,7 +32,7 @@ A limited amount of testing has taken place on other platforms by other users of
 
 ### Breaking changes:
 
-1. Parameter initialization values (for parameters in the parameter block) are now passed in as an optional keyword argument to `stan()`. See BernoulliInitTheta for an example.
+1. Parameter initialization values (for parameters in the parameter block) are now passed in as an optional keyword argument to `stan()`. In v1.1.0 this was a keyword argument of Stanmodel(). See BernoulliInitTheta for an example.
 1. The main execution method, `stan()`, now returns a tuple consisting of a return code and the simulation results.
 1. The simulation results can either be in the form of Mamba.Chains or as a Array of values (the latter if the argument `useMamba=false` is added to `Stanmodel()`).
 1. The `update` argument to Stanmodel() has been renamed `num_samples`.
