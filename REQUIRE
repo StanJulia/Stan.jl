@@ -3,4 +3,5 @@ Documenter 0.10.0
 #Mamba 0.10
 #Gadfly 0.5.2
 BinDeps 0.4.3
+Compat 0.17
 @osx Homebrew 0.4.0
