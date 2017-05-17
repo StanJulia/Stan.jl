@@ -25,8 +25,8 @@ A limited amount of testing has taken place on other platforms by other users of
 1. Compatible with Julia 0.6.
 1. Added optional keyward argument useMamba to stanmodel().
 1. All test now set useMamba=false and do not depend on either Mamba or Gadfly.
-1. Tamas Papp figured out how to install CmdStan on Travis! This allows proper testing of Stan.jl on various unix/linux versions. Currently Travis tests Julia 0.5, 0.6 and nightlies on both linux and OSX.
-1. Complete documentation (initial version, will take additional work).
+1. Tamas Papp figured out how to install CmdStan on Travis! This allows proper testing of Stan.jl on various unix/linux versions. Currently Travis tests Julia 0.5 and 0.6 on linux. The master branch typically tests on nightlies and osx as well.
+1. Complete documentation (initial version, will no doubt take additional work).
 2. Streamline R file creation for observed data and initialization values.
 3. Improve error catching.
 
