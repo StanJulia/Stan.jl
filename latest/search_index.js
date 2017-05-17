@@ -173,7 +173,7 @@ var documenterSearchIndex = {"docs": [
     "page": "Versions",
     "title": "Breaking changes:",
     "category": "section",
-    "text": "Parameter initialization values (for parameters in the parameter block) are now passed in as an optional keyword argument to stan(). See BernoulliInitTheta for an example.\nThe main execution method, stan(), now returns a tuple consisting of a return code and the simulation results.\nThe simulation results can either be in the form of Mamba.Chains or as a Array of values (the latter if the argument useMamba=false is added to Stanmodel())."
+    "text": "Parameter initialization values (for parameters in the parameter block) are now passed in as an optional keyword argument to stan(). See BernoulliInitTheta for an example.\nThe main execution method, stan(), now returns a tuple consisting of a return code and the simulation results.\nThe simulation results can either be in the form of Mamba.Chains or as a Array of values (the latter if the argument useMamba=false is added to Stanmodel()).\nThe update argument to Stanmodel() has been renamed num_samples."
 },
 
 {
