@@ -20,7 +20,7 @@ Note that at this point in time Mamba and Gadfly are not yet available for Julia
 
 A limited amount of testing has taken place on other platforms by other users of the package.
 
-## Version 2.0.1
+## Version 2.0.0
 
 1. Compatible with Julia 0.6.
 1. Added optional keyward argument useMamba to stanmodel().
