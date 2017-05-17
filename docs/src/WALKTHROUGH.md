@@ -41,7 +41,7 @@ const bernoullidata = Dict("N" => 10, "y" => [0, 1, 0, 1, 0, 0, 0, 0, 0, 1])
 
 Run the simulation by calling stan(), passing in the data and the intended working directory. 
 ```
-rc, sim1 = stan(stanmodel, bernoullidata, ProjDir, CmdStanDir=CMDSTAN_HOME)
+rc, sim1 = stan(stanmodel, [bernoullidata], ProjDir, CmdStanDir=CMDSTAN_HOME)
 ```
 More documentation on stan() can be found in [`stan`](@ref)
 
