@@ -20,7 +20,7 @@ Note that at this point in time Mamba and Gadfly are not yet available for Julia
 
 A limited amount of testing has taken place on other platforms by other users of the package.
 
-## Version 2.0.0
+## Version 2.0.1
 
 1. Compatible with Julia 0.6.
 1. Added optional keyward argument useMamba to stanmodel().
@@ -35,6 +35,7 @@ A limited amount of testing has taken place on other platforms by other users of
 1. Parameter initialization values (for parameters in the parameter block) are now passed in as an optional keyword argument to `stan()`. See BernoulliInitTheta for an example.
 1. The main execution method, `stan()`, now returns a tuple consisting of a return code and the simulation results.
 1. The simulation results can either be in the form of Mamba.Chains or as a Array of values (the latter if the argument `useMamba=false` is added to `Stanmodel()`).
+1. The `update` argument to Stanmodel() has been renamed `num_samples`.
 
 ## Version 1.1.0
 
