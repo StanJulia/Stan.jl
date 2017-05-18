@@ -49,7 +49,7 @@ function update_R_file{T<:Any}(file::String, dct::Dict{String, T})
 	
 	str = ""
 	for entry in dct
-		str = "\""entry[1]"\""" <- "
+		str = "\""*entry[1]*"\" <- "
 		val = entry[2]
 		if length(val)==1 && length(size(val))==0
 			# Scalar
