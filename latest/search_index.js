@@ -61,7 +61,7 @@ var documenterSearchIndex = {"docs": [
     "page": "Installation",
     "title": "Minimal requirement",
     "category": "section",
-    "text": "To run this version of the Stan.jl package on your local machine, it assumes that the  CmdStan executable is properly installed.In order for Stan.jl to find the CmdStan executable you can either1.1) set the environment variable CMDSTAN_HOME to point to the CmdStan directory, e.g. addexport CMDSTAN_HOME=/Users/rob/Projects/Stan/cmdstan\nlaunchctl setenv CMDSTAN_HOME /Users/rob/Projects/Stan/cmdstanto .bash_profile. I typically prefer not to include the cmdstan version number in the path so no update is needed when CmdStan is updated.Or, alternatively,1.2) define CMDSTAN_HOME in ~/.juliarc.jl, e.g. append lines like CMDSTAN_HOME = \"/Users/rob/Projects/Stan/cmdstan\" # Choose the appropriate directory hereto ~/.juliarc.jl.On Windows this could look like:CMDSTAN_HOME = \"C:\\\\cmdstan\""
+    "text": "To run this version of the Stan.jl package on your local machine, it assumes that the  CmdStan executable is properly installed.In order for Stan.jl to find the CmdStan executable you can1.1) set the environment variable CMDSTAN_HOME to point to the CmdStan directory, e.g. addexport CMDSTAN_HOME=/Users/rob/Projects/Stan/cmdstan\nlaunchctl setenv CMDSTAN_HOME /Users/rob/Projects/Stan/cmdstanto .bash_profile. I typically prefer not to include the cmdstan version number in the path so no update is needed when CmdStan is updated.Currently tested with CmdStan 2.16.0."
 },
 
 {
