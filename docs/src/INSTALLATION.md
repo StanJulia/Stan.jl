@@ -4,7 +4,7 @@
 
 To run this version of the Stan.jl package on your local machine, it assumes that the  [CmdStan] (http://mc-stan.org/interfaces/cmdstan.html) executable is properly installed.
 
-In order for Stan.jl to find the CmdStan executable you can either
+In order for Stan.jl to find the CmdStan executable you can
 
 1.1) set the environment variable CMDSTAN_HOME to point to the CmdStan directory, e.g. add
 
