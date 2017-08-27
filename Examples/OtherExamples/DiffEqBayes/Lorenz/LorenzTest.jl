@@ -1,6 +1,16 @@
-using DStan, Mamba
+using Stan, Mamba
 using OrdinaryDiffEq, ParameterizedFunctions, RecursiveArrayTools, DiffEqBayes
 using Base.Test
+
+#=
+Experimental link to DiffEqBayes examples
+
+Issues:
+
+1. Sampling results vary too uch
+2. Can't bracket cd with do ... end
+
+=#
 
 ProjDir = dirname(@__FILE__)
 cd(ProjDir) #do

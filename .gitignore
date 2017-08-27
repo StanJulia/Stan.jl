@@ -11,3 +11,7 @@ win_tests_*.jl
 .ipynb_checkpoints
 docs/build/
 docs/site/
+Examples/OtherExamples/DiffEqBayes/Lorenz/tmp/*
+Examples/OtherExamples/DiffEqBayes/Lorenz/*.pdf
+Examples/OtherExamples/DiffEqBayes/LotkaVolterra/tmp/*
+Examples/OtherExamples/DiffEqBayes/LotkaVolterra/*.pdf

@@ -3,7 +3,7 @@ using OrdinaryDiffEq, ParameterizedFunctions, RecursiveArrayTools, DiffEqBayes
 using Base.Test
 
 #=
-Experimental 
+Experimental link to DiffEqBayes examples
 =#
 
 ProjDir = dirname(@__FILE__)
