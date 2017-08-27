@@ -12,6 +12,6 @@ win_tests_*.jl
 docs/build/
 docs/site/
 Examples/OtherExamples/DiffEqBayes/Lorenz/tmp/*
-Examples/OtherExamples/DiffEqBayes/Lorenz/*.pdf
+#Examples/OtherExamples/DiffEqBayes/Lorenz/*.pdf
 Examples/OtherExamples/DiffEqBayes/LotkaVolterra/tmp/*
-Examples/OtherExamples/DiffEqBayes/LotkaVolterra/*.pdf
+#Examples/OtherExamples/DiffEqBayes/LotkaVolterra/*.pdf
