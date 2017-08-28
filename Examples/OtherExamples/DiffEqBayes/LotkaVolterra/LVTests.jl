@@ -30,7 +30,6 @@ cd(ProjDir) #do
   bayesian_result = bayesian_inference(prob1,t,data,priors;
     num_samples=500,num_warmup=1500)
   theta1 = bayesian_result.chain_results[:,["theta.1"],:]
-  @test mean(theta1.value[:,:,1]) ≈ 1.5 atol=1e-1
 
   global sim1
   sim1=bayesian_result.chain_results[1:end,
@@ -39,4 +38,5 @@ cd(ProjDir) #do
   p = plot(sim1, [:trace, :mean, :density, :autocor], legend=true);
   draw(p, ncol=4, filename="LotkaVolterraTest1-summaryplot", fmt=:pdf)
 
+  @test mean(theta1.value[:,:,1]) ≈ 1.5 atol=1e-1
 #end

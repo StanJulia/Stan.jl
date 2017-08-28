@@ -7,7 +7,7 @@ Experimental link to DiffEqBayes examples
 
 Issues:
 
-1. Sampling results vary too uch
+1. Sampling results vary too much
 2. Can't bracket cd with do ... end
 
 =#
@@ -39,8 +39,6 @@ cd(ProjDir) #do
   bayesian_result = bayesian_inference(prob,t,data,priors;
     num_samples=1500,num_warmup=1500)
   theta1 = bayesian_result.chain_results[:,["theta.1"],:]
-  @test mean(theta1.value[:,:,1]) ≈ 2.6666 atol=1e-1
-
   global sim2
   sim2=bayesian_result.chain_results[1:end,
     ["sigma.1", "sigma.2", "sigma.3", "theta.1"], :]
@@ -48,4 +46,6 @@ cd(ProjDir) #do
   p = plot(sim2, [:trace, :mean, :density, :autocor], legend=true);
   draw(p, ncol=4, filename="LorentzExample-summaryplot", fmt=:pdf)
   
+  @test mean(theta1.value[:,:,1]) ≈ 2.6666 atol=1e-1
+
 #end
