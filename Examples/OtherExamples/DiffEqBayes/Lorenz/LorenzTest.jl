@@ -7,25 +7,25 @@ Experimental link to DiffEqBayes examples
 
 Issues:
 
-1. Sampling results vary too much
-2. Can't bracket cd with do ... end
+1. Sampling results vary too much. chains often get stuck
+2. @ode_def_nohes needs to be kept outside local scope block
 
 =#
 
-ProjDir = dirname(@__FILE__)
-cd(ProjDir) #do
+g1 = @ode_def_nohes LorenzExample begin
+  dx = σ*(y-x)
+  dy = x*(ρ-z) - y
+  dz = x*y - β*z
+end σ=10.0 ρ=28.0 β=>2.6666
 
-  isdir("tmp") && rm("tmp", recursive=true)
+ProjDir = dirname(@__FILE__)
+cd(ProjDir) do
+
+  #isdir("tmp") && rm("tmp", recursive=true)
   isfile("LorentzExample-summaryplot-1.pdf") &&
     rm("LorentzExample-summaryplot-1.pdf")
   isfile("LorentzExample-summaryplot-2.pdf") &&
     rm("LorentzExample-summaryplot-2.pdf")
-
-  g1 = @ode_def_nohes LorenzExample begin
-    dx = σ*(y-x)
-    dy = x*(ρ-z) - y
-    dz = x*y - β*z
-  end σ=10.0 ρ=28.0 β=>2.6666
 
   r0 = [0.1;0.0;0.0]
   tspan = (0.0,4.0)
@@ -39,8 +39,7 @@ cd(ProjDir) #do
   bayesian_result = bayesian_inference(prob,t,data,priors;
     num_samples=1500,num_warmup=1500)
   theta1 = bayesian_result.chain_results[:,["theta.1"],:]
-  global sim2
-  sim2=bayesian_result.chain_results[1:end,
+  global sim2 = bayesian_result.chain_results[1:end,
     ["sigma.1", "sigma.2", "sigma.3", "theta.1"], :]
   ## Plotting
   p = plot(sim2, [:trace, :mean, :density, :autocor], legend=true);
@@ -48,4 +47,4 @@ cd(ProjDir) #do
   
   @test mean(theta1.value[:,:,1]) ≈ 2.6666 atol=1e-1
 
-#end
+end
