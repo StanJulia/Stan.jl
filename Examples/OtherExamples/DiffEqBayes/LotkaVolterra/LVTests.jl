@@ -20,7 +20,7 @@ end a=>1.5 b=1.0 c=3.0 d=1.0
 ProjDir = dirname(@__FILE__)
 cd(ProjDir) do
 
-  isdir("tmp") && rm("tmp", recursive=true)
+  #isdir("tmp") && rm("tmp", recursive=true)
   isfile("LotkaVolterraTest1-summaryplot-1.pdf") &&
     rm("LotkaVolterraTest1-summaryplot-1.pdf")
     

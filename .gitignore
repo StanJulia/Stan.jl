@@ -3,8 +3,8 @@
 *.csv
 *.o
 *.log
-*.pdf
-*.svg
+#*.pdf
+#*.svg
 bernoulli.bugs
 bernoulli.data.R
 win_tests_*.jl
