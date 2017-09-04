@@ -36,7 +36,8 @@ function generate_priors(f,priors)
 end
 
 function bayesian_inference(prob::DEProblem,t,data,priors = nothing;
-    alg=:rk45,num_samples=1000, num_warmup=1000, kwargs...)
+    alg=:rk45,num_samples=1000, num_warmup=1000, 
+    reltol=1e-3, abstol=1e-6, maxiter=100000, kwargs...)
     length_of_y = string(length(prob.u0)
     )
   f = prob.f
@@ -91,7 +92,7 @@ function bayesian_inference(prob::DEProblem,t,data,priors = nothing;
    name="parameter_estimation_model", model=parameter_estimation_model);
   const parameter_estimation_data = Dict("u0"=>prob.u0, "T" => size(t)[1],
    "u" => data', "t0" => prob.tspan[1], "ts" => t,
-   "reltol" => 1e-3, "abstol" => 1e-6, "maxiter" => 100000)
+   "reltol" => reltol, "abstol" => abstol, "maxiter" => maxiter)
   display(parameter_estimation_data)
   return_code, chain_results = stan(stanmodel, [parameter_estimation_data];
     CmdStanDir=CMDSTAN_HOME)
