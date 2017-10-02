@@ -51,6 +51,7 @@ cd(ProjDir) do
     nchains=Nchains, num_samples=1000, thin=1, name="TestModel", model=TestModel
   )
 
-  @time rc, sim = stan(stanmodel, observeddata, ProjDir, init=initpars, diagnostics=false)
+  @time rc, sim = stan(stanmodel, observeddata, ProjDir, init=initpars,
+    diagnostics=false)
   rc == 0 && describe(sim)
 end
