@@ -21,11 +21,16 @@ rc, sim = stan(
 ### Required arguments
 ```julia
 * `model::Stanmodel`              : See ?Method
+```
+
+### Optional positional arguments
+
+```julia
 * `data=Void`                     : Observed input data dictionary 
 * `ProjDir=pwd()`                 : Project working directory
 ```
 
-### Optional arguments
+### Keyword arguments
 ```julia
 * `init=Void`                     : Initial parameter value dictionary
 * `summary=true`                  : Use CmdStan's stansummary to display results
@@ -37,6 +42,21 @@ rc, sim = stan(
 ```julia
 * `rc::Int`                       : Return code from stan(), rc == 0 if all is well
 * `sim`                           : Chain results
+```
+
+### Examples
+
+```julia
+# no data, use default ProjDir (pwd)
+stan(mymodel)
+# default ProjDir (pwd)
+stan(mymodel, mydata)
+# specify ProjDir
+stan(mymodel, mydata, "~/myproject/")
+# keyword arguments
+stan(mymodel, mydata, "~/myproject/", diagnostics=true, summary=false)
+# use default ProjDir (pwd), with keyword arguments
+stan(mymodel, mydata, diagnostics=true, summary=false)
 ```
 
 ### Related help
