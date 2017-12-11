@@ -1,10 +1,10 @@
-abstract Metrics
+abstract type Metrics end
 mutable struct Unit_e <: Metrics
 end
 mutable struct Diag_e <: Metrics
 end
 
-abstract SamplingAlgorithm
+abstract type SamplingAlgorithm end
 mutable struct Hmc <: SamplingAlgorithm
   # ...
   metric::Metrics

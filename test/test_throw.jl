@@ -1,4 +1,4 @@
-immutable Stop <: Exception end
+struct Stop <: Exception end
 
 function run_task(f)
    try f()
