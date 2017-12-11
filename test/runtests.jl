@@ -1,5 +1,5 @@
 # Top level test script for Stan.jl
-using Stan, Base.Test
+using Stan, Test
 
 println("Running tests for Stan-j0.5/6-v2.0.0:")
 

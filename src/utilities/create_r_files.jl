@@ -1,6 +1,6 @@
 """
 
-# check_dct_type 
+# check_dct_mutable struct 
 
 Check if dct == Dict{String, Any}[] and has length > 0. 
 
@@ -43,38 +43,38 @@ update_R_file{T<:Any}(file, dct)
 ```
 
 """
-function update_R_file{T<:Any}(file::String, dct::Dict{String, T})
-	isfile(file) && rm(file)
-	strmout = open(file, "w")
-	
-	str = ""
-	for entry in dct
-		str = "\""entry[1]"\""" <- "
-		val = entry[2]
-		if length(val)==1 && length(size(val))==0
-			# Scalar
-			str = str*"$(val)\n"
-    #elseif length(val)==1 && length(size(val))==1
-			# Single element vector
-			#str = str*"$(val[1])\n"
-		elseif length(val)>=1 && length(size(val))==1
-			# Vector
-			str = str*"structure(c("
-			write(strmout, str)
-			str = ""
-			writecsv(strmout, val');
-			str = str*"), .Dim=c($(length(val))))\n"
-		elseif length(val)>1 && length(size(val))>1
-			# Array
-			str = str*"structure(c("
-			write(strmout, str)
-			str = ""
-			writecsv(strmout, val[:]');
-			dimstr = "c"*string(size(val))
-			str = str*"), .Dim=$(dimstr))\n"
-		end
-		write(strmout, str)
-	end
-	close(strmout)
+function update_R_file(file::String, dct::Dict{String, T})  where T <: Any
+  isfile(file) && rm(file)
+  strmout = open(file, "w")
+
+  str = ""
+  for entry in dct
+  	str = "\"" * entry[1] * "\" <- "
+  	val = entry[2]
+  	if length(val)==1 && length(size(val))==0
+  		# Scalar
+  		str = str*"$(val)\n"
+       #elseif length(val)==1 && length(size(val))==1
+  		# Single element vector
+  		#str = str*"$(val[1])\n"
+  	elseif length(val)>=1 && length(size(val))==1
+  		# Vector
+  		str = str*"structure(c("
+  		write(strmout, str)
+  		str = ""
+  		writedlm(strmout, val', ',')
+  		str = str*"), .Dim=c($(length(val))))\n"
+  	elseif length(val)>1 && length(size(val))>1
+  		# Array
+  		str = str*"structure(c("
+  		write(strmout, str)
+  		str = ""
+  		writedlm(strmout, val[:]', ',')
+  		dimstr = "c"*string(size(val))
+  		str = str*"), .Dim=$(dimstr))\n"
+  	end
+  	write(strmout, str)
+  end
+  close(strmout)
 end
 

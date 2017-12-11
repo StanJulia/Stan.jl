@@ -1,6 +1,6 @@
 ######### Stan program example  ###########
 
-using Stan, Base.Test
+using Stan, Test
 
 ProjDir = dirname(@__FILE__)
 cd(ProjDir) do

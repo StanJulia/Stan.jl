@@ -1,11 +1,11 @@
 ######### Stan batch program example  ###########
 
-using Stan, Compat, Base.Test
+using Stan, Compat, Test
 
 ProjDir = dirname(@__FILE__)
 cd(ProjDir) do
 
-  const dyes ="
+  dyes ="
   data {
     int BATCHES; 
     int SAMPLES; 
@@ -46,7 +46,7 @@ cd(ProjDir) do
   }
   "
 
-  const dyesdata = [
+  dyesdata = [
     Dict("BATCHES" => 6,
       "SAMPLES" => 5,
       "y" => reshape([

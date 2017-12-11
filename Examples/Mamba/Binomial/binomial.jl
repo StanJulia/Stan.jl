@@ -7,7 +7,7 @@ using Mamba, Stan
 ProjDir = dirname(@__FILE__)
 cd(ProjDir) do
 
-  const binomialstanmodel = "
+  binomialstanmodel = "
   // Inferring a Rate
   data {
     int<lower=1> n;
@@ -37,7 +37,7 @@ cd(ProjDir) do
   global stanmodel, rc, sim1
   stanmodel = Stanmodel(name="binomial", model=binomialstanmodel)
 
-  const binomialdata = [
+  binomialdata = [
     Dict("n" => 10, "k" => 5)
   ]
 

@@ -1,11 +1,11 @@
 ######### Stan batch program example  ###########
 
-using Compat, Stan, Base.Test
+using Compat, Stan, Test
 
 ProjDir = dirname(@__FILE__)
 cd(ProjDir) do
 
-  const eightschools ="
+  eightschools ="
   data {
     int<lower=0> J; // number of schools 
     real y[J]; // estimated treatment effects
@@ -27,7 +27,7 @@ cd(ProjDir) do
   }
   "
 
-  const schools8data = [
+  schools8data = [
     Dict("J" => 8,
       "y" => [28,  8, -3,  7, -1,  1, 18, 12],
       "sigma" => [15, 10, 16, 11,  9, 11, 10, 18],

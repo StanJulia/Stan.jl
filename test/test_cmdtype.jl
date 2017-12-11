@@ -1,5 +1,5 @@
 using Stan
-using Base.Test
+using Test
 
 ProjDir = dirname(@__FILE__)
 cd(ProjDir) do

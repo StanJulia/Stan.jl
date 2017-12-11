@@ -1,6 +1,6 @@
 module Stan
 
-using Compat, Documenter
+using Compat, Documenter, DelimitedFiles
 
 """
 The directory which contains the CmdStan executables such as `bin/stanc` and 
@@ -38,7 +38,7 @@ include("types/diagnosetype.jl")
 include("types/variationaltype.jl")
 
 export
-# from this file
+# From this file
 set_cmdstan_home!,
 CMDSTAN_HOME,
 # From stanmodel.jl
@@ -52,6 +52,9 @@ Optimize,
 # From diagnosetype.jl
 Diagnose,
 # From variationaltype.jl
-Variational
+Variational,
+# From DelimitedFiles
+writedlm,
+readdlm
 
 end # module

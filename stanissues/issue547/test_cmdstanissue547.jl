@@ -5,7 +5,7 @@ using Mamba, Stan
 ProjDir = dirname(@__FILE__)
 cd(ProjDir) do
 
-  const simplecode = "
+  simplecode = "
   parameters {
     real y;
   }

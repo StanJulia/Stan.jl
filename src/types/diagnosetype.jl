@@ -5,7 +5,7 @@
 Currently limited to Gradient().
 
 """ 
-@compat abstract type Diagnostics end
+abstract type Diagnostics end
 
 """
 
@@ -28,7 +28,7 @@ Gradient(;epsilon=1e-6, error=1e-6)
 ?Diagnose                      : Diagnostic method
 ```
 """
-type Gradient <: Diagnostics
+mutable struct Gradient <: Diagnostics
   epsilon::Float64
   error::Float64
 end
@@ -52,7 +52,7 @@ Diagnose(;d=Gradient())
 ?Diagnostics                  : Diagnostic methods
 ?Gradient                     : Currently sole diagnostic method
 """
-type Diagnose <: Method
+mutable struct Diagnose <: Method
   diagnostic::Diagnostics
 end
 Diagnose(;d=Gradient()) = Diagnose(d)

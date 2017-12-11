@@ -1,11 +1,11 @@
 ######### Stan program example  ###########
 
-using Compat, Stan, Base.Test
+using Compat, Stan, Test
 
 ProjDir = dirname(@__FILE__)
 cd(ProjDir) do
 
-  const binorm = "
+  binorm = "
   transformed data {
       matrix[2,2] Sigma;
       vector[2] mu;

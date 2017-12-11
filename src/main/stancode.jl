@@ -21,11 +21,16 @@ rc, sim = stan(
 ### Required arguments
 ```julia
 * `model::Stanmodel`              : See ?Method
+```
+
+### Optional positional arguments
+
+```julia
 * `data=Void`                     : Observed input data dictionary 
 * `ProjDir=pwd()`                 : Project working directory
 ```
 
-### Optional arguments
+### Keyword arguments
 ```julia
 * `init=Void`                     : Initial parameter value dictionary
 * `summary=true`                  : Use CmdStan's stansummary to display results
@@ -37,6 +42,21 @@ rc, sim = stan(
 ```julia
 * `rc::Int`                       : Return code from stan(), rc == 0 if all is well
 * `sim`                           : Chain results
+```
+
+### Examples
+
+```julia
+# no data, use default ProjDir (pwd)
+stan(mymodel)
+# default ProjDir (pwd)
+stan(mymodel, mydata)
+# specify ProjDir
+stan(mymodel, mydata, "~/myproject/")
+# keyword arguments
+stan(mymodel, mydata, "~/myproject/", diagnostics=true, summary=false)
+# use default ProjDir (pwd), with keyword arguments
+stan(mymodel, mydata, diagnostics=true, summary=false)
 ```
 
 ### Related help
@@ -74,7 +94,7 @@ function stan(
   cd(CmdStanDir)
   local tmpmodelname::String
   tmpmodelname = Pkg.dir(model.tmpdir, model.name)
-  if @static is_windows() ? true : false
+  if @static Sys.iswindows() ? true : false
     tmpmodelname = replace(tmpmodelname*".exe", "\\", "/")
   end
   try
@@ -227,7 +247,8 @@ function stan_summary(file::String; CmdStanDir=CMDSTAN_HOME)
   try
     pstring = Pkg.dir("$(CmdStanDir)", "bin", "stansummary")
     cmd = `$(pstring) $(file)`
-    print(open(readstring, cmd, "r"))
+    resfile = open(cmd, "r")
+    print(read(resfile, String))
   catch e
     println(e)
   end
@@ -268,7 +289,8 @@ function stan_summary(filecmd::Cmd; CmdStanDir=CMDSTAN_HOME)
     println()
     println("Calling $(pstring) to infer across chains.")
     println()
-    print(open(readstring, cmd, "r"))
+    resfile = open(cmd, "r")
+    print(read(resfile, String))
   catch e
     println()
     println("Stan.jl caught above exception in Stan's 'stansummary' program.")

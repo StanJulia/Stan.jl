@@ -9,7 +9,7 @@
 * Newton::OptimizeAlgorithm  : Euclidean manifold with unit metric
 ```
 """ 
-@compat abstract type OptimizeAlgorithm end
+abstract type OptimizeAlgorithm end
 
 """
 
@@ -38,7 +38,7 @@ Lbfgs(;init_alpha=0.001, tol_obj=1e-8, tol_grad=1e-8, tol_param=1e-8, history_si
 ?Optimize                      : Optimize arguments
 ```
 """
-type Lbfgs <: OptimizeAlgorithm
+mutable struct Lbfgs <: OptimizeAlgorithm
   init_alpha::Float64
   tol_obj::Float64
   tol_rel_obj::Float64
@@ -79,7 +79,7 @@ Bfgs(;init_alpha=0.001, tol_obj=1e-8, tol_rel_obj=1e4,
 ?Optimize                      : Optimize arguments
 ```
 """
-type Bfgs <: OptimizeAlgorithm
+mutable struct Bfgs <: OptimizeAlgorithm
   init_alpha::Float64
   tol_obj::Float64
   tol_rel_obj::Float64
@@ -108,7 +108,7 @@ Newton()
 ?Optimize                      : Optimize arguments
 ```
 """
-type Newton <: OptimizeAlgorithm
+mutable struct Newton <: OptimizeAlgorithm
 end
 
 
@@ -139,7 +139,7 @@ Optimize(;
 ?OptimizeAlgorithm              : Available algorithms
 ```
 """
-type Optimize <: Method
+mutable struct Optimize <: Method
   method::OptimizeAlgorithm
   iter::Int64
   save_iterations::Bool
