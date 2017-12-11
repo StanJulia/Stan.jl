@@ -61,7 +61,7 @@ var documenterSearchIndex = {"docs": [
     "page": "Installation",
     "title": "Minimal requirement",
     "category": "section",
-    "text": "To run this version of the Stan.jl package on your local machine, it assumes that the  CmdStan executable is properly installed.In order for Stan.jl to find the CmdStan executable you can either1.1) set the environment variable CMDSTAN_HOME to point to the CmdStan directory, e.g. addexport CMDSTAN_HOME=/Users/rob/Projects/Stan/cmdstan\nlaunchctl setenv CMDSTAN_HOME /Users/rob/Projects/Stan/cmdstanto .bash_profile. I typically prefer not to include the cmdstan version number in the path so no update is needed when CmdStan is updated.Or, alternatively,1.2) define CMDSTAN_HOME in ~/.juliarc.jl, e.g. append lines like CMDSTAN_HOME = \"/Users/rob/Projects/Stan/cmdstan\" # Choose the appropriate directory hereto ~/.juliarc.jl.On Windows this could look like:CMDSTAN_HOME = \"C:\\\\cmdstan\""
+    "text": "To run this version of the Stan.jl package on your local machine, it assumes that the  CmdStan executable is properly installed.In order for Stan.jl to find the CmdStan executable you can1.1) set the environment variable CMDSTAN_HOME to point to the CmdStan directory, e.g. addexport CMDSTAN_HOME=/Users/rob/Projects/Stan/cmdstan\nlaunchctl setenv CMDSTAN_HOME /Users/rob/Projects/Stan/cmdstanto .bash_profile. I typically prefer not to include the cmdstan version number in the path so no update is needed when CmdStan is updated.Currently tested with CmdStan 2.16.0."
 },
 
 {
@@ -157,7 +157,15 @@ var documenterSearchIndex = {"docs": [
     "page": "Versions",
     "title": "Testing",
     "category": "section",
-    "text": "This version of the package has primarily been tested on Mac OSX 10.12, Julia 0.5 and 0.6, CmdStan 2.15.0, Mamba 0.10.0 and Gadfly 0.6.1.Note that at this point in time Mamba and Gadfly are not yet available for Julia 0.6-RC1, thus only the NoMamba examples will work on Julia 0.6-RC1. Once Mamba and Gadfly are available for Julia 0.6 I will bump the Stan.jl version.A limited amount of testing has taken place on other platforms by other users of the package."
+    "text": "This version of the package has primarily been tested on Mac OSX 10.12&13, Julia 0.6 and 0.7, CmdStan 2.16.0, Mamba 0.11.1 and Gadfly 0.6.3.A limited amount of testing has taken place on other platforms by other users of the package."
+},
+
+{
+    "location": "VERSIONS.html#Version-2.0.1-(not-yet-on-METADATA,-in-master)-1",
+    "page": "Versions",
+    "title": "Version 2.0.1 (not yet on METADATA, in master)",
+    "category": "section",
+    "text": "Mainly package updates"
 },
 
 {
@@ -285,7 +293,7 @@ var documenterSearchIndex = {"docs": [
     "page": "Stan.jl documentation",
     "title": "Stan.stan",
     "category": "Function",
-    "text": "stan\n\nExecute a Stan model. \n\nMethod\n\nrc, sim = stan(\n  model::Stanmodel, \n  data=Void, \n  ProjDir=pwd();\n  init=Void,\n  summary=true, \n  diagnostics=false, \n  CmdStanDir=CMDSTAN_HOME\n)\n\nRequired arguments\n\n* `model::Stanmodel`              : See ?Method\n* `data=Void`                     : Observed input data dictionary \n* `ProjDir=pwd()`                 : Project working directory\n\nOptional arguments\n\n* `init=Void`                     : Initial parameter value dictionary\n* `summary=true`                  : Use CmdStan's stansummary to display results\n* `diagnostics=false`             : Generate diagnostics file\n* `CmdStanDir=CMDSTAN_HOME`       : Location of CmdStan directory\n\nReturn values\n\n* `rc::Int`                       : Return code from stan(), rc == 0 if all is well\n* `sim`                           : Chain results\n\nRelated help\n\n?Stanmodel                      : Create a StanModel\n\n\n\n"
+    "text": "stan\n\nExecute a Stan model. \n\nMethod\n\nrc, sim = stan(\n  model::Stanmodel, \n  data=Void, \n  ProjDir=pwd();\n  init=Void,\n  summary=true, \n  diagnostics=false, \n  CmdStanDir=CMDSTAN_HOME\n)\n\nRequired arguments\n\n* `model::Stanmodel`              : See ?Method\n\nOptional positional arguments\n\n* `data=Void`                     : Observed input data dictionary \n* `ProjDir=pwd()`                 : Project working directory\n\nKeyword arguments\n\n* `init=Void`                     : Initial parameter value dictionary\n* `summary=true`                  : Use CmdStan's stansummary to display results\n* `diagnostics=false`             : Generate diagnostics file\n* `CmdStanDir=CMDSTAN_HOME`       : Location of CmdStan directory\n\nReturn values\n\n* `rc::Int`                       : Return code from stan(), rc == 0 if all is well\n* `sim`                           : Chain results\n\nExamples\n\n# no data, use default ProjDir (pwd)\nstan(mymodel)\n# default ProjDir (pwd)\nstan(mymodel, mydata)\n# specify ProjDir\nstan(mymodel, mydata, \"~/myproject/\")\n# keyword arguments\nstan(mymodel, mydata, \"~/myproject/\", diagnostics=true, summary=false)\n# use default ProjDir (pwd), with keyword arguments\nstan(mymodel, mydata, diagnostics=true, summary=false)\n\nRelated help\n\n?Stanmodel                      : Create a StanModel\n\n\n\n"
 },
 
 {
