@@ -12,11 +12,11 @@ Documentation:
 
 ## Purpose
 
-A package to use Stan (as an external program) from Julia.
+A package to use Stan (as an external program) from Julia. 
 
 Documentation can be found [here](http://goedman.github.io/Stan.jl/latest/INTRO.html)
 
-CmdStan needs to be installed separatedly. Please see [CmdStan installation](http://goedman.github.io/Stan.jl/latest/INSTALLATION.html).
+CmdStan needs to be installed separatedly. Please see [CmdStan installation](http://goedman.github.io/Stan.jl/latest/INSTALLATION.html). 
 
 For more info on Stan, please go to <http://mc-stan.org>.
 

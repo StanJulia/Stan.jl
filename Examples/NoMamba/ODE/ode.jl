@@ -1,5 +1,4 @@
 ######### Stan ODE example  ###########
-
 #
 # This is very experimental.
 #
@@ -101,33 +100,7 @@ cd(ProjDir) do
   stanmodel |> display
   println()
 
-  rc, sim1 = stan(stanmodel, [odedict], ProjDir, diagnostics=false, CmdStanDir=CMDSTAN_HOME);
+  rc, sim1 = stan(stanmodel, [odedict], ProjDir, diagnostics=false,
+    CmdStanDir=CMDSTAN_HOME);
 
-  if rc == 0
-    ## Subset Sampler Output to variables suitable for describe().
-    monitor = ["theta.1", "lp__", "accept_stat__"]
-    sim = sim1[1:size(sim1, 1), monitor, 1:size(sim1, 3)]
-
-    describe(sim)
-    println()
-
-    if isdefined(Main, :Mamba)
-      p = plot(sim, [:trace, :mean, :density, :autocor], legend=true);
-      draw(p, ncol=4, filename="$(stanmodel.name)-thetaplot", fmt=:svg)
-      draw(p, ncol=4, filename="$(stanmodel.name)-thetaplot", fmt=:pdf)
-    end
-
-    ## Subset Sampler Output to variables suitable for describe().
-    monitor = ["y0.1", "y0.2", "sigma.1", "sigma.2"]
-    sim = sim1[:, monitor, :]
-    describe(sim)
-    println()
-
-    if isdefined(Main, :Mamba)
-      p = plot(sim, [:trace, :mean, :density, :autocor], legend=true);
-      draw(p, nrow=4, ncol=4, filename="$(stanmodel.name)-sigmaplot", fmt=:svg)
-      draw(p, nrow=4, ncol=4, filename="$(stanmodel.name)-sigmaplot", fmt=:pdf)
-    end
-    
-  end # rc == 0
 end # cd

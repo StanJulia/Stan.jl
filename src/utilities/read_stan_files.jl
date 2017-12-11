@@ -225,7 +225,7 @@ function read_stanfit_samples(m::Stanmodel, diagnostics=false, warmup_samples=fa
     end
   else  
     if m.useMamba
-      sr = getindex(a3d, [1:m.thin:size(a3d, 1);], 
+      sr = getindex(a3d, [1:size(a3d, 1);], 
         [1:size(a3d, 2);], [1:size(a3d, 3);])
       Chains(sr, start=1, thin=m.mambaThinning, names=idx[indvec],
         chains=[i for i in 1:m.nchains])

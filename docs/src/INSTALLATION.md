@@ -4,7 +4,7 @@
 
 To run this version of the Stan.jl package on your local machine, it assumes that the  [CmdStan] (http://mc-stan.org/interfaces/cmdstan.html) executable is properly installed.
 
-In order for Stan.jl to find the CmdStan executable you can either
+In order for Stan.jl to find the CmdStan executable you can
 
 1.1) set the environment variable CMDSTAN_HOME to point to the CmdStan directory, e.g. add
 
@@ -15,18 +15,7 @@ launchctl setenv CMDSTAN_HOME /Users/rob/Projects/Stan/cmdstan
 
 to .bash_profile. I typically prefer not to include the cmdstan version number in the path so no update is needed when CmdStan is updated.
 
-Or, alternatively,
-
-1.2) define CMDSTAN_HOME in ~/.juliarc.jl, e.g. append lines like 
-```
-CMDSTAN_HOME = "/Users/rob/Projects/Stan/cmdstan" # Choose the appropriate directory here
-```
-to ~/.juliarc.jl.
-
-On Windows this could look like:
-```
-CMDSTAN_HOME = "C:\\cmdstan"
-```
+Currently tested with CmdStan 2.16.0.
 
 ## Optional requirements
 

@@ -14,11 +14,13 @@ Updates for new releases of Julia and CmdStan bump the appropriate level.
 
 ## Testing
 
-This version of the package has primarily been tested on Mac OSX 10.12, Julia 0.5 and 0.6, CmdStan 2.15.0, Mamba 0.10.0 and Gadfly 0.6.1.
-
-Note that at this point in time Mamba and Gadfly are not yet available for Julia 0.6-RC1, thus only the NoMamba examples will work on Julia 0.6-RC1. Once Mamba and Gadfly are available for Julia 0.6 I will bump the Stan.jl version.
+This version of the package has primarily been tested on Mac OSX 10.12&13, Julia 0.6 and 0.7, CmdStan 2.16.0, Mamba 0.11.1 and Gadfly 0.6.3.
 
 A limited amount of testing has taken place on other platforms by other users of the package.
+
+## Version 2.0.1 (not yet on METADATA, in master)
+
+1. Mainly package updates
 
 ## Version 2.0.0
 
