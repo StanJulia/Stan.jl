@@ -46,7 +46,7 @@ function read_stanfit(model::Stanmodel)
         instream = open("$(model.name)_$(res_type)_$(i).csv")
         if res_type == "diagnose"
           tdict = Dict()
-          str = readstring(instream)
+          str = read(instream, String)
           sstr = split(str)
           tdict = merge(tdict, Dict(:stan_major_version => [parse(Int, sstr[4])]))
           tdict = merge(tdict, Dict(:stan_minor_version => [parse(Int, sstr[8])]))
@@ -106,7 +106,7 @@ function read_stanfit(model::Stanmodel)
               break
             else
               #println(split(strip(line)))
-              flds = float(split(strip(line), ","))
+              flds = parse.(Float64, (split(strip(line), ",")))
               for k in 1:length(index)
                 if j ==1
                   tdict = merge(tdict, Dict(index[k] => [flds[k]]))
@@ -194,7 +194,7 @@ function read_stanfit_samples(m::Stanmodel, diagnostics=false, warmup_samples=fa
           close(instream)
           break
         else
-          flds = float(split(strip(line), ","))
+          flds = parse.(Float64, (split(strip(line), ",")))
           flds = reshape(flds[indvec], 1, length(indvec))
           a3d[j,:,i] = flds
         end
@@ -263,7 +263,7 @@ function read_stanfit_variational_samples(m::Stanmodel)
           close(instream)
           break
         else
-          flds = float(split(strip(line), ","))
+          flds = parse.(Float64, (split(strip(line), ",")))
           flds = reshape(flds[indvec], 1, length(indvec))
           a3d[j,:,i] = flds
         end

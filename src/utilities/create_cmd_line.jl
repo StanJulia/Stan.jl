@@ -23,7 +23,7 @@ function cmdline(m)
   cmd = ``
   if isa(m, Stanmodel)
     # Handle the model name field for unix and windows
-    cmd = @static is_unix() ? `./$(getfield(m, :name))` : `cmd /c $(getfield(m, :name)).exe`
+    cmd = @static Sys.isunix() ? `./$(getfield(m, :name))` : `cmd /c $(getfield(m, :name)).exe`
 
     # Method (sample, optimize, variational and diagnose) specific portion of the model
     cmd = `$cmd $(cmdline(getfield(m, :method)))`
@@ -63,7 +63,7 @@ function cmdline(m)
       cmd = `$cmd $(split(lowercase(string(typeof(m))), '.')[end])`
     end
     #println(cmd)
-    for name in fieldnames(m)
+    for name in fieldnames(typeof(m))
       #println("$(name) = $(getfield(m, name)) ($(typeof(getfield(m, name))))")
       if  isa(getfield(m, name), String) || isa(getfield(m, name), Tuple)
         cmd = `$cmd $(name)=$(getfield(m, name))`

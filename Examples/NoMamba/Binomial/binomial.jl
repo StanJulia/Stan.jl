@@ -2,12 +2,12 @@
 ## Note: Adapted from the Rate_4 example in Bayesian Cognitive Modeling
 ##  https://github.com/stan-dev/example-models/tree/master/Bayesian_Cognitive_Modeling
 
-using Compat, Stan, Base.Test
+using Compat, Stan, Test
 
 ProjDir = dirname(@__FILE__)
 cd(ProjDir) do
 
-  const binomialstanmodel = "
+  binomialstanmodel = "
   // Inferring a Rate
   data {
     int<lower=1> n;
@@ -37,7 +37,7 @@ cd(ProjDir) do
   global stanmodel, rc, sim
   stanmodel = Stanmodel(name="binomial", model=binomialstanmodel, useMamba=false)
 
-  const binomialdata = [
+  binomialdata = [
     Dict("n" => 10, "k" => 5)
   ]
 

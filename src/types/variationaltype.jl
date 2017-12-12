@@ -1,4 +1,4 @@
-type Variational <: Method
+mutable struct Variational <: Method
   algorithm::Symbol
   grad_samples::Int64
   elbo_samples::Int64

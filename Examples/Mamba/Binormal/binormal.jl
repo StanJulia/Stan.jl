@@ -5,7 +5,7 @@ using Stan, Mamba
 ProjDir = dirname(@__FILE__)
 cd(ProjDir) do
 
-  const binorm = "
+  binorm = "
   transformed data {
       matrix[2,2] Sigma;
       vector[2] mu;

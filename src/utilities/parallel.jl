@@ -50,8 +50,8 @@ or
 """
 function par(cmds::Array{Base.AbstractCmd,1})
   if length(cmds) > 2
-    return(par([cmds[1:(length(cmds)-2)],
-      Base.AndCmds(cmds[length(cmds)-1], cmds[length(cmds)]);]))
+    return(par([cmds[1:(length(cmds)-2)];
+      Base.AndCmds(cmds[length(cmds)-1], cmds[length(cmds)])]))
   elseif length(cmds) == 2
     return(Base.AndCmds(cmds[1], cmds[2]))
   else

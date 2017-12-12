@@ -11,7 +11,7 @@ using Mamba, Stan
 
 Next define the variable 'bernoullistanmodel' to hold the Stan model definition:
 ```
-const bernoullistanmodel = "
+bernoullistanmodel = "
 data { 
   int<lower=0> N; 
   int<lower=0,upper=1> y[N];
@@ -36,7 +36,7 @@ Above Stanmodel() call creates a default model for sampling. Other arguments to 
 
 The observed input data is defined below.
 ```
-const bernoullidata = Dict("N" => 10, "y" => [0, 1, 0, 1, 0, 0, 0, 0, 0, 1])
+bernoullidata = Dict("N" => 10, "y" => [0, 1, 0, 1, 0, 0, 0, 0, 0, 1])
 ```
 
 Run the simulation by calling stan(), passing in the data and the intended working directory. 

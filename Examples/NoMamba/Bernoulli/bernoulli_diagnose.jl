@@ -1,6 +1,6 @@
 ######## Stan diagnose example  ###########
 
-using Compat, Stan, Base.Test
+using Compat, Stan, Test
 
 ProjDir = dirname(@__FILE__)
 cd(ProjDir) do
