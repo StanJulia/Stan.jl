@@ -18,7 +18,11 @@ This version of the package has primarily been tested on Mac OSX 10.12&13, Julia
 
 A limited amount of testing has taken place on other platforms by other users of the package.
 
-## Version 2.0.1 (not yet on METADATA, in master)
+## Version 3.0.0 
+
+1. Julia 0.7- compatible
+
+## Version 2.0.1
 
 1. Mainly package updates
 
