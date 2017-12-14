@@ -68,7 +68,7 @@ function read_stanfit(model::Stanmodel)
             skipchars(instream, isspace, linecomment='#')
             while true
               i += 1 
-              line = normalize_string(readline(instream), newline2lf=true)
+              line = Unicode.normalize(readline(instream), newline2lf=true)
               if i == 1
                 tdict = merge(tdict, Dict(:lp => [float(split(line[1:(length(line)-1)], "=")[2])]))
               elseif i == 3
@@ -88,7 +88,7 @@ function read_stanfit(model::Stanmodel)
           #println("Type of result file is $(res_type)")
           tdict = Dict()
           skipchars(instream, isspace, linecomment='#')
-          line = normalize_string(readline(instream), newline2lf=true)
+          line = Unicode.normalize(readline(instream), newline2lf=true)
           idx = split(strip(line), ",")
           index = [idx[k] for k in 1:length(idx)]
           #res_type == "optimize" && println(index)
@@ -97,7 +97,7 @@ function read_stanfit(model::Stanmodel)
           while true
             j += 1
             #skipchars(instream, isspace, linecomment='#')
-            line = normalize_string(readline(instream), newline2lf=true)
+            line = Unicode.normalize(readline(instream), newline2lf=true)
             flds = Float64[]
             if eof(instream) && length(line) < 2
               #println("EOF detected")
@@ -169,7 +169,7 @@ function read_stanfit_samples(m::Stanmodel, diagnostics=false, warmup_samples=fa
       noofsamples = 0
       instream = open("$(m.name)_$(ftype)_$(i).csv")
       skipchars(instream, isspace, linecomment='#')
-      line = normalize_string(readline(instream), newline2lf=true)
+      line = Unicode.normalize(readline(instream), newline2lf=true)
       idx = split(strip(line), ",")
       index = [idx[k] for k in 1:length(idx)]
       if length(m.monitors) == 0
@@ -189,7 +189,7 @@ function read_stanfit_samples(m::Stanmodel, diagnostics=false, warmup_samples=fa
       skipchars(instream, isspace, linecomment='#')
       for j in 1:noofsamples
         skipchars(instream, isspace, linecomment='#')
-        line = normalize_string(readline(instream), newline2lf=true)
+        line = Unicode.normalize(readline(instream), newline2lf=true)
         if eof(instream) && length(line) < 2
           close(instream)
           break
@@ -244,7 +244,7 @@ function read_stanfit_variational_samples(m::Stanmodel)
     if isfile("$(m.name)_$(ftype)_$(i).csv")
       instream = open("$(m.name)_$(ftype)_$(i).csv")
       skipchars(instream, isspace, linecomment='#')
-      line = normalize_string(readline(instream), newline2lf=true)
+      line = Unicode.normalize(readline(instream), newline2lf=true)
       idx = split(strip(line), ",")
       index = [idx[k] for k in 1:length(idx)]
       if length(m.monitors) == 0
@@ -258,7 +258,7 @@ function read_stanfit_variational_samples(m::Stanmodel)
       skipchars(instream, isspace, linecomment='#')
       for j in 1:m.method.output_samples
         skipchars(instream, isspace, linecomment='#')
-        line = normalize_string(readline(instream), newline2lf=true)
+        line = Unicode.normalize(readline(instream), newline2lf=true)
         if eof(instream) && length(line) < 2
           close(instream)
           break
