@@ -1,10 +1,14 @@
 using OrdinaryDiffEq, ParameterizedFunctions, RecursiveArrayTools
-using DiffEqBayes
+#using DiffEqBayes
 using Stan, Mamba
 using Base.Test
 
-#=
+# This example uses the local version of stan_inference for testing purposes
 
+include(joinpath(Pkg.dir("Stan"), "Examples", "OtherExamples", "DiffEqBayes",
+  "stan_inference.jl"))
+  
+  #=
 Experimental link to DiffEqBayes examples
 
 Possible issues to investigate:
