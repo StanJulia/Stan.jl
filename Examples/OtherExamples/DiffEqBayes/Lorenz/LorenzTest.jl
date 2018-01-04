@@ -1,12 +1,12 @@
 using OrdinaryDiffEq, ParameterizedFunctions, RecursiveArrayTools
-#using DiffEqBayes
+using DiffEqBayes
 using Stan, Mamba
 using Base.Test
 
+#=
 include(joinpath(Pkg.dir("Stan"), "Examples", "OtherExamples", "DiffEqBayes",
   "bayesian_inference.jl"))
 
-#=
 Experimental link to DiffEqBayes examples
 
 Possible issues to investigate:
@@ -40,7 +40,7 @@ cd(ProjDir) do
   data = convert(Array,randomized)
   priors = [Normal(2.6666,1)]
 
-  bayesian_result = bayesian_inference(prob,t,data,priors;
+  bayesian_result = stam_inference(prob,t,data,priors;
     num_samples=1500,num_warmup=1500)
   theta1 = bayesian_result.chain_results[:,["theta.1"],:]
   global sim2 = bayesian_result.chain_results[1:end,
