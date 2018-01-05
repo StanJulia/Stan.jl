@@ -1,10 +1,7 @@
 using OrdinaryDiffEq, ParameterizedFunctions, RecursiveArrayTools
-#using DiffEqBayes
+using DiffEqBayes
 using Stan, Mamba
 using Base.Test
-
-include(joinpath(Pkg.dir("Stan"), "Examples", "OtherExamples", "DiffEqBayes",
-  "bayesian_inference.jl"))
 
 #=
 Experimental link to DiffEqBayes examples
@@ -39,7 +36,7 @@ cd(ProjDir) do
   data = convert(Array,randomized)
   priors = [Normal(1.5,1)]
 
-  bayesian_result = bayesian_inference(prob1,t,data,priors;
+  bayesian_result = stan_inference(prob1,t,data,priors;
     num_samples=500,num_warmup=1500)
   theta1 = bayesian_result.chain_results[:,["theta.1"],:]
 
