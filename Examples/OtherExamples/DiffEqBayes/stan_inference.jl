@@ -1,3 +1,5 @@
+# Usually identical to stan_inference in DiffEqBayes. Included here for testing.
+
 struct StanModel{R,C}
   return_code::R
   chain_results::C

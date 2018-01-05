@@ -7,7 +7,7 @@ The directory which contains the CmdStan executables such as `bin/stanc` and
 `bin/stansummary`. Inferred from `Main.CMDSTAN_HOME` or `ENV["CMDSTAN_HOME"]`
 when available. Use `set_cmdstan_home!` to modify.
 """
-CMDSTAN_HOME=""
+global CMDSTAN_HOME=""
 
 function __init__()
     global CMDSTAN_HOME = if isdefined(Main, :CMDSTAN_HOME)

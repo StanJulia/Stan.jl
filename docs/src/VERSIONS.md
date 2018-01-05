@@ -14,13 +14,22 @@ Updates for new releases of Julia and CmdStan bump the appropriate level.
 
 ## Testing
 
-This version of the package has primarily been tested on Mac OSX 10.12&13, Julia 0.6 and 0.7, CmdStan 2.17.0, Mamba 0.11.1 and Gadfly 0.6.3.
+This version of the package has primarily been tested on Mac OSX 10.12&13, Julia 0.6 and 0.7, CmdStan 2.17.1, Mamba 0.11.1 and Gadfly 0.6.4.
 
 A limited amount of testing has taken place on other platforms by other users of the package.
+
+## Version 3.0.1 
+
+1. Added ODE examples from DiffEqBayes.jl
 
 ## Version 3.0.0 
 
 1. Julia 0.7- compatible
+
+## Version 2.0.2
+
+1. Julia 0.6 only
+2. Added ODE examples from DiffEqBayes.jl
 
 ## Version 2.0.1
 
