@@ -40,7 +40,7 @@ cd(ProjDir) do
   data = convert(Array,randomized)
   priors = [Normal(2.6666,1)]
 
-  bayesian_result = stam_inference(prob,t,data,priors;
+  bayesian_result = stan_inference(prob,t,data,priors;
     num_samples=1500,num_warmup=1500)
   theta1 = bayesian_result.chain_results[:,["theta.1"],:]
   global sim2 = bayesian_result.chain_results[1:end,
