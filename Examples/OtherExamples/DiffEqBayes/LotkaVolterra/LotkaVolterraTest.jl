@@ -51,9 +51,8 @@ end
 f2 = @ode_def_nohes LotkaVolterraTest2 begin
   dx = a*x - b*x*y
   dy = -c*y + d*x*y
-end a=>1.5 b=1.0 c=3.0 d=1.0
+end a=>1.5 b=>1.0 c=>3.0 d=>1.0
 
-ProjDir = dirname(@__FILE__)
 cd(ProjDir) do
 
   isdir("tmp") && rm("tmp", recursive=true)
