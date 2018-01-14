@@ -3,7 +3,7 @@ using OrdinaryDiffEq, ParameterizedFunctions, RecursiveArrayTools
 using Stan, Mamba, Base.Test
 
 ProjDir = dirname(@__FILE__)
-include(ProjDir*"/stan_inference.jl")
+include(ProjDir*"/local_stan_inference.jl")
 
 f2 = @ode_def_nohes LotkaVolterraTest2 begin
   dx = a*x - b*x*y

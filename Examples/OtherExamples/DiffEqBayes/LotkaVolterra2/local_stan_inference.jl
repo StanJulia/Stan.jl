@@ -24,8 +24,8 @@ function local_stan_inference(prob::DEProblem,t,data,priors = nothing;alg=:rk45,
     end
   end
   tuple_hyper_params = tuple_hyper_params[1:endof(tuple_hyper_params)-1] 
-  differential_equation = generate_differential_equation(f)
-  priors_string = string(generate_priors(f,priors),";")
+  differential_equation = DiffEqBayes.generate_differential_equation(f)
+  priors_string = string(DiffEqBayes.generate_priors(f,priors),";")
   stan_likelihood = stan_string(likelihood)
   const parameter_estimation_model = "
   functions {
@@ -35,30 +35,33 @@ function local_stan_inference(prob::DEProblem,t,data,priors = nothing;alg=:rk45,
       return internal_var___du;
       }
     }
-  data {
-    real u0[$length_of_y];
-    int<lower=1> T;
-    real internal_var___u[T,$length_of_y];
-    real t0;
-    real ts[T];
-  }
-  transformed data {
-    real x_r[0];
-    int x_i[0];
-  }
-  parameters {
-    real theta[$length_of_parameter];
-    real params[$length_of_params];
-  }
-  model{
-    real u_hat[T,$length_of_y];
-    $hyper_params
-    $priors_string
-    u_hat = $algorithm(sho, u0, t0, ts, theta, x_r, x_i, $reltol, $abstol, $maxiter);
-    for (t in 1:T){
-      internal_var___u[t] ~ $stan_likelihood($tuple_hyper_params);
-      }
-  }
+    data {
+      real u0[2];
+      int<lower=1> T;
+      real internal_var___u[T,2];
+      real t0;
+      real ts[T];
+    }
+    transformed data {
+      real x_r[0];
+      int x_i[0];
+    }
+    parameters {
+      row_vector<lower=0>[2] sigma1;
+      real theta[4];
+    }
+    model{
+      real u_hat[T,2];
+      sigma1 ~ inv_gamma(4.0, 1.0);
+      theta[1] ~normal(1.5, 0.01);
+      theta[2] ~normal(1.0, 0.01);
+      theta[3] ~normal(3.0, 0.01);
+      theta[4] ~normal(1.0, 0.01);
+      u_hat = integrate_ode_rk45(sho, u0, t0, ts, theta, x_r, x_i, 0.001, 1.0e-6, 100000);
+      for (t in 1:T){
+        internal_var___u[t,:] ~ normal(u_hat[t,:],sigma1);
+        }
+    }
   "
 
   stanmodel = Stanmodel(num_samples=num_samples, num_warmup=num_warmup, name="parameter_estimation_model", model=parameter_estimation_model);
