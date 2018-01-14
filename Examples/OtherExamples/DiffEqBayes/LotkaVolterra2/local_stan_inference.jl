@@ -47,7 +47,7 @@ function local_stan_inference(prob::DEProblem,t,data,priors = nothing;alg=:rk45,
       int x_i[0];
     }
     parameters {
-      row_vector<lower=0>[2] sigma1;
+      row_vector<lower=0.1, upper=3.0>[2] sigma1;
       real theta[4];
     }
     model{

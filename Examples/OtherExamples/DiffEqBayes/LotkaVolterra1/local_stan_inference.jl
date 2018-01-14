@@ -50,7 +50,7 @@ function local_stan_inference(prob::DEProblem,t,data,priors = nothing;alg=:rk45,
   }
   parameters {
     real theta[$length_of_parameter];
-    real params[$length_of_params];
+    real<lower=0.1, upper=3.0> params[$length_of_params];
   }
   model{
     real u_hat[T,$length_of_y];
