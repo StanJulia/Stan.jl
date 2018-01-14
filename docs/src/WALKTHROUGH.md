@@ -48,7 +48,6 @@ More documentation on stan() can be found in [`stan`](@ref)
 If the return code rc indicated success (rc == 0), Mamba.jl provides the describe() function. We can't use all monitored variables by Stan. In this example a good subset is selected as below and stored in 'sim'
 ```
 if rc == 0
-  sim1 = stan(stanmodel, [bernoullidata], ProjDir, CmdStanDir=CMDSTAN_HOME)
   println("Subset Sampler Output")
   sim = sim1[1:1000, ["lp__", "theta", "accept_stat__"], :]
   describe(sim)
