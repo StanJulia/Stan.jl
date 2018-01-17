@@ -7,7 +7,6 @@
 [![Stan](http://pkg.julialang.org/badges/Stan_0.6.svg)](http://pkg.julialang.org/?pkg=Stan&ver=0.6)
 [![Stan](http://pkg.julialang.org/badges/Stan_0.7.svg)](http://pkg.julialang.org/?pkg=Stan&ver=0.7)
 
-
 Documentation:
 [![](https://img.shields.io/badge/docs-latest-blue.svg)](https://goedman.github.io/Stan.jl/latest)
 
