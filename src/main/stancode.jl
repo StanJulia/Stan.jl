@@ -10,9 +10,9 @@ Execute a Stan model.
 ```julia
 rc, sim = stan(
   model::Stanmodel, 
-  data=Void, 
+  data=Nothing, 
   ProjDir=pwd();
-  init=Void,
+  init=Nothing,
   summary=true, 
   diagnostics=false, 
   CmdStanDir=CMDSTAN_HOME
@@ -26,13 +26,13 @@ rc, sim = stan(
 ### Optional positional arguments
 
 ```julia
-* `data=Void`                     : Observed input data dictionary 
+* `data=Nothing`                     : Observed input data dictionary 
 * `ProjDir=pwd()`                 : Project working directory
 ```
 
 ### Keyword arguments
 ```julia
-* `init=Void`                     : Initial parameter value dictionary
+* `init=Nothing`                     : Initial parameter value dictionary
 * `summary=true`                  : Use CmdStan's stansummary to display results
 * `diagnostics=false`             : Generate diagnostics file
 * `CmdStanDir=CMDSTAN_HOME`       : Location of CmdStan directory
@@ -66,9 +66,9 @@ stan(mymodel, mydata, diagnostics=true, summary=false)
 """
 function stan(
   model::Stanmodel, 
-  data=Void, 
+  data=Nothing, 
   ProjDir=pwd();
-  init=Void,
+  init=Nothing,
   summary=true, 
   diagnostics=false, 
   CmdStanDir=CMDSTAN_HOME)
@@ -107,7 +107,7 @@ function stan(
   end
         
   cd(model.tmpdir)
-  if data != Void && check_dct_type(data)
+  if data != Nothing && check_dct_type(data)
     if length(data) == model.nchains
       for i in 1:model.nchains
         if length(keys(data[i])) > 0
@@ -126,7 +126,7 @@ function stan(
       end
     end
   end
-  if init != Void && check_dct_type(init)
+  if init != Nothing && check_dct_type(init)
     if length(init) == model.nchains
       for i in 1:model.nchains
         if length(keys(init[i])) > 0
@@ -148,7 +148,7 @@ function stan(
   for i in 1:model.nchains
     model.id = i
     model.data_file ="$(model.name)_$(i).data.R"
-    if !(model.init == Void)
+    if !(model.init == Nothing)
         model.init_file = "$(model.name)_$(i).init.R"
     end
     if isa(model.method, Sample)
