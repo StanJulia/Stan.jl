@@ -1,9 +1,9 @@
 functions {
     real[] sho(real t,real[] internal_var___u,real[] theta,real[] x_r,int[] x_i) {
       real internal_var___du[2];
-       # /Users/rob/.julia/v0.6/Stan/Examples/OtherExamples/DiffEqBayes/LotkaVolterra1/LotkaVolterra1.jl, line 20:;
+       # /Users/rob/.julia/v0.6/Stan/Examples/OtherExamples/DiffEqBayes/LotkaVolterra1/LotkaVolterra1.jl, line 18:;
 internal_var___du[1] = theta[1] * internal_var___u[1] - 1.0 * internal_var___u[1] * internal_var___u[2];
- # /Users/rob/.julia/v0.6/Stan/Examples/OtherExamples/DiffEqBayes/LotkaVolterra1/LotkaVolterra1.jl, line 21:;
+ # /Users/rob/.julia/v0.6/Stan/Examples/OtherExamples/DiffEqBayes/LotkaVolterra1/LotkaVolterra1.jl, line 19:;
 internal_var___du[2] = -3.0 * internal_var___u[2] + 1.0 * internal_var___u[1] * internal_var___u[2];
 
       return internal_var___du;
@@ -21,15 +21,19 @@ internal_var___du[2] = -3.0 * internal_var___u[2] + 1.0 * internal_var___u[1] * 
     int x_i[0];
   }
   parameters {
+    row_vector<lower=0>[2] sigma1;
+    real<lower=0.0,upper=2.0> theta1;
+  }
+  transformed parameters{
     real theta[1];
-    real<lower=0.1, upper=3.0> params[2];
+    theta[1] <- theta1;
   }
   model{
     real u_hat[T,2];
-    params[2] ~ inv_gamma(2.0, 3.0);
-    theta[1] ~normal(1.5, 1.0) T[0.0,2.0];;
+    sigma1 ~ inv_gamma(3.0, 2.0);
+    theta[1] ~normal(1.5, 0.1) T[0.0,2.0];
     u_hat = integrate_ode_rk45(sho, u0, t0, ts, theta, x_r, x_i, 0.001, 1.0e-6, 100000);
     for (t in 1:T){
-      internal_var___u[t] ~ normal(u_hat[t],params[2]);
+      internal_var___u[t,:] ~ normal(u_hat[t,:],sigma1);
       }
   }

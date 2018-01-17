@@ -17,8 +17,8 @@ static int current_statement_begin__;
 
 stan::io::program_reader prog_reader__() {
     stan::io::program_reader reader;
-    reader.add_event(0, 0, "start", "/Users/rob/.julia/v0.6/Stan/Examples/OtherExamples/DiffEqBayes/LotkaVolterra1/tmp/parameter_estimation_model.stan");
-    reader.add_event(39, 39, "end", "/Users/rob/.julia/v0.6/Stan/Examples/OtherExamples/DiffEqBayes/LotkaVolterra1/tmp/parameter_estimation_model.stan");
+    reader.add_event(0, 0, "start", "/Users/rob/.julia/v0.6/Stan/Examples/OtherExamples/DiffEqBayes/LotkaVolterra2/tmp/parameter_estimation_model.stan");
+    reader.add_event(39, 39, "end", "/Users/rob/.julia/v0.6/Stan/Examples/OtherExamples/DiffEqBayes/LotkaVolterra2/tmp/parameter_estimation_model.stan");
     return reader;
 }
 
@@ -47,9 +47,9 @@ sho(const T0__& t,
 
 
         current_statement_begin__ = 5;
-        stan::math::assign(get_base1_lhs(internal_var___du,1,"internal_var___du",1), ((get_base1(theta,1,"theta",1) * get_base1(internal_var___u,1,"internal_var___u",1)) - ((1.0 * get_base1(internal_var___u,1,"internal_var___u",1)) * get_base1(internal_var___u,2,"internal_var___u",1))));
+        stan::math::assign(get_base1_lhs(internal_var___du,1,"internal_var___du",1), ((get_base1(theta,1,"theta",1) * get_base1(internal_var___u,1,"internal_var___u",1)) - ((get_base1(theta,2,"theta",1) * get_base1(internal_var___u,1,"internal_var___u",1)) * get_base1(internal_var___u,2,"internal_var___u",1))));
         current_statement_begin__ = 7;
-        stan::math::assign(get_base1_lhs(internal_var___du,2,"internal_var___du",1), ((-(3.0) * get_base1(internal_var___u,2,"internal_var___u",1)) + ((1.0 * get_base1(internal_var___u,1,"internal_var___u",1)) * get_base1(internal_var___u,2,"internal_var___u",1))));
+        stan::math::assign(get_base1_lhs(internal_var___du,2,"internal_var___du",1), ((-(get_base1(theta,3,"theta",1)) * get_base1(internal_var___u,2,"internal_var___u",1)) + ((get_base1(theta,4,"theta",1) * get_base1(internal_var___u,1,"internal_var___u",1)) * get_base1(internal_var___u,2,"internal_var___u",1))));
         current_statement_begin__ = 9;
         return stan::math::promote_scalar<fun_return_scalar_t__>(internal_var___du);
         }
@@ -199,6 +199,12 @@ public:
             num_params_r__ += 2;
             current_statement_begin__ = 25;
             ++num_params_r__;
+            current_statement_begin__ = 25;
+            ++num_params_r__;
+            current_statement_begin__ = 25;
+            ++num_params_r__;
+            current_statement_begin__ = 25;
+            ++num_params_r__;
         } catch (const std::exception& e) {
             stan::lang::rethrow_located(e, current_statement_begin__, prog_reader__());
             // Next line prevents compiler griping about no return
@@ -245,6 +251,45 @@ public:
             writer__.scalar_lub_unconstrain(0.0,2.0,theta1);
         } catch (const std::exception& e) { 
             throw std::runtime_error(std::string("Error transforming variable theta1: ") + e.what());
+        }
+
+        if (!(context__.contains_r("theta2")))
+            throw std::runtime_error("variable theta2 missing");
+        vals_r__ = context__.vals_r("theta2");
+        pos__ = 0U;
+        context__.validate_dims("initialization", "theta2", "double", context__.to_vec());
+        double theta2(0);
+        theta2 = vals_r__[pos__++];
+        try {
+            writer__.scalar_lub_unconstrain(0.0,1.5,theta2);
+        } catch (const std::exception& e) { 
+            throw std::runtime_error(std::string("Error transforming variable theta2: ") + e.what());
+        }
+
+        if (!(context__.contains_r("theta3")))
+            throw std::runtime_error("variable theta3 missing");
+        vals_r__ = context__.vals_r("theta3");
+        pos__ = 0U;
+        context__.validate_dims("initialization", "theta3", "double", context__.to_vec());
+        double theta3(0);
+        theta3 = vals_r__[pos__++];
+        try {
+            writer__.scalar_lub_unconstrain(0.0,4.0,theta3);
+        } catch (const std::exception& e) { 
+            throw std::runtime_error(std::string("Error transforming variable theta3: ") + e.what());
+        }
+
+        if (!(context__.contains_r("theta4")))
+            throw std::runtime_error("variable theta4 missing");
+        vals_r__ = context__.vals_r("theta4");
+        pos__ = 0U;
+        context__.validate_dims("initialization", "theta4", "double", context__.to_vec());
+        double theta4(0);
+        theta4 = vals_r__[pos__++];
+        try {
+            writer__.scalar_lub_unconstrain(0.0,2.0,theta4);
+        } catch (const std::exception& e) { 
+            throw std::runtime_error(std::string("Error transforming variable theta4: ") + e.what());
         }
 
         params_r__ = writer__.data_r();
@@ -294,20 +339,47 @@ public:
             else
                 theta1 = in__.scalar_lub_constrain(0.0,2.0);
 
+            local_scalar_t__ theta2;
+            (void) theta2;  // dummy to suppress unused var warning
+            if (jacobian__)
+                theta2 = in__.scalar_lub_constrain(0.0,1.5,lp__);
+            else
+                theta2 = in__.scalar_lub_constrain(0.0,1.5);
+
+            local_scalar_t__ theta3;
+            (void) theta3;  // dummy to suppress unused var warning
+            if (jacobian__)
+                theta3 = in__.scalar_lub_constrain(0.0,4.0,lp__);
+            else
+                theta3 = in__.scalar_lub_constrain(0.0,4.0);
+
+            local_scalar_t__ theta4;
+            (void) theta4;  // dummy to suppress unused var warning
+            if (jacobian__)
+                theta4 = in__.scalar_lub_constrain(0.0,2.0,lp__);
+            else
+                theta4 = in__.scalar_lub_constrain(0.0,2.0);
+
 
             // transformed parameters
             current_statement_begin__ = 28;
-            validate_non_negative_index("theta", "1", 1);
-            vector<local_scalar_t__> theta(1);
+            validate_non_negative_index("theta", "4", 4);
+            vector<local_scalar_t__> theta(4);
             stan::math::initialize(theta, DUMMY_VAR__);
             stan::math::fill(theta,DUMMY_VAR__);
 
 
             current_statement_begin__ = 29;
             stan::math::assign(get_base1_lhs(theta,1,"theta",1), theta1);
+            current_statement_begin__ = 29;
+            stan::math::assign(get_base1_lhs(theta,2,"theta",1), theta2);
+            current_statement_begin__ = 29;
+            stan::math::assign(get_base1_lhs(theta,3,"theta",1), theta3);
+            current_statement_begin__ = 29;
+            stan::math::assign(get_base1_lhs(theta,4,"theta",1), theta4);
 
             // validate transformed parameters
-            for (int i0__ = 0; i0__ < 1; ++i0__) {
+            for (int i0__ = 0; i0__ < 4; ++i0__) {
                 if (stan::math::is_uninitialized(theta[i0__])) {
                     std::stringstream msg__;
                     msg__ << "Undefined transformed parameter: theta" << '[' << i0__ << ']';
@@ -330,12 +402,27 @@ public:
 
 
             current_statement_begin__ = 33;
-            lp_accum__.add(inv_gamma_log<propto__>(sigma1, 3.0, 2.0));
+            lp_accum__.add(inv_gamma_log<propto__>(sigma1, 4.0, 1.0));
             current_statement_begin__ = 34;
-            lp_accum__.add(normal_log<propto__>(get_base1(theta,1,"theta",1), 1.5, 0.10000000000000001));
+            lp_accum__.add(normal_log<propto__>(get_base1(theta,1,"theta",1), 1.5, 0.01));
             if (get_base1(theta,1,"theta",1) < 0.0) lp_accum__.add(-std::numeric_limits<double>::infinity());
             else if (get_base1(theta,1,"theta",1) > 2.0) lp_accum__.add(-std::numeric_limits<double>::infinity());
-            else lp_accum__.add(-log_diff_exp(normal_cdf_log(2.0, 1.5, 0.10000000000000001), normal_cdf_log(0.0, 1.5, 0.10000000000000001)));
+            else lp_accum__.add(-log_diff_exp(normal_cdf_log(2.0, 1.5, 0.01), normal_cdf_log(0.0, 1.5, 0.01)));
+            current_statement_begin__ = 34;
+            lp_accum__.add(normal_log<propto__>(get_base1(theta,2,"theta",1), 1.0, 0.01));
+            if (get_base1(theta,2,"theta",1) < 0.0) lp_accum__.add(-std::numeric_limits<double>::infinity());
+            else if (get_base1(theta,2,"theta",1) > 1.5) lp_accum__.add(-std::numeric_limits<double>::infinity());
+            else lp_accum__.add(-log_diff_exp(normal_cdf_log(1.5, 1.0, 0.01), normal_cdf_log(0.0, 1.0, 0.01)));
+            current_statement_begin__ = 34;
+            lp_accum__.add(normal_log<propto__>(get_base1(theta,3,"theta",1), 3.0, 0.01));
+            if (get_base1(theta,3,"theta",1) < 0.0) lp_accum__.add(-std::numeric_limits<double>::infinity());
+            else if (get_base1(theta,3,"theta",1) > 4.0) lp_accum__.add(-std::numeric_limits<double>::infinity());
+            else lp_accum__.add(-log_diff_exp(normal_cdf_log(4.0, 3.0, 0.01), normal_cdf_log(0.0, 3.0, 0.01)));
+            current_statement_begin__ = 34;
+            lp_accum__.add(normal_log<propto__>(get_base1(theta,4,"theta",1), 1.0, 0.01));
+            if (get_base1(theta,4,"theta",1) < 0.0) lp_accum__.add(-std::numeric_limits<double>::infinity());
+            else if (get_base1(theta,4,"theta",1) > 2.0) lp_accum__.add(-std::numeric_limits<double>::infinity());
+            else lp_accum__.add(-log_diff_exp(normal_cdf_log(2.0, 1.0, 0.01), normal_cdf_log(0.0, 1.0, 0.01)));
             current_statement_begin__ = 35;
             stan::math::assign(u_hat, integrate_ode_rk45(sho_functor__(), u0, t0, ts, theta, x_r, x_i, pstream__, 0.001, 9.9999999999999995e-07, 100000));
             current_statement_begin__ = 36;
@@ -373,6 +460,9 @@ public:
         names__.resize(0);
         names__.push_back("sigma1");
         names__.push_back("theta1");
+        names__.push_back("theta2");
+        names__.push_back("theta3");
+        names__.push_back("theta4");
         names__.push_back("theta");
     }
 
@@ -386,7 +476,13 @@ public:
         dims__.resize(0);
         dimss__.push_back(dims__);
         dims__.resize(0);
-        dims__.push_back(1);
+        dimss__.push_back(dims__);
+        dims__.resize(0);
+        dimss__.push_back(dims__);
+        dims__.resize(0);
+        dimss__.push_back(dims__);
+        dims__.resize(0);
+        dims__.push_back(4);
         dimss__.push_back(dims__);
     }
 
@@ -407,10 +503,16 @@ public:
         // read-transform, write parameters
         row_vector_d sigma1 = in__.row_vector_lb_constrain(0,2);
         double theta1 = in__.scalar_lub_constrain(0.0,2.0);
+        double theta2 = in__.scalar_lub_constrain(0.0,1.5);
+        double theta3 = in__.scalar_lub_constrain(0.0,4.0);
+        double theta4 = in__.scalar_lub_constrain(0.0,2.0);
             for (int k_0__ = 0; k_0__ < 2; ++k_0__) {
             vars__.push_back(sigma1[k_0__]);
             }
         vars__.push_back(theta1);
+        vars__.push_back(theta2);
+        vars__.push_back(theta3);
+        vars__.push_back(theta4);
 
         // declare and define transformed parameters
         double lp__ = 0.0;
@@ -422,21 +524,27 @@ public:
 
         try {
             current_statement_begin__ = 28;
-            validate_non_negative_index("theta", "1", 1);
-            vector<local_scalar_t__> theta(1);
+            validate_non_negative_index("theta", "4", 4);
+            vector<local_scalar_t__> theta(4);
             stan::math::initialize(theta, DUMMY_VAR__);
             stan::math::fill(theta,DUMMY_VAR__);
 
 
             current_statement_begin__ = 29;
             stan::math::assign(get_base1_lhs(theta,1,"theta",1), theta1);
+            current_statement_begin__ = 29;
+            stan::math::assign(get_base1_lhs(theta,2,"theta",1), theta2);
+            current_statement_begin__ = 29;
+            stan::math::assign(get_base1_lhs(theta,3,"theta",1), theta3);
+            current_statement_begin__ = 29;
+            stan::math::assign(get_base1_lhs(theta,4,"theta",1), theta4);
 
             // validate transformed parameters
             current_statement_begin__ = 28;
 
             // write transformed parameters
             if (include_tparams__) {
-            for (int k_0__ = 0; k_0__ < 1; ++k_0__) {
+            for (int k_0__ = 0; k_0__ < 4; ++k_0__) {
             vars__.push_back(theta[k_0__]);
             }
             }
@@ -490,11 +598,20 @@ public:
         param_name_stream__.str(std::string());
         param_name_stream__ << "theta1";
         param_names__.push_back(param_name_stream__.str());
+        param_name_stream__.str(std::string());
+        param_name_stream__ << "theta2";
+        param_names__.push_back(param_name_stream__.str());
+        param_name_stream__.str(std::string());
+        param_name_stream__ << "theta3";
+        param_names__.push_back(param_name_stream__.str());
+        param_name_stream__.str(std::string());
+        param_name_stream__ << "theta4";
+        param_names__.push_back(param_name_stream__.str());
 
         if (!include_gqs__ && !include_tparams__) return;
 
         if (include_tparams__) {
-            for (int k_0__ = 1; k_0__ <= 1; ++k_0__) {
+            for (int k_0__ = 1; k_0__ <= 4; ++k_0__) {
                 param_name_stream__.str(std::string());
                 param_name_stream__ << "theta" << '.' << k_0__;
                 param_names__.push_back(param_name_stream__.str());
@@ -518,11 +635,20 @@ public:
         param_name_stream__.str(std::string());
         param_name_stream__ << "theta1";
         param_names__.push_back(param_name_stream__.str());
+        param_name_stream__.str(std::string());
+        param_name_stream__ << "theta2";
+        param_names__.push_back(param_name_stream__.str());
+        param_name_stream__.str(std::string());
+        param_name_stream__ << "theta3";
+        param_names__.push_back(param_name_stream__.str());
+        param_name_stream__.str(std::string());
+        param_name_stream__ << "theta4";
+        param_names__.push_back(param_name_stream__.str());
 
         if (!include_gqs__ && !include_tparams__) return;
 
         if (include_tparams__) {
-            for (int k_0__ = 1; k_0__ <= 1; ++k_0__) {
+            for (int k_0__ = 1; k_0__ <= 4; ++k_0__) {
                 param_name_stream__.str(std::string());
                 param_name_stream__ << "theta" << '.' << k_0__;
                 param_names__.push_back(param_name_stream__.str());

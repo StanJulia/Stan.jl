@@ -3,8 +3,6 @@ using Stan, Mamba, Base.Test
 
 ProjDir = dirname(@__FILE__)
 
-include(ProjDir*"/local_stan_inference.jl")
-
 #=
 Experimental link to DiffEqBayes examples
 
@@ -27,27 +25,26 @@ cd(ProjDir) do
   isfile("LotkaVolterra1-1.pdf") &&
     rm("LotkaVolterra1-1.pdf")
 
-  println("One parameter case")
-  u0 = [1.0,1.0]
-  tspan = (0.0,10.0)
-  prob1 = ODEProblem(f1,u0,tspan)
-  sol = solve(prob1,Tsit5())
-  t = collect(linspace(1,10,10))
-  randomized = VectorOfArray([(sol(t[i]) + .01randn(2)) for i in 1:length(t)])
-  data = convert(Array,randomized)
-  priors = [Truncated(Normal(1.5,1),0,2)]
+    println("One parameter case")
+    u0 = [1.0,1.0]
+    tspan = (0.0,10.0)
+    prob1 = ODEProblem(f1,u0,tspan)
+    sol = solve(prob1,Tsit5())
+    t = collect(linspace(1,10,10))
+    randomized = VectorOfArray([(sol(t[i]) + .01randn(2)) for i in 1:length(t)])
+    data = convert(Array,randomized)
+    priors = [Truncated(Normal(1.5,0.1),0,2)]
 
-  bayesian_result = local_stan_inference(prob1,t,data,priors;num_samples=500,
-    num_warmup=500,likelihood=Normal,vars =("StanODEData",InverseGamma(2,3)))
+    bayesian_result = stan_inference(prob1,t,data,priors;num_samples=300,
+      num_warmup=500,likelihood=Normal,vars =("StanODEData",InverseGamma(3,2)))
 
-  global sim1 = bayesian_result.chain_results[1:end,
-    ["theta.1", "params.1", "params.2"], :]
+    global sim1 = bayesian_result.chain_results[1:end,["theta.1", "sigma1.1", "sigma1.2"], :]
     
   ## Plotting
   p = plot(sim1, [:trace, :mean, :density, :autocor], legend=true);
   draw(p, ncol=4, filename="LotkaVolterra1", fmt=:pdf)
 
   theta1 = bayesian_result.chain_results[:,["theta.1"],:]
-  @test mean(theta1.value[:,:,1]) ≈ 1.5 atol=1e-1
+  @test mean(theta1.value) ≈ 1.5 atol=3e-1
 end
 
