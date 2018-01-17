@@ -40,13 +40,12 @@ cd(ProjDir) do
 
   bayesian_result = stan_inference(prob,t,data,priors;
     num_samples=1500,num_warmup=1500)
-  theta1 = bayesian_result.chain_results[:,["theta.1"],:]
   global sim2 = bayesian_result.chain_results[1:end,
-    ["sigma.1", "sigma.2", "sigma.3", "theta.1"], :]
+    ["sigma1.1", "sigma1.2", "sigma1.3", "theta.1"], :]
   ## Plotting
   p = plot(sim2, [:trace, :mean, :density, :autocor], legend=true);
   draw(p, ncol=4, filename="Lorentz-summaryplot", fmt=:pdf)
   
+  theta1 = bayesian_result.chain_results[:,["theta.1"],:]
   @test mean(theta1.value[:,:,1]) ≈ 2.6666 atol=1e-1
-
 end
