@@ -140,6 +140,28 @@ Hmc(engine::Engine) = Hmc(engine, diag_e(), 1.0, 1.0)
 
 """
 
+# Fixed_param type and constructor
+
+Settings for algorithm=Fixed_param() in Sample(). 
+
+### Method
+```julia
+Fixed_param()
+```
+
+### Related help
+```julia
+?Sample                        : Sampling settings
+?Engine                        : Engine for Hamiltonian Monte Carlo
+?Nuts                          : Settings for Nuts
+?Static                        : Settings for Static
+?Metric                        : Base manifold geometries
+```
+"""
+type Fixed_param <: SamplingAlgorithm end
+  
+"""
+
 # Adapt type and constructor
 
 Settings for adapt=Adapt() in Sample(). 
@@ -256,12 +278,16 @@ function sample_show(io::IO, s::Sample, compact::Bool)
         println("      engine =                  Static()")
         println("        int_time =                ", s.algorithm.engine.int_time)
       end
+      println("      metric =                  ", typeof(s.algorithm.metric))
+      println("      stepsize =                ", s.algorithm.stepsize)
+      println("      stepsize_jitter =         ", s.algorithm.stepsize_jitter)
     else
-      println("    algorithm =               Unknown")
+      if isa(s.algorithm, Fixed_param)
+        println("    algorithm =               Fixed_param()")
+      else
+        println("    algorithm =               Unknown")
+      end
     end
-    println("      metric =                  ", typeof(s.algorithm.metric))
-    println("      stepsize =                ", s.algorithm.stepsize)
-    println("      stepsize_jitter =         ", s.algorithm.stepsize_jitter)
     println("    adapt =                   Adapt()")
     println("      gamma =                   ", s.adapt.gamma)
     println("      delta =                   ", s.adapt.delta)
