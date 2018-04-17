@@ -15,5 +15,5 @@ fid = open("ar1.stan");
 ar1 = readstring(fid);|
 close(fid)
 
-stanmodel= Stanmodel(name = "ar1", model = ar1, Sample(algorithm=Fixed_param()));
+stanmodel= Stanmodel(name = "ar1", model = ar1, Sample(algorithm=Stan.Fixed_param()));
 rc, sim1 = stan(stanmodel, [dat], ProjDir, CmdStanDir=CMDSTAN_HOME);

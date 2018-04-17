@@ -47,8 +47,6 @@ Stanmodel,
 stan,
 # From sampletype.jl
 Sample,
-Hmc,
-Fixed_param,
 # From optimizetype.jl
 Optimize,
 # From diagnosetype.jl
