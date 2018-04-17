@@ -1,4 +1,4 @@
-using Mamba, Stan
+using Stan
 
 ProjDir = dirname(@__FILE__);
 cd(ProjDir)
@@ -34,6 +34,6 @@ dat = Dict("T"=>T,"y0"=>y0,"phi"=>phi,"sigma"=>sigma);
 stanmodel= Stanmodel(name = "ar1", model = ar1, Sample(algorithm=Stan.Fixed_param()));
 rc, sim1 = stan(stanmodel, [dat], ProjDir, CmdStanDir=CMDSTAN_HOME);
 
-rc == 0 && describe(sim1)
+#rc == 0 && describe(sim1)
 
 isdir("tmp") && rm("tmp", recursive=true);
