@@ -14,11 +14,20 @@ Updates for new releases of Julia and CmdStan bump the appropriate level.
 
 ## Testing
 
-This version of the package has primarily been tested on Mac OSX 10.12&13, Julia 0.6 and 0.7, CmdStan 2.16.0, Mamba 0.11.1 and Gadfly 0.6.3.
+Version 2.0.3 of the package has primarily been tested on Mac OSX 10.12 &13, Julia 0.6.2, CmdStan 2.18, Mamba 0.11.2 and Gadfly 0.6.5.
 
 A limited amount of testing has taken place on other platforms by other users of the package.
 
-## Version 2.0.1 (not yet on METADATA, in master)
+## Version 2.0.3
+
+1. Added support for algorithm=fixed_param
+_
+## Version 2.0.2
+
+1. Added some tests/examples based on DiffEqBayes.jl
+2. Dripped support for Julia 0.5
+
+## Version 2.0.1
 
 1. Mainly package updates
 
