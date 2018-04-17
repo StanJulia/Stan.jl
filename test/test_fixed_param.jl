@@ -5,7 +5,7 @@ cd(ProjDir)
 
 isdir("tmp") && rm("tmp", recursive=true);
 
-art1 = "
+ar1 = "
 data {
   int T;
   real y0;

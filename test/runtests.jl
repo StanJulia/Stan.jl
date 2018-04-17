@@ -1,7 +1,7 @@
 # Top level test script for Stan.jl
 using Stan, Base.Test
 
-println("Running tests for Stan-j0.5/6-v2.0.0:")
+println("Running tests for Stan-j0.6-v2.0.3:")
 
 code_tests = ["test_env.jl",              
               "test_utilities.jl",

@@ -20,7 +20,7 @@ A limited amount of testing has taken place on other platforms by other users of
 
 ## Version 2.0.3
 
-1. Added support for algorithm=fixed_param
+1. Added support for algorithm=fixed_param (see test/test_fixed_param.jl)
 _
 ## Version 2.0.2
 
