@@ -1,6 +1,6 @@
 # Run most Stan.jl examples, remove all tmp dirs.
 
-println("Running Stan.jl examples:")
+println("Running Stan.jl examples using Mamba:")
 
 function rmtmpdirs()
   dirs = [
@@ -14,7 +14,8 @@ function rmtmpdirs()
     "Examples/Mamba/Binormal",
     "Examples/Mamba/EightSchools",
     "Examples/Mamba/Dyes",
-    "Examples/Mamba/ARM/Ch03/Kid"
+    "Examples/Mamba/ARM/Ch03/Kid",
+    "Examples/Mamba/Fixed_param"
   ]
 
   for dir in dirs
@@ -35,7 +36,8 @@ examples = [
   "../Examples/Mamba/Binormal/binormal.jl",
   "../Examples/Mamba/EightSchools/schools8.jl",
   "../Examples/Mamba/Dyes/dyes.jl",
-  "../Examples/Mamba/ARM/Ch03/Kid/kidscore.jl"
+  "../Examples/Mamba/ARM/Ch03/Kid/kidscore.jl",
+  "../Examples/Mamba/Fixed_param/fixed_param.jl"
 ]
 
 for example in examples
