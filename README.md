@@ -24,3 +24,7 @@ For more info on Mamba, please go to <http://mambajl.readthedocs.org/en/latest/>
 
 For more info on Gadfly, please go to <https://github.com/GiovineItalia/Gadfly.jl>
 
+
+## Important note
+
+For Julia 1.0.0 and up, the intention is to split out the functionality currently part of Stan.jl, For more info see [StanJulia][(https://github.com/StanJulia) and the currently available package CmdStan.jl. The intention is to make Stan.jl into a shell using the features available in StanJulia packages.
