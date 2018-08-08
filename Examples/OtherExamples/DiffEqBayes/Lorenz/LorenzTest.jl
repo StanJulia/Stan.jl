@@ -1,7 +1,7 @@
 using OrdinaryDiffEq, ParameterizedFunctions, RecursiveArrayTools
 using DiffEqBayes
 using Stan, Mamba
-using Base.Test
+using Test
 
 #=
 
@@ -33,7 +33,7 @@ cd(ProjDir) do
   tspan = (0.0,4.0)
   prob = ODEProblem(g1,r0,tspan)
   sol = solve(prob,Tsit5())
-  t = collect(linspace(0.1,4.0,10))
+  t = collect(range(0.1, stop=4.0, length=10))
   randomized = VectorOfArray([(sol(t[i]) + .01randn(3)) for i in 1:length(t)])
   data = convert(Array,randomized)
   priors = [Normal(2.6666,1)]

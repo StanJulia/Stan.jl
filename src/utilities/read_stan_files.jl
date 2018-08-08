@@ -175,7 +175,7 @@ function read_stanfit_samples(m::Stanmodel, diagnostics=false, warmup_samples=fa
       if length(m.monitors) == 0
         indvec = 1:length(index)
       else
-        indvec = findin(index, m.monitors)
+        indvec = findall(in(m.monitors), index)
       end
       if m.method.save_warmup
         noofsamples = floor(Int, (m.method.num_samples+m.method.num_warmup)/m.method.thin)
@@ -250,7 +250,7 @@ function read_stanfit_variational_samples(m::Stanmodel)
       if length(m.monitors) == 0
         indvec = 1:length(index)
       else
-        indvec = findin(index, m.monitors)
+        indvec = findall(in(m.monitors), index)
       end
       if i == 1
         a3d = fill(0.0, m.method.output_samples, length(indvec), m.nchains)

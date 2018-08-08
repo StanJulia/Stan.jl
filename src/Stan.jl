@@ -15,7 +15,7 @@ function __init__()
     elseif haskey(ENV, "CMDSTAN_HOME")
         ENV["CMDSTAN_HOME"]
     else
-        warn("Environment variable CMDSTAN_HOME not found. Use set_cmdstan_home!.")
+        @warn("Environment variable CMDSTAN_HOME not found. Use set_cmdstan_home!.")
         ""
     end
 end
