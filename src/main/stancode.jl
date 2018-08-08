@@ -93,7 +93,7 @@ function stan(
 
   cd(CmdStanDir)
   local tmpmodelname::String
-  tmpmodelname = Pkg.dir(model.tmpdir, model.name)
+  tmpmodelname = joinpath(model.tmpdir, model.name)
   if @static Sys.iswindows() ? true : false
     tmpmodelname = replace(tmpmodelname*".exe", "\\", "/")
   end
@@ -245,7 +245,7 @@ stan_summary(
 """
 function stan_summary(file::String; CmdStanDir=CMDSTAN_HOME)
   try
-    pstring = Pkg.dir("$(CmdStanDir)", "bin", "stansummary")
+    pstring = joinpath("$(CmdStanDir)", "bin", "stansummary")
     cmd = `$(pstring) $(file)`
     resfile = open(cmd, "r")
     print(read(resfile, String))
@@ -284,7 +284,7 @@ stan_summary(
 """
 function stan_summary(filecmd::Cmd; CmdStanDir=CMDSTAN_HOME)
   try
-    pstring = Pkg.dir("$(CmdStanDir)", "bin", "stansummary")
+    pstring = joinpath("$(CmdStanDir)", "bin", "stansummary")
     cmd = `$(pstring) $(filecmd)`
     println()
     println("Calling $(pstring) to infer across chains.")

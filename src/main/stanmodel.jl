@@ -173,14 +173,14 @@ function Stanmodel(
     end
   end
   
-  tmpdir = Pkg.dir(pdir, "tmp")
+  tmpdir = joinpath(pdir, "tmp")
   if !isdir(tmpdir)
     mkdir(tmpdir)
   end
   
   model_file = "$(name).stan"
   if length(model) > 0
-    update_model_file(Pkg.dir(tmpdir, "$(name).stan"), strip(model))
+    update_model_file(joinpath(tmpdir, "$(name).stan"), strip(model))
   end
   
   id::Int=0
