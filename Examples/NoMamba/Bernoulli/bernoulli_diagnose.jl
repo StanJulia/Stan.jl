@@ -38,7 +38,7 @@ cd(ProjDir) do
 
     println()
     tmp = diags[1]["diagnose"][:error][1]
-    println("Test round(diags[1][diagnose][:error], 6) ≈ 0.0")
-    @test round(tmp, 6) ≈ 0.0
+    println("Test round(diags[1][diagnose][:error], digits=6) ≈ 0.0")
+    @test round(tmp, digits=6) ≈ 0.0
   end
 end # cd

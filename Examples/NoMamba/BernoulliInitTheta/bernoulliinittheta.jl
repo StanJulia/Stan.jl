@@ -44,7 +44,7 @@ cd(ProjDir) do
   if rc == 0
     println()
     println("Test 0.2 <= mean(theta[1]) <= 0.5)")
-    @test 0.2 <= round(mean(sim[:,8,:]), 1) <= 0.5
+    @test 0.2 <= round(mean(sim[:,8,:]), digits=1) <= 0.5
   end
 
 end # cd

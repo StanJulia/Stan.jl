@@ -37,7 +37,7 @@ cd(ProjDir) do
     println()
 
     println()
-    println("Test round(optim[1][\"optimize\"][\"theta\"][1], 1) ≈ 0.3")
-    @test round(optim[1]["optimize"]["theta"][1], 1) ≈ 0.3
+    println("Test round(optim[1][\"optimize\"][\"theta\"][1], digits=1) ≈ 0.3")
+    @test round(optim[1]["optimize"]["theta"][1], digits=1) ≈ 0.3
   end
 end # cd

@@ -33,7 +33,7 @@ cd(ProjDir) do
 
   if rc == 0
     println()
-    println("Test round(mean(y[1]), 0) ≈ 0.0")
-    @test round(mean(sim[:,8,:]), 0) ≈ 0.0
+    println("Test round(mean(y[1]), digits=0) ≈ 0.0")
+    @test round(mean(sim[:,8,:]), digits=0) ≈ 0.0
   end
 end # cd

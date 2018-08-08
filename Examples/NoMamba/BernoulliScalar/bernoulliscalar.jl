@@ -34,7 +34,7 @@ cd(ProjDir) do
 
   if rc == 0
     println()
-    println("Test round(mean(theta), 1) ≈ 0.3")
-    @test round(mean(sim[:,8,:]), 1) ≈ 0.3
+    println("Test round(mean(theta), digits=1) ≈ 0.3")
+    @test round(mean(sim[:,8,:]), digits=1) ≈ 0.3
   end
 end # cd
