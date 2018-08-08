@@ -43,7 +43,7 @@ cd(ProjDir) do
   ###########################
 
   f = open("model.stan","r")
-  TestModel = readstring(f)
+  TestModel = read(f, String)
   close(f)
 
   stanmodel = Stanmodel(

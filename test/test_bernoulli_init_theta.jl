@@ -1,5 +1,5 @@
 
-using Base.Test
+using Test
 
 
 ProjDir = joinpath(dirname(@__FILE__), "..", "Examples", "NoMamba", "BernoulliInitTheta")

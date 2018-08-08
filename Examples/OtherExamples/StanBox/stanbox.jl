@@ -25,7 +25,7 @@ end
 function run_model(input)
     data = input[:data]
     model_str = input[:code]
-    d = parse(data) |> eval
+    d = Meta.parse(data) |> eval
     stanmodel = Stanmodel(name="_model", model=model_str)
     sim = stan(stanmodel, d, "/tmp", CmdStanDir=CMDSTAN_HOME)
     describe_str(sim)
