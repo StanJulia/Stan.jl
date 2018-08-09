@@ -63,9 +63,9 @@ function read_stanfit(model::Stanmodel)
             tdict = merge(tdict, Dict(:error => [parse(Float64, sstr[94])]))
           else
             instream = open("$(model.name)_$(res_type)_$(i).csv")
-            skipchars(instream, isspace, linecomment='#')
+            skipchars(isspace, instream, linecomment='#')
             i = 0
-            skipchars(instream, isspace, linecomment='#')
+            skipchars(isspace, instream, linecomment='#')
             while true
               i += 1 
               line = Unicode.normalize(readline(instream), newline2lf=true)
@@ -81,22 +81,22 @@ function read_stanfit(model::Stanmodel)
                 close(instream)
                 break
               end
-              skipchars(instream, isspace, linecomment='#')
+              skipchars(isspace, instream, linecomment='#')
             end
           end
         else
           #println("Type of result file is $(res_type)")
           tdict = Dict()
-          skipchars(instream, isspace, linecomment='#')
+          skipchars(isspace, instream, linecomment='#')
           line = Unicode.normalize(readline(instream), newline2lf=true)
           idx = split(strip(line), ",")
           index = [idx[k] for k in 1:length(idx)]
           #res_type == "optimize" && println(index)
           j = 0
-          skipchars(instream, isspace, linecomment='#')
+          skipchars(isspace, instream, linecomment='#')
           while true
             j += 1
-            #skipchars(instream, isspace, linecomment='#')
+            #skipchars(isspace, instream, linecomment='#')
             line = Unicode.normalize(readline(instream), newline2lf=true)
             flds = Float64[]
             if eof(instream) && length(line) < 2
@@ -168,7 +168,7 @@ function read_stanfit_samples(m::Stanmodel, diagnostics=false, warmup_samples=fa
     if isfile("$(m.name)_$(ftype)_$(i).csv")
       noofsamples = 0
       instream = open("$(m.name)_$(ftype)_$(i).csv")
-      skipchars(instream, isspace, linecomment='#')
+      skipchars(isspace, instream, linecomment='#')
       line = Unicode.normalize(readline(instream), newline2lf=true)
       idx = split(strip(line), ",")
       index = [idx[k] for k in 1:length(idx)]
@@ -186,9 +186,9 @@ function read_stanfit_samples(m::Stanmodel, diagnostics=false, warmup_samples=fa
         a3d = fill(0.0, noofsamples, length(indvec), m.nchains)
       end
       #println(size(a3d))
-      skipchars(instream, isspace, linecomment='#')
+      skipchars(isspace, instream, linecomment='#')
       for j in 1:noofsamples
-        skipchars(instream, isspace, linecomment='#')
+        skipchars(isspace, instream, linecomment='#')
         line = Unicode.normalize(readline(instream), newline2lf=true)
         if eof(instream) && length(line) < 2
           close(instream)
@@ -243,7 +243,7 @@ function read_stanfit_variational_samples(m::Stanmodel)
   for i in 1:m.nchains
     if isfile("$(m.name)_$(ftype)_$(i).csv")
       instream = open("$(m.name)_$(ftype)_$(i).csv")
-      skipchars(instream, isspace, linecomment='#')
+      skipchars(isspace, instream, linecomment='#')
       line = Unicode.normalize(readline(instream), newline2lf=true)
       idx = split(strip(line), ",")
       index = [idx[k] for k in 1:length(idx)]
@@ -255,9 +255,9 @@ function read_stanfit_variational_samples(m::Stanmodel)
       if i == 1
         a3d = fill(0.0, m.method.output_samples, length(indvec), m.nchains)
       end
-      skipchars(instream, isspace, linecomment='#')
+      skipchars(isspace, instream, linecomment='#')
       for j in 1:m.method.output_samples
-        skipchars(instream, isspace, linecomment='#')
+        skipchars(isspace, instream, linecomment='#')
         line = Unicode.normalize(readline(instream), newline2lf=true)
         if eof(instream) && length(line) < 2
           close(instream)

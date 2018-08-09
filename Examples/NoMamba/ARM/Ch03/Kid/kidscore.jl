@@ -1,6 +1,6 @@
 ######### ARM Ch03: kid score example  ###########
 
-using Compat, Stan, Test
+using Compat, Stan, Test, Statistics
 
 ProjDir = dirname(@__FILE__)
 cd(ProjDir) do

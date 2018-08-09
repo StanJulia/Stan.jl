@@ -1,6 +1,6 @@
 ######### Stan program example  ###########
 
-using Compat, Stan, Test
+using Compat, Stan, Test, Statistics
 
 ProjDir = dirname(@__FILE__)
 cd(ProjDir) do
