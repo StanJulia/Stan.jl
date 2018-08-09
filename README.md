@@ -27,6 +27,8 @@ For more info on Gadfly, please go to <https://github.com/GiovineItalia/Gadfly.j
 
 ## Important note
 
-The latest (and maybe last) Stan.jl release is v3.5.0. 
+The latest (and maybe last) Stan.jl release is v3.5.0. Stan.jl v3.5.0 has been tested on Julia v0.7.0 and Julia v1.0.0.
 
-For Julia 1.0.0 and up, the intention is to split out the functionality currently in Stan.jl, For more info see [StanJulia][(https://github.com/StanJulia) and the currently available package CmdStan.jl. The intention is to make Stan.jl v4.x.x into a shell using the features available in StanJulia packages.
+For Julia 1.0.0 and up, the intention is to split out the functionality currently in Stan.jl. For more info see [StanJulia][(https://github.com/StanJulia) and the currently available package CmdStan.jl in that Github organization.
+
+The intention is to make Stan.jl v4.x.x into a shell using the features available in StanJulia packages.
