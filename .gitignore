@@ -13,3 +13,4 @@ docs/build/
 docs/site/
 Examples/OtherExamples/DiffEqBayes/Lorenz/tmp/*
 Examples/OtherExamples/DiffEqBayes/LotkaVolterra/tmp/*
+Manifest.toml
