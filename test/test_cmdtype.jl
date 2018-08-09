@@ -2,7 +2,7 @@ using Stan
 using Test
 
 ProjDir = dirname(@__FILE__)
-cd(ProjDir) do
+cd(ProjDir) #do
 
 bernoulli = "
 data { 
@@ -79,4 +79,4 @@ cd(ProjDir)
 isdir("tmp") &&
   rm("tmp", recursive=true);
 
-end # cd
+  #end # cd

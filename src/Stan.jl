@@ -1,6 +1,6 @@
 module Stan
 
-using Compat, Documenter, DelimitedFiles
+using Compat, Documenter, DelimitedFiles, Statistics
 
 """
 The directory which contains the CmdStan executables such as `bin/stanc` and 

@@ -151,7 +151,7 @@ function Stanmodel(
   if useMamba
     res = ""
     try
-    	res = Pkg.installed("Mamba")
+    	res = isdefined(Main, :Mamba)
     catch
       println("Package Mamba.jl not installed, please run Pkg.add(\"Mamba\")")
       return
@@ -159,7 +159,7 @@ function Stanmodel(
 
     res = ""
     try
-    	res = Pkg.installed("Gadfly")
+    	res = isdefined(Main, :Gadfly)
     catch
       println("Package Gadfly.jl not installed, please run Pkg.add(\"Gadfly\")")
       return
