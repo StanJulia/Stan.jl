@@ -274,4 +274,3 @@ function model_show(io::IO, m::Stanmodel, compact::Bool)
 end
 
 show(io::IO, m::Stanmodel) = model_show(io, m, false)
-showcompact(io::IO, m::Stanmodel) = model_show(io, m, true)

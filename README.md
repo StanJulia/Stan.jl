@@ -4,8 +4,8 @@
 [![Coverage Status](https://coveralls.io/repos/goedman/Stan.jl/badge.svg?branch=master&service=github)](https://coveralls.io/github/goedman/Stan.jl?branch=master)
 [![codecov](https://codecov.io/gh/goedman/Stan.jl/branch/master/graph/badge.svg)](https://codecov.io/gh/goedman/Stan.jl?branch=master)
 
-[![Stan](http://pkg.julialang.org/badges/Stan_0.6.svg)](http://pkg.julialang.org/?pkg=Stan&ver=0.6)
 [![Stan](http://pkg.julialang.org/badges/Stan_0.7.svg)](http://pkg.julialang.org/?pkg=Stan&ver=0.7)
+[![Stan](http://pkg.julialang.org/badges/Stan_1.0.svg)](http://pkg.julialang.org/?pkg=Stan&ver=1.0)
 
 Documentation:
 [![](https://img.shields.io/badge/docs-latest-blue.svg)](https://goedman.github.io/Stan.jl/latest)
@@ -27,4 +27,6 @@ For more info on Gadfly, please go to <https://github.com/GiovineItalia/Gadfly.j
 
 ## Important note
 
-For Julia 1.0.0 and up, the intention is to split out the functionality currently part of Stan.jl, For more info see [StanJulia][(https://github.com/StanJulia) and the currently available package CmdStan.jl. The intention is to make Stan.jl into a shell using the features available in StanJulia packages.
+The latest (and maybe last) Stan.jl release is v3.5.0. 
+
+For Julia 1.0.0 and up, the intention is to split out the functionality currently in Stan.jl, For more info see [StanJulia][(https://github.com/StanJulia) and the currently available package CmdStan.jl. The intention is to make Stan.jl v4.x.x into a shell using the features available in StanJulia packages.

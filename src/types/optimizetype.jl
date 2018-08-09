@@ -176,4 +176,3 @@ function optimize_show(io::IO, o::Optimize, compact::Bool)
 end
 
 show(io::IO, o::Optimize) = optimize_show(io, o, false)
-showcompact(io::IO, o::Optimize) = optimize_show(io, o, true)

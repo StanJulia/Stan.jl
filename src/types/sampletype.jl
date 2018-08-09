@@ -274,4 +274,3 @@ function sample_show(io::IO, s::Sample, compact::Bool)
 end
 
 show(io::IO, s::Sample) = sample_show(io, s, false)
-showcompact(io::IO, s::Sample) = sample_show(io, s, true)

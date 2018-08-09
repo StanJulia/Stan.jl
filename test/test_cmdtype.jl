@@ -39,7 +39,7 @@ show(m)
 s1 = Sample()
 
 println()
-showcompact(IOContext(stdout, :compact => true), s1)
+show(IOContext(stdout, :compact => true), s1)
 println()
 show(s1)
 
@@ -58,7 +58,7 @@ o5 = Optimize(method=Stan.Bfgs(tol_obj=1e-9), save_iterations=true)
 @assert o5.method.tol_obj == o1.method.tol_obj/10
 
 println()
-showcompact(IOContext(stdout, :compact => true), o5)
+show(IOContext(stdout, :compact => true), o5)
 println()
 show(o5)
 
@@ -68,7 +68,7 @@ d2 = Diagnose(Stan.Gradient(error=1e-7))
 @assert d2.diagnostic.error == 1e-7
 
 println()
-showcompact(IOContext(stdout, :compact => true), d2)
+show(IOContext(stdout, :compact => true), d2)
 println()
 show(d2)
 

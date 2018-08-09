@@ -74,4 +74,3 @@ function variational_show(io::IO, v::Variational, compact::Bool)
 end
 
 show(io::IO, v::Variational) = variational_show(io, v, false)
-showcompact(io::IO, v::Variational) = variational_show(io, v, true)

@@ -72,4 +72,3 @@ function diagnose_show(io::IO, d::Diagnose, compact::Bool)
 end
 
 show(io::IO, d::Diagnose) = diagnose_show(io, d, false)
-showcompact(io::IO, d::Diagnose) = diagnose_show(io, d, true)
