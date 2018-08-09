@@ -30,7 +30,7 @@ m = Stanmodel(Optimize(), name="bernoulli", model=bernoulli,
 m.command[1] = Stan.cmdline(m)
 
 println()
-showcompact(m)
+show(IOContext(stdout, :compact => true), m)
 println()
 show(m)
 
@@ -39,7 +39,7 @@ show(m)
 s1 = Sample()
 
 println()
-showcompact(s1)
+showcompact(IOContext(stdout, :compact => true), s1)
 println()
 show(s1)
 
@@ -58,7 +58,7 @@ o5 = Optimize(method=Stan.Bfgs(tol_obj=1e-9), save_iterations=true)
 @assert o5.method.tol_obj == o1.method.tol_obj/10
 
 println()
-showcompact(o5)
+showcompact(IOContext(stdout, :compact => true), o5)
 println()
 show(o5)
 
@@ -68,7 +68,7 @@ d2 = Diagnose(Stan.Gradient(error=1e-7))
 @assert d2.diagnostic.error == 1e-7
 
 println()
-showcompact(d2)
+showcompact(IOContext(stdout, :compact => true), d2)
 println()
 show(d2)
 

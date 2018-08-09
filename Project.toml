@@ -3,7 +3,7 @@ uuid = "682df890-35be-576f-97d0-3d8c8b33a550"
 license = "MIT"
 desc = "Execute cmdstan as an external program in Julia"
 authors = ["Rob J Goedman <goedman@icloud.com>"]
-version = "4.0.0"
+version = "3.5.0"
 
 [deps]
 Compat = "34da2185-b29b-5c13-b0c7-acf172513d20"

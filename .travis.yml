@@ -24,7 +24,7 @@ script:
   - cd $HOME/cmdstan; git checkout v2.17.1; make stan-update; make build
   - export CMDSTAN_HOME=$HOME/cmdstan
   - cd $TRAVIS_BUILD_DIR
-  - julia -e 'Pkg.clone(pwd()); Pkg.build("Stan"); Pkg.test("Stan"; coverage=true)'
+  - julia -e 'using Pkg; Pkg.test("Stan"; coverage=true)'
 after_success:
 
   #
