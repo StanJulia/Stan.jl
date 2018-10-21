@@ -1,4 +1,4 @@
-import Base: show, showcompact
+import Base: show
 
 """
 
