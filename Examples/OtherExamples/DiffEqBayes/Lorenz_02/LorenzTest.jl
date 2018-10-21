@@ -5,7 +5,7 @@ using Test
 
 # This example uses the local version of stan_inference for testing purposes
 
-include(joinpath(dirname(pathof(Stan)), "Examples", "OtherExamples", "DiffEqBayes",
+include(joinpath(dirname(pathof(Stan)), "..", "Examples", "OtherExamples", "DiffEqBayes",
   "stan_inference.jl"))
   
   #=

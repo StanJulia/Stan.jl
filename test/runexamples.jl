@@ -18,7 +18,7 @@ function rmtmpdirs()
   ]
 
   for dir in dirs
-    println(joinpath(dirname(pathof(Stan)), dir))
+    println(joinpath(dirname(pathof(Stan)), "..", dir))
     cd(joinpath(dirname(pathof(Stan)), "..", dir)) do
       isdir("tmp") && rm("tmp", recursive=true)
     end

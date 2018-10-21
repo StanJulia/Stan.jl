@@ -4,8 +4,6 @@
 [![Coverage Status](https://coveralls.io/repos/goedman/Stan.jl/badge.svg?branch=master&service=github)](https://coveralls.io/github/goedman/Stan.jl?branch=master)
 [![codecov](https://codecov.io/gh/goedman/Stan.jl/branch/master/graph/badge.svg)](https://codecov.io/gh/goedman/Stan.jl?branch=master)
 
-[![Stan](http://pkg.julialang.org/badges/Stan_1.0.svg)](http://pkg.julialang.org/?pkg=Stan&ver=1.0)
-
 Documentation:
 [![](https://img.shields.io/badge/docs-latest-blue.svg)](https://goedman.github.io/Stan.jl/latest)
 
@@ -28,4 +26,4 @@ For more info on Gadfly, please go to <https://github.com/GiovineItalia/Gadfly.j
 
 For Julia 1.0.0 and up, the intention is to split out the functionality currently in Stan.jl. For more info see [StanJulia][(https://github.com/StanJulia) and the currently available package CmdStan.jl in that Github organization.
 
-The intention is to make Stan.jl v5.1.0 into a shell using the features available in above StanJulia packages. Stan.jl v5.0.0 will be an updated version of Stan.jl v3.5.0 based on Pkg3.
+The intention is to make Stan.jl v5.1.0 into a shell using the features available in above StanJulia packages. Stan.jl v5.0.0 is an updated version of Stan.jl v3.5.0 based on Pkg3.
