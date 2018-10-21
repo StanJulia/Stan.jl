@@ -4,7 +4,6 @@
 [![Coverage Status](https://coveralls.io/repos/goedman/Stan.jl/badge.svg?branch=master&service=github)](https://coveralls.io/github/goedman/Stan.jl?branch=master)
 [![codecov](https://codecov.io/gh/goedman/Stan.jl/branch/master/graph/badge.svg)](https://codecov.io/gh/goedman/Stan.jl?branch=master)
 
-[![Stan](http://pkg.julialang.org/badges/Stan_0.7.svg)](http://pkg.julialang.org/?pkg=Stan&ver=0.7)
 [![Stan](http://pkg.julialang.org/badges/Stan_1.0.svg)](http://pkg.julialang.org/?pkg=Stan&ver=1.0)
 
 Documentation:
