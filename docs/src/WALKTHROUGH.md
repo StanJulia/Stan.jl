@@ -6,7 +6,7 @@ In this walk-through, it is assumed that 'ProjDir' holds a path to where transie
 
 Make Stan.jl and Mamba diagnostics and graphics available:
 ```
-using Mamba, Stan
+using Mamba, Stan, Cairo
 ```
 
 Next define the variable 'bernoullistanmodel' to hold the Stan model definition:

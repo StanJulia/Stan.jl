@@ -3,7 +3,7 @@ uuid = "682df890-35be-576f-97d0-3d8c8b33a550"
 license = "MIT"
 desc = "Execute Stan's command line interface 'cmdstan' as an external program in Julia"
 authors = ["Rob J Goedman <goedman@icloud.com>"]
-version = "3.5.0"
+version = "5.0.0"
 
 [deps]
 BinDeps = "9e28174c-4ba2-5203-b857-d8d62c4213ee"

@@ -1,6 +1,6 @@
 ######### Stan program example  ###########
 
-using Mamba, Stan
+using Mamba, Stan, Cairo
 
 old = pwd()
 ProjDir = normpath(homedir(), "Projects", "Julia", "Rob", "Support_Stan", "ODE")

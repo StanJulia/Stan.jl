@@ -1,6 +1,6 @@
 # This is a test for CmdStan issue #547 (thanks to chris fisher & bob)
 
-using Mamba, Stan
+using Mamba, Stan, Cairo
 
 ProjDir = dirname(@__FILE__)
 cd(ProjDir) do

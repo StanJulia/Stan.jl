@@ -1,6 +1,6 @@
 ######### Stan program example  ###########
 
-using Mamba, Stan
+using Mamba, Stan, Cairo
 
 ProjDir = dirname(@__FILE__)
 cd(ProjDir) do

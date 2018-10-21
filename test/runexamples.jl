@@ -18,7 +18,8 @@ function rmtmpdirs()
   ]
 
   for dir in dirs
-    cd(joinpath(Pkg.dir("Stan"), dir)) do
+    println(joinpath(dirname(pathof(Stan)), dir))
+    cd(joinpath(dirname(pathof(Stan)), "..", dir)) do
       isdir("tmp") && rm("tmp", recursive=true)
     end
   end
@@ -41,6 +42,7 @@ examples = [
 for example in examples
     println("\n\n\n  * $(example) *")
     include(example)
-    rmtmpdirs()
     println("\n$(example) done!\n")
 end
+
+rmtmpdirs()
