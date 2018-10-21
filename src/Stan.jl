@@ -1,6 +1,7 @@
 module Stan
 using Mamba
 using Compat, Documenter, DelimitedFiles, Statistics
+using LinearAlgebra, Printf, CSV
 
 """
 The directory which contains the CmdStan executables such as `bin/stanc` and 
