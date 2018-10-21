@@ -95,7 +95,7 @@ function stan(
   local tmpmodelname::String
   tmpmodelname = joinpath(model.tmpdir, model.name)
   if @static Sys.iswindows() ? true : false
-    tmpmodelname = replace(tmpmodelname*".exe", "\\", "/")
+    tmpmodelname = tmpmodelname*".exe"
   end
   try
     run(pipeline(`make $(tmpmodelname)`, stderr="$(tmpmodelname)_build.log"))

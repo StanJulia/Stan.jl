@@ -1,5 +1,5 @@
 module Stan
-
+using Mamba
 using Compat, Documenter, DelimitedFiles, Statistics
 
 """
