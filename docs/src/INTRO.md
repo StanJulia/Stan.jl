@@ -6,13 +6,13 @@
 
 [CmdStan](http://mc-stan.org/interfaces/cmdstan.html) is the shell/command line interface to run Stan language programs. 
 
-[Stan.jl](https://github.com/goedman/Stan.jl) wraps CmdStan and captures the samples for further processing.
+[Stan.jl](https://github.com/StanJulia/Stan.jl) wraps CmdStan and captures the samples for further processing.
 
 ## A few other MCMC options in Julia
 
 [Mamba.jl](http://mambajl.readthedocs.io/en/latest/) and [Klara.jl](http://klarajl.readthedocs.io/en/latest/) are other Julia packages to run MCMC models (in pure Julia!).
 
-[Jags.jl](https://github.com/goedman/Jags.jl) is another option, but like CmdStan/Stan.jl, Jags runs as an external program.
+[Jags.jl](https://github.com/StanJulia/Jags.jl) is another option, but like CmdStan/Stan.jl, Jags runs as an external program.
 
 ## References
 

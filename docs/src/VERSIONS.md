@@ -54,7 +54,7 @@ A limited amount of testing has taken place on other platforms by other users of
 
 ## Version 1.1.0
 
-Please see the "Future of Stan.jl" [issue](https://github.com/goedman/Stan.jl/issues/40).
+Please see the "Future of Stan.jl" [issue](https://github.com/StanJulia/Stan.jl/issues/40).
  
 1. Thanks to Jon Alm Eriksen the performance of update_R_file() has been improved tremendously. 
 1. A further suggestion by Michael Prange to directly write to the R file also prevents a Julia segmentation trap for very large arrays (N > 10^6).

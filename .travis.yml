@@ -23,22 +23,21 @@ script:
   - export CMDSTAN_HOME=$HOME/cmdstan
   - cd $TRAVIS_BUILD_DIR
   - julia -e 'using Pkg; Pkg.test("Stan"; coverage=true)'
+  
+branches:
+  only:
+    - master
+    - /^v\d+\.\d+(\.\d+)?(-\S*)?$/
+    
 after_success:
+  - julia --project=test/coverage -e 'using Pkg; Pkg.instantiate()'
+  - julia --project=test/coverage test/coverage/coverage.jl
+  
+  - julia --project=docs -e 'using Pkg; ps=Pkg.PackageSpec(name="Documenter", version="0.19"); Pkg.add(ps); Pkg.pin(ps); Pkg.add("Stan"); Pkg.instantiate();'
+  - julia --project=docs --color=yes docs/make.jl
 
-  #
-  # Documentation
-  #
-  - julia -e 'Pkg.add("Documenter")'
-  - julia -e 'cd(Pkg.dir("Stan")); include(joinpath("docs", "make.jl"))'
-
-  #
-  # Coverage
-  #
+notifications:
+  email: false
   
-  # push coverage results to Coveralls
-  
-  - julia -e 'cd(Pkg.dir("Stan")); Pkg.add("Coverage"); using Coverage; Coveralls.submit(Coveralls.process_folder())'
-  
-  # push coverage results to Codecov
-  
-  - julia -e 'cd(Pkg.dir("Stan")); Pkg.add("Coverage"); using Coverage; Codecov.submit(Codecov.process_folder())'
+git:
+  depth: 99999999
