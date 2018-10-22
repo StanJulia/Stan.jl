@@ -5,16 +5,16 @@
 [![codecov](https://codecov.io/gh/StanJulia/Stan.jl/branch/master/graph/badge.svg)](https://codecov.io/gh/StanJulia/Stan.jl?branch=master)
 
 Documentation:
-[![](https://img.shields.io/badge/docs-latest-blue.svg)](https://goedman.github.io/Stan.jl/latest)
+[![](https://img.shields.io/badge/docs-latest-blue.svg)](https://StanJulia.github.io/Stan.jl/latest)
 
 
 ## Purpose
 
 A package to use Stan (as an external program) from Julia. 
 
-Documentation can be found [here](http://goedman.github.io/Stan.jl/latest/INTRO.html)
+Documentation can be found [here](http://StanJulia.github.io/Stan.jl/latest/INTRO.html)
 
-CmdStan needs to be installed separatedly. Please see [CmdStan installation](http://goedman.github.io/Stan.jl/latest/INSTALLATION.html). 
+CmdStan needs to be installed separatedly. Please see [CmdStan installation](http://StanJulia.github.io/Stan.jl/latest/INSTALLATION.html). 
 
 For more info on Stan, please go to <http://mc-stan.org>.
 
