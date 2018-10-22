@@ -7,6 +7,7 @@
 Documentation:
 [![](https://img.shields.io/badge/docs-latest-blue.svg)](https://goedman.github.io/Stan.jl/latest)
 
+
 ## Purpose
 
 A package to use Stan (as an external program) from Julia. 
