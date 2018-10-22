@@ -14,9 +14,15 @@ Updates for new releases of Julia and CmdStan bump the appropriate level.
 
 ## Testing
 
-This version of the package has primarily been tested on Mac OSX 10.12&13, Julia 0.6 and 0.7, CmdStan 2.17.1, Mamba 0.11.1 and Gadfly 0.6.4.
+This version of the package has primarily been tested on Mac OSX 10.14, Julia 1.0, CmdStan 2.18.0, Mamba 0.12.0 and Gadfly 1.0.0.
 
 A limited amount of testing has taken place on other platforms by other users of the package.
+
+## Version 4.0.0
+
+1. Julia 1.0 release
+2. Moved to [StanJulia](https://github.com/StanJulia)
+3. Further development will be done in CmdStan.jl
 
 ## Version 3.0.1 
 
