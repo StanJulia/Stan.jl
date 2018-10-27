@@ -1,10 +1,10 @@
 module Stan
 using Mamba
-using Compat, Documenter, DelimitedFiles, Statistics
+using Compat, DelimitedFiles, Statistics
 using LinearAlgebra, Printf, CSV
 
 """
-The directory which contains the CmdStan executables such as `bin/stanc` and 
+The directory which contains the CmdStan executables such as `bin/stanc` and
 `bin/stansummary`. Inferred from `Main.CMDSTAN_HOME` or `ENV["CMDSTAN_HOME"]`
 when available. Use `set_cmdstan_home!` to modify.
 """
@@ -22,7 +22,7 @@ function __init__()
 end
 
 """Set the path for the `CMDSTAN_HOME` environment variable.
-    
+
 Example: `set_cmdstan_home!(homedir() * "/Projects/Stan/cmdstan/")`
 """
 set_cmdstan_home!(path) = global CMDSTAN_HOME=path
