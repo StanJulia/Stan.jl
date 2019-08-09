@@ -14,7 +14,7 @@ makedocs(
 deploydocs(
     repo = "github.com/StanJulia/Stan.jl.git",
     target = "build",
-    julia = "1.0",
+    julia = "1.3",
     osname = "linux",
     deps = nothing,
     make = nothing

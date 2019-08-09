@@ -1,45 +1,25 @@
-# Top level test script for Stan.jl
-using Stan, Test
+# Run most Stan.jl examples, remove all tmp dirs.
 
-println("Running tests for Stan-j0.7-v3.5.0:")
+println("Running Stan.jl examples:")
 
-code_tests = ["test_env.jl",              
-              "test_utilities.jl",
-              "test_cmdtype.jl"]
-
-# Run execution_tests only if CmdStan is installed and CMDSTAN_HOME is set correctly.
-execution_tests = [
-  "test_bernoulli.jl",
-  "test_bernoulli_optimize.jl",
-  "test_bernoulli_diagnose.jl",
-  #"test_bernoulli_variational.jl",
-  "test_bernoulliinittheta.jl",
-  "test_bernoulliscalar.jl",
-  "test_binomial.jl",
-  "test_binormal.jl",
-  "test_schools8.jl",
-  "test_dyes.jl",
-  "test_kidscore.jl"
+examples = [
+#=
+  "../Examples/Bernoulli/bernoulli.jl",
+  "../Examples/BernoulliOptimize/bernoulli_optimize.jl",
+  "../Examples/BernoulliDiagnose/bernoulli_diagnose.jl",
+  "../Examples/BernoulliVariational/bernoulli_variational.jl",
+  "../Examples/BernoulliInitTheta/bernoulliinittheta.jl",
+  "../Examples/BernoulliScalar/bernoulliscalar.jl",
+  "../Examples/Binomial/binomial.jl",
+  "../Examples/Binormal/binormal.jl",
+  "../Examples/EightSchools/schools8.jl",
+  "../Examples/Dyes/dyes.jl",
+  "../Examples/ARM/Ch03/Kid/kidscore.jl"
+=#
 ]
 
-if CMDSTAN_HOME != ""
-  println("CMDSTAN_HOME set. Try to run tests.")
-  @testset "Stan.jl" begin
-    for my_test in code_tests
-        println("\n\n\n  * $(my_test) *")
-        include(my_test)
-    end
-    
-    for my_test in execution_tests
-        println("\n\n  * $(my_test) *\n")
-        include(my_test)
-    end
-    
-    println("\n")
-  end 
-else
-  println("\n\nCMDSTAN_HOME not set or found.")
-  println("Skipping all tests that depend on CmdStan!\n")
+for example in examples
+    println("\n\n\n  * $(example) *")
+    include(example)
+    println("\n$(example) done!\n")
 end
-
-println("\n")
