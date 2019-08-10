@@ -10,16 +10,20 @@ Documentation:
 
 ## Important note
 
-Major work will happen on this package over the next few months. 
+Major work will happen on this package over the next few months.
 
-Stan.jl v6.0.0 will contain selected examples using the features available in StanJulia packages such as StanSample, StanOptimize, etc. 
+Stan.jl v4.x (and earlier versions) was the first generation Julia tools to use Stan's [cmdstan executable](). CmdStan.jl v5.x updated these for Julia v1.x and added many features based on user feedback. Most of cmdstan's features were covered (but not all).
 
-My intention is to continue maintenance on CmdStan.jl
+Stan.jl v6.x constitutes the third generation and extends Tamas Papp's approach taken in StanRun, StanDump and StanSamples. It covers all of cmdstan's features in separate modules. i.e. StanVariational, StanSample, etc., including an option to run `generate_quantities`.
+
+Stan.jl v6.x will contain selected, heavily commented, examples using the features available inall  [StanJulia](). 
+
+My intention is to continue maintenance of CmdStan.jl for at least another two years. 
 
 ## Purpose
 
-A collection of examples to use Stan (as an external program) from Julia. 
+A collection of documented examples to use Stan (as an external program) from Julia. 
 
-CmdStan needs to be installed separatedly. Please see [CmdStan installation](http://StanJulia.github.io/Stan.jl/latest/INSTALLATION.html). 
+Stan's cmdstan executable needs to be installed separatedly. Please see [CmdStan installation](http://StanJulia.github.io/Stan.jl/latest/INSTALLATION.html). 
 
 For more info on Stan, please go to <http://mc-stan.org>.
