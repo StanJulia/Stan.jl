@@ -1,6 +1,6 @@
-######### Stan program example  ###########
+######### CmdStan program example  ###########
 
-using Compat, Stan, Test, Statistics
+using CmdStan, Test, Statistics
 
 ProjDir = dirname(@__FILE__)
 cd(ProjDir) do
@@ -19,32 +19,20 @@ cd(ProjDir) do
   }
   "
 
-  bernoullidata = Dict{String, Any}[
-    Dict("N" => 10, "y" => [0, 1, 0, 1, 0, 0, 0, 0, 0, 1]),
-    Dict("N" => 10, "y" => [0, 1, 0, 0, 0, 0, 1, 0, 0, 1]),
-    Dict("N" => 10, "y" => [0, 0, 0, 0, 0, 0, 1, 0, 1, 1]),
-    Dict("N" => 10, "y" => [0, 0, 0, 1, 0, 0, 0, 1, 0, 1])
-  ]
+  bernoullidata = Dict("N" => 10, "y" => [0, 1, 0, 1, 0, 0, 0, 0, 0, 1])
+  inittheta = Dict("theta" => 0.60)
 
-  inittheta = Dict{String, Any}[
-    Dict("theta" => 0.31),
-    Dict("theta" => 0.32),
-    Dict("theta" => 0.33),
-    Dict("theta" => 0.34),
-  ]
-
-  global stanmodel
+  global stanmodel, csd, chns
   stanmodel = Stanmodel(name="bernoulli", model=bernoullimodel,
-    num_warmup=1, useMamba=false);
+    output_format=:mcmcchains, random=CmdStan.Random(seed=-1),
+    num_warmup=1000, printsummary=false);
 
   global rc, sim
-  rc, sim = stan(stanmodel, bernoullidata, ProjDir, 
+  rc, chns, cnames = stan(stanmodel, bernoullidata, ProjDir, 
     init=inittheta, CmdStanDir=CMDSTAN_HOME)
   
   if rc == 0
-    println()
-    println("Test 0.2 <= mean(theta[1]) <= 0.5)")
-    @test 0.2 <= round(mean(sim[:,8,:]), digits=1) <= 0.5
+    describe(chns)
   end
-
+  
 end # cd

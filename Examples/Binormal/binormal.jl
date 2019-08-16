@@ -1,6 +1,6 @@
-######### Stan program example  ###########
+######### CmdStan program example  ###########
 
-using Compat, Stan, Test
+using CmdStan, Test, Statistics
 
 ProjDir = dirname(@__FILE__)
 cd(ProjDir) do
@@ -26,14 +26,14 @@ cd(ProjDir) do
   "
 
   global stanmodel, rc, sim
-  stanmodel = Stanmodel(name="binormal", model=binorm, Sample(save_warmup=true),
-   useMamba=false);
+  stanmodel = Stanmodel(name="binormal", model=binorm,
+    output_format=:array, Sample(save_warmup=true));
 
-  rc, sim = stan(stanmodel, CmdStanDir=CMDSTAN_HOME)
+  rc, sim, cnames = stan(stanmodel, CmdStanDir=CMDSTAN_HOME)
 
   if rc == 0
     println()
-    println("Test round(mean(y[1]), digits=0) ≈ 0.0")
-    @test round(mean(sim[:,8,:]), digits=0) ≈ 0.0
+    println("Test round.(mean(y[1]), 0) ≈ 0.0")
+    @test round.(mean(sim[:,8,:]), digits=0) ≈ 0.0
   end
 end # cd

@@ -19,19 +19,16 @@ cd(ProjDir) do
   }
   "
 
-  bernoullidata = Dict("N" => 1, "y" => [0])
-
+  observeddata = Dict("N" => 10, "y" => [0, 1, 0, 1, 0, 0, 0, 0, 0, 1])
   global stanmodel, rc, sim
-  
-  stanmodel = Stanmodel(num_samples=1200, thin=2, name="bernoulli",
+  stanmodel = Stanmodel(num_samples=1200, thin=2, name="bernoulli", 
     output_format=:array, model=bernoullimodel);
 
-  rc, sim, cnames = stan(stanmodel, bernoullidata, ProjDir,
-    diagnostics=false, CmdStanDir=CMDSTAN_HOME);
+  rc, sim, cnames = stan(stanmodel, observeddata, ProjDir, diagnostics=true,
+    CmdStanDir=CMDSTAN_HOME);
 
   if rc == 0
-    println()
-    println("Test round.(mean(theta), 1) ≈ 0.3")
-    @test round.(mean(sim[:,8,:]), digits=1) ≈ 0.3
+    @test -0.9 < round.(mean(sim[:, 8, :]), digits=2) < -0.7
   end
+
 end # cd

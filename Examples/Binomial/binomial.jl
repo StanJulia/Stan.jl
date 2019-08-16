@@ -2,7 +2,7 @@
 ## Note: Adapted from the Rate_4 example in Bayesian Cognitive Modeling
 ##  https://github.com/stan-dev/example-models/tree/master/Bayesian_Cognitive_Modeling
 
-using Compat, Stan, Test, Statistics
+using CmdStan, Test, Statistics
 
 ProjDir = dirname(@__FILE__)
 cd(ProjDir) do
@@ -35,18 +35,17 @@ cd(ProjDir) do
   "
 
   global stanmodel, rc, sim
-  stanmodel = Stanmodel(name="binomial", model=binomialstanmodel, useMamba=false)
+  stanmodel = Stanmodel(name="binomial",
+    output_format=:array, model=binomialstanmodel)
 
-  binomialdata = [
-    Dict("n" => 10, "k" => 5)
-  ]
+  binomialdata = Dict("n" => 10, "k" => 5)
 
-  rc, sim = stan(stanmodel, binomialdata, ProjDir, diagnostics=false,
+  rc, sim, cnames = stan(stanmodel, binomialdata, ProjDir, diagnostics=false,
               CmdStanDir=CMDSTAN_HOME)
 
   if rc == 0
     println()
-    println("Test round(mean(theta[1]), digits=1) ≈ 0.5")
-    @test round(mean(sim[:,8,:]), digits=1) ≈ 0.5
+    println("Test round.(mean(theta[1]), digits=1) ≈ 0.5")
+    @test round.(mean(sim[:,8,:]), digits=1) ≈ 0.5
   end
 end # cd

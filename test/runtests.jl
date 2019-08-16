@@ -1,10 +1,8 @@
-# Run most Stan.jl examples, remove all tmp dirs.
-
-println("Running Stan.jl examples:")
+# Run Stan.jl examples.
 
 examples = [
-#=
-  "../Examples/Bernoulli/bernoulli.jl",
+  "Bernoulli/bernoulli.jl",
+  #=
   "../Examples/BernoulliOptimize/bernoulli_optimize.jl",
   "../Examples/BernoulliDiagnose/bernoulli_diagnose.jl",
   "../Examples/BernoulliVariational/bernoulli_variational.jl",
@@ -14,12 +12,12 @@ examples = [
   "../Examples/Binormal/binormal.jl",
   "../Examples/EightSchools/schools8.jl",
   "../Examples/Dyes/dyes.jl",
-  "../Examples/ARM/Ch03/Kid/kidscore.jl"
-=#
+  "ARM/Ch03/Kid/kidscore.jl"
+  =#
 ]
 
 for example in examples
-    println("\n\n\n  * $(example) *")
+    println("\n\n  * $(example) *")
     include(example)
     println("\n$(example) done!\n")
 end

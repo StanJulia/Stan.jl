@@ -1,6 +1,6 @@
-######### Stan batch program example  ###########
+######### CmdStan batch program example  ###########
 
-using Stan, Compat, Test
+using CmdStan, Statistics, Test
 
 ProjDir = dirname(@__FILE__)
 cd(ProjDir) do
@@ -46,8 +46,7 @@ cd(ProjDir) do
   }
   "
 
-  dyesdata = [
-    Dict("BATCHES" => 6,
+  dyesdata = Dict("BATCHES" => 6,
       "SAMPLES" => 5,
       "y" => reshape([
         [1545, 1540, 1595, 1445, 1595]; 
@@ -58,15 +57,34 @@ cd(ProjDir) do
         [1495, 1560, 1545, 1625, 1445]
       ], 6, 5)
     )
-  ]
 
-  global stanmodel, rc, sim
-  stanmodel = Stanmodel(name="dyes", model=dyes, useMamba=false);
-  @time rc, sim = stan(stanmodel, dyesdata, ProjDir, CmdStanDir=CMDSTAN_HOME)
+  global stanmodel, rc, sim, cnames
+  
+  stanmodel = Stanmodel(name="dyes", model=dyes);
+  
+  @time rc, sim, cnames = stan(stanmodel, dyesdata, ProjDir,
+    CmdStanDir=CMDSTAN_HOME)
 
   if rc == 0
+    pi = filter(p -> length(p) > 2 && p[end-1:end] == "__", cnames)
+    p = filter(p -> !(p in  pi), cnames)
+    
+    chns = set_section(sim, 
+      Dict(
+        :parameters => ["theta", 
+          "tau_between", "tau_within", 
+          "sigma_between", "sigma_within",
+          "sigmasq_between", "sigmasq_within"],
+        :mu => ["mu.$i" for i in 1:6],
+        :internals => pi
+      )
+    )
+    describe(chns)
+    describe(chns, sections=[:mu])
+    #=
     println()
-    println("Test round(mean(theta)/100.0, digits=0) ≈ 15.0")
-    @test round(mean(sim[:,10,:])/100.0, digits=0) ≈ 15.0
+    println("Test round.(mean(theta)/100.0, digits=0) ≈ 15.0")
+    @test round.(mean(sim[:,10,:])/100.0, digits=0) ≈ 15.0
+    =#
   end
 end # cd

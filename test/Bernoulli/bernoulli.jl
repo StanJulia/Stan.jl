@@ -1,7 +1,6 @@
 ######### Stan program example  ###########
 
-using StanSample
-using StatsPlots
+using StanSample, Test
 
 bernoullimodel = "
 data { 
@@ -26,25 +25,16 @@ sm = SampleModel("bernoulli", bernoullimodel,
 (sample_file, log_file) = stan_sample(sm, data=observeddata);
 
 if !(sample_file == nothing)
-  chns = read_samples(sm)
+  
+  # Create MCMCChains object
+  chns = read_samples(sm);
+  
+  # Ceate a summary ChainDataFrame
+  summary_df = read_summary(sm);
 
-  
-  # Check if StatsPlots is available
-  if isdefined(Main, :StatsPlots)
-    cd(@__DIR__) do
-      p1 = plot(chns)
-      savefig(p1, "traceplot.pdf")
-      p2 = pooleddensity(chns)
-      savefig(p2, "pooleddensity.pdf")
-    end
+  @testset "Bernoulli" begin
+      @test summary_df[:theta, :mean][1] ≈ 0.34 atol=0.1
   end
-  
-  # Describe the results
-  show(chns)
-  println()
-  
-  # Ceate a ChainDataFrame
-  summary_df = read_summary(sm)
-  summary_df[:theta, [:mean, :ess]]
+
 end
 

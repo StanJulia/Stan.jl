@@ -178,17 +178,10 @@ sm = SampleModel("kid", kid);
 
 if !(sample_file == nothing)
   chn = read_samples(sm)
-  
-  # rename parameter vectors
-  #...
-  
-  # Describe the results
-  describe(chn) |> display
-  println()
+
+  # Update parameter names
+  # ...
   
   # Ceate a ChainDataFrame
   summary_df = read_summary(sm)
-  summary_df |> display
-  println()
-  summary_df[Symbol("beta[1]"), [:mean, :ess]]
 end
