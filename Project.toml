@@ -6,6 +6,7 @@ authors = ["Rob J Goedman <goedman@icloud.com>"]
 version = "6.0.0"
 
 [deps]
+Random = "9a3f8284-a2c9-5f02-9a11-845980a1fd5c"
 StanDiagnose = "fb13fc95-9a72-5e81-90ef-432a29d7f4c2"
 StanOptimize = "fbd8da12-e93d-5a64-9231-612a0707ab99"
 StanSample = "c1514b29-d3a0-5178-b312-660c88baa699"

@@ -1,19 +1,28 @@
 # Run Stan.jl examples.
 
 examples = [
-  "Bernoulli/bernoulli.jl",
-  #=
-  "../Examples/BernoulliOptimize/bernoulli_optimize.jl",
-  "../Examples/BernoulliDiagnose/bernoulli_diagnose.jl",
-  "../Examples/BernoulliVariational/bernoulli_variational.jl",
-  "../Examples/BernoulliInitTheta/bernoulliinittheta.jl",
-  "../Examples/BernoulliScalar/bernoulliscalar.jl",
-  "../Examples/Binomial/binomial.jl",
-  "../Examples/Binormal/binormal.jl",
-  "../Examples/EightSchools/schools8.jl",
-  "../Examples/Dyes/dyes.jl",
-  "ARM/Ch03/Kid/kidscore.jl"
-  =#
+
+  "Examples/ARM/Ch03/Kid/kidscore.jl",
+  "Examples/Bernoulli/bernoulli.jl",
+  "Examples/Binomial/binomial.jl",
+  "Examples/Binormal/binormal.jl",
+  "Examples/Dyes/dyes.jl",
+  "Examples/EightSchools/schools8.jl",
+  
+  "Examples_Stan_Methods/Diagnose/bernoulli_diagnose.jl",
+  "Examples_Stan_Methods/Generate_Quantities/generate_quantities.jl",
+  "Examples_Stan_Methods/Optimize/bernoulli_optimize.jl",
+  "Examples_Stan_Methods/Parse_and_Interpolate/example.jl",
+  "Examples_Stan_Methods/Variational/bernoulli_variational.jl",
+  
+  "Examples_Test_Cases/Diagnostics/bernoulli_diagnostics.jl",
+  "Examples_Test_Cases/InitThetaDict/bernoulliinittheta.jl",
+  #"Examples_Test_Cases/InitThetaDictArray/bernoulliinittheta.jl",
+  "Examples_Test_Cases/InitThetaFile/bernoulliinittheta.jl",
+  "Examples_Test_Cases/NamedArray/bernoulli_namedarray.jl",
+  "Examples_Test_Cases/ScalarObs/bernoulliscalar.jl",
+  "Examples_Test_Cases/ZeroLengthArray/zerolengtharray.jl",
+  
 ]
 
 for example in examples

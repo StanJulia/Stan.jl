@@ -17,8 +17,8 @@ static int current_statement_begin__;
 
 stan::io::program_reader prog_reader__() {
     stan::io::program_reader reader;
-    reader.add_event(0, 0, "start", "/Users/rob/.julia/dev/Stan/Examples/InitThetaDictArray/tmp/bernoulli.stan");
-    reader.add_event(13, 11, "end", "/Users/rob/.julia/dev/Stan/Examples/InitThetaDictArray/tmp/bernoulli.stan");
+    reader.add_event(0, 0, "start", "/Users/rob/.julia/dev/Stan/test/Examples_Stan_Methods/Variational/tmp/bernoulli.stan");
+    reader.add_event(13, 11, "end", "/Users/rob/.julia/dev/Stan/test/Examples_Stan_Methods/Variational/tmp/bernoulli.stan");
     return reader;
 }
 
