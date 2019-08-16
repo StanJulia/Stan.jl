@@ -1,10 +1,11 @@
+######### Stan program example  ###########
+
 using StanSample
 
 bernoullimodel = "
 data { 
   int<lower=1> N; 
   int<lower=0,upper=1> y[N];
-  real empty[0];
 } 
 parameters {
   real<lower=0,upper=1> theta;
@@ -15,12 +16,12 @@ model {
 }
 "
 
-observeddata = Dict("N" => 10, "y" => [0, 1, 0, 1, 0, 0, 0, 0, 0, 1],"empty"=>Float64[])
+datatheta = joinpath(@__DIR__, "bernoulli.data.R")
+inittheta = joinpath(@__DIR__ , "bernoulli.init.R")
 
+sm = SampleModel("bernoulli3", bernoullimodel);
 
-sm = SampleModel("bernoulli", bernoullimodel);
-
-(sample_file, log_file) = stan_sample(sm, data=observeddata);
+(sample_file, log_file) = stan_sample(sm, data=datatheta, init=inittheta)
 
 if !(sample_file == nothing)
   chn = read_samples(sm)

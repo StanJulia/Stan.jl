@@ -1,11 +1,8 @@
-######### CmdStan program example  ###########
+######### Stan program example  ###########
 
-using CmdStan, Test, Statistics
+using StanSample
 
-ProjDir = dirname(@__FILE__)
-cd(ProjDir) do
-
-  binorm = "
+  binorm_model = "
   transformed data {
       matrix[2,2] Sigma;
       vector[2] mu;
@@ -25,15 +22,15 @@ cd(ProjDir) do
   }
   "
 
-  global stanmodel, rc, sim
-  stanmodel = Stanmodel(name="binormal", model=binorm,
-    output_format=:array, Sample(save_warmup=true));
+sm = SampleModel("binormal", binorm_model);
 
-  rc, sim, cnames = stan(stanmodel, CmdStanDir=CMDSTAN_HOME)
+(sample_file, log_file) = stan_sample(sm)
 
-  if rc == 0
-    println()
-    println("Test round.(mean(y[1]), 0) ≈ 0.0")
-    @test round.(mean(sim[:,8,:]), digits=0) ≈ 0.0
-  end
-end # cd
+if !(sample_file == nothing)
+  chn = read_samples(sm)
+  
+  # Update parameter names
+  chn = set_names(chn, Dict(["y.$i" => "y[$i]" for i in 1:2]))
+  
+  describe(chn)
+end

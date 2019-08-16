@@ -179,8 +179,8 @@ sm = SampleModel("kid", kid);
 if !(sample_file == nothing)
   chn = read_samples(sm)
   
-  # rename parameter vectors
-  #...
+  # Update parameter names    
+  chn = set_names(chn,  Dict(["beta.$i" => "beta[$i]" for i in 1:3]))
   
   # Describe the results
   describe(chn) |> display
