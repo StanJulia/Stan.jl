@@ -30,7 +30,7 @@ branches:
     - /^v\d+\.\d+(\.\d+)?(-\S*)?$/
     
 notifications:
-  email: false
+  email: true
   
 git:
   depth: 99999999
