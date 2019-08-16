@@ -29,13 +29,6 @@ branches:
     - master
     - /^v\d+\.\d+(\.\d+)?(-\S*)?$/
     
-after_success:
-  - julia --project=test/coverage -e 'using Pkg; Pkg.instantiate()'
-  - julia --project=test/coverage test/coverage/coverage.jl
-  
-  - julia --project=docs -e 'using Pkg; ps=Pkg.PackageSpec(name="Documenter", version="0.19"); Pkg.add(ps); Pkg.pin(ps); Pkg.add("Stan"); Pkg.instantiate();'
-  - julia --project=docs --color=yes docs/make.jl
-
 notifications:
   email: false
   
