@@ -16,14 +16,14 @@ model {
 }
 "
 
-datatheta = joinpath(@__DIR__, "bernoulli.data.R")
-inittheta = joinpath(@__DIR__ , "bernoulli.init.R")
+observeddata = Dict("N" => 10, "y" => [0, 1, 0, 1, 0, 0, 0, 0, 0, 1])
 
-sm = SampleModel("bernoulli", bernoullimodel);
+sm = SampleModel("namedarray", bernoullimodel);
 
-(sample_file, log_file) = stan_sample(sm, data=datatheta, init=inittheta)
+(sample_file, log_file) = stan_sample(sm, data=observeddata);
 
 if !(sample_file == nothing)
   chn = read_samples(sm)
   describe(chn)
 end
+

@@ -33,9 +33,7 @@ bernoulli_model = "
   }
 ";
 
-tmpdir = joinpath(@__DIR__, "tmp")
-
-stanmodel = SampleModel("bernoulli", bernoulli_model, tmpdir=tmpdir)
+stanmodel = SampleModel("parse_and_interpolate", bernoulli_model)
 
 observeddata = Dict("N" => 10, "y" => [0, 1, 0, 1, 0, 0, 0, 0, 0, 1])
 

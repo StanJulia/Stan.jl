@@ -1,4 +1,4 @@
-######### Stan program example  ###########
+######### StanSample program example  ###########
 
 using StanSample
 
@@ -16,11 +16,11 @@ model {
 }
 "
 
-bernoullidata = Dict("N" => 1, "y" => [0])
+observeddata = Dict("N" => 10, "y" => [0, 1, 0, 1, 0, 0, 0, 0, 0, 1])
 
-sm = SampleModel("bernoulli", bernoullimodel);
+sm = SampleModel("diagnostics", bernoullimodel);
 
-(sample_file, log_file) = stan_sample(sm, data=bernoullidata);
+(sample_file, log_file) = stan_sample(sm, data=observeddata);
 
 if !(sample_file == nothing)
   chn = read_samples(sm)

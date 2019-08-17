@@ -17,7 +17,7 @@ model {
 
 observeddata = Dict("N" => 10, "y" => [0, 1, 0, 1, 0, 0, 0, 0, 0, 1],"empty"=>Float64[])
 
-sm = SampleModel("bernoulli", bernoullimodel);
+sm = SampleModel("zerolengtharray", bernoullimodel);
 
 (sample_file, log_file) = stan_sample(sm, data=observeddata);
 

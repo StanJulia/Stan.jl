@@ -32,9 +32,9 @@ if !(sample_file == nothing)
   # Ceate a summary ChainDataFrame
   summary_df = read_summary(sm);
 
-  @testset "Bernoulli" begin
+  #@testset "Bernoulli" begin
       @test summary_df[:theta, :mean][1] ≈ 0.34 atol=0.1
-  end
+  #end
 
 end
 

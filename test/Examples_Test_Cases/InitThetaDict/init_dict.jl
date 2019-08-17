@@ -17,17 +17,15 @@ model {
 "
 
 bernoullidata = Dict("N" => 10, "y" => [0, 1, 0, 1, 0, 0, 0, 0, 0, 1])
+inittheta = Dict("theta" => 0.60)
 
-inittheta = [
-  Dict("theta" => 0.6), Dict("theta" => 0.4), 
-  Dict("theta" => 0.2), Dict("theta" => 0.1)]
-
-sm = SampleModel("bernoulli", bernoullimodel,
+sm = SampleModel("init_dict", bernoullimodel,
   seed=StanBase.RandomSeed(seed=-1));
 
 (sample_file, log_file) = stan_sample(sm, data=bernoullidata, init=inittheta)
-  
+
 if !(sample_file == nothing)
   chn = read_samples(sm)
   describe(chn)
 end
+  

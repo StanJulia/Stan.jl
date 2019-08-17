@@ -17,11 +17,11 @@ model {
 "
 bernoulli_data = Dict("N" => 10, "y" => [0, 1, 0, 1, 0, 0, 0, 0, 0, 1])
 
-stanmodel = DiagnoseModel("bernoulli", bernoulli_model;
+sm = DiagnoseModel("diagnose", bernoulli_model;
   method=StanDiagnose.Diagnose(StanDiagnose.Gradient(epsilon=1e-6)));
 
-(sample_file, log_file) = stan_diagnose(stanmodel; data=bernoulli_data);
+(sample_file, log_file) = stan_diagnose(sm; data=bernoulli_data);
 
 if sample_file !== Nothing
-  diags = read_diagnose(stanmodel)
+  diags = read_diagnose(sm)
 end

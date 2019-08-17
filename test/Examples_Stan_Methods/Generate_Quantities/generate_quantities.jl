@@ -27,7 +27,7 @@ gq_data = Dict(
   "y" => [100, 950, 450]
 );
 
-stanmodel = SampleModel("Generate_quantities", gq);
+stanmodel = SampleModel("generate_quantities", gq);
 
 (sample_file, log_file) = stan_sample(stanmodel; data=gq_data)
 
