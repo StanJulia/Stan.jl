@@ -18,7 +18,7 @@ model {
 
 bernoulli_data = Dict("N" => 10, "y" => [0, 1, 0, 1, 0, 0, 0, 0, 0, 1])
 
-stanmodel = OptimizeModel("bernoulli",  bernoulli_model);
+stanmodel = OptimizeModel("optimize_1",  bernoulli_model);
 
 (sample_path, log_path) = stan_sample(stanmodel, data=bernoulli_data);
 
@@ -27,7 +27,7 @@ if sample_path !== Nothing
 end
 
 # Same with saved iterations
-sm = OptimizeModel("optimize", bernoulli_model;
+sm = OptimizeModel("optimize_2", bernoulli_model;
   method = StanOptimize.Optimize(save_iterations = true));
 
 (sample_path, log_path)  = stan_optimize(sm, data=bernoulli_data);
