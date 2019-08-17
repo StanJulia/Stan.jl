@@ -18,6 +18,7 @@ model {
 
 datatheta = joinpath(@__DIR__, "bernoulli.data.R")
 inittheta = joinpath(@__DIR__ , "bernoulli.init.R")
+println([datatheta, inittheta])
 
 sm = SampleModel("bernoulli3", bernoullimodel);
 

@@ -17,9 +17,9 @@ model {
 "
 
 datatheta = joinpath(@__DIR__, "bernoulli.data.R")
-inittheta = joinpath(@__DIR__ , "bernoulli.init.R")
+inittheta = joinpath(@__DIR__ , "bernoulli.init.R")[]
 
-sm = SampleModel("bernoulli3", bernoullimodel);
+sm = SampleModel("bernoulli", bernoullimodel);
 
 (sample_file, log_file) = stan_sample(sm, data=datatheta, init=inittheta)
 
