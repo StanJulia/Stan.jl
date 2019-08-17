@@ -6,7 +6,7 @@
 #*.pdf
 #*.svg
 bernoulli.bugs
-bernoulli.data.R
+#bernoulli.data.R
 win_tests_*.jl
 .ipynb_checkpoints
 docs/build/
