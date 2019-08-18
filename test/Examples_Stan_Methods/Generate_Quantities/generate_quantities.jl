@@ -44,8 +44,8 @@ if !(sample_file == Nothing)
   sdf = StanSample.read_summary(stanmodel)
   
   df = stan_generate_quantities(stanmodel, 1)
-  @test mean(df[!, :y_pred]) ≈ 412.0 atol=10.0
-  @test std(df[!, :y_pred]) ≈ 530.0 atol=10.0
+  @test mean(df[!, :y_pred]) ≈ 412.0 atol=100.0
+  @test std(df[!, :y_pred]) ≈ 500.0 atol=100.0
   
 end
 
