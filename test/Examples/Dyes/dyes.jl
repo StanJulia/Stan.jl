@@ -1,6 +1,6 @@
 ######### Stan batch program example  ###########
 
-using StanSample
+using StanSample, Test
 
 dyes ="
 data {
@@ -77,4 +77,15 @@ if !(sample_file == nothing)
   describe(chn)
   describe(chn, sections=[:mu])
   describe(chn, sections=[:internals])
+
+  # Ceate a ChainDataFrame
+  summary_df = read_summary(sm)
+  @test summary_df[:theta, [:mean]][1][1] ≈ 1527.5 atol=50.0
+  @test summary_df[Symbol("mu[1]"), [:mean]][1][1] ≈ 1512.5 atol=40.0
+  @test summary_df[Symbol("mu[2]"), [:mean]][1][1] ≈ 1528.1 atol=40.0
+  @test summary_df[Symbol("mu[3]"), [:mean]][1][1] ≈ 1553.8 atol=40.0
+  @test summary_df[Symbol("mu[4]"), [:mean]][1][1] ≈ 1507.2 atol=40.0
+  @test summary_df[Symbol("mu[5]"), [:mean]][1][1] ≈ 1578.7 atol=40.0
+  @test summary_df[Symbol("mu[6]"), [:mean]][1][1] ≈ 1487.3 atol=40.0
+  
 end

@@ -1,6 +1,6 @@
 ######### ARM Ch03: kid score example  ###########
 
-using StanSample
+using StanSample, Test
 
 kid = "
 data {
@@ -185,5 +185,8 @@ if !(sample_file == nothing)
   # Ceate a ChainDataFrame
   summary_df = read_summary(sm)
   summary_df[Symbol("beta[1]"), [:mean, :ess]]
-  
+  @test summary_df[Symbol("beta[1]"), [:mean]][1][1] ≈ 25.5 atol=12.0
+  @test summary_df[Symbol("beta[2]"), [:mean]][1][1] ≈ 6.01 atol=4.0
+  @test summary_df[Symbol("beta[3]"), [:mean]][1][1] ≈ 0.565 atol=0.1
+  @test summary_df[Symbol("sigma"), [:mean]][1][1] ≈ 18.2 atol=1.2
 end

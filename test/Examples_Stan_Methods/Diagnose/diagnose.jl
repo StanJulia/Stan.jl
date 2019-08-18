@@ -1,6 +1,6 @@
 ######## Stan diagnose example  ###########
 
-using StanDiagnose
+using StanDiagnose, Test
 
 bernoulli_model = "
 data { 
@@ -24,4 +24,7 @@ sm = DiagnoseModel("diagnose", bernoulli_model;
 
 if sample_file !== Nothing
   diags = read_diagnose(sm)
+
+@test diags[:finite_dif][end] ≈ -5.5421 atol=1.0
+
 end

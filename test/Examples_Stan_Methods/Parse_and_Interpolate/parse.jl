@@ -1,4 +1,4 @@
-using StanSample
+using StanSample, Test
 
 ProjDir = @__DIR__
 cd(ProjDir)
@@ -50,5 +50,6 @@ if sample_file !== Nothing
   sdf = read_summary(stanmodel)
 
   # Retrieve mean value of theta from the summary
-  sdf[:theta, :mean]
+  @test sdf[:theta, :mean][1] ≈ 0.33 atol=0.1
+  
 end

@@ -1,6 +1,6 @@
-######### CmdStan optimize example  ###########
+######### Stan optimize example  ###########
 
-using StanOptimize
+using StanOptimize, Test
 
 bernoulli_model = "
 data { 
@@ -24,6 +24,8 @@ stanmodel = OptimizeModel("optimize_1",  bernoulli_model);
 
 if sample_path !== Nothing
   optim1, cnames = read_optimize(stanmodel)
+  
+  @test optim1["theta"][end] ≈ 0.3 atol=0.001
 end
 
 # Same with saved iterations
@@ -34,4 +36,5 @@ sm = OptimizeModel("optimize_2", bernoulli_model;
 
 if sample_path !== Nothing
   optim2, cnames = read_optimize(sm)
+  @test optim2["theta"][end] ≈ 0.3 atol=0.001
 end

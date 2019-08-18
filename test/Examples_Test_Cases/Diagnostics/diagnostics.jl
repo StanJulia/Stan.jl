@@ -1,6 +1,6 @@
 ######### StanSample program example  ###########
 
-using StanSample
+using StanSample, Test
 
 bernoullimodel = "
 data { 
@@ -25,4 +25,7 @@ sm = SampleModel("diagnostics", bernoullimodel);
 if !(sample_file == nothing)
   chn = read_samples(sm)
   describe(chn)
+  
+  sdf = read_summary(sm)
+  @test sdf[:theta, :mean][1] ≈ 0.33 atol=0.2
 end

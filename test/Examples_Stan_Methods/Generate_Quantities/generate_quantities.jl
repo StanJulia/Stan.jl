@@ -1,4 +1,6 @@
-using StanSample
+######## Stan diagnose example  ###########
+
+using StanSample, Test, Statistics
 
 ProjDir = @__DIR__
 cd(ProjDir)
@@ -41,7 +43,10 @@ if !(sample_file == Nothing)
   # Show the same output in DataFrame format
   sdf = StanSample.read_summary(stanmodel)
   
-  stan_generate_quantities(stanmodel, 1)
+  df = stan_generate_quantities(stanmodel, 1)
+  @test mean(df[!, :y_pred]) ≈ 412.0 atol=10.0
+  @test std(df[!, :y_pred]) ≈ 530.0 atol=10.0
+  
 end
 
 

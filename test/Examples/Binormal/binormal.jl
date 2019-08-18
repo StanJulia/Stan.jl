@@ -1,6 +1,6 @@
 ######### Stan program example  ###########
 
-using StanSample
+using StanSample, Test
 
   binorm_model = "
   transformed data {
@@ -33,4 +33,10 @@ if !(sample_file == nothing)
   chn = set_names(chn, Dict(["y.$i" => "y[$i]" for i in 1:2]))
   
   describe(chn)
+  
+  # Ceate a ChainDataFrame
+  summary_df = read_summary(sm)
+  @test summary_df[Symbol("y[1]"), [:mean]][1][1] ≈ 0.0 atol=2.0
+  @test summary_df[Symbol("y[2]"), [:mean]][1][1] ≈ 0.0 atol=2.0
+  
 end

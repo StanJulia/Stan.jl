@@ -1,6 +1,6 @@
 ######### StanVariational Bernoulli example  ###########
 
-using StanVariational
+using StanVariational, Test
 
 bernoulli_model = "
 data { 
@@ -34,5 +34,6 @@ if sample_file !== Nothing
 
   # Retrieve mean value of theta from the summary
   sdf[:theta, :mean]
+  @test sdf[:theta, :mean][1] ≈ 0.33 atol=0.1
 
 end

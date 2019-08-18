@@ -1,4 +1,4 @@
-using StanSample
+using StanSample, Test
 
 binom_model = "
 // Inferring a Rate
@@ -36,4 +36,9 @@ binom_data = Dict("n" => 10, "k" => 5)
 if !(sample_file == nothing)
   chn = read_samples(sm)
   describe(chn)
+  
+  # Ceate a ChainDataFrame
+  summary_df = read_summary(sm)
+  @test summary_df[:theta, [:mean]][1][1] ≈ 0.24 atol=0.8
+  
 end
