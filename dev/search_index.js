@@ -25,6 +25,38 @@ var documenterSearchIndex = {"docs": [
 },
 
 {
+    "location": "INTRO/#Table-of-contents-1",
+    "page": "Home",
+    "title": "Table of contents",
+    "category": "section",
+    "text": ""
+},
+
+{
+    "location": "INTRO/#Examples-1",
+    "page": "Home",
+    "title": "Examples",
+    "category": "section",
+    "text": "ARM kids example\nBernoulli..."
+},
+
+{
+    "location": "INTRO/#Examples-showing-cmdstan-methods-1",
+    "page": "Home",
+    "title": "Examples showing cmdstan methods",
+    "category": "section",
+    "text": "Diagnose\nGenerate_Quantities\nOptimize\nParseandInterpolate_Example\nVariational\nNuts sampling diagnose using the diagnose binary..."
+},
+
+{
+    "location": "INTRO/#Examples-added-to-test-special-cases-1",
+    "page": "Home",
+    "title": "Examples added to test special cases",
+    "category": "section",
+    "text": "Init using a single Dict\nInit with an Array{Dict, 1}\nInit using a .R file..."
+},
+
+{
     "location": "INTRO/#References-1",
     "page": "Home",
     "title": "References",
