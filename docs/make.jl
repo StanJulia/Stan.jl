@@ -1,21 +1,21 @@
 using Documenter, Stan
-makedocs(
-    format = :html,
-    sitename = "Stan",
-    pages = Any[
-        "Introduction" => "INTRO.md",
-        "Installation" => "INSTALLATION.md",
-        "Walkthrough" => "WALKTHROUGH.md",
-        "Versions" => "VERSIONS.md",
-        "Stan.jl documentation" => "index.md",
-    ]
+
+DOC_ROOT = joinpath(dirname(pathof(Stan)), "..", "docs")
+
+makedocs( root = DOC_ROOT,
+  modules = [Stan],
+  sitename = "StanJulia/Stan.jl",
+  authors = "Rob J Goedman",
+  pages = Any[
+      "Home" => "INTRO.md",
+      "Installation" => "INSTALLATION.md",
+      "Walkthrough" => "WALKTHROUGH.md",
+      "Versions" => "VERSIONS.md",
+      "Index" => "index.md"
+  ]
 )
 
 deploydocs(
-    repo = "github.com/StanJulia/Stan.jl.git",
-    target = "build",
-    julia = "1.3",
-    osname = "linux",
-    deps = nothing,
-    make = nothing
-)
+  root = DOC_ROOT,
+  repo = "github.com/StanJulia/Stan.jl.git",
+ )
