@@ -51,11 +51,11 @@ if !(sample_file == nothing)
   
   # Ceate a ChainDataFrame
   summary_df = read_summary(sm)
-  @test summary_df[:mu, [:mean]][1][1] ≈ 7.64 atol=10.0
-  @test summary_df[:tau, [:mean]][1][1] ≈ 6.50 atol=10.0
-  @test summary_df[Symbol("theta[1]"), [:mean]][1][1] ≈ 11.1 atol=16.0
-  @test summary_df[Symbol("theta[8]"), [:mean]][1][1] ≈ 8.3 atol=16.0
-  @test summary_df[Symbol("eta[1]"), [:mean]][1][1] ≈ 0.4 atol=2.0
-  @test summary_df[Symbol("eta[8]"), [:mean]][1][1] ≈ 0.066 atol=2.0
+  @test summary_df[:mu, :mean][1] ≈ 7.64 atol=10.0
+  @test summary_df[:tau, :mean][1] ≈ 6.50 atol=10.0
+  @test summary_df[Symbol("theta[1]"), :mean][1] ≈ 11.1 atol=16.0
+  @test summary_df[Symbol("theta[8]"), :mean][1] ≈ 8.3 atol=16.0
+  @test summary_df[Symbol("eta[1]"), :mean][1] ≈ 0.4 atol=2.0
+  @test summary_df[Symbol("eta[8]"), :mean][1] ≈ 0.066 atol=2.0
 
 end

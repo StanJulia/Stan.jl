@@ -36,7 +36,7 @@ if !(sample_file == nothing)
   
   # Ceate a ChainDataFrame
   summary_df = read_summary(sm)
-  @test summary_df[Symbol("y[1]"), [:mean]][1][1] ≈ 0.0 atol=2.0
-  @test summary_df[Symbol("y[2]"), [:mean]][1][1] ≈ 0.0 atol=2.0
+  @test summary_df[Symbol("y[1]"), :mean][1] ≈ 0.0 atol=2.0
+  @test summary_df[Symbol("y[2]"), :mean][1] ≈ 0.0 atol=2.0
   
 end

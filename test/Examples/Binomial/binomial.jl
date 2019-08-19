@@ -39,6 +39,6 @@ if !(sample_file == nothing)
   
   # Ceate a ChainDataFrame
   summary_df = read_summary(sm)
-  @test summary_df[:theta, [:mean]][1][1] ≈ 0.24 atol=0.8
+  @test summary_df[:theta, :mean][1] ≈ 0.24 atol=0.8
   
 end
