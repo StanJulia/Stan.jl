@@ -8,6 +8,31 @@
 
 [Stan.jl](https://github.com/StanJulia/Stan.jl) wraps CmdStan and captures the samples for further processing.
 
+## Table of contents
+
+### Examples
+
+1. ARM kids example
+2. Bernoulli
+...
+
+### Examples showing cmdstan methods
+
+1. Diagnose
+2. Generate_Quantities
+3. Optimize
+4. Parse_and_Interpolate_Example
+5. Variational
+6. Nuts sampling diagnose using the diagnose binary
+...
+
+### Examples added to test special cases
+
+1. Init using a single Dict
+2. Init with an Array{Dict, 1}
+3. Init using a .R file
+...
+
 ## References
 
 There is no shortage of good books on Bayesian statistics. A few of my favorites are:
