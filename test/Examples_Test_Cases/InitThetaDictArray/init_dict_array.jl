@@ -1,4 +1,4 @@
-######### CmdStan program example  ###########
+######### Stan program example  ###########
 
 using StanSample, Test
 
