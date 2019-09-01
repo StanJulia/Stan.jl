@@ -73,9 +73,9 @@ var documenterSearchIndex = {"docs": [
 },
 
 {
-    "location": "INSTALLATION/#CmdStan-installation-1",
+    "location": "INSTALLATION/#Cmdstan-installation-1",
     "page": "Installation",
-    "title": "CmdStan installation",
+    "title": "Cmdstan installation",
     "category": "section",
     "text": ""
 },
@@ -85,7 +85,7 @@ var documenterSearchIndex = {"docs": [
     "page": "Installation",
     "title": "Minimal requirement",
     "category": "section",
-    "text": "To run this version of the Stan.jl package on your local machine, it assumes that the  CmdStan executable is properly installed."
+    "text": "To run this version of the Stan.jl package on your local machine, it assumes that the  cmdstan executable is properly installed."
 },
 
 {
@@ -102,6 +102,238 @@ var documenterSearchIndex = {"docs": [
     "title": "A walk-through example",
     "category": "section",
     "text": "Make StanSample.jl available:using StanSampleDefine a variable \'model\' to hold the Stan language model definition:model = \"\ndata { \n  int<lower=0> N; \n  int<lower=0,upper=1> y[N];\n} \nparameters {\n  real<lower=0,upper=1> theta;\n} \nmodel {\n  theta ~ beta(1,1);\n    y ~ bernoulli(theta);\n}\n\"Create a SampleModel object:sm = SampleModel(\"bernoulli\", model)Above SampleModel() call creates a default model for sampling. See ?SampleModel for details.The observed input data:data = Dict(\"N\" => 10, \"y\" => [0, 1, 0, 1, 0, 0, 0, 0, 0, 1])Run a simulation by calling stan_sample(), passing in the model and data: (sample_file, log_file) = stan_sample(sm, data)If sample_file is defined the sampling completed and can (and should!) be inspected:if !(sample_file == Nothing)\n  chns = read_samples(sm)\n  describe(chns)\n  plot(chns)\nend"
+},
+
+{
+    "location": "EXAMPLES/#",
+    "page": "Feature cross reference",
+    "title": "Feature cross reference",
+    "category": "page",
+    "text": ""
+},
+
+{
+    "location": "EXAMPLES/#Cross-referenece-of-features-1",
+    "page": "Feature cross reference",
+    "title": "Cross referenece of features",
+    "category": "section",
+    "text": "This section is intended to help find an example that shows a specific feature. Work-in-progress!"
+},
+
+{
+    "location": "EXAMPLES/#Stan-manual-examples-1",
+    "page": "Feature cross reference",
+    "title": "Stan manual examples",
+    "category": "section",
+    "text": ""
+},
+
+{
+    "location": "EXAMPLES/#ARM-1",
+    "page": "Feature cross reference",
+    "title": "ARM",
+    "category": "section",
+    "text": ""
+},
+
+{
+    "location": "EXAMPLES/#Bernoulli-1",
+    "page": "Feature cross reference",
+    "title": "Bernoulli",
+    "category": "section",
+    "text": ""
+},
+
+{
+    "location": "EXAMPLES/#Binomial-1",
+    "page": "Feature cross reference",
+    "title": "Binomial",
+    "category": "section",
+    "text": ""
+},
+
+{
+    "location": "EXAMPLES/#Binormal-1",
+    "page": "Feature cross reference",
+    "title": "Binormal",
+    "category": "section",
+    "text": ""
+},
+
+{
+    "location": "EXAMPLES/#Dyes-1",
+    "page": "Feature cross reference",
+    "title": "Dyes",
+    "category": "section",
+    "text": ""
+},
+
+{
+    "location": "EXAMPLES/#Eight-schools-1",
+    "page": "Feature cross reference",
+    "title": "Eight schools",
+    "category": "section",
+    "text": ""
+},
+
+{
+    "location": "EXAMPLES/#Stan-language-methods-(Sample,-Optimize,-...)-1",
+    "page": "Feature cross reference",
+    "title": "Stan language methods (Sample, Optimize, ...)",
+    "category": "section",
+    "text": ""
+},
+
+{
+    "location": "EXAMPLES/#StanSample.jl-1",
+    "page": "Feature cross reference",
+    "title": "StanSample.jl",
+    "category": "section",
+    "text": ""
+},
+
+{
+    "location": "EXAMPLES/#StanOpimize-1",
+    "page": "Feature cross reference",
+    "title": "StanOpimize",
+    "category": "section",
+    "text": ""
+},
+
+{
+    "location": "EXAMPLES/#StanVariational-1",
+    "page": "Feature cross reference",
+    "title": "StanVariational",
+    "category": "section",
+    "text": ""
+},
+
+{
+    "location": "EXAMPLES/#StanDiagnose-1",
+    "page": "Feature cross reference",
+    "title": "StanDiagnose",
+    "category": "section",
+    "text": ""
+},
+
+{
+    "location": "EXAMPLES/#Generate_Quantities-1",
+    "page": "Feature cross reference",
+    "title": "Generate_Quantities",
+    "category": "section",
+    "text": ""
+},
+
+{
+    "location": "EXAMPLES/#Include-external-functions-1",
+    "page": "Feature cross reference",
+    "title": "Include external functions",
+    "category": "section",
+    "text": ""
+},
+
+{
+    "location": "EXAMPLES/#Special-input-and-output-1",
+    "page": "Feature cross reference",
+    "title": "Special input and output",
+    "category": "section",
+    "text": ""
+},
+
+{
+    "location": "EXAMPLES/#Init-settings-1",
+    "page": "Feature cross reference",
+    "title": "Init settings",
+    "category": "section",
+    "text": ""
+},
+
+{
+    "location": "EXAMPLES/#Init-with-an-array-of-dicts-1",
+    "page": "Feature cross reference",
+    "title": "Init with an array of dicts",
+    "category": "section",
+    "text": ""
+},
+
+{
+    "location": "EXAMPLES/#Init-froma-file-1",
+    "page": "Feature cross reference",
+    "title": "Init froma file",
+    "category": "section",
+    "text": ""
+},
+
+{
+    "location": "EXAMPLES/#NamedArray-1",
+    "page": "Feature cross reference",
+    "title": "NamedArray",
+    "category": "section",
+    "text": ""
+},
+
+{
+    "location": "EXAMPLES/#Scalar-observation-1",
+    "page": "Feature cross reference",
+    "title": "Scalar observation",
+    "category": "section",
+    "text": ""
+},
+
+{
+    "location": "EXAMPLES/#Zero-length-array-test-1",
+    "page": "Feature cross reference",
+    "title": "Zero length array test",
+    "category": "section",
+    "text": ""
+},
+
+{
+    "location": "EXAMPLES/#TBD-1",
+    "page": "Feature cross reference",
+    "title": "TBD",
+    "category": "section",
+    "text": ""
+},
+
+{
+    "location": "EXAMPLES/#Stan\'s-diagnose-executable-example-1",
+    "page": "Feature cross reference",
+    "title": "Stan\'s diagnose executable example",
+    "category": "section",
+    "text": ""
+},
+
+{
+    "location": "EXAMPLES/#MCMCChains-1",
+    "page": "Feature cross reference",
+    "title": "MCMCChains",
+    "category": "section",
+    "text": ""
+},
+
+{
+    "location": "EXAMPLES/#MCMCChains-to-DataFrame-1",
+    "page": "Feature cross reference",
+    "title": "MCMCChains to DataFrame",
+    "category": "section",
+    "text": ""
+},
+
+{
+    "location": "EXAMPLES/#NamedTuple-input-and-output-1",
+    "page": "Feature cross reference",
+    "title": "NamedTuple input and output",
+    "category": "section",
+    "text": ""
+},
+
+{
+    "location": "EXAMPLES/#MCMCChains-to-Array-1",
+    "page": "Feature cross reference",
+    "title": "MCMCChains to Array",
+    "category": "section",
+    "text": ""
 },
 
 {
