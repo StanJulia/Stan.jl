@@ -10,6 +10,7 @@ makedocs( root = DOC_ROOT,
       "Home" => "INTRO.md",
       "Installation" => "INSTALLATION.md",
       "Walkthrough" => "WALKTHROUGH.md",
+      "Feature cross reference" => "EXAMPLES.md"
       "Versions" => "VERSIONS.md",
       "Index" => "index.md"
   ]
