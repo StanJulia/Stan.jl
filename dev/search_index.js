@@ -113,9 +113,9 @@ var documenterSearchIndex = {"docs": [
 },
 
 {
-    "location": "EXAMPLES/#Cross-referenece-of-features-1",
+    "location": "EXAMPLES/#Cross-reference-of-features-1",
     "page": "Feature cross reference",
-    "title": "Cross referenece of features",
+    "title": "Cross reference of features",
     "category": "section",
     "text": "This section is intended to help find an example that shows a specific feature. Work-in-progress!"
 },
@@ -125,15 +125,7 @@ var documenterSearchIndex = {"docs": [
     "page": "Feature cross reference",
     "title": "Stan manual examples",
     "category": "section",
-    "text": ""
-},
-
-{
-    "location": "EXAMPLES/#ARM-1",
-    "page": "Feature cross reference",
-    "title": "ARM",
-    "category": "section",
-    "text": ""
+    "text": "These examples show basic usage patterns of this package."
 },
 
 {
@@ -141,7 +133,7 @@ var documenterSearchIndex = {"docs": [
     "page": "Feature cross reference",
     "title": "Bernoulli",
     "category": "section",
-    "text": ""
+    "text": "Stan\'s goto initial example. This example touches pretty much most features available in StanSample.jl and MCMCChains.jl.Features demonstrated:Define a basic SampleModel.\nSet up a permanent tmpdir to prevent recompilation of a Stan language program. Default is to create a new directory using mktempdir().\nUpdate sample and adaptation default parameter settings.\nCall stan_sample.\nCheck the return value of stan_sample, in this example sample_file.\nCreate and show an MCMCChains.Chains object, chns.\nConvert a chns to a DataFrame.\nDisplay ESS (estimated effective sample size).\nPlot the chns.\nExtract Stan\'s sampling summary (MCMCChains.jl provides a similar summary).\nExtract a, or a few, fields from Stan\'s summary, e.g. for comparison purposes."
 },
 
 {
@@ -149,7 +141,7 @@ var documenterSearchIndex = {"docs": [
     "page": "Feature cross reference",
     "title": "Binomial",
     "category": "section",
-    "text": ""
+    "text": "Features demonstrated:Use of the generated_quantities section in a Stan program."
 },
 
 {
@@ -157,23 +149,15 @@ var documenterSearchIndex = {"docs": [
     "page": "Feature cross reference",
     "title": "Binormal",
     "category": "section",
-    "text": ""
+    "text": "Features demonstrated:Rename parameters in MCMCChains objects."
 },
 
 {
-    "location": "EXAMPLES/#Dyes-1",
+    "location": "EXAMPLES/#Dyes,-ARM-and-Eight-schools-examples-1",
     "page": "Feature cross reference",
-    "title": "Dyes",
+    "title": "Dyes, ARM and Eight schools examples",
     "category": "section",
-    "text": ""
-},
-
-{
-    "location": "EXAMPLES/#Eight-schools-1",
-    "page": "Feature cross reference",
-    "title": "Eight schools",
-    "category": "section",
-    "text": ""
+    "text": "Slightly larger Stan model examples.Features demonstrated:Manipulate sections in MCMCChains objects."
 },
 
 {
