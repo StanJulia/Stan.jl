@@ -2,6 +2,8 @@
 
 using StanDiagnose, Test
 
+Random.seed!(1)
+
 bernoulli_model = "
 data { 
   int<lower=0> N; 
@@ -24,7 +26,6 @@ sm = DiagnoseModel("diagnose", bernoulli_model;
 
 if sample_file !== Nothing
   diags = read_diagnose(sm)
-
-@test diags[:finite_dif][end] ≈ -5.5421 atol=1.0
-
+  @test diags[:error][1] ≈ 0.0  atol=0.000001
+  #diags |> display
 end
