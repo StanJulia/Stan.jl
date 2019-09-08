@@ -2,8 +2,6 @@
 
 using StanDiagnose, Test
 
-Random.seed!(1)
-
 bernoulli_model = "
 data { 
   int<lower=0> N; 
