@@ -43,7 +43,7 @@ if !(sample_file == Nothing)
   sdf = StanSample.read_summary(stanmodel)
   display(sdf)
   
-  stan_generate_quantities(stanmodel, 1)
+  StanSample.stan_generate_quantities(stanmodel, 1)
 end
 
 

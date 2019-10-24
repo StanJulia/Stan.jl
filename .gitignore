@@ -8,4 +8,4 @@ win_tests_*.jl
 .ipynb_checkpoints
 docs/build/
 docs/site/
-Manifest.toml
+#Manifest.toml
