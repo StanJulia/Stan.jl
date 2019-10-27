@@ -349,13 +349,13 @@ var documenterSearchIndex = {"docs": [
     "page": "Versions",
     "title": "Testing",
     "category": "section",
-    "text": "This version of the package has primarily been tested on Mac OSX 10.14, Julia 1.3 and CmdStan 2.20.0."
+    "text": "This version of the package has primarily been tested on Mac OSX 10.14, Julia 1.3 and CmdStan 2.21.0."
 },
 
 {
-    "location": "VERSIONS/#Version-6.0.0-1",
+    "location": "VERSIONS/#Version-5.0.0-1",
     "page": "Versions",
-    "title": "Version 6.0.0",
+    "title": "Version 5.0.0",
     "category": "section",
     "text": "Initial release of Stan.jl based on StanJulia organization packages."
 },
