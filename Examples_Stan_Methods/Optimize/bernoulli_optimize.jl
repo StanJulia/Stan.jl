@@ -1,4 +1,4 @@
-######### CmdStan optimize example  ###########
+######### StanOptimize example  ###########
 
 using StanOptimize
 

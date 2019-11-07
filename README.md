@@ -24,6 +24,6 @@ My intention is to continue maintenance of CmdStan.jl for at least another two y
 
 A collection of documented examples to use Stan (as an external program) from Julia. 
 
-Stan's cmdstan executable needs to be installed separatedly. Please see [CmdStan installation](http://StanJulia.github.io/Stan.jl/latest/INSTALLATION.html). 
+Stan's cmdstan executable needs to be installed separatedly. Please see [cmdstan installation](http://StanJulia.github.io/Stan.jl/latest/INSTALLATION.html). 
 
 For more info on Stan, please go to <http://mc-stan.org>.
