@@ -9,9 +9,9 @@ var documenterSearchIndex = {"docs": [
 },
 
 {
-    "location": "INTRO/#A-Julia-interface-to-CmdStan-1",
+    "location": "INTRO/#A-Julia-interface-to-Stan\'s-cmdstan-1",
     "page": "Home",
-    "title": "A Julia interface to CmdStan",
+    "title": "A Julia interface to Stan\'s cmdstan",
     "category": "section",
     "text": ""
 },
@@ -21,7 +21,7 @@ var documenterSearchIndex = {"docs": [
     "page": "Home",
     "title": "Stan.jl",
     "category": "section",
-    "text": "Stan is a system for statistical modeling, data analysis, and prediction. It is extensively used in social, biological, and physical sciences, engineering, and business. The Stan program language and interfaces are documented here.CmdStan is the shell/command line interface to run Stan language programs. Stan.jl wraps CmdStan and captures the samples for further processing."
+    "text": "Stan is a system for statistical modeling, data analysis, and prediction. It is extensively used in social, biological, and physical sciences, engineering, and business. The Stan program language and interfaces are documented here.cmdstan is the shell/command line interface to run Stan language programs. Stan.jl wraps cmdstan and captures the samples for further processing."
 },
 
 {
@@ -341,7 +341,7 @@ var documenterSearchIndex = {"docs": [
     "page": "Versions",
     "title": "Approach",
     "category": "section",
-    "text": "A version of a Julia package is labeled (tagged) as v\"major.minor.patch\".My intention is to update the patch level whenever I make updates which are not visible to any of the existing examples.New functionality will be introduced in minor level updates. This includes adding new examples, tests and the introduction of new arguments if they default to previous behavior, e.g. in v\"1.1.0\" the useMamba and init arguments to Stanmodel().Changes that require updates to some examples bump the major level.Updates for new releases of Julia and CmdStan bump the appropriate level."
+    "text": "A version of a Julia package is labeled (tagged) as v\"major.minor.patch\".My intention is to update the patch level whenever I make updates which are not visible to any of the existing examples.New functionality will be introduced in minor level updates. This includes adding new examples, tests and the introduction of new arguments if they default to previous behavior, e.g. in v\"1.1.0\" the useMamba and init arguments to Stanmodel().Changes that require updates to some examples bump the major level.Updates for new releases of Julia and cmdstan bump the appropriate level."
 },
 
 {
@@ -349,7 +349,7 @@ var documenterSearchIndex = {"docs": [
     "page": "Versions",
     "title": "Testing",
     "category": "section",
-    "text": "This version of the package has primarily been tested on Mac OSX 10.14, Julia 1.3 and CmdStan 2.21.0."
+    "text": "This version of the package has primarily been tested on Mac OSX 10.14, Julia 1.3 and cmdstan 2.21.0."
 },
 
 {
