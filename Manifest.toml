@@ -536,15 +536,15 @@ version = "0.8.0"
 
 [[StanBase]]
 deps = ["CSV", "DataFrames", "DelimitedFiles", "Distributed", "DocStringExtensions", "MCMCChains", "NamedTupleTools", "Parameters", "Random", "Reexport", "StanDump", "StanRun", "StanSamples", "Unicode"]
-git-tree-sha1 = "59fca7055b04e55681e0868f51dbad4724b8b0bb"
+git-tree-sha1 = "6437fdf3a2054657eeba7aef0afc90ddcdcca880"
 uuid = "d0ee94f6-a23d-54aa-bbe9-7f572d6da7f5"
-version = "1.0.1"
+version = "1.0.2"
 
 [[StanDiagnose]]
 deps = ["BinDeps", "CSV", "DataFrames", "DelimitedFiles", "Distributed", "DocStringExtensions", "Documenter", "MCMCChains", "NamedTupleTools", "Parameters", "Random", "Reexport", "StanBase", "StanDump", "StanRun", "StanSamples", "Statistics", "Test", "Unicode"]
-git-tree-sha1 = "0ff1427cf11ec123c32d2654874e15f4a26be4c7"
+git-tree-sha1 = "8afa95e99e11499c89704d3a72a3e7cd6f20c51e"
 uuid = "fb13fc95-9a72-5e81-90ef-432a29d7f4c2"
-version = "1.0.0"
+version = "1.0.1"
 
 [[StanDump]]
 deps = ["ArgCheck", "DocStringExtensions"]
@@ -554,9 +554,9 @@ version = "0.2.0"
 
 [[StanOptimize]]
 deps = ["BinDeps", "CSV", "DataFrames", "DelimitedFiles", "Distributed", "DocStringExtensions", "Documenter", "MCMCChains", "NamedTupleTools", "Parameters", "Random", "Reexport", "StanBase", "StanDump", "StanRun", "StanSamples", "Statistics", "Test", "Unicode"]
-git-tree-sha1 = "60e9485bf4c4e3642522d1e5ddef783e72281b6d"
+git-tree-sha1 = "170a4e58279fa6119471939714928bdfe0e67850"
 uuid = "fbd8da12-e93d-5a64-9231-612a0707ab99"
-version = "1.0.0"
+version = "1.0.1"
 
 [[StanRun]]
 deps = ["ArgCheck", "Distributed", "DocStringExtensions", "Parameters", "StanDump"]
@@ -566,9 +566,9 @@ version = "0.2.1"
 
 [[StanSample]]
 deps = ["CSV", "DataFrames", "DelimitedFiles", "Distributed", "DocStringExtensions", "MCMCChains", "NamedTupleTools", "Parameters", "Reexport", "StanBase", "StanDump", "StanRun", "StanSamples", "Unicode"]
-git-tree-sha1 = "3d9c58fe0a02357bfc34b91fe76b45201a66186a"
+git-tree-sha1 = "d47e05ef1df3d01591e65e7bb69550cad20208ab"
 uuid = "c1514b29-d3a0-5178-b312-660c88baa699"
-version = "1.0.0"
+version = "1.0.1"
 
 [[StanSamples]]
 deps = ["ArgCheck", "DocStringExtensions", "ElasticArrays"]
@@ -578,9 +578,9 @@ version = "0.1.0"
 
 [[StanVariational]]
 deps = ["DataFrames", "DelimitedFiles", "Distributed", "DocStringExtensions", "MCMCChains", "NamedTupleTools", "Parameters", "Reexport", "StanBase", "StanDump", "StanRun", "StanSamples", "Unicode"]
-git-tree-sha1 = "b74db7a1266e7e44bb9219f2998fabaf708cf4ab"
+git-tree-sha1 = "27c09485e86f3f95df36eb8b1709c36eeb845fb8"
 uuid = "6ede68ce-8466-5085-8a79-4c4de3d9cf4a"
-version = "1.0.0"
+version = "1.0.1"
 
 [[StaticArrays]]
 deps = ["LinearAlgebra", "Random", "Statistics"]
