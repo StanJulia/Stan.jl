@@ -21,7 +21,7 @@ observed_data = Dict("N" => 10, "y" => [0, 1, 0, 1, 0, 0, 0, 0, 0, 1])
 
 # Default for tmpdir is to create a new tmpdir location
 # To prevent recompilation of a Stan progam, choose a fixed location,
-tmpdir=joinpath(@__DIR__, "tmp")
+tmpdir=mktempdir()
 
 sm = SampleModel("bernoulli", bernoullimodel,
   method=StanSample.Sample(save_warmup=true, num_warmup=1000, 
@@ -50,9 +50,9 @@ if !isnothing(sample_file)
   if isdefined(Main, :StatsPlots)
     cd(@__DIR__) do
       p1 = plot(chns)
-      savefig(p1, "traceplot.pdf")
+      savefig(p1, joinpath(tmpdir, "traceplot.pdf"))
       p2 = pooleddensity(chns)
-      savefig(p2, "pooleddensity.pdf")
+      savefig(p2, joinpath(tmpdir, "pooleddensity.pdf"))
     end
   end
   
