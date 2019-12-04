@@ -73,9 +73,9 @@ var documenterSearchIndex = {"docs": [
 },
 
 {
-    "location": "INSTALLATION/#Cmdstan-installation-1",
+    "location": "INSTALLATION/#cmdstan-installation-1",
     "page": "Installation",
-    "title": "Cmdstan installation",
+    "title": "cmdstan installation",
     "category": "section",
     "text": ""
 },
@@ -85,7 +85,7 @@ var documenterSearchIndex = {"docs": [
     "page": "Installation",
     "title": "Minimal requirement",
     "category": "section",
-    "text": "To run this version of the Stan.jl package on your local machine, it assumes that the  cmdstan executable is properly installed."
+    "text": "Note: Stan.jl refers to this Julia package. Stan\'s executable C++ program is \'cmdstan\'.To install Stan.jl e.g. in the Julia REPL: ] add Stan.To run this version of the Stan.jl package on your local machine, it assumes that cmdstan executable is properly installed.In order for Stan.jl to find the cmdstan you need to set the environment variable JULIA_CMDSTAN_HOME to point to the cmdstan directory, e.g. addexport JULIA_CMDSTAN_HOME=/Users/rob/Projects/Stan/cmdstan\nlaunchctl setenv JULIA_CMDSTAN_HOME /Users/rob/Projects/Stan/cmdstanto ~/.bash_profile or add ENV[\"JULIA_CMDSTAN_HOME\"]=\"./cmdstan\" to ./julia/etc/startup.jl. I typically prefer cmdstan not to include the cmdstan version number so no update is needed when cmdstan is updated.Currently tested with cmdstan 2.21.0"
 },
 
 {
@@ -97,9 +97,9 @@ var documenterSearchIndex = {"docs": [
 },
 
 {
-    "location": "WALKTHROUGH/#A-walk-through-example-1",
+    "location": "WALKTHROUGH/#A-walk-through-example-(using-StanSample.jl)-1",
     "page": "Walkthrough",
-    "title": "A walk-through example",
+    "title": "A walk-through example (using StanSample.jl)",
     "category": "section",
     "text": "Make StanSample.jl available:using StanSampleDefine a variable \'model\' to hold the Stan language model definition:model = \"\ndata { \n  int<lower=0> N; \n  int<lower=0,upper=1> y[N];\n} \nparameters {\n  real<lower=0,upper=1> theta;\n} \nmodel {\n  theta ~ beta(1,1);\n    y ~ bernoulli(theta);\n}\n\"Create a SampleModel object:sm = SampleModel(\"bernoulli\", model)Above SampleModel() call creates a default model for sampling. See ?SampleModel for details.The observed input data:data = Dict(\"N\" => 10, \"y\" => [0, 1, 0, 1, 0, 0, 0, 0, 0, 1])Run a simulation by calling stan_sample(), passing in the model and data: (sample_file, log_file) = stan_sample(sm, data)If sample_file is defined the sampling completed and can (and should!) be inspected:if !(sample_file == Nothing)\n  chns = read_samples(sm)\n  describe(chns)\n  plot(chns)\nend"
 },
@@ -341,7 +341,7 @@ var documenterSearchIndex = {"docs": [
     "page": "Versions",
     "title": "Approach",
     "category": "section",
-    "text": "A version of a Julia package is labeled (tagged) as v\"major.minor.patch\".My intention is to update the patch level whenever I make updates which are not visible to any of the existing examples.New functionality will be introduced in minor level updates. This includes adding new examples, tests and the introduction of new arguments if they default to previous behavior, e.g. in v\"1.1.0\" the useMamba and init arguments to Stanmodel().Changes that require updates to some examples bump the major level.Updates for new releases of Julia and cmdstan bump the appropriate level."
+    "text": "A version of a Julia package is labeled (tagged) as v\"major.minor.patch\".My intention is to update the patch level whenever I make updates which are not visible to any of the existing examples.New functionality will be introduced in minor level updates. This includes adding new examples, tests and the introduction of new arguments if they default to previous behavior.Changes that require updates to some examples bump the major level.Updates for new releases of Julia and cmdstan bump the appropriate level."
 },
 
 {
@@ -349,7 +349,31 @@ var documenterSearchIndex = {"docs": [
     "page": "Versions",
     "title": "Testing",
     "category": "section",
-    "text": "This version of the package has primarily been tested on Mac OSX 10.14, Julia 1.3 and cmdstan 2.21.0."
+    "text": "This version of the package has primarily been tested on Travis and Mac OSX 10.15, Julia 1.3 and cmdstan 2.21.0."
+},
+
+{
+    "location": "VERSIONS/#Versions-1",
+    "page": "Versions",
+    "title": "Versions",
+    "category": "section",
+    "text": ""
+},
+
+{
+    "location": "VERSIONS/#Version-5.0.2-1",
+    "page": "Versions",
+    "title": "Version 5.0.2",
+    "category": "section",
+    "text": "Tracking updates of dependencies.\nMinor docs updates (far from complete!)"
+},
+
+{
+    "location": "VERSIONS/#Version-5.0.1-1",
+    "page": "Versions",
+    "title": "Version 5.0.1",
+    "category": "section",
+    "text": "Tracking updates of dependencies."
 },
 
 {
@@ -357,7 +381,7 @@ var documenterSearchIndex = {"docs": [
     "page": "Versions",
     "title": "Version 5.0.0",
     "category": "section",
-    "text": "Initial release of Stan.jl based on StanJulia organization packages."
+    "text": "Initial release of Stan.jl based on StanJulia organization packages.\nA key package that will test the new setup is StatisticalRethinking.jl. This likely will drive further fine tuning.\nSee the TODO for outstanding work items."
 },
 
 {
