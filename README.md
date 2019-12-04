@@ -10,7 +10,9 @@ Documentation:
 
 ## Important note
 
-Major work will happen on this package over the next few months.
+Major work will happen on this package over the next few months, i.e. until at least March 2020. The basic packages in StanJulia work but are still fine-tuned. Documantation - to be part of Stan.jl v5 - is also virtually not there yet. WORK IN PROGRESS!!!!
+
+## Background info
 
 Stan.jl v4.x (and earlier versions) was the first generation of Julia tools to use Stan's [cmdstan executable](https://mc-stan.org/users/interfaces/cmdstan.html). CmdStan.jl v5.x updated these for Julia v1.x and added features based on user feedback. Most of cmdstan's features are covered (but not all).
 
@@ -24,6 +26,6 @@ My intention is to continue maintenance of CmdStan.jl for at least another two y
 
 A collection of documented examples to use Stan (as an external program) from Julia. 
 
-Stan's cmdstan executable needs to be installed separatedly. Please see [cmdstan installation](https://stanjulia.github.io/Stan.jl/latest/). 
+Stan's cmdstan executable needs to be installed separatedly. Please see [cmdstan installation](https://stanjulia.github.io/Stan.jl/latest/INSTALLATION/). 
 
 For more info on Stan, please go to <http://mc-stan.org>.

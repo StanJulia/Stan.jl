@@ -1,11 +1,11 @@
-# A walk-through example
+# A walk-through example (using StanSample.jl)
 
 Make StanSample.jl available:
 ```
 using StanSample
 ```
 
-Define a variable 'model' to hold the [Stan language]() model definition:
+Define a variable 'model' to hold the [Stan language](https://mc-stan.org/docs/2_21/reference-manual/index.html) model definition:
 
 ```
 model = "
