@@ -83,9 +83,9 @@ version = "0.5.1"
 
 [[CategoricalArrays]]
 deps = ["Compat", "DataAPI", "Future", "JSON", "Missings", "Printf", "Reexport", "Unicode"]
-git-tree-sha1 = "4d85a015093760ff23b20f3e25fa195b4cb76794"
+git-tree-sha1 = "9c3fd1ebb503d271943c4ea94332d55ea900c9cb"
 uuid = "324d7699-5711-5eae-9e2f-1d82baa6b597"
-version = "0.7.3"
+version = "0.7.4"
 
 [[Clustering]]
 deps = ["Distances", "LinearAlgebra", "NearestNeighbors", "Printf", "SparseArrays", "Statistics", "StatsBase"]
@@ -620,9 +620,9 @@ version = "0.1.0"
 
 [[StanVariational]]
 deps = ["DataFrames", "DelimitedFiles", "Distributed", "DocStringExtensions", "MCMCChains", "NamedTupleTools", "Parameters", "Reexport", "StanBase", "StanDump", "StanRun", "StanSamples", "Unicode"]
-git-tree-sha1 = "77b96d34cabcea370ca633f9884cf1d6c375302f"
+git-tree-sha1 = "b8f61e1d5eaf0d56d427a912603c97504a84f022"
 uuid = "6ede68ce-8466-5085-8a79-4c4de3d9cf4a"
-version = "1.1.0"
+version = "1.1.1"
 
 [[StaticArrays]]
 deps = ["LinearAlgebra", "Random", "Statistics"]
