@@ -3,7 +3,7 @@ uuid = "682df890-35be-576f-97d0-3d8c8b33a550"
 license = "MIT"
 desc = "Execute Stan's command line interface 'cmdstan' as an external program in Julia"
 authors = ["Rob J Goedman <goedman@icloud.com>"]
-version = "5.0.2"
+version = "5.1.0"
 
 [deps]
 Random = "9a3f8284-a2c9-5f02-9a11-845980a1fd5c"
@@ -16,12 +16,12 @@ StatsPlots = "f3b207a7-027a-5e70-b257-86293d7955fd"
 Test = "8dfed614-e22c-5e08-85e1-65c5234f0b40"
 
 [compat]
-StanDiagnose = "^1.0"
-StanOptimize = "^1.0"
-StanSample = "^1.0"
-StanVariational = "^1.0"
-StatsPlots = "^0.12, 0.13"
-julia = "^1"
+StanDiagnose = "1.1"
+StanOptimize = "1.1"
+StanSample = "1.1"
+StanVariational = "1.1"
+StatsPlots = "0.12, 0.13"
+julia = "1"
 
 [extras]
 Test = "8dfed614-e22c-5e08-85e1-65c5234f0b40"
