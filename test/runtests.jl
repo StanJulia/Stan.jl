@@ -4,12 +4,12 @@ using Test
 
 examples = [
 
-  "Examples/ARM/Ch03/Kid/kidscore.jl",
   "Examples/Bernoulli/bernoulli.jl",
   "Examples/Binomial/binomial.jl",
   "Examples/Binormal/binormal.jl",
   "Examples/Dyes/dyes.jl",
   "Examples/EightSchools/schools8.jl",
+  "Examples/ARM/Ch03/Kid/kidscore.jl",
   
   "Examples_Stan_Methods/Diagnose/diagnose.jl",
   "Examples_Stan_Methods/Generate_Quantities/generate_quantities.jl",
