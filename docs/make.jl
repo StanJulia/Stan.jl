@@ -2,20 +2,26 @@ using Documenter, Stan
 
 DOC_ROOT = joinpath(dirname(pathof(Stan)), "..", "docs")
 
-makedocs( root = DOC_ROOT,
-  modules = [Stan],
-  sitename = "StanJulia/Stan.jl",
+page_list = Array{Pair{String, Any}, 1}();
+append!(page_list, [Pair("Home", "INTRO.md")]);
+append!(page_list, [Pair("Installation", "INSTALLATION.md")]);
+append!(page_list, [Pair("Walkthrough", "WALKTHROUGH.md")]);
+append!(page_list, [Pair("Version", "VERSIONS.md")]);
+append!(page_list, [Pair("Features", "EXAMPLES.md")]);
+
+makedocs(
+  format = Documenter.HTML(prettyurls = haskey(ENV, "GITHUB_ACTIONS")),
+  root = DOC_ROOT,
+  modules = Module[],
+  sitename = "Stan.jl",
   authors = "Rob J Goedman",
-  pages = Any[
-      "Home" => "INTRO.md",
-      "Installation" => "INSTALLATION.md",
-      "Walkthrough" => "WALKTHROUGH.md",
-      "Feature cross reference" => "EXAMPLES.md",
-      "Versions" => "VERSIONS.md"
-  ]
+  pages = page_list,
 )
 
 deploydocs(
   root = DOC_ROOT,
   repo = "github.com/StanJulia/Stan.jl.git",
- )
+  versions = "v#",
+  devbranch = "master",
+  push_preview = true,
+)
