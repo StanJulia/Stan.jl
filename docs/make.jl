@@ -1,6 +1,7 @@
 using Documenter, Stan
 
 DOC_ROOT = joinpath(dirname(pathof(Stan)), "..", "docs")
+DocDir =  joinpath(DOC_ROOT, "src")
 
 page_list = Array{Pair{String, Any}, 1}();
 append!(page_list, [Pair("Home", "INTRO.md")]);
