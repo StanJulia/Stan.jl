@@ -30,6 +30,7 @@ if !(sample_file == nothing)
   chns = read_samples(sm);
   
   # Ceate a summary ChainDataFrame
+  stan_summary(sm)
   summary_df = read_summary(sm);
   @test summary_df[:theta, :mean][1] ≈ 0.34 atol=0.1
 
