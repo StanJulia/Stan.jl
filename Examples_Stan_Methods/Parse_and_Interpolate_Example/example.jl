@@ -39,9 +39,9 @@ stanmodel = SampleModel("bernoulli", bernoulli_model, tmpdir=tmpdir)
 
 observeddata = Dict("N" => 10, "y" => [0, 1, 0, 1, 0, 0, 0, 0, 0, 1])
 
-(sample_file, log_file) = stan_sample(stanmodel, data=observeddata)
+rc = stan_sample(stanmodel, data=observeddata)
 
-if sample_file !== Nothing
+if success(rc)
   # Convert to an MCMCChains.Chains object
   chns = read_samples(stanmodel)
 

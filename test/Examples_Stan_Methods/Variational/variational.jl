@@ -23,9 +23,9 @@ bernoulli_data = Dict("N" => 10, "y" => [0, 1, 0, 1, 0, 0, 0, 0, 0, 1])
 
 sm = VariationalModel("variational", bernoulli_model)
 
-(sample_file, log_file) = stan_variational(sm; data=bernoulli_data)
+rc = stan_variational(sm; data=bernoulli_data)
 
-if sample_file !== Nothing
+if success(rc)
 
   (chns, cnames) = read_variational(sm)
 

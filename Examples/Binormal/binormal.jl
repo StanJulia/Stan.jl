@@ -24,9 +24,9 @@ using StanSample
 
 sm = SampleModel("binormal", binorm_model);
 
-(sample_file, log_file) = stan_sample(sm)
+rc = stan_sample(sm)
 
-if !(sample_file == nothing)
+if success(rc)
   chn = read_samples(sm)
   
   # Update parameter names

@@ -1,4 +1,4 @@
-using StanSample, Test
+using StanSample, MCMCChains, Test
 
 binom_model = "
 // Inferring a Rate
@@ -31,9 +31,9 @@ sm = SampleModel("binomial", binom_model)
 
 binom_data = Dict("n" => 10, "k" => 5)
 
-(sample_file, log_file) = stan_sample(sm, data=binom_data)
+rc = stan_sample(sm, data=binom_data)
 
-if !(sample_file == nothing)
+if success(rc)
   chn = read_samples(sm)
   describe(chn)
   

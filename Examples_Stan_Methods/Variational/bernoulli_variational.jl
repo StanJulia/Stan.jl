@@ -24,9 +24,9 @@ tmpdir = joinpath(@__DIR__, "tmp")
 stanmodel = VariationalModel(
   "bernoulli", bernoulli_model; tmpdir = tmpdir)
 
-(sample_file, log_file) = stan_variational(stanmodel; data=bernoulli_data)
+rc = stan_variational(stanmodel; data=bernoulli_data)
 
-if sample_file !== Nothing
+if success(rc)
 
   (chns, cnames) = read_variational(stanmodel)
 

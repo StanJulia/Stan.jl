@@ -25,9 +25,9 @@ inittheta = [
 sm = SampleModel("bernoulli", bernoullimodel,
   seed=StanBase.RandomSeed(seed=-1));
 
-(sample_file, log_file) = stan_sample(sm, data=bernoullidata, init=inittheta)
+rc = stan_sample(sm, data=bernoullidata, init=inittheta)
   
-if !(sample_file == nothing)
+if success(rc)
   chn = read_samples(sm)
   describe(chn)
 end

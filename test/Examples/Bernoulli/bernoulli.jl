@@ -22,9 +22,9 @@ sm = SampleModel("bernoulli", bernoullimodel,
   method=StanSample.Sample(save_warmup=true, num_warmup=1000, 
   num_samples=1000, thin=1));
 
-(sample_file, log_file) = stan_sample(sm, data=observeddata);
+rc = stan_sample(sm, data=observeddata);
 
-if !(sample_file == nothing)
+if success(rc)
   
   # Create MCMCChains object
   chns = read_samples(sm);

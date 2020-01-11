@@ -20,9 +20,9 @@ bernoullidata = Dict("N" => 1, "y" => [0])
 
 sm = SampleModel("bernoulli", bernoullimodel);
 
-(sample_file, log_file) = stan_sample(sm, data=bernoullidata);
+rc = stan_sample(sm, data=bernoullidata);
 
-if !(sample_file == nothing)
+if success(rc)
   chn = read_samples(sm)
   describe(chn)
 end

@@ -1,6 +1,6 @@
 ######### ARM Ch03: kid score example  ###########
 
-using StanSample, Test
+using StanSample, MCMCChains, Test
 
 kid = "
 data {
@@ -174,9 +174,9 @@ kiddata = Dict("N" => 434,
 
 sm = SampleModel("kid", kid);
 
-(sample_file, log_file) = stan_sample(sm, data=kiddata)
+rc = stan_sample(sm, data=kiddata)
 
-if !(sample_file == nothing)
+if success(rc)
   chn = read_samples(sm)
 
   # Update parameter names    

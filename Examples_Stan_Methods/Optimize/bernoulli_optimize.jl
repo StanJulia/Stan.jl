@@ -35,7 +35,7 @@ stanmodel = OptimizeModel("bernoulli", bernoulli_model;
   method = StanOptimize.Optimize(save_iterations = true),
   tmpdir = joinpath(@__DIR__, "tmp"));
 
-(sample_path, log_path)  = stan_optimize(stanmodel, data=bernoulli_data);
+rc  = stan_optimize(stanmodel, data=bernoulli_data);
 
 if sample_path !== Nothing
   optim2, cnames = read_optimize(stanmodel)

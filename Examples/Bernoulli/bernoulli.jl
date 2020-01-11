@@ -28,7 +28,7 @@ sm = SampleModel("bernoulli", bernoullimodel,
   num_samples=1000, thin=1, adapt=StanSample.Adapt(delta=0.85)),
   tmpdir=tmpdir);
 
-(sample_file, log_file) = stan_sample(sm, data=observed_data);
+rc = stan_sample(sm, data=observed_data);
 
 if !isnothing(sample_file)
   chns = read_samples(sm)

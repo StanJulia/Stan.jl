@@ -19,6 +19,7 @@ before_install:
   
 julia:
   - 1.3
+  - nightly
   
 notifications:
   email: false

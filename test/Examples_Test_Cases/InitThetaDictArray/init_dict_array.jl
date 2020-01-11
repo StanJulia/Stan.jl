@@ -1,6 +1,6 @@
 ######### Stan program example  ###########
 
-using StanSample, Test
+using StanSample, MCMCChains, StanBase, Test
 
 bernoullimodel = "
 data { 
@@ -25,9 +25,9 @@ inittheta = [
 sm = SampleModel("init_dict_array", bernoullimodel,
   seed=StanBase.RandomSeed(seed=-1));
 
-(sample_file, log_file) = stan_sample(sm, data=bernoullidata, init=inittheta)
+rc = stan_sample(sm, data=bernoullidata, init=inittheta)
   
-if !(sample_file == nothing)
+if success(rc)
   chn = read_samples(sm)
   describe(chn)
   

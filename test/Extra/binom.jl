@@ -35,9 +35,9 @@ res = [rand(Binomial(trials[i], probs[i]), 1)[1] for i in 1:300]
 #d <- list(W = 300, F = trials, R = res)
 binom_data = Dict("W" => 300, "F" => trials, "R" => res)
 
-(sample_file, log_file) = stan_sample(sm, data=binom_data)
+rc = stan_sample(sm, data=binom_data)
 
-if !(sample_file == nothing)
+if success(rc)
   chn = read_samples(sm)
   show(chn)
   

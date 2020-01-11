@@ -1,6 +1,6 @@
 ######### Stan program example  ###########
 
-using StanSample, Test
+using StanSample, MCMCChains, Test
 
 eightschools ="
 data {
@@ -32,9 +32,9 @@ schools8data = Dict("J" => 8,
 
 sm = SampleModel("schools8", eightschools)
 
-(sample_file, log_file) = stan_sample(sm, data=schools8data)
+rc = stan_sample(sm, data=schools8data)
 
-if !(sample_file == nothing)
+if success(rc)
   chns = read_samples(sm)
   
   chn = set_section(chns, Dict(

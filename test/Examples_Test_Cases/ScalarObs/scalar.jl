@@ -1,6 +1,6 @@
 ######### Stan program example  ###########
 
-using StanSample, Test
+using StanSample, MCMCChains, Test
 
 bernoullimodel = "
 data { 
@@ -20,9 +20,9 @@ bernoullidata = Dict("N" => 1, "y" => [0])
 
 sm = SampleModel("scalar", bernoullimodel);
 
-(sample_file, log_file) = stan_sample(sm, data=bernoullidata);
+rc = stan_sample(sm, data=bernoullidata);
 
-if !(sample_file == nothing)
+if success(rc)
   chn = read_samples(sm)
   describe(chn)
 

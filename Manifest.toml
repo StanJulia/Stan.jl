@@ -65,9 +65,9 @@ version = "0.5.8"
 
 [[CSV]]
 deps = ["CategoricalArrays", "DataFrames", "Dates", "FilePathsBase", "Mmap", "Parsers", "PooledArrays", "Tables", "Unicode", "WeakRefStrings"]
-git-tree-sha1 = "a4ff17bfcb4b6a5001712e33f2372d534ec47a4f"
+git-tree-sha1 = "027b8d04a1983153ecbcf8f905e926bf01c078e8"
 uuid = "336ed68f-0bac-5ca0-87d4-7b16caf5d00b"
-version = "0.5.21"
+version = "0.5.22"
 
 [[Calculus]]
 deps = ["LinearAlgebra"]
@@ -378,11 +378,6 @@ git-tree-sha1 = "928b8ca9b2791081dc71a51c55347c27c618760f"
 uuid = "77ba4419-2d1f-58cd-9bb1-8ffee604a2e3"
 version = "0.3.3"
 
-[[NamedTupleTools]]
-git-tree-sha1 = "afee2ee65c73490500b82bfed3ceb4774b3baaab"
-uuid = "d9ec5142-1e00-5aa0-9d6a-321866360f50"
-version = "0.12.1"
-
 [[NearestNeighbors]]
 deps = ["Distances", "StaticArrays"]
 git-tree-sha1 = "8bc6180f328f3c0ea2663935db880d34c57d6eae"
@@ -402,9 +397,9 @@ version = "0.11.4"
 
 [[OpenBLAS_jll]]
 deps = ["Libdl", "Pkg"]
-git-tree-sha1 = "27f7e3187464eef76b4b7784b79fe10cb302c75c"
+git-tree-sha1 = "3a6e5767e8ae022871c19162cc3ecd80748bd3dc"
 uuid = "4536629a-c528-5b80-bd46-f80d51c5b363"
-version = "0.3.7+3"
+version = "0.3.7+4"
 
 [[OpenSpecFun_jll]]
 deps = ["Libdl", "Pkg"]
@@ -570,16 +565,16 @@ uuid = "276daf66-3868-5448-9aa4-cd146d93841b"
 version = "0.9.0"
 
 [[StanBase]]
-deps = ["CSV", "DataFrames", "DelimitedFiles", "Distributed", "DocStringExtensions", "MCMCChains", "NamedTupleTools", "Parameters", "Random", "Reexport", "StanDump", "StanRun", "StanSamples", "Unicode"]
-git-tree-sha1 = "48fa8aac68559fbe710b770ec1267c088e15175b"
+deps = ["CSV", "DataFrames", "DelimitedFiles", "Distributed", "DocStringExtensions", "Documenter", "MCMCChains", "Parameters", "Random", "StanDump", "StanSamples", "Unicode"]
+git-tree-sha1 = "05614bf0a5097a0a779ed6257029a189f4330db0"
 uuid = "d0ee94f6-a23d-54aa-bbe9-7f572d6da7f5"
-version = "1.1.3"
+version = "1.1.5"
 
 [[StanDiagnose]]
-deps = ["BinDeps", "CSV", "DataFrames", "DelimitedFiles", "Distributed", "DocStringExtensions", "Documenter", "MCMCChains", "NamedTupleTools", "Parameters", "Random", "Reexport", "StanBase", "StanDump", "StanRun", "StanSamples", "Statistics", "Test", "Unicode"]
-git-tree-sha1 = "64623d2ee644fd51aa033f28193a7f8d84fb5a19"
+deps = ["BinDeps", "CSV", "DataFrames", "DelimitedFiles", "Distributed", "DocStringExtensions", "Documenter", "Random", "StanBase", "Statistics", "Test", "Unicode"]
+git-tree-sha1 = "6fa1bed8fbc9fd58cd4806371a26450be6f87960"
 uuid = "fb13fc95-9a72-5e81-90ef-432a29d7f4c2"
-version = "1.1.2"
+version = "1.1.3"
 
 [[StanDump]]
 deps = ["ArgCheck", "DocStringExtensions"]
@@ -588,22 +583,16 @@ uuid = "9713c8f3-0168-54b5-986e-22c526958f39"
 version = "0.2.0"
 
 [[StanOptimize]]
-deps = ["BinDeps", "CSV", "DataFrames", "DelimitedFiles", "Distributed", "DocStringExtensions", "Documenter", "MCMCChains", "NamedTupleTools", "Parameters", "Random", "Reexport", "StanBase", "StanDump", "StanRun", "StanSamples", "Statistics", "Test", "Unicode"]
-git-tree-sha1 = "0d9f24c517ad3589e1259494b2579d4879e926f9"
+deps = ["CSV", "DataFrames", "DelimitedFiles", "Distributed", "DocStringExtensions", "Documenter", "Random", "StanBase", "Statistics", "Test", "Unicode"]
+git-tree-sha1 = "b242a623da8a55741f523547e41475236ea9eaf4"
 uuid = "fbd8da12-e93d-5a64-9231-612a0707ab99"
-version = "1.1.2"
-
-[[StanRun]]
-deps = ["ArgCheck", "Distributed", "DocStringExtensions", "Parameters", "StanDump"]
-git-tree-sha1 = "da0cdcdc28d51a8b3215ca12fcd12ed3372228d3"
-uuid = "d49c3b98-12bb-537a-8c40-37c13654c7f4"
-version = "0.2.1"
+version = "1.1.3"
 
 [[StanSample]]
-deps = ["CSV", "DataFrames", "DelimitedFiles", "Distributed", "DocStringExtensions", "MCMCChains", "NamedTupleTools", "Parameters", "Reexport", "StanBase", "StanDump", "StanRun", "StanSamples", "Unicode"]
-git-tree-sha1 = "91a9b87758966b76ac023206323bbc5fb4d6709e"
+deps = ["CSV", "DataFrames", "DelimitedFiles", "Distributed", "DocStringExtensions", "Documenter", "MCMCChains", "StanBase", "Unicode"]
+git-tree-sha1 = "f1af36dd77fb2508ac07a1a52952285b4d8638fd"
 uuid = "c1514b29-d3a0-5178-b312-660c88baa699"
-version = "1.1.2"
+version = "1.1.3"
 
 [[StanSamples]]
 deps = ["ArgCheck", "DocStringExtensions", "ElasticArrays"]
@@ -612,10 +601,10 @@ uuid = "52d0d7a9-b304-5f31-a727-b234d0b606ff"
 version = "0.1.0"
 
 [[StanVariational]]
-deps = ["DataFrames", "DelimitedFiles", "Distributed", "DocStringExtensions", "MCMCChains", "NamedTupleTools", "Parameters", "Reexport", "StanBase", "StanDump", "StanRun", "StanSamples", "Unicode"]
-git-tree-sha1 = "5384e9eaef544c4a520b087a7f71bd04fc615234"
+deps = ["DataFrames", "DelimitedFiles", "Distributed", "DocStringExtensions", "Documenter", "MCMCChains", "StanBase", "Unicode"]
+git-tree-sha1 = "50f1b9c4f7b5b47c7222afcd432773137e8b1ab3"
 uuid = "6ede68ce-8466-5085-8a79-4c4de3d9cf4a"
-version = "1.1.3"
+version = "1.1.4"
 
 [[StaticArrays]]
 deps = ["LinearAlgebra", "Random", "Statistics"]

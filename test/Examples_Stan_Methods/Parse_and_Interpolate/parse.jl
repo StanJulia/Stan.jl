@@ -1,4 +1,4 @@
-using StanSample, Test
+using StanSample, MCMCChains, Test
 
 ProjDir = @__DIR__
 cd(ProjDir)
@@ -37,9 +37,9 @@ stanmodel = SampleModel("parse_and_interpolate", bernoulli_model)
 
 observeddata = Dict("N" => 10, "y" => [0, 1, 0, 1, 0, 0, 0, 0, 0, 1])
 
-(sample_file, log_file) = stan_sample(stanmodel, data=observeddata)
+rc = stan_sample(stanmodel, data=observeddata)
 
-if sample_file !== Nothing
+if success(rc)
   # Convert to an MCMCChains.Chains object
   chns = read_samples(stanmodel)
 

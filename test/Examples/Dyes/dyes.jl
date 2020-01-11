@@ -1,6 +1,6 @@
 ######### Stan batch program example  ###########
 
-using StanSample, Test
+using StanSample, MCMCChains, Test
 
 dyes ="
 data {
@@ -57,9 +57,9 @@ dyesdata = Dict("BATCHES" => 6,
 
 sm = SampleModel("dyes", dyes);
   
-(sample_file, log_file) = stan_sample(sm, data=dyesdata)
+rc = stan_sample(sm, data=dyesdata)
 
-if !(sample_file == nothing)
+if success(rc)
   chns = read_samples(sm)
   #pi = filter(p -> length(p) > 2 && p[end-1:end] == "__", cnames)
   #p = filter(p -> !(p in  pi), cnames)
