@@ -312,7 +312,6 @@ uuid = "5ab0869b-81aa-558d-bb23-cbf5423bbe9b"
 version = "0.5.1"
 
 [[LibGit2]]
-deps = ["Printf"]
 uuid = "76f85450-5226-5b5a-8eaa-529ad045b433"
 
 [[Libdl]]
@@ -438,7 +437,7 @@ uuid = "69de0a69-1ddd-5017-9359-2bf0b02dc9f0"
 version = "0.3.10"
 
 [[Pkg]]
-deps = ["Dates", "LibGit2", "Libdl", "Logging", "Markdown", "Printf", "REPL", "Random", "SHA", "UUIDs"]
+deps = ["Dates", "LibGit2", "Libdl", "Logging", "Markdown", "Printf", "REPL", "Random", "SHA", "Test", "UUIDs"]
 uuid = "44cfe95a-1eb2-52ea-b672-e2afdf69b78f"
 
 [[PlotThemes]]
@@ -590,9 +589,9 @@ version = "1.1.3"
 
 [[StanSample]]
 deps = ["CSV", "DataFrames", "DelimitedFiles", "Distributed", "DocStringExtensions", "Documenter", "MCMCChains", "StanBase", "Unicode"]
-git-tree-sha1 = "f1af36dd77fb2508ac07a1a52952285b4d8638fd"
+git-tree-sha1 = "cae33e3acab286fde0947536464945245e323358"
 uuid = "c1514b29-d3a0-5178-b312-660c88baa699"
-version = "1.1.3"
+version = "1.1.4"
 
 [[StanSamples]]
 deps = ["ArgCheck", "DocStringExtensions", "ElasticArrays"]
@@ -602,9 +601,9 @@ version = "0.1.0"
 
 [[StanVariational]]
 deps = ["DataFrames", "DelimitedFiles", "Distributed", "DocStringExtensions", "Documenter", "MCMCChains", "StanBase", "Unicode"]
-git-tree-sha1 = "50f1b9c4f7b5b47c7222afcd432773137e8b1ab3"
+git-tree-sha1 = "5ee20c3d9f91b0229510b6aaf607d6ebb7e46ee2"
 uuid = "6ede68ce-8466-5085-8a79-4c4de3d9cf4a"
-version = "1.1.4"
+version = "1.1.5"
 
 [[StaticArrays]]
 deps = ["LinearAlgebra", "Random", "Statistics"]
