@@ -4,12 +4,13 @@
 [![Coverage Status](https://coveralls.io/repos/StanJulia/Stan.jl/badge.svg?branch=master&service=github)](https://coveralls.io/github/StanJulia/Stan.jl?branch=master)
 [![codecov](https://codecov.io/gh/StanJulia/Stan.jl/branch/master/graph/badge.svg)](https://codecov.io/gh/StanJulia/Stan.jl?branch=master)
 
-Documentation:
-[![](https://img.shields.io/badge/docs-latest-blue.svg)](https://StanJulia.github.io/Stan.jl/latest)
-
 ## Important note
 
 Major work will happen on this package over the next few months, i.e. until at least March 2020. The basic packages in StanJulia work but are still being fine-tuned. Documentation - to be part of Stan.jl v5 - is also virtually not there yet. WORK IN PROGRESS!!!!
+
+## Documentation
+
+Recently generating documentation on Travis has been problematic (to say the least). Docs will be moved to the examples.
 
 ## Background info
 
