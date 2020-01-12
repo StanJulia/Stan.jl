@@ -28,12 +28,6 @@ jobs:
     - stage: Test
       julia: 1.3
       os: linux
-    - stage: Test
-      julia: nightly
-      os: linux
-      allow_failures:
-      - os: linux
-      - julia: nightly
     - stage: Documentation
       julia: 1.3
       os: linux

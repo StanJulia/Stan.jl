@@ -40,10 +40,7 @@ data = Dict("N" => 10, "y" => [0, 1, 0, 1, 0, 0, 0, 0, 0, 1])
 Run a simulation by calling stan_sample(), passing in the model and data: 
 ```
 rc = stan_sample(sm, data)
-```
 
-If sample_file is defined the sampling completed and can (and should!) be inspected:
-```
 if success(rc)
   chns = read_samples(sm)
   describe(chns)
