@@ -19,7 +19,7 @@ before_install:
   - cd $OLDWD
   
 julia:
-  - 1.2
+  #- 1.2
   - 1.3
   - nightly
   
