@@ -34,11 +34,8 @@ binom_data = Dict("n" => 10, "k" => 5)
 rc = stan_sample(sm, data=binom_data)
 
 if success(rc)
-  chn = read_samples(sm)
-  describe(chn)
-  
   # Ceate a ChainDataFrame
-  summary_df = read_summary(sm)
-  @test summary_df[:theta, :mean][1] ≈ 0.24 atol=0.8
+  df = read_summary(sm)
+  @test df[df.parameters .== :theta, :mean][1] ≈ 0.5 rtol=0.1
   
 end

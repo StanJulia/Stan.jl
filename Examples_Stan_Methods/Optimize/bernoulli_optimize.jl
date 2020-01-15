@@ -18,12 +18,10 @@ model {
 
 bernoulli_data = Dict("N" => 10, "y" => [0, 1, 0, 1, 0, 0, 0, 0, 0, 1])
 
-stanmodel = OptimizeModel("bernoulli",  bernoulli_model;
-  tmpdir = joinpath(@__DIR__, "tmp"));
+stanmodel = OptimizeModel("bernoulli",  bernoulli_model);
 
-(sample_path, log_path) = stan_sample(stanmodel, data=bernoulli_data);
-
-if sample_path !== Nothing
+rc = stan_sample(stanmodel, data=bernoulli_data);
+if success(rc)
   optim1, cnames = read_optimize(stanmodel)
   println()
   display(optim1)
@@ -35,9 +33,9 @@ stanmodel = OptimizeModel("bernoulli", bernoulli_model;
   method = StanOptimize.Optimize(save_iterations = true),
   tmpdir = joinpath(@__DIR__, "tmp"));
 
-rc  = stan_optimize(stanmodel, data=bernoulli_data);
+rc2  = stan_optimize(stanmodel, data=bernoulli_data);
 
-if sample_path !== Nothing
+if success(rc2)
   optim2, cnames = read_optimize(stanmodel)
   println()
   display(optim2)

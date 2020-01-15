@@ -30,10 +30,9 @@ if success(rc)
   (chns, cnames) = read_variational(sm)
 
   # Show the same output in DataFrame format
-  sdf = read_summary(sm)
+  df = read_summary(sm)
 
   # Retrieve mean value of theta from the summary
-  sdf[:theta, :mean]
-  @test sdf[:theta, :mean][1] ≈ 0.33 atol=0.1
+  @test df[df.parameters .== :theta, :mean][1] ≈ 0.33 rtol=0.1
 
 end

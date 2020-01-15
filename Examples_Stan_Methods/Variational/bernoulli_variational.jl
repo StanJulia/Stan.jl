@@ -18,11 +18,7 @@ model {
 
 bernoulli_data = Dict("N" => 10, "y" => [0, 1, 0, 1, 0, 0, 0, 0, 0, 1])
 
-# Keep tmpdir across multiple runs to prevent re-compilation
-tmpdir = joinpath(@__DIR__, "tmp")
-
-stanmodel = VariationalModel(
-  "bernoulli", bernoulli_model; tmpdir = tmpdir)
+stanmodel = VariationalModel("bernoulli", bernoulli_model)
 
 rc = stan_variational(stanmodel; data=bernoulli_data)
 
@@ -31,11 +27,11 @@ if success(rc)
   (chns, cnames) = read_variational(stanmodel)
 
   # Show the same output in DataFrame format
-  sdf = read_summary(stanmodel)
-  display(sdf)
+  df = read_summary(stanmodel)
+  display(df)
   println()
 
   # Retrieve mean value of theta from the summary
-  sdf[:theta, :mean]
+  df[df.parameters .== :theta, :mean] |> display
 
 end

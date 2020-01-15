@@ -1,4 +1,4 @@
-using StanSample
+using StanSample, MCMCChains
 
 bernoullimodel = "
 data { 
@@ -24,5 +24,5 @@ rc = stan_sample(sm, data=observeddata);
 
 if success(rc)
   chn = read_samples(sm)
-  describe(chn)
+  show(chn)
 end

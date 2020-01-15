@@ -42,7 +42,7 @@ if success(rc)
   show(chn)
   
   # Create a ChainDataFrame
-  summary_df = read_summary(sm)
-  #@test summary_df[:theta, :mean][1] ≈ 0.24 atol=0.8
+  df = read_summary(sm)
+  @test df[df.parameters .== :theta, :mean][1] ≈ 0.24 rtol=0.1
   
 end

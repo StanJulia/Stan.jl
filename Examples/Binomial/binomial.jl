@@ -1,4 +1,4 @@
-using StanSample
+using StanSample, MCMCChains
 
 binom_model = "
 // Inferring a Rate
@@ -35,5 +35,5 @@ rc = stan_sample(sm, data=binom_data)
 
 if success(rc)
   chn = read_samples(sm)
-  describe(chn)
+  show(chn)
 end

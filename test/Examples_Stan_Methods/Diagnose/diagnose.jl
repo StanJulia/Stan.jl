@@ -25,5 +25,4 @@ rc = stan_diagnose(sm; data=bernoulli_data);
 if success(rc)
   diags = read_diagnose(sm)
   @test diags[:error][1] ≈ 0.0  atol=0.000001
-  #diags |> display
 end

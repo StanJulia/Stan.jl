@@ -89,9 +89,9 @@ version = "0.13.3"
 
 [[ColorTypes]]
 deps = ["FixedPointNumbers", "Random"]
-git-tree-sha1 = "b41d0f666d46ba128c6a0fc632d6e33fbfc03604"
+git-tree-sha1 = "b9de8dc6106e09c79f3f776c27c62360d30e5eb8"
 uuid = "3da002f7-5984-5a60-b8a6-cbb66c0b333f"
-version = "0.9.0"
+version = "0.9.1"
 
 [[Colors]]
 deps = ["ColorTypes", "FixedPointNumbers", "InteractiveUtils", "Printf", "Reexport"]
@@ -312,7 +312,6 @@ uuid = "5ab0869b-81aa-558d-bb23-cbf5423bbe9b"
 version = "0.5.1"
 
 [[LibGit2]]
-deps = ["Printf"]
 uuid = "76f85450-5226-5b5a-8eaa-529ad045b433"
 
 [[Libdl]]
@@ -438,7 +437,7 @@ uuid = "69de0a69-1ddd-5017-9359-2bf0b02dc9f0"
 version = "0.3.10"
 
 [[Pkg]]
-deps = ["Dates", "LibGit2", "Libdl", "Logging", "Markdown", "Printf", "REPL", "Random", "SHA", "UUIDs"]
+deps = ["Dates", "LibGit2", "Libdl", "Logging", "Markdown", "Printf", "REPL", "Random", "SHA", "Test", "UUIDs"]
 uuid = "44cfe95a-1eb2-52ea-b672-e2afdf69b78f"
 
 [[PlotThemes]]
@@ -449,9 +448,9 @@ version = "1.0.1"
 
 [[PlotUtils]]
 deps = ["Colors", "Dates", "Printf", "Random", "Reexport"]
-git-tree-sha1 = "7622cbde3200a9876a14ba85d66f25d7f4e7a6ca"
+git-tree-sha1 = "22bd7d0a1f4665d66317d6c89a57f6bba9f2560d"
 uuid = "995b91a9-d308-5afd-9ec6-746e21dbc043"
-version = "0.6.1"
+version = "0.6.2"
 
 [[Plots]]
 deps = ["Base64", "Contour", "Dates", "FFMPEG", "FixedPointNumbers", "GR", "GeometryTypes", "JSON", "LinearAlgebra", "Measures", "NaNMath", "Pkg", "PlotThemes", "PlotUtils", "Printf", "REPL", "Random", "RecipesBase", "Reexport", "Requires", "Showoff", "SparseArrays", "Statistics", "StatsBase", "UUIDs"]
@@ -565,16 +564,16 @@ uuid = "276daf66-3868-5448-9aa4-cd146d93841b"
 version = "0.9.0"
 
 [[StanBase]]
-deps = ["CSV", "DataFrames", "DelimitedFiles", "Distributed", "DocStringExtensions", "Documenter", "MCMCChains", "Parameters", "Random", "StanDump", "StanSamples", "Unicode"]
-git-tree-sha1 = "05614bf0a5097a0a779ed6257029a189f4330db0"
+deps = ["CSV", "DataFrames", "DelimitedFiles", "Distributed", "DocStringExtensions", "Documenter", "Parameters", "Random", "StanDump", "StanSamples", "Unicode"]
+git-tree-sha1 = "d87108fc62e9aa0839caf8399ca12208cfd48e29"
 uuid = "d0ee94f6-a23d-54aa-bbe9-7f572d6da7f5"
-version = "1.1.5"
+version = "1.1.6"
 
 [[StanDiagnose]]
 deps = ["BinDeps", "CSV", "DataFrames", "DelimitedFiles", "Distributed", "DocStringExtensions", "Documenter", "Random", "StanBase", "Statistics", "Test", "Unicode"]
-git-tree-sha1 = "634a7932eb942771a302f92d25a033d613e4e903"
+git-tree-sha1 = "8dfb2763cec7b64b0489faa4f14829d39bd9e7b8"
 uuid = "fb13fc95-9a72-5e81-90ef-432a29d7f4c2"
-version = "1.1.4"
+version = "1.1.5"
 
 [[StanDump]]
 deps = ["ArgCheck", "DocStringExtensions"]
@@ -584,15 +583,15 @@ version = "0.2.0"
 
 [[StanOptimize]]
 deps = ["CSV", "DataFrames", "DelimitedFiles", "Distributed", "DocStringExtensions", "Documenter", "Random", "StanBase", "Statistics", "Test", "Unicode"]
-git-tree-sha1 = "78f123e574e78c088f41506aa9be237ad4fb5570"
+git-tree-sha1 = "3ffcc9dfee65f1e513407c543595f0174a20dfb6"
 uuid = "fbd8da12-e93d-5a64-9231-612a0707ab99"
-version = "1.1.4"
+version = "1.1.5"
 
 [[StanSample]]
 deps = ["CSV", "DataFrames", "DelimitedFiles", "Distributed", "DocStringExtensions", "Documenter", "MCMCChains", "StanBase", "Unicode"]
-git-tree-sha1 = "cae33e3acab286fde0947536464945245e323358"
+git-tree-sha1 = "5d75ab9aae972b0fcef1b0c08b9b45ccec8517fa"
 uuid = "c1514b29-d3a0-5178-b312-660c88baa699"
-version = "1.1.4"
+version = "1.1.5"
 
 [[StanSamples]]
 deps = ["ArgCheck", "DocStringExtensions", "ElasticArrays"]
@@ -602,9 +601,9 @@ version = "0.1.0"
 
 [[StanVariational]]
 deps = ["DataFrames", "DelimitedFiles", "Distributed", "DocStringExtensions", "Documenter", "MCMCChains", "StanBase", "Unicode"]
-git-tree-sha1 = "5ee20c3d9f91b0229510b6aaf607d6ebb7e46ee2"
+git-tree-sha1 = "ef45983189f70be6327ebc6a04c444fb1d4fcc20"
 uuid = "6ede68ce-8466-5085-8a79-4c4de3d9cf4a"
-version = "1.1.5"
+version = "1.1.6"
 
 [[StaticArrays]]
 deps = ["LinearAlgebra", "Random", "Statistics"]

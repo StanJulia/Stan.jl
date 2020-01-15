@@ -1,6 +1,9 @@
 # Test Stan.jl examples.
 
-using Test
+using DataFrames, MCMCChains, Test
+
+TestDir = @__DIR__
+ExampleDir = joinpath(TestDir, "..")
 
 examples = [
 
@@ -12,11 +15,9 @@ examples = [
   "Examples/ARM/Ch03/Kid/kidscore.jl",
   
   "Examples_Stan_Methods/Diagnose/diagnose.jl",
-  "Examples_Stan_Methods/Generate_Quantities/generate_quantities.jl",
   "Examples_Stan_Methods/Optimize/optimize.jl",
-  "Examples_Stan_Methods/Parse_and_Interpolate/parse.jl",
   "Examples_Stan_Methods/Variational/variational.jl",
-  
+
   "Examples_Test_Cases/Diagnostics/diagnostics.jl",
   "Examples_Test_Cases/InitThetaDict/init_dict.jl",
   "Examples_Test_Cases/InitThetaDictArray/init_dict_array.jl",
@@ -24,17 +25,20 @@ examples = [
   "Examples_Test_Cases/NamedArray/namedarray.jl",
   "Examples_Test_Cases/ScalarObs/scalar.jl",
   "Examples_Test_Cases/ZeroLengthArray/zerolengtharray.jl",
- 
+
+  "Examples_Stan_Methods/Generate_Quantities/generate_quantities.jl",
+  "Examples_Stan_Methods/Parse_and_Interpolate/parse.jl"
 ]
 
-@testset "Stan.jl v6.0" begin
+println("\nRunning Stan.jl v5.x test examples")
 
   for example in examples
-      #println("\n  * $(example) *")
-      @testset "$(example)" begin
-        include(example)
-      end
-      #println("\n * $(example) done! *")
-  end
+      println("\n* $(example) *\n")
 
-end
+      cd(TestDir) do
+        include(joinpath(TestDir, example))
+      end
+
+      # Or to run regular examples:
+      # include(joinpath(ExampleDir, "..", example))
+  end

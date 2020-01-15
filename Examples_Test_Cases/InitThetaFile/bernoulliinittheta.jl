@@ -1,6 +1,8 @@
 ######### Stan program example  ###########
 
-using StanSample
+using StanSample, MCMCChains
+
+ProjDir = @__DIR__
 
 bernoullimodel = "
 data { 
@@ -16,9 +18,8 @@ model {
 }
 "
 
-datatheta = joinpath(@__DIR__, "bernoulli.data.R")
-inittheta = joinpath(@__DIR__ , "bernoulli.init.R")[]
-println([datatheta, inittheta])
+datatheta = joinpath(ProjDir, "bernoulli.data.R")
+inittheta = joinpath(ProjDir , "bernoulli.init.R")
 
 sm = SampleModel("bernoulli", bernoullimodel);
 
@@ -26,5 +27,5 @@ rc = stan_sample(sm, data=datatheta, init=inittheta)
 
 if success(rc)
   chn = read_samples(sm)
-  describe(chn)
+  show(chn)
 end

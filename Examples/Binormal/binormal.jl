@@ -1,6 +1,6 @@
 ######### Stan program example  ###########
 
-using StanSample
+using StanSample, MCMCChains
 
   binorm_model = "
   transformed data {
@@ -32,5 +32,5 @@ if success(rc)
   # Update parameter names
   chn = set_names(chn, Dict(["y.$i" => "y[$i]" for i in 1:2]))
   
-  describe(chn)
+  show(chn)
 end

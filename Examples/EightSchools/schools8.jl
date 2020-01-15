@@ -1,6 +1,6 @@
 ######### Stan program example  ###########
 
-using StanSample
+using StanSample, MCMCChains
 
 eightschools ="
 data {
@@ -46,6 +46,6 @@ if success(rc)
     )
   )
   
-  describe(chn)
+  show(chn)
   
 end

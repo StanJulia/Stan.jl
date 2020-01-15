@@ -20,7 +20,7 @@ bernoulli_data = Dict("N" => 10, "y" => [0, 1, 0, 1, 0, 0, 0, 0, 0, 1])
 
 stanmodel = OptimizeModel("optimize_1",  bernoulli_model);
 
-rc = stan_sample(stanmodel, data=bernoulli_data);
+rc = stan_optimize(stanmodel, data=bernoulli_data);
 
 if success(rc)
   optim1, cnames = read_optimize(stanmodel)
@@ -36,5 +36,5 @@ rc2  = stan_optimize(sm, data=bernoulli_data);
 
 if success(rc2)
   optim2, cnames = read_optimize(sm)
-  @test optim2["theta"][end] ≈ 0.3 atol=0.001
+  @test optim2["theta"][end] ≈ 0.3 rtol=0.1
 end

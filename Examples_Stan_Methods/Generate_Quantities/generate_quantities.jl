@@ -1,7 +1,6 @@
-using StanSample
+using StanSample, MCMCChains
 
 ProjDir = @__DIR__
-cd(ProjDir)
 
 gq = "
   data {
@@ -40,8 +39,8 @@ if success(rc)
   display(cdf)
 
   # Show the same output in DataFrame format
-  sdf = StanSample.read_summary(stanmodel)
-  display(sdf)
+  df = StanSample.read_summary(stanmodel)
+  display(df)
   
   StanSample.stan_generate_quantities(stanmodel, 1)
 end

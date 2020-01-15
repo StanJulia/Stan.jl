@@ -183,10 +183,9 @@ if success(rc)
   set_names(chn,  Dict(["beta.$i" => "beta[$i]" for i in 1:3]))
     
   # Ceate a ChainDataFrame
-  summary_df = read_summary(sm)
-  summary_df[Symbol("beta[1]"), [:mean, :ess]]
-  @test summary_df[Symbol("beta[1]"), :mean][1] ≈ 25.5 atol=12.0
-  @test summary_df[Symbol("beta[2]"), :mean][1] ≈ 6.01 atol=4.0
-  @test summary_df[Symbol("beta[3]"), :mean][1] ≈ 0.565 atol=0.1
-  @test summary_df[Symbol("sigma"), :mean][1] ≈ 18.2 atol=1.2
+  df = read_summary(sm)
+  @test df[df.parameters .== Symbol("beta[1]"), :mean][1] ≈ 25.5 rtol=0.1
+  @test df[df.parameters .== Symbol("beta[2]"), :mean][1] ≈ 6.01 rtol=0.1
+  @test df[df.parameters .== Symbol("beta[3]"), :mean][1] ≈ 0.565 rtol=0.1
+  @test df[df.parameters .== Symbol("sigma"), :mean][1] ≈ 18.2 rtol=0.1
 end

@@ -1,6 +1,6 @@
 ######### StanSample example  ###########
 
-using StanSample
+using StanSample, MCMCChains
 
 bernoullimodel = "
 data { 
@@ -20,12 +20,12 @@ bernoullidata = Dict("N" => 10, "y" => [0, 1, 0, 1, 0, 0, 0, 0, 0, 1])
 inittheta = Dict("theta" => 0.60)
 
 sm = SampleModel("bernoulli", bernoullimodel,
-  seed=StanBase.RandomSeed(seed=-1));
+  seed=StanSample.RandomSeed(seed=-1));
 
 rc = stan_sample(sm, data=bernoullidata, init=inittheta)
 
 if success(rc)
   chn = read_samples(sm)
-  describe(chn)
+  show(chn)
 end
   

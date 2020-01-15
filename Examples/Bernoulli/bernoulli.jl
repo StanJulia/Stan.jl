@@ -30,7 +30,7 @@ sm = SampleModel("bernoulli", bernoullimodel,
 
 rc = stan_sample(sm, data=observed_data);
 
-if !isnothing(sample_file)
+if success(rc)
   chns = read_samples(sm)
   
   # Describe the results
@@ -39,7 +39,8 @@ if !isnothing(sample_file)
   println()
   
   # Optionally, convert to a DataFrame
-  DataFrame(chns, showall=true, sorted=true, append_chains=true) |> display
+  df = DataFrame(chns, showall=true, sorted=true, append_chains=true)
+  first(df, 5)
   println()
   
   # Look at effective sample saize
@@ -56,8 +57,7 @@ if !isnothing(sample_file)
     end
   end
   
-  # Ceate a ChainDataFrame
-  summary_df = read_summary(sm)
-  summary_df[:theta, [:mean, :ess]]
+  df = read_summary(sm)
+  df[df.parameters .== :theta, [:mean, :ess]]
 end
 

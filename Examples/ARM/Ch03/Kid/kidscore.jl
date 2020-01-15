@@ -1,6 +1,6 @@
 ######### ARM Ch03: kid score example  ###########
 
-using StanSample
+using StanSample, MCMCChains
 
 kid = "
 data {
@@ -183,12 +183,12 @@ if success(rc)
   chn = set_names(chn,  Dict(["beta.$i" => "beta[$i]" for i in 1:3]))
   
   # Describe the results
-  describe(chn) |> display
+  show(chn)
   println()
   
   # Ceate a ChainDataFrame
-  summary_df = read_summary(sm)
-  summary_df |> display
+  df = read_summary(sm)
+  df |> display
   println()
-  summary_df[Symbol("beta[1]"), [:mean, :ess]]
+  df[df.parameters .== Symbol("beta[1]"), [:mean, :ess]] |> display
 end

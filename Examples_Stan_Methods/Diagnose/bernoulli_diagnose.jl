@@ -22,7 +22,7 @@ stanmodel = DiagnoseModel("bernoulli", bernoulli_model;
 
 rc = stan_diagnose(stanmodel; data=bernoulli_data);
 
-if sample_file !== Nothing
+if success(rc)
   diags = read_diagnose(stanmodel)
   println()
   display(diags)

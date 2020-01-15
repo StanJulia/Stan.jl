@@ -3,7 +3,6 @@
 using StanSample, MCMCChains, Test, Statistics
 
 ProjDir = @__DIR__
-cd(ProjDir)
 
 gq = "
   data {
@@ -41,12 +40,11 @@ if success(rc)
   cdf = describe(chns)
 
   # Show the same output in DataFrame format
-  sdf = StanSample.read_summary(stanmodel)
+  df = StanSample.read_summary(stanmodel)
   
-  df = stan_generate_quantities(stanmodel, 1)
-  @test mean(df[!, :y_pred]) ≈ 412.0 atol=100.0
-  #std(df[!, :y_pred])  |> display
-  @test std(df[!, :y_pred]) ≈ 500.0 atol=150.0
+  df1 = stan_generate_quantities(stanmodel, 1)
+  @test mean(df1[!, :y_pred]) ≈ 412.0 rtol=0.3
+  @test std(df1[!, :y_pred]) ≈ 500.0 rtol=0.3
 end
 
 

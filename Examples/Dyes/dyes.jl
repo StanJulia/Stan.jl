@@ -1,6 +1,6 @@
 ######### Stan batch program example  ###########
 
-using StanSample
+using StanSample, MCMCChains
 
 dyes ="
 data {
@@ -74,7 +74,7 @@ if success(rc)
       :internals => names(chns, [:internals])
     )
   )
-  describe(chn) |> display
+  show(chn)
   println()
   describe(chn, sections=[:mu]) |> display
   println()
