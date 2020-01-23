@@ -1,4 +1,4 @@
-using StanSample, MCMCChains, Test
+using StanSample, Test
 
 ProjDir = @__DIR__
 cd(ProjDir) do
@@ -41,10 +41,7 @@ cd(ProjDir) do
 
   if success(rc)
     # Convert to an MCMCChains.Chains object
-    chns = read_samples(stanmodel)
-
-    # Describe the MCMCChains using MCMCChains statistics
-    cdf = describe(chns)
+    samples = read_samples(stanmodel)
 
     # Show cmdstan summary in DataFrame format
     df = read_summary(stanmodel)

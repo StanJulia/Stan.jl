@@ -1,6 +1,6 @@
 ######### Stan program example  ###########
 
-using StanSample, MCMCChains, Test
+using StanSample, Test
 
 bernoullimodel = "
 data { 
@@ -26,9 +26,8 @@ rc = stan_sample(sm, data=observeddata);
 
 if success(rc)
   
-  # Create MCMCChains object
+  # Fetch cmdstan summary data frame
   df = read_summary(sm);
   @test df[df.parameters .== :theta, :mean][1] ≈ 0.34 rtol=0.1
 
 end
-

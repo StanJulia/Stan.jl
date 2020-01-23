@@ -27,7 +27,7 @@ rc = stan_variational(sm; data=bernoulli_data)
 
 if success(rc)
 
-  (chns, cnames) = read_variational(sm)
+  (samples, cnames) = read_variational(sm)
 
   # Show the same output in DataFrame format
   df = read_summary(sm)

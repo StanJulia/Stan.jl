@@ -1,6 +1,6 @@
 ######### Stan program example  ###########
 
-using StanSample, MCMCChains, Test
+using StanSample, Test
 
 eightschools ="
 data {
@@ -35,19 +35,7 @@ sm = SampleModel("schools8", eightschools)
 rc = stan_sample(sm, data=schools8data)
 
 if success(rc)
-  chns = read_samples(sm)
-  
-  chn = set_section(chns, Dict(
-    :parameters => ["mu", "tau"],
-    :thetas => ["theta.$i" for i in 1:8],
-    :etas => ["eta.$i" for i in 1:8],
-    :internals => ["lp__", "accept_stat__", "stepsize__", "treedepth__", "n_leapfrog__",
-      "divergent__", "energy__"]
-    )
-  )
-  
-  describe(chn)
-  describe(chn, sections=[:thetas])
+  samples = read_samples(sm)
   
   df = read_summary(sm)
   @test df[df.parameters .== :mu, :mean][1] ≈ 7.64 rtol=0.5

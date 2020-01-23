@@ -27,13 +27,9 @@ sm = SampleModel("binormal", binorm_model);
 rc = stan_sample(sm)
 
 if success(rc)
-  chn = read_samples(sm)
+  samples = read_samples(sm)
   
-  # Update parameter names
-  chn = set_names(chn, Dict(["y.$i" => "y[$i]" for i in 1:2]))
-  describe(chn)
-  
-  # Ceate a ChainDataFrame
+  # Fetch cmdstan summary data frame
   df = read_summary(sm)
   @test df[df.parameters .== Symbol("y[1]"), :mean][1] ≈ 0.0 atol=2.0
   @test df[df.parameters .== Symbol("y[2]"), :mean][1] ≈ 0.0 atol=2.0

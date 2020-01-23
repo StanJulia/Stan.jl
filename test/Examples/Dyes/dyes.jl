@@ -1,6 +1,6 @@
 ######### Stan batch program example  ###########
 
-using StanSample, MCMCChains, Test
+using StanSample, Test
 
 dyes ="
 data {
@@ -60,25 +60,9 @@ sm = SampleModel("dyes", dyes);
 rc = stan_sample(sm, data=dyesdata)
 
 if success(rc)
-  chns = read_samples(sm)
-  #pi = filter(p -> length(p) > 2 && p[end-1:end] == "__", cnames)
-  #p = filter(p -> !(p in  pi), cnames)
-  
-  chn = set_section(chns, 
-    Dict(
-      :parameters => ["theta", 
-        "tau_between", "tau_within", 
-        "sigma_between", "sigma_within",
-        "sigmasq_between", "sigmasq_within"],
-      :mu => ["mu.$i" for i in 1:6],
-      :internals => names(chns, [:internals])
-    )
-  )
-  describe(chn)
-  describe(chn, sections=[:mu])
-  describe(chn, sections=[:internals])
+  samples = read_samples(sm)
 
-  # Ceate a ChainDataFrame
+  # Fetch cmdstan summary data frame.
   df = read_summary(sm)
   @test df[df.parameters .== :theta, :mean][1] ≈ 1527.5 atol=50.0
   @test df[df.parameters .== Symbol("mu[1]"), :mean][1] ≈ 1512.5 rtol=0.1

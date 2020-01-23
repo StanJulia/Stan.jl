@@ -1,4 +1,4 @@
-using StanSample, MCMCChains, Test
+using StanSample, Test
 
 binom_model = "
 // Inferring a Rate
@@ -34,7 +34,7 @@ binom_data = Dict("n" => 10, "k" => 5)
 rc = stan_sample(sm, data=binom_data)
 
 if success(rc)
-  # Ceate a ChainDataFrame
+  # Fetch cmdstan summary data frame.
   df = read_summary(sm)
   @test df[df.parameters .== :theta, :mean][1] ≈ 0.5 rtol=0.1
   

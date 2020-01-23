@@ -1,6 +1,6 @@
 ######## Stan diagnose example  ###########
 
-using StanSample, MCMCChains, Test, Statistics
+using StanSample, Test
 
 ProjDir = @__DIR__
 
@@ -34,17 +34,13 @@ rc = stan_sample(stanmodel; data=gq_data)
 
 if success(rc)
   # Convert to an MCMCChains.Chains object
-  chns = read_samples(stanmodel)
+  samples = read_samples(stanmodel)
   
-  # Describe the MCMCChains using MCMCChains statistics
-  cdf = describe(chns)
-
   # Show the same output in DataFrame format
   df = StanSample.read_summary(stanmodel)
   
   df1 = stan_generate_quantities(stanmodel, 1)
-  @test mean(df1[!, :y_pred]) ≈ 412.0 rtol=0.3
-  @test std(df1[!, :y_pred]) ≈ 500.0 rtol=0.3
+  @test sum(df1[!, :y_pred])/size(df1, 1) ≈ 412.0 rtol=0.3
 end
 
 

@@ -1,6 +1,6 @@
 # Test Stan.jl examples.
 
-using DataFrames, MCMCChains, Test
+using DataFrames, Test
 
 TestDir = @__DIR__
 ExampleDir = joinpath(TestDir, "..")
@@ -22,7 +22,6 @@ examples = [
   "Examples_Test_Cases/InitThetaDict/init_dict.jl",
   "Examples_Test_Cases/InitThetaDictArray/init_dict_array.jl",
   "Examples_Test_Cases/InitThetaFile/init_file.jl",
-  "Examples_Test_Cases/NamedArray/namedarray.jl",
   "Examples_Test_Cases/ScalarObs/scalar.jl",
   "Examples_Test_Cases/ZeroLengthArray/zerolengtharray.jl",
 
@@ -30,7 +29,7 @@ examples = [
   "Examples_Stan_Methods/Parse_and_Interpolate/parse.jl"
 ]
 
-println("\nRunning Stan.jl v5.x test examples")
+println("\nRunning Stan.jl v6.x test examples")
 
   for example in examples
       println("\n* $(example) *\n")
@@ -39,6 +38,4 @@ println("\nRunning Stan.jl v5.x test examples")
         include(joinpath(TestDir, example))
       end
 
-      # Or to run regular examples:
-      # include(joinpath(ExampleDir, "..", example))
   end
