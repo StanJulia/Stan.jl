@@ -29,7 +29,7 @@ StanBase = "1.1, 2.0"
 StanDiagnose = "1.1"
 StanOptimize = "1.1"
 StanSample = "1.1, 2.0"
-StanVariational = "1.1"
+StanVariational = "1.1, 2.0"
 StatsPlots = "0.13"
 julia = "1"
 
