@@ -10,7 +10,8 @@ Major work will happen on this package over the next few months, i.e. until at l
 
 ## Documentation
 
-Recently generating documentation on Travis has been problematic (to say the least). Docs will be moved to the examples.
+- [**STABLE**][docs-stable-url] &mdash; **documentation of the most recently tagged version.**
+- [**DEVEL**][docs-dev-url] &mdash; *documentation of the in-development version.*
 
 ## Background info
 
@@ -29,3 +30,11 @@ A collection of documented examples to use Stan (as an external program) from Ju
 Stan's cmdstan executable needs to be installed separatedly. Please see [cmdstan installation](https://stanjulia.github.io/Stan.jl/latest/INSTALLATION/). 
 
 For more info on Stan, please go to <http://mc-stan.org>.
+
+
+[docs-dev-img]: https://img.shields.io/badge/docs-dev-blue.svg
+[docs-dev-url]: https://stanjulia.github.io/Stan.jl/latest
+
+[docs-stable-img]: https://img.shields.io/badge/docs-stable-blue.svg
+[docs-stable-url]: https://stanjulia.github.io/Stan.jl/stable
+
