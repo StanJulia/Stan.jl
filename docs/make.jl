@@ -8,7 +8,6 @@ append!(page_list, [Pair("Intro", "INTRO.md")]);
 append!(page_list, [Pair("Installation", "INSTALLATION.md")]);
 append!(page_list, [Pair("Walkthrough", "WALKTHROUGH.md")]);
 append!(page_list, [Pair("Versions", "VERSIONS.md")]);
-#append!(page_list, [Pair("Feature index", "EXAMPLES.md")]);
 
 makedocs(
   format = Documenter.HTML(prettyurls = haskey(ENV, "GITHUB_ACTIONS")),

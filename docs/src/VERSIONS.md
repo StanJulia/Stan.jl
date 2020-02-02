@@ -23,11 +23,11 @@ This version of the package has primarily been tested on Travis and Mac OSX 10.1
 This is a breaking release. Instead of by default returning an MCMCChains.Chains object,
 Requires.jl is used to:
 
-1. Optional support for Chains through MCMCChains.jl.
-2. Optional support for ElasticArrays through StanSamples.jl.
-3. Optional support for Particles through MonteCarloMeasusrements.jl.
+1. Optional include glue code to support Chains through MCMCChains.jl.
+2. Optional include glue code to support DataFrames through DataFrames.jl.
+3. Optional include glue code to support Particles through MonteCarloMeasusrements.jl.
 
-By default stan_sample will return an "a3d" and vector of variable names.
+By default stan_sample will return an "a3d" and optionally can also return a vector of variable names.
 
 ### Version 5.0.2
 

@@ -42,8 +42,10 @@ Run a simulation by calling stan_sample(), passing in the model and data:
 rc = stan_sample(sm, data)
 
 if success(rc)
-  chns = read_samples(sm)
-  describe(chns)
-  plot(chns)
+  samples = read_samples(sm)
 end
 ```
+
+Many examples are provided in the 3 Example subdirectories. In the test directory a similar set of examples is included that do not depend on MCMCChains.jl.
+
+Additional examples can be found in StanSample.jl and StatisticalRethinking.jl.

@@ -8,9 +8,9 @@
 
 [Stan.jl](https://github.com/StanJulia/Stan.jl) wraps cmdstan and captures the samples for further processing.
 
-## StanJulia
+## StanJulia overview
 
-Stan.jl is part of the [StanJulia Github organization](https://github.com/StanJulia) set of packages. It is one of two options in StanJulia to capture draws from a Stan language program. The other option is *under development* and is illustrated in Stan.jl and [StatisticalRethinking.jl](https://github.com/StatisticalRethinkingJulia/StatisticalRethinking.jl).
+Stan.jl is part of the [StanJulia Github organization](https://github.com/StanJulia) set of packages. CmdStan.jl is one of two options in StanJulia to capture draws from a Stan language program. The other option is *under development* and is illustrated in Stan.jl and [StatisticalRethinking.jl](https://github.com/StatisticalRethinkingJulia/StatisticalRethinking.jl).
 
 These are not the only options to sample using Stan from Julia. Valid other options are PyCall.jl/PyStan and StanRun.jl.
 
@@ -28,26 +28,31 @@ sm = SampleModel(...)
 # Compile and run Stan program, collect draws.
 rc = stan_sample(...)
 
-# Cmdstan summary of result
-sdf = read_summary(sm)
+if rc == 0
+  # Cmdstan summary of result
+  sdf = read_summary(sm)
 
-# Dsplay the summary
-sdf |> display
+  # Display the summary as a DataFrame
+  sdf |> display
 
-# Show the draws
-samples = read_samples(sm)
+  # Show the draws
+  samples = read_samples(sm, output_format=:array)
+
+end
 ```
-This workflow creates an array of draws, the default value for the `output_format` argument in Stanmodel(). Other options are `:dataframes` and `:mcmcchains`.
+This workflow creates an array of draws, the default value for the `output_format` argument in read_samples().
 
 If at this point a vector of DataFrames (a DataFrame for each chain) is preferred:
 ```
-df = StanSample.convert_a3d(samples, cnames, Val(:dataframes))
+df = read_samples(sm; output_format=:dataframes)
 ```
-Or, if you know upfront a vector of DataFrames is what you want, you can specify that when creating the Stanmodel:
+Other options are `:dataframe, :dataframes`, `:mcmcchains` and `:particles`. See
 ```
-stanmodel = StanModel(..., output_format=:dataframes,...)
+?read_samples
 ```
-Version 5 of CmdStan.jl used `:mcmcchains` by default but the dependencies of MCMCChains.jl, including access to plotting features, can lead to long compile times.
+for more details.
+
+Version 5 of Stan.jl used `:mcmcchains` by default but the dependencies of MCMCChains.jl, including access to plotting features, lead to long compile times. In version 6 the default is :array again. In order to use the other options glue code is needed which is handled by Requires.jl.
 
 ## References
 

@@ -6,9 +6,15 @@
 
 ## Important note
 
-V6.0.0 is a breaking release. 
+V6.0.0 is a (mildly) breaking release primarily because StanSample now by default returns an array.
+If e.g. an MCMCChains.Chains object is needed MCMCChains.jl must have been loaded and use:
+```
+chns = read_samples(sm; output_format=:mcmcchains)
+```
 
-Major work will happen on this package over the next few months, i.e. until at least March 2020. The basic packages in StanJulia work but are still being fine-tuned. Documentation - to be part of Stan.jl v6 - is also virtually not there yet. WORK IN PROGRESS!!!!
+See `?read_samples` for other optional arguments. 
+
+Further work will happen on this package over the next few months, i.e. until at least April 2020 as the underlying StanJulia packages are being fine-tuned. Documentation - to be part of Stan.jl v6 - is also far from done. WORK IN PROGRESS!!!!
 
 ## Documentation
 
