@@ -6,7 +6,9 @@
 
 ## Important note
 
-Major work will happen on this package over the next few months, i.e. until at least March 2020. The basic packages in StanJulia work but are still being fine-tuned. Documentation - to be part of Stan.jl v5 - is also virtually not there yet. WORK IN PROGRESS!!!!
+V6.0.0 is a breaking release. 
+
+Major work will happen on this package over the next few months, i.e. until at least March 2020. The basic packages in StanJulia work but are still being fine-tuned. Documentation - to be part of Stan.jl v6 - is also virtually not there yet. WORK IN PROGRESS!!!!
 
 ## Documentation
 
