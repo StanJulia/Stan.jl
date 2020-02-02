@@ -28,6 +28,6 @@ sm = SampleModel("bernoulli", bernoullimodel,
 rc = stan_sample(sm, data=bernoullidata, init=inittheta)
   
 if success(rc)
-  chn = read_samples(sm)
+  chn = read_samples(sm; output_format=:mcmcchains)
   show(chn)
 end

@@ -60,9 +60,7 @@ sm = SampleModel("dyes", dyes);
 rc = stan_sample(sm, data=dyesdata)
 
 if success(rc)
-  chns = read_samples(sm)
-  #pi = filter(p -> length(p) > 2 && p[end-1:end] == "__", cnames)
-  #p = filter(p -> !(p in  pi), cnames)
+  chns = read_samples(sm; output_format=:mcmcchains, include_internals=true)
   
   chn = set_section(chns, 
     Dict(

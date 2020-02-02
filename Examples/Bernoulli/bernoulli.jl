@@ -1,6 +1,6 @@
 ######### Stan program example  ###########
 
-using StanSample
+using StanSample, MCMCChains
 using StatsPlots
 
 bernoullimodel = "
@@ -31,15 +31,15 @@ sm = SampleModel("bernoulli", bernoullimodel,
 rc = stan_sample(sm, data=observed_data);
 
 if success(rc)
-  chns = read_samples(sm)
+  chns = read_samples(sm; output_format=:mcmcchains)
   
   # Describe the results
   println()
   show(chns)
   println()
   
-  # Optionally, convert to a DataFrame
-  df = DataFrame(chns, showall=true, sorted=true, append_chains=true)
+  # Optionally, read samples as a a DataFrame
+  df=read_samples(sm, output_format=:dataframe)
   first(df, 5)
   println()
   

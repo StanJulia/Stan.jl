@@ -41,7 +41,7 @@ rc = stan_sample(stanmodel, data=observeddata)
 
 if success(rc)
   # Convert to an MCMCChains.Chains object
-  chns = read_samples(stanmodel)
+  chns = read_samples(stanmodel; output_format=:mcmcchains)
 
   # Describe the MCMCChains using MCMCChains statistics
   show(chns)

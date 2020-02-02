@@ -34,6 +34,6 @@ binom_data = Dict("n" => 10, "k" => 5)
 rc = stan_sample(sm, data=binom_data)
 
 if success(rc)
-  chn = read_samples(sm)
+  chn = read_samples(sm; output_format=:mcmcchains)
   show(chn)
 end

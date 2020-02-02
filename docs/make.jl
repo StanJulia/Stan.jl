@@ -4,11 +4,11 @@ DOC_ROOT = joinpath(dirname(pathof(Stan)), "..", "docs")
 DocDir =  joinpath(DOC_ROOT, "src")
 
 page_list = Array{Pair{String, Any}, 1}();
-append!(page_list, [Pair("Home", "INTRO.md")]);
+append!(page_list, [Pair("Intro", "INTRO.md")]);
 append!(page_list, [Pair("Installation", "INSTALLATION.md")]);
 append!(page_list, [Pair("Walkthrough", "WALKTHROUGH.md")]);
-append!(page_list, [Pair("Version", "VERSIONS.md")]);
-append!(page_list, [Pair("Features", "EXAMPLES.md")]);
+append!(page_list, [Pair("Versions", "VERSIONS.md")]);
+#append!(page_list, [Pair("Feature index", "EXAMPLES.md")]);
 
 makedocs(
   format = Documenter.HTML(prettyurls = haskey(ENV, "GITHUB_ACTIONS")),

@@ -177,7 +177,7 @@ sm = SampleModel("kid", kid);
 rc = stan_sample(sm, data=kiddata)
 
 if success(rc)
-  chn = read_samples(sm)
+  chn = read_samples(sm, output_format=:mcmcchains)
   
   # Update parameter names    
   chn = set_names(chn,  Dict(["beta.$i" => "beta[$i]" for i in 1:3]))

@@ -35,7 +35,7 @@ sm = SampleModel("schools8", eightschools)
 rc = stan_sample(sm, data=schools8data)
 
 if success(rc)
-  chns = read_samples(sm)
+  chns = read_samples(sm; output_format=:mcmcchains, include_internals=true)
   
   chn = set_section(chns, Dict(
     :parameters => ["mu", "tau"],

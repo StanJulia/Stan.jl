@@ -18,6 +18,17 @@ This version of the package has primarily been tested on Travis and Mac OSX 10.1
 
 ## Versions
 
+### Version 6.0.0
+
+This is a breaking release. Instead of by default returning an MCMCChains.Chains object,
+Requires.jl is used to:
+
+1. Optional support for Chains through MCMCChains.jl.
+2. Optional support for ElasticArrays through StanSamples.jl.
+3. Optional support for Particles through MonteCarloMeasusrements.jl.
+
+By default stan_sample will return an "a3d" and vector of variable names.
+
 ### Version 5.0.2
 
 1. Tracking updates of dependencies.

@@ -1,4 +1,4 @@
-# A Julia interface to Stan's cmdstan
+# A Julia interface to Stan's cmdstan executable
 
 ## Stan.jl
 
@@ -8,30 +8,46 @@
 
 [Stan.jl](https://github.com/StanJulia/Stan.jl) wraps cmdstan and captures the samples for further processing.
 
-## Table of contents
+## StanJulia
 
-### Examples
+Stan.jl is part of the [StanJulia Github organization](https://github.com/StanJulia) set of packages. It is one of two options in StanJulia to capture draws from a Stan language program. The other option is *under development* and is illustrated in Stan.jl and [StatisticalRethinking.jl](https://github.com/StatisticalRethinkingJulia/StatisticalRethinking.jl).
 
-1. ARM kids example
-2. Bernoulli
-...
+These are not the only options to sample using Stan from Julia. Valid other options are PyCall.jl/PyStan and StanRun.jl.
 
-### Examples showing cmdstan methods
+On a very high level, a typical workflow for using CmdStan.jl looks like:
 
-1. Diagnose
-2. Generate_Quantities
-3. Optimize
-4. Parse_and_Interpolate_Example
-5. Variational
-6. Nuts sampling diagnose using the diagnose binary
-...
+```
+using CmdStan
 
-### Examples added to test special cases
+# Define a Stan language program.
+bernoulli = "..."
 
-1. Init using a single Dict
-2. Init with an Array{Dict, 1}
-3. Init using a .R file
-...
+# Prepare for calling cmdstan.
+sm = SampleModel(...)
+
+# Compile and run Stan program, collect draws.
+rc = stan_sample(...)
+
+# Cmdstan summary of result
+sdf = read_summary(sm)
+
+# Dsplay the summary
+sdf |> display
+
+# Show the draws
+samples = read_samples(sm)
+```
+This workflow creates an array of draws, the default value for the `output_format` argument in Stanmodel(). Other options are `:dataframes` and `:mcmcchains`.
+
+If at this point a vector of DataFrames (a DataFrame for each chain) is preferred:
+```
+df = StanSample.convert_a3d(samples, cnames, Val(:dataframes))
+```
+Or, if you know upfront a vector of DataFrames is what you want, you can specify that when creating the Stanmodel:
+```
+stanmodel = StanModel(..., output_format=:dataframes,...)
+```
+Version 5 of CmdStan.jl used `:mcmcchains` by default but the dependencies of MCMCChains.jl, including access to plotting features, can lead to long compile times.
 
 ## References
 
@@ -43,12 +59,10 @@ There is no shortage of good books on Bayesian statistics. A few of my favorites
 
 3. [Gelman, Hill: Data Analysis using regression and multileve,/hierachical models](http://www.stat.columbia.edu/~gelman/arm/)
 
-4. [Gelman, Carlin, and others: Bayesian Data Analysis](http://www.stat.columbia.edu/~gelman/book/)
+4. [McElreath: Statistical Rethinking](http://xcelab.net/rm/statistical-rethinking/)
 
-and a great read:
+5. [Gelman, Carlin, and others: Bayesian Data Analysis](http://www.stat.columbia.edu/~gelman/book/)
+
+and a great read (and implementation in DynamicHMC.jl):
 
 5. [Betancourt: A Conceptual Introduction to Hamiltonian Monte Carlo](https://arxiv.org/abs/1701.02434)
-
-
-
-
