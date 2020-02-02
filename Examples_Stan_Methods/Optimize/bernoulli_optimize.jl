@@ -31,7 +31,8 @@ end
 # Same with saved iterations
 stanmodel = OptimizeModel("bernoulli", bernoulli_model;
   method = StanOptimize.Optimize(save_iterations = true),
-  tmpdir = joinpath(@__DIR__, "tmp"));
+  #tmpdir = joinpath(@__DIR__, "tmp")
+  );
 
 rc2  = stan_optimize(stanmodel, data=bernoulli_data);
 
