@@ -4,6 +4,14 @@
 [![Coverage Status](https://coveralls.io/repos/StanJulia/Stan.jl/badge.svg?branch=master&service=github)](https://coveralls.io/github/StanJulia/Stan.jl?branch=master)
 [![codecov](https://codecov.io/gh/StanJulia/Stan.jl/branch/master/graph/badge.svg)](https://codecov.io/gh/StanJulia/Stan.jl?branch=master)
 
+## Stan.jl stargazers over time
+
+[![Stargazers over time](https://starchart.cc/StanJulia/Stan.jl.svg)](https://starchart.cc/StanJulia/Stan.jl)
+
+## CmdStan.jl stargazers over time
+
+[![Stargazers over time](https://starchart.cc/StanJulia/CmdStan.jl.svg)](https://starchart.cc/StanJulia/CmdStan.jl)
+
 ## Important note
 
 V6.0.0 is a (mildly) breaking release primarily because StanSample now by default returns an array.

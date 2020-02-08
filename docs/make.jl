@@ -21,7 +21,6 @@ makedocs(
 deploydocs(
   root = DOC_ROOT,
   repo = "github.com/StanJulia/Stan.jl.git",
-  versions = "v#",
   devbranch = "master",
   push_preview = true,
 )
