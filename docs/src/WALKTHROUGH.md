@@ -20,13 +20,13 @@ model {
   theta ~ beta(1,1);
     y ~ bernoulli(theta);
 }
-"
+";
 ```
 
 Create a SampleModel object:
 
 ```
-sm = SampleModel("bernoulli", model)
+sm = SampleModel("bernoulli", model);
 ```
 
 Above SampleModel() call creates a default model for sampling. See `?SampleModel` for details.
@@ -34,15 +34,15 @@ Above SampleModel() call creates a default model for sampling. See `?SampleModel
 The observed input data:
 
 ```
-data = Dict("N" => 10, "y" => [0, 1, 0, 1, 0, 0, 0, 0, 0, 1])
+data = Dict("N" => 10, "y" => [0, 1, 0, 1, 0, 0, 0, 0, 0, 1]);
 ```
 
 Run a simulation by calling stan_sample(), passing in the model and data: 
 ```
-rc = stan_sample(sm, data)
+rc = stan_sample(sm, data=data);
 
 if success(rc)
-  samples = read_samples(sm)
+  samples = read_samples(sm);
 end
 ```
 
