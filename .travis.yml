@@ -31,6 +31,9 @@ jobs:
     - stage: Test
       julia: 1.4
       os: linux
+    - stage: Test
+      julia: nightly
+      os: linux
     - stage: Documentation
       julia: 1.3
       os: linux

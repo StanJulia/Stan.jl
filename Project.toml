@@ -3,12 +3,11 @@ uuid = "682df890-35be-576f-97d0-3d8c8b33a550"
 license = "MIT"
 desc = "Illustrate StanJulia's interface options to cmdstan"
 authors = ["Rob J Goedman <goedman@icloud.com>"]
-version = "6.0.2"
+version = "6.0.1"
 
 [deps]
 DataFrames = "a93c6f00-e57d-5684-b7b6-d8193f3e46c0"
 DocStringExtensions = "ffbed154-4ef7-542d-bbb7-c09d3a79fcae"
-Documenter = "e30172f5-a6a5-5a46-863b-614d45cd2de4"
 Random = "9a3f8284-a2c9-5f02-9a11-845980a1fd5c"
 StanBase = "d0ee94f6-a23d-54aa-bbe9-7f572d6da7f5"
 StanDiagnose = "fb13fc95-9a72-5e81-90ef-432a29d7f4c2"
@@ -20,7 +19,6 @@ Test = "8dfed614-e22c-5e08-85e1-65c5234f0b40"
 [compat]
 DataFrames = "0.20"
 DocStringExtensions = "0.8"
-Documenter = "0.24"
 StanBase = "1.1, 2.0"
 StanDiagnose = "1.1, 2.0"
 StanOptimize = "1.1, 2.0"
