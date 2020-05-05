@@ -17,7 +17,7 @@ StanVariational = "6ede68ce-8466-5085-8a79-4c4de3d9cf4a"
 Test = "8dfed614-e22c-5e08-85e1-65c5234f0b40"
 
 [compat]
-DataFrames = "0.20"
+DataFrames = "0.20, 0.21"
 DocStringExtensions = "0.8"
 StanBase = "1.1, 2.0"
 StanDiagnose = "1.1, 2.0"
