@@ -479,7 +479,7 @@ class pem_model : public model_base_crtp<pem_model> {
         u_hat = std::vector<std::vector<local_scalar_t__>>(T, std::vector<local_scalar_t__>(2, 0));
         
         current_statement__ = 14;
-        lp_accum__.add(inv_gamma_log<propto__>(sigma1, 4.0, 1.0));
+        lp_accum__.add(inv_gamma_log<propto__>(sigma1, 3.0, 3.0));
         current_statement__ = 16;
         if (logical_lt(theta[(1 - 1)], 0.1)) {
           current_statement__ = 16;

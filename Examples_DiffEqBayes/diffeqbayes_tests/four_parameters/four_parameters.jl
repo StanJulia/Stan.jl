@@ -27,7 +27,7 @@ data = convert(Array,randomized)
 priors = [truncated(Normal(1.0,1),0.1,2),truncated(Normal(1.5,0.5),0.1,1.5),
           truncated(Normal(2.0,1),0.1,4),truncated(Normal(1.3,0.5),0.1,2)]
 
-bayesian_result = stan_inference(prob1,t,data,priors;num_samples=2000, nchains=4,
+@time bayesian_result = stan_inference(prob1,t,data,priors;num_samples=2000, nchains=4,
   num_warmup=1000,vars =(StanODEData(),InverseGamma(4,1)))
 
 if success(bayesian_result.return_code)

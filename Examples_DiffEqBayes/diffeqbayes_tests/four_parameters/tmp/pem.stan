@@ -44,7 +44,7 @@ functions {
   }
   model{
     real u_hat[T,2];
-    sigma1 ~ inv_gamma(4.0, 1.0);
+    sigma1 ~ inv_gamma(3.0, 3.0);
     theta[1] ~normal(1.0, 1.0) T[0.1,2.0];theta[2] ~normal(1.5, 0.5) T[0.1,1.5];theta[3] ~normal(2.0, 1.0) T[0.1,4.0];theta[4] ~normal(1.3, 0.5) T[0.1,2.0];
     u_hat = integrate_ode_rk45(sho, u0, t0, ts, theta, x_r, x_i, 0.001, 1.0e-6, 100000);
     for (t in 1:T){

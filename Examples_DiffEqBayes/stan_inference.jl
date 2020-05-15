@@ -177,9 +177,8 @@ function stan_inference(prob::DiffEqBase.DEProblem, t, data,
   if isnothing(stanmodel)
     stanmodel = StanSample.SampleModel(
       "pem", parameter_estimation_model, [nchains],
-      tmpdir=tmpdir)
-      #method=StanSample.Sample(num_samples=num_samples, num_warmup=num_warmup)) 
-      #printsummary = printsummary)
+      tmpdir=tmpdir,
+      method=StanSample.Sample(num_samples=num_samples, num_warmup=num_warmup)) 
   end
 
   parameter_estimation_data = Dict("u0"=>prob.u0, "T" => length(t), "internal_var___u" => view(data, :, 1:length(t))', "t0" => prob.tspan[1], "ts" => t)
