@@ -412,10 +412,10 @@ class pem_model : public model_base_crtp<pem_model> {
       current_statement__ = 2;
       if (jacobian__) {
         current_statement__ = 2;
-        theta1 = stan::math::lub_constrain(theta1, 0.1, 2.0, lp__);
+        theta1 = stan::math::lub_constrain(theta1, 0.5, 2.5, lp__);
       } else {
         current_statement__ = 2;
-        theta1 = stan::math::lub_constrain(theta1, 0.1, 2.0);
+        theta1 = stan::math::lub_constrain(theta1, 0.5, 2.5);
       }
       local_scalar_t__ theta2;
       
@@ -424,10 +424,10 @@ class pem_model : public model_base_crtp<pem_model> {
       current_statement__ = 3;
       if (jacobian__) {
         current_statement__ = 3;
-        theta2 = stan::math::lub_constrain(theta2, 0.1, 1.5, lp__);
+        theta2 = stan::math::lub_constrain(theta2, 0.0, 2.0, lp__);
       } else {
         current_statement__ = 3;
-        theta2 = stan::math::lub_constrain(theta2, 0.1, 1.5);
+        theta2 = stan::math::lub_constrain(theta2, 0.0, 2.0);
       }
       local_scalar_t__ theta3;
       
@@ -436,10 +436,10 @@ class pem_model : public model_base_crtp<pem_model> {
       current_statement__ = 4;
       if (jacobian__) {
         current_statement__ = 4;
-        theta3 = stan::math::lub_constrain(theta3, 0.1, 4.0, lp__);
+        theta3 = stan::math::lub_constrain(theta3, 1.0, 4.0, lp__);
       } else {
         current_statement__ = 4;
-        theta3 = stan::math::lub_constrain(theta3, 0.1, 4.0);
+        theta3 = stan::math::lub_constrain(theta3, 1.0, 4.0);
       }
       local_scalar_t__ theta4;
       
@@ -448,10 +448,10 @@ class pem_model : public model_base_crtp<pem_model> {
       current_statement__ = 5;
       if (jacobian__) {
         current_statement__ = 5;
-        theta4 = stan::math::lub_constrain(theta4, 0.1, 2.0, lp__);
+        theta4 = stan::math::lub_constrain(theta4, 0.0, 2.0, lp__);
       } else {
         current_statement__ = 5;
-        theta4 = stan::math::lub_constrain(theta4, 0.1, 2.0);
+        theta4 = stan::math::lub_constrain(theta4, 0.0, 2.0);
       }
       current_statement__ = 6;
       validate_non_negative_index("theta", "4", 4);
@@ -481,43 +481,43 @@ class pem_model : public model_base_crtp<pem_model> {
         current_statement__ = 14;
         lp_accum__.add(inv_gamma_log<propto__>(sigma1, 3.0, 3.0));
         current_statement__ = 16;
-        if (logical_lt(theta[(1 - 1)], 0.1)) {
+        if (logical_lt(theta[(1 - 1)], 0.5)) {
           current_statement__ = 16;
           lp_accum__.add(stan::math::negative_infinity());
         } else {
           current_statement__ = 15;
-          if (logical_gt(theta[(1 - 1)], 2.0)) {
+          if (logical_gt(theta[(1 - 1)], 2.5)) {
             current_statement__ = 15;
             lp_accum__.add(stan::math::negative_infinity());
           } else {
             current_statement__ = 15;
             lp_accum__.add(
-              -log_diff_exp(normal_cdf_log(2.0, 1.0, 1.0),
-                 normal_cdf_log(0.1, 1.0, 1.0)));
+              -log_diff_exp(normal_cdf_log(2.5, 1.5, 0.5),
+                 normal_cdf_log(0.5, 1.5, 0.5)));
           }
         }
         current_statement__ = 17;
-        lp_accum__.add(normal_log<propto__>(theta[(1 - 1)], 1.0, 1.0));
+        lp_accum__.add(normal_log<propto__>(theta[(1 - 1)], 1.5, 0.5));
         current_statement__ = 19;
-        if (logical_lt(theta[(2 - 1)], 0.1)) {
+        if (logical_lt(theta[(2 - 1)], 0.0)) {
           current_statement__ = 19;
           lp_accum__.add(stan::math::negative_infinity());
         } else {
           current_statement__ = 18;
-          if (logical_gt(theta[(2 - 1)], 1.5)) {
+          if (logical_gt(theta[(2 - 1)], 2.0)) {
             current_statement__ = 18;
             lp_accum__.add(stan::math::negative_infinity());
           } else {
             current_statement__ = 18;
             lp_accum__.add(
-              -log_diff_exp(normal_cdf_log(1.5, 1.5, 0.5),
-                 normal_cdf_log(0.1, 1.5, 0.5)));
+              -log_diff_exp(normal_cdf_log(2.0, 1.2, 0.5),
+                 normal_cdf_log(0.0, 1.2, 0.5)));
           }
         }
         current_statement__ = 20;
-        lp_accum__.add(normal_log<propto__>(theta[(2 - 1)], 1.5, 0.5));
+        lp_accum__.add(normal_log<propto__>(theta[(2 - 1)], 1.2, 0.5));
         current_statement__ = 22;
-        if (logical_lt(theta[(3 - 1)], 0.1)) {
+        if (logical_lt(theta[(3 - 1)], 1.0)) {
           current_statement__ = 22;
           lp_accum__.add(stan::math::negative_infinity());
         } else {
@@ -528,14 +528,14 @@ class pem_model : public model_base_crtp<pem_model> {
           } else {
             current_statement__ = 21;
             lp_accum__.add(
-              -log_diff_exp(normal_cdf_log(4.0, 2.0, 1.0),
-                 normal_cdf_log(0.1, 2.0, 1.0)));
+              -log_diff_exp(normal_cdf_log(4.0, 1.0, 0.5),
+                 normal_cdf_log(1.0, 1.0, 0.5)));
           }
         }
         current_statement__ = 23;
-        lp_accum__.add(normal_log<propto__>(theta[(3 - 1)], 2.0, 1.0));
+        lp_accum__.add(normal_log<propto__>(theta[(3 - 1)], 1.0, 0.5));
         current_statement__ = 25;
-        if (logical_lt(theta[(4 - 1)], 0.1)) {
+        if (logical_lt(theta[(4 - 1)], 0.0)) {
           current_statement__ = 25;
           lp_accum__.add(stan::math::negative_infinity());
         } else {
@@ -546,12 +546,12 @@ class pem_model : public model_base_crtp<pem_model> {
           } else {
             current_statement__ = 24;
             lp_accum__.add(
-              -log_diff_exp(normal_cdf_log(2.0, 1.3, 0.5),
-                 normal_cdf_log(0.1, 1.3, 0.5)));
+              -log_diff_exp(normal_cdf_log(2.0, 1.0, 0.5),
+                 normal_cdf_log(0.0, 1.0, 0.5)));
           }
         }
         current_statement__ = 26;
-        lp_accum__.add(normal_log<propto__>(theta[(4 - 1)], 1.3, 0.5));
+        lp_accum__.add(normal_log<propto__>(theta[(4 - 1)], 1.0, 0.5));
         current_statement__ = 27;
         assign(u_hat, nil_index_list(),
           integrate_ode_rk45(sho_functor__(), u0, t0, ts, theta, x_r, x_i,
@@ -616,25 +616,25 @@ class pem_model : public model_base_crtp<pem_model> {
       current_statement__ = 2;
       theta1 = in__.scalar();
       current_statement__ = 2;
-      theta1 = stan::math::lub_constrain(theta1, 0.1, 2.0);
+      theta1 = stan::math::lub_constrain(theta1, 0.5, 2.5);
       double theta2;
       
       current_statement__ = 3;
       theta2 = in__.scalar();
       current_statement__ = 3;
-      theta2 = stan::math::lub_constrain(theta2, 0.1, 1.5);
+      theta2 = stan::math::lub_constrain(theta2, 0.0, 2.0);
       double theta3;
       
       current_statement__ = 4;
       theta3 = in__.scalar();
       current_statement__ = 4;
-      theta3 = stan::math::lub_constrain(theta3, 0.1, 4.0);
+      theta3 = stan::math::lub_constrain(theta3, 1.0, 4.0);
       double theta4;
       
       current_statement__ = 5;
       theta4 = in__.scalar();
       current_statement__ = 5;
-      theta4 = stan::math::lub_constrain(theta4, 0.1, 2.0);
+      theta4 = stan::math::lub_constrain(theta4, 0.0, 2.0);
       current_statement__ = 6;
       validate_non_negative_index("theta", "4", 4);
       std::vector<double> theta;
@@ -730,25 +730,25 @@ class pem_model : public model_base_crtp<pem_model> {
       current_statement__ = 2;
       theta1 = context__.vals_r("theta1")[(1 - 1)];
       current_statement__ = 2;
-      theta1 = stan::math::lub_free(theta1, 0.1, 2.0);
+      theta1 = stan::math::lub_free(theta1, 0.5, 2.5);
       double theta2;
       
       current_statement__ = 3;
       theta2 = context__.vals_r("theta2")[(1 - 1)];
       current_statement__ = 3;
-      theta2 = stan::math::lub_free(theta2, 0.1, 1.5);
+      theta2 = stan::math::lub_free(theta2, 0.0, 2.0);
       double theta3;
       
       current_statement__ = 4;
       theta3 = context__.vals_r("theta3")[(1 - 1)];
       current_statement__ = 4;
-      theta3 = stan::math::lub_free(theta3, 0.1, 4.0);
+      theta3 = stan::math::lub_free(theta3, 1.0, 4.0);
       double theta4;
       
       current_statement__ = 5;
       theta4 = context__.vals_r("theta4")[(1 - 1)];
       current_statement__ = 5;
-      theta4 = stan::math::lub_free(theta4, 0.1, 2.0);
+      theta4 = stan::math::lub_free(theta4, 0.0, 2.0);
       for (size_t sym1__ = 1; sym1__ <= 2; ++sym1__) {
         vars__.push_back(sigma1[(sym1__ - 1)]);}
       vars__.push_back(theta1);
