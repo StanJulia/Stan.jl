@@ -30,13 +30,13 @@ priors = [truncated(Normal(1.5,0.5),0.5,2.5),truncated(Normal(1.2,0.5),0,2.0),
           truncated(Normal(1.0,0.5),1.0,4),truncated(Normal(1.0,0.5),0,2)]
 
 @time bayesian_result = stan_inference(prob1,t,data,priors;
-  num_samples=2000, nchains=4,
+  num_samples=9000, nchains=1,
   num_warmup=1000,vars =(StanODEData(),InverseGamma(3,3)))
 
 stanmodel = bayesian_result.model
 
 @time bayesian_result = stan_inference(prob1,t,data,priors, stanmodel;
-  num_samples=2000, nchains=4,
+  num_samples=9000, nchains=1,
   num_warmup=1000,vars =(StanODEData(),InverseGamma(3,3)))
 
 if success(bayesian_result.return_code)
