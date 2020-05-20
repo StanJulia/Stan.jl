@@ -9,7 +9,6 @@ win_tests_*.jl
 docs/build/
 docs/site/
 Manifest.toml
-tmp
 tmp1
 tmp2
 tmp3
