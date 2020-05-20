@@ -3,7 +3,7 @@ uuid = "682df890-35be-576f-97d0-3d8c8b33a550"
 license = "MIT"
 desc = "Illustrate StanJulia's interface options to cmdstan"
 authors = ["Rob J Goedman <goedman@icloud.com>"]
-version = "6.0.6"
+version = "6.0.7"
 
 [deps]
 DataFrames = "a93c6f00-e57d-5684-b7b6-d8193f3e46c0"
