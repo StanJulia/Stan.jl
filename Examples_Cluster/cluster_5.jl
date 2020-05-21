@@ -2,7 +2,6 @@
 
 ProjDir = @__DIR__
 
-isdir("$(ProjDir)/tmp") && rm("$(ProjDir)/tmp", recursive=true)
 
 @everywhere mutable struct Job
   name::AbstractString
@@ -46,8 +45,13 @@ function Job(
     save_warmup, delta, sm)
 end
 
-# Assume we have 2 models, m1 & m2
-m1 = "
+@everywhere M = 2           # No of models
+@everywhere D = 8           # No of data sets
+@everywhere N = 100         # No of Bernoulli
+isdir("$(ProjDir)/tmp") && rm("$(ProjDir)/tmp", recursive=true)
+
+# Assume we have M models
+model_template = "
 data { 
   int<lower=1> N; 
   int<lower=0,upper=1> y[N];
@@ -61,35 +65,28 @@ model {
 }
 ";
 
-m2 = "
-data { 
-  int<lower=1> N; 
-  int<lower=0,upper=1> y[N];
-} 
-parameters {
-  real<lower=0,upper=1> theta;
-} 
-model {
-  theta ~ beta(1,1);
-  y ~ bernoulli(theta);
-}
-";
+m = repeat([model_template], M)
 
-# Assume we have 4 sets of data 
-d = Vector{Dict}(undef, 4)
-d[1] = Dict(:N => 10, :y => [0, 1, 0, 0, 0, 0, 0, 0, 0, 1])
-d[2] = Dict(:N => 10, :y => [0, 1, 0, 0, 0, 1, 1, 1, 0, 1])
-d[3] = Dict(:N => 10, :y => [0, 1, 0, 1, 0, 0, 0, 0, 0, 1])
-d[4] = Dict(:N => 10, :y => [0, 1, 1, 1, 0, 1, 1, 1, 0, 1])
+# Assume we have D sets of data 
+d = Vector{Dict}(undef, D)
+p = range(0.1, stop=0.9, length=D)
+for i in 1:D
+  d[i] = Dict(:N => N, :y => rand(Bernoulli(p[i]), N))
+end
 
 tmpdir = "$(ProjDir)/tmp"
-@everywhere jobs = Vector{Job}(undef, 4)
-jobs[1] = Job("m1.1", m1, d[1]; output_format=:particles, tmpdir=tmpdir)
-jobs[2] = Job("m1.2", m1, d[2]; output_format=:particles, tmpdir=tmpdir)
-jobs[3] = Job("m2.1", m2, d[3]; output_format=:particles, tmpdir=tmpdir)
-jobs[4] = Job("m2.2", m2, d[4]; output_format=:particles, tmpdir=tmpdir)
+@everywhere jobs = Vector{Job}(undef, M*D)
+jobid = 0
+for i in 1:M
+  for j in 1:D
+    global jobid += 1
+    jobs[jobid] = Job("m$(jobid)", m[i], d[j]; output_format=:particles, 
+      tmpdir=tmpdir)
+  end
+end
 
 @everywhere function runjob(i, jobs)
+  println("Job $i ($(jobs[i].name))started")
   p = []
   rc = stan_sample(jobs[i].sm; data=jobs[i].data)
   if success(rc)
@@ -97,7 +94,7 @@ jobs[4] = Job("m2.2", m2, d[4]; output_format=:particles, tmpdir=tmpdir)
     push!(p, (i, res, jobs[i].sm))
     println("Job $i completed")
   else
-    println("Job[i] failed, adjust p indeces accordingly.")
+    println("Job $i failed.")
   end
   p
 end
@@ -105,7 +102,7 @@ end
 println("\nNo of jobs = $(length(jobs))\n")
 
 @time res = pmap(i -> runjob(i, jobs), 1:length(jobs));
+
 for i in 1:length(jobs)
   display(res[i][1][2])
 end
-

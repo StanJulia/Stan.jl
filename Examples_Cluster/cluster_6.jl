@@ -1,8 +1,7 @@
-@everywhere using Pkg
-@everywhere Pkg.activate(".")
-@everywhere using CmdStan, Distributions, Distributed, MCMCChains
+using CmdStan, Distributions, Distributed, MCMCChains
 
 ProjDir = @__DIR__
+
 
 @everywhere mutable struct Job
   name::AbstractString
@@ -39,7 +38,8 @@ function Job(
       adapt=CmdStan.Adapt(delta=delta)
     ),
     name=name, model=model, nchains=nchains,
-    tmpdir=tmpdir, output_format=:mcmcchains
+    tmpdir=tmpdir, output_format=:mcmcchains,
+    printsummary=false
   )
 
   Job(name, model, data, output_format,
@@ -47,8 +47,13 @@ function Job(
     save_warmup, delta, sm)
 end
 
-# Assume we have 2 models, m1 & m2
-m1 = "
+@everywhere M = 3           # No of models
+@everywhere D = 10           # No of data sets
+@everywhere N = 10          # No of Bernoulli
+isdir("$(ProjDir)/tmp") && rm("$(ProjDir)/tmp", recursive=true)
+
+# Assume we have M models
+model_template = "
 data { 
   int<lower=1> N; 
   int<lower=0,upper=1> y[N];
@@ -62,48 +67,43 @@ model {
 }
 ";
 
-m2 = "
-data { 
-  int<lower=1> N; 
-  int<lower=0,upper=1> y[N];
-} 
-parameters {
-  real<lower=0,upper=1> theta;
-} 
-model {
-  theta ~ beta(1,1);
-  y ~ bernoulli(theta);
-}
-";
+m = repeat([model_template], M)
 
-# Assume we have 4 sets of data 
-d = Vector{Dict}(undef, 4)
-d[1] = Dict("N" => 10, "y" => [0, 1, 0, 0, 0, 0, 0, 0, 0, 1])
-d[2] = Dict("N" => 10, "y" => [0, 1, 0, 0, 0, 1, 1, 1, 0, 1])
-d[3] = Dict("N" => 10, "y" => [0, 1, 0, 1, 0, 0, 0, 0, 0, 1])
-d[4] = Dict("N" => 10, "y" => [0, 1, 1, 1, 0, 1, 1, 1, 0, 1])
+# Assume we have D sets of data 
+d = Vector{Dict}(undef, D)
+p = range(0.1, stop=0.9, length=D)
+for i in 1:D
+  d[i] = Dict("N" => N, "y" => [Int(rand(Bernoulli(p[i]), 1)[1]) for j in 1:N])
+end
 
-tmpdir = "$(ProjDir)/tmpcmd"
-@everywhere jobs = Vector{Job}(undef, 4)
-jobs[1] = Job("m1.1", m1, d[1]; tmpdir=tmpdir*"1")
-jobs[2] = Job("m1.2", m1, d[2]; tmpdir=tmpdir*"2")
-jobs[3] = Job("m2.1", m2, d[3]; tmpdir=tmpdir*"3")
-jobs[4] = Job("m2.2", m2, d[4]; tmpdir=tmpdir*"4")
+tmpdir = "$(ProjDir)/tmp"
+@everywhere jobs = Vector{Job}(undef, M*D)
+jobid = 0
+for i in 1:M
+  for j in 1:D
+    global jobid += 1
+    jobs[jobid] = Job("m$(jobid)", m[i], d[j]; output_format=:mcmcchains, 
+      tmpdir=tmpdir)
+  end
+end
 
 @everywhere function runjob(i, jobs)
+  println("Job $i ($(jobs[i].name))started")
   p = []
-  rc, chn, _ = stan(jobs[i].sm, jobs[i].data)
+  rc, chns, _ = stan(jobs[i].sm, jobs[i].data)
   if rc == 0
-    push!(p, chn)
+    push!(p, (i, chns, jobs[i].sm))
     println("Job $i completed")
   else
-    println("Job[i] failed, adjust p indeces accordingly.")
+    println("Job $i failed.")
   end
   p
 end
 
-@time res = pmap(i -> runjob(i, jobs), 1:length(jobs));
-for i in 1:length(jobs)
-  display(res[i])
-end
+println("\nNo of jobs = $(length(jobs))\n")
 
+@time res = pmap(i -> runjob(i, jobs), 1:length(jobs));
+
+for i in 1:length(jobs)
+  display(mean(res[i][1][2]))
+end
