@@ -47,9 +47,9 @@ function Job(
     save_warmup, delta, sm)
 end
 
-@everywhere M = 3           # No of models
+@everywhere M = 3            # No of models
 @everywhere D = 10           # No of data sets
-@everywhere N = 10          # No of Bernoulli
+@everywhere N = 100          # No of Bernoulli trials
 isdir("$(ProjDir)/tmp") && rm("$(ProjDir)/tmp", recursive=true)
 
 # Assume we have M models
@@ -88,7 +88,6 @@ for i in 1:M
 end
 
 @everywhere function runjob(i, jobs)
-  println("Job $i ($(jobs[i].name))started")
   p = []
   rc, chns, _ = stan(jobs[i].sm, jobs[i].data)
   if rc == 0
