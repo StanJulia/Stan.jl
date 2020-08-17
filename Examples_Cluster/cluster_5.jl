@@ -46,7 +46,7 @@ function Job(
 end
 
 @everywhere M = 2           # No of models
-@everywhere D = 8           # No of data sets
+@everywhere D = 12           # No of data sets
 @everywhere N = 100         # No of Bernoulli
 isdir("$(ProjDir)/tmp") && rm("$(ProjDir)/tmp", recursive=true)
 
