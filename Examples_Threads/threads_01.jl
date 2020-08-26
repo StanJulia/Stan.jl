@@ -34,7 +34,7 @@ println("\nThreads loop\n")
 
 estimates = Vector(undef, p1)
 Threads.@threads for i in 1:p1
-     rc = stan_sample(sm[i]; data=observeddata[i]);
+    rc = stan_sample(sm[i]; data=observeddata[i]);
     if success(rc)
       samples = read_samples(sm[i]; output_format=:namedtuple)
 
