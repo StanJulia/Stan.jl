@@ -20,13 +20,15 @@ model {
   y ~ bernoulli(theta);
 }
 ";
-n = 100;
-p1 = 12 # p1 is the number of models to fit
-p = range(0, stop=1, length=p1)
-observeddata = [Dict("N" => n, "y" => rand(Bernoulli(p[i]), n)) for i in 1:p1]
 
 #isdir(ProjDir * "/tmp") && rm(ProjDir * "/tmp", recursive=true)
 tmpdir = ProjDir * "/tmp"
+
+p1 = 12 # p1 is the number of models to fit
+p = range(0, stop=1, length=p1)
+
+n = 100;
+observeddata = [Dict("N" => n, "y" => rand(Bernoulli(p[i]), n)) for i in 1:p1]
 
 sm = [SampleModel("bernoulli_m$i", bernoullimodel; tmpdir=tmpdir) for i in 1:p1];
 
