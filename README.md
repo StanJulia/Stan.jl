@@ -1,6 +1,6 @@
 # Stan
 
-[![Travis Build Status](https://travis-ci.org/StanJulia/Stan.jl.svg?branch=master)](https://travis-ci.org/StanJulia/Stan.jl)
+[![Travis Build Status](https://travis-ci.com/StanJulia/Stan.jl.svg?branch=master)](https://travis-ci.com/StanJulia/Stan.jl)
 [![Coverage Status](https://coveralls.io/repos/StanJulia/Stan.jl/badge.svg?branch=master&service=github)](https://coveralls.io/github/StanJulia/Stan.jl?branch=master)
 [![codecov](https://codecov.io/gh/StanJulia/Stan.jl/branch/master/graph/badge.svg)](https://codecov.io/gh/StanJulia/Stan.jl?branch=master)
 

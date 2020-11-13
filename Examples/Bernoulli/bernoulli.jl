@@ -34,9 +34,7 @@ if success(rc)
   chns = read_samples(sm; output_format=:mcmcchains)
   
   # Describe the results
-  println()
-  show(chns)
-  println()
+  chns
   
   # Optionally, read samples as a a DataFrame
   df=read_samples(sm, output_format=:dataframe)
