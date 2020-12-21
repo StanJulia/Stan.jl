@@ -1,16 +1,19 @@
-name: Documenter
+name: Documentation
+
 on:
-    push:
-    branches: [master]
-    tags: [v*]
-    pull_request:
+  push:
+    branches:
+      - master
+      - /^v\d+\.\d+(\.\d+)?(-\S*)?$/
+    tags: '*'
+  pull_request:
+
 jobs:
-    Documenter:
-    name: Documentation
+  build:
     runs-on: ubuntu-latest
     steps:
-        - uses: actions/checkout@v2
-        - uses: julia-actions/julia-buildpkg@latest
+      - uses: actions/checkout@v2
+      - uses: julia-actions/setup-julia@latest
         with:
           version: '1'
       - name: Install dependencies
