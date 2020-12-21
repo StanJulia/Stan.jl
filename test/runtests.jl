@@ -29,7 +29,8 @@ examples = [
   "Examples_Stan_Methods/Parse_and_Interpolate/parse.jl"
 ]
 
-println("\nRunning Stan.jl v6.x test examples")
+if haskey(ENV, "JULIA_CMDSTAN_HOME")
+  println("\nRunning Stan.jl v6.x test examples")
 
   for example in examples
       println("\n* $(example) *\n")
@@ -39,3 +40,6 @@ println("\nRunning Stan.jl v6.x test examples")
       end
 
   end
+else
+  println("\nJULIA_CMDSTAN_HOME not set. Skipping tests")
+end
