@@ -1,16 +1,28 @@
 # Stan
 
-[![Travis Build Status](https://travis-ci.com/StanJulia/Stan.jl.svg?branch=master)](https://travis-ci.com/StanJulia/Stan.jl)
-[![Coverage Status](https://coveralls.io/repos/StanJulia/Stan.jl/badge.svg?branch=master&service=github)](https://coveralls.io/github/StanJulia/Stan.jl?branch=master)
-[![codecov](https://codecov.io/gh/StanJulia/Stan.jl/branch/master/graph/badge.svg)](https://codecov.io/gh/StanJulia/Stan.jl?branch=master)
 
-## Stan.jl stargazers over time
+| **Project Status**                                                               |  **Documentation**                                                               | **Build Status**                                                                                |
+|:-------------------------------------------------------------------------------:|:-------------------------------------------------------------------------------:|:-----------------------------------------------------------------------------------------------:|
+|![][project-status-img] | [![][docs-stable-img]][docs-stable-url] [![][docs-dev-img]][docs-dev-url] | ![][CI-build] |
 
-[![Stargazers over time](https://starchart.cc/StanJulia/Stan.jl.svg)](https://starchart.cc/StanJulia/Stan.jl)
+[docs-dev-img]: https://img.shields.io/badge/docs-dev-blue.svg
+[docs-dev-url]: https://stanjulia.github.io/Stan.jl/latest
 
-## CmdStan.jl stargazers over time
+[docs-stable-img]: https://img.shields.io/badge/docs-stable-blue.svg
+[docs-stable-url]: https://stanjulia.github.io/Stan.jl/stable
 
-[![Stargazers over time](https://starchart.cc/StanJulia/CmdStan.jl.svg)](https://starchart.cc/StanJulia/CmdStan.jl)
+[CI-build]: https://github.com/stanjulia/Stan.jl/workflows/CI/badge.svg?branch=master
+
+[![codecov](https://codecov.io/gh/stanjulia/Stan.jl/branch/master/graph/badge.svg?token=TFxRFbKONS)](https://codecov.io/gh/stanjulia/Stan.jl)
+
+[![Coverage Status](https://coveralls.io/repos/github/stanjulia/Stan.jl/badge.svg?branch=master)](https://coveralls.io/github/stanjulia/Stan.jl?branch=master)
+
+[codecov-img]: https://codecov.io/gh/stanjulia/Stan.jl/branch/master/graph/badge.svg
+[codecov-url]: https://codecov.io/gh/stanjulia/Stan.jl
+
+[issues-url]: https://github.com/stanjulia/Stan.jl/issues
+
+[project-status-img]: https://img.shields.io/badge/lifecycle-wip-orange.svg
 
 ## Important note
 
@@ -23,11 +35,6 @@ chns = read_samples(sm; output_format=:mcmcchains)
 See `?read_samples` for other optional arguments. 
 
 Further work will happen on this package over the next few months, i.e. until at least April 2020 as the underlying StanJulia packages are being fine-tuned. Documentation - to be part of Stan.jl v6 - is also far from done. WORK IN PROGRESS!!!!
-
-## Documentation
-
-- [**STABLE**][docs-stable-url] &mdash; **documentation of the most recently tagged version.**
-- [**DEVEL**][docs-dev-url] &mdash; *documentation of the in-development version.*
 
 ## Background info
 
@@ -46,11 +53,4 @@ A collection of documented examples to use Stan (as an external program) from Ju
 Stan's cmdstan executable needs to be installed separatedly. Please see [cmdstan installation](https://stanjulia.github.io/Stan.jl/latest/INSTALLATION/). 
 
 For more info on Stan, please go to <http://mc-stan.org>.
-
-
-[docs-dev-img]: https://img.shields.io/badge/docs-dev-blue.svg
-[docs-dev-url]: https://stanjulia.github.io/Stan.jl/latest
-
-[docs-stable-img]: https://img.shields.io/badge/docs-stable-blue.svg
-[docs-stable-url]: https://stanjulia.github.io/Stan.jl/stable
 
