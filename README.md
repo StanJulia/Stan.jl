@@ -29,11 +29,10 @@ Stan.jl v6.x constitutes the third generation and extends Tamas Papp's approach 
 
 Stan.jl v6.x will contain examples using the features available in [StanJulia](https://github.com/StanJulia). 
 
-My intention is to continue maintenance of CmdStan.jl for at least another two years (late 2021?).
+My intention is to continue maintenance of CmdStan.jl at least until late 2021.
 
 ## Requirements
 
 Stan's cmdstan executable needs to be installed separatedly. Please see [cmdstan installation](https://stanjulia.github.io/Stan.jl/latest/INSTALLATION/). 
 
 For more info on Stan, please go to <http://mc-stan.org>.
-
