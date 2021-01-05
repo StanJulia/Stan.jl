@@ -1,0 +1,45 @@
+➜  jl_24iZBN ls
+logistic1             logistic1_chain_3.csv logistic1_data_4.R
+logistic1.hpp         logistic1_chain_4.csv logistic1_log_1.log
+logistic1.stan        logistic1_data_1.R    logistic1_summary.csv
+logistic1_chain_1.csv logistic1_data_2.R    output.csv
+logistic1_chain_2.csv logistic1_data_3.R
+➜  jl_24iZBN for i in {1..9}; do STAN_NUM_THREADS=$i ./logistic1 sample data file=logistic1_data_1.R | tail -n2 | head -n1; done
+               71.511 seconds (Total)
+               41.631 seconds (Total)
+               25.896 seconds (Total)
+               19.38 seconds (Total)
+               16.479 seconds (Total)
+               14.841 seconds (Total)
+               13.871 seconds (Total)
+               12.887 seconds (Total)
+               12.471 seconds (Total)
+➜  jl_24iZBN for i in {1..9}; do STAN_NUM_THREADS=$i ./logistic1 sample data file=logistic1_data_1.R | tail -n2 | head -n1; done
+               78.994 seconds (Total)
+               39.489 seconds (Total)
+               29.278 seconds (Total)
+               22.698 seconds (Total)
+               18.269 seconds (Total)
+               15.194 seconds (Total)
+               14.23 seconds (Total)
+               14.601 seconds (Total)
+               13.658 seconds (Total)
+
+
+➜  jl_YBTImb ls
+logistic0             logistic0_chain_3.csv logistic0_data_4.R
+logistic0.hpp         logistic0_chain_4.csv logistic0_log_1.log
+logistic0.stan        logistic0_data_1.R    logistic0_summary.csv
+logistic0_chain_1.csv logistic0_data_2.R
+logistic0_chain_2.csv logistic0_data_3.R
+➜  jl_YBTImb for i in {1..9}; do STAN_NUM_THREADS=$i ./logistic0 sample data file=logistic0_data_1.R | tail -n2 | head -n1; done
+               75.534 seconds (Total)
+               82.695 seconds (Total)
+               80.046 seconds (Total)
+               78.354 seconds (Total)
+               72.32 seconds (Total)
+               76.972 seconds (Total)
+               83.795 seconds (Total)
+               75.028 seconds (Total)
+               80.94 seconds (Total)
+

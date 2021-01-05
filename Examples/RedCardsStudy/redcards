@@ -1,0 +1,9 @@
+
+cd /Users/rob/.julia/dev/Stan/Examples/RedCardsStudy/tmp0
+
+for i in {1..3}; do STAN_NUM_THREADS=$i ./logistic0 sample data file=logistic0_data_1.R | tail -n2 | head -n1; done
+
+cd /Users/rob/.julia/dev/Stan/Examples/RedCardsStudy/tmp1
+
+for i in {1..9}; do STAN_NUM_THREADS=$i ./logistic1 sample data file=logistic1_data_1.R | tail -n2 | head -n1; done
+
