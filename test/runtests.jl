@@ -33,7 +33,7 @@ if haskey(ENV, "JULIA_CMDSTAN_HOME")
   println("\nRunning Stan.jl v6.x test examples")
 
   for example in examples
-      println("\n* $(example) *\n")
+      println("\n* $(joinpath(TestDir, example)) *\n")
 
       cd(TestDir) do
         include(joinpath(TestDir, example))

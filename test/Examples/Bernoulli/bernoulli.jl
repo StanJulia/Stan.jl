@@ -18,9 +18,7 @@ model {
 
 observeddata = Dict("N" => 10, "y" => [0, 1, 0, 1, 0, 0, 0, 0, 0, 1])
 
-sm = SampleModel("bernoulli", bernoullimodel,
-  method=StanSample.Sample(save_warmup=true, num_warmup=1000, 
-  num_samples=1000, thin=1));
+sm = SampleModel("bernoulli", bernoullimodel);
 
 rc = stan_sample(sm, data=observeddata);
 
