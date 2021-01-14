@@ -24,8 +24,6 @@ observed_data = Dict("N" => 10, "y" => [0, 1, 0, 1, 0, 0, 0, 0, 0, 1])
 tmpdir=mktempdir()
 
 sm = SampleModel("bernoulli", bernoullimodel,
-  method=StanSample.Sample(save_warmup=true, num_warmup=1000, 
-  num_samples=1000, thin=1, adapt=StanSample.Adapt(delta=0.85)),
   tmpdir=tmpdir);
 
 rc = stan_sample(sm, data=observed_data);

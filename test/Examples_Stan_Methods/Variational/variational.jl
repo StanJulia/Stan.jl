@@ -29,11 +29,4 @@ if success(rc)
 
   (samples, cnames) = read_variational(sm)
 
-  if !Sys.iswindows()
-    # Show the same output in DataFrame format
-    df = read_summary(sm)
-
-    # Retrieve mean value of theta from the summary
-    @test df[df.parameters .== :theta, :mean][1] ≈ 0.33 rtol=0.1
-  end
 end

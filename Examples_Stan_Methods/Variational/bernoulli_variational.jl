@@ -24,14 +24,6 @@ rc = stan_variational(stanmodel; data=bernoulli_data)
 
 if success(rc)
 
-  (chns, cnames) = read_variational(stanmodel)
-
-  # Show the same output in DataFrame format
-  df = read_summary(stanmodel)
-  display(df)
-  println()
-
-  # Retrieve mean value of theta from the summary
-  df[df.parameters .== :theta, :mean] |> display
+  chns, cnames = read_variational(stanmodel)
 
 end
