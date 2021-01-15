@@ -20,10 +20,10 @@ jobs:
           - nightly
         os:
           - ubuntu-latest
-          - macOS-latest
+          - macOS
           #- windows-latest
         arch:
-          #- x86
+          - x86
           - x64
         exclude:
           - os: windows-latest
