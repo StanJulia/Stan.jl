@@ -9,15 +9,14 @@ on:
 env:
   - JULIA_CMDSTAN_HOME="$HOME/cmdstan-2.25.0/"
 
-run: |
-  OLDWD=`pwd`
-  cd ~
-  wget https://github.com/stan-dev/cmdstan/releases/download/v2.25.0/cmdstan-2.25.0.tar.gz
-  tar -xzpf cmdstan-2.25.0.tar.gz
-  make -C $JULIA_CMDSTAN_HOME build
-  cd $OLDWD
-
 jobs:
+  run: |
+    OLDWD=`pwd`
+    cd ~
+    wget https://github.com/stan-dev/cmdstan/releases/download/v2.25.0/cmdstan-2.25.0.tar.gz
+    tar -xzpf cmdstan-2.25.0.tar.gz
+    make -C $JULIA_CMDSTAN_HOME build
+    cd $OLDWD
   test:
     runs-on: ${{ matrix.os }}
     continue-on-error: ${{ matrix.version == 'nightly' }}
