@@ -6,6 +6,9 @@ on:
       - master
   pull_request:
 
+env:
+  JULIA_CMDSTAN_HOME: "$HOME/cmdstan-2.25.0/"
+
 jobs:
   test:
     runs-on: ${{ matrix.os }}
@@ -28,8 +31,6 @@ jobs:
           - os: macOS-latest
             arch: x86
     steps:
-      - env:
-        JULIA_CMDSTAN_HOME: "$HOME/cmdstan-2.25.0/"
       - run: |
           OLDWD=`pwd`
           cd ~
