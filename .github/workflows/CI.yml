@@ -17,10 +17,10 @@ jobs:
       matrix:
         version:
           - '1'
-          #- nightly
+          - nightly
         os:
           - ubuntu-latest
-          #- macOS-latest
+          - macOS-latest
           #- windows-latest
         arch:
           #- x86
@@ -36,7 +36,6 @@ jobs:
         run: |
           println(pwd())
           println(ENV["JULIA_CMDSTAN_HOME"])
-          println(expanduser("~"))
           println(ENV["HOME"])
       - run: |
           OLDWD=`pwd`
