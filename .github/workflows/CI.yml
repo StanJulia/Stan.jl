@@ -6,7 +6,7 @@ on:
       - master
   pull_request:
 
-end:
+env:
   - JULIA_CMDSTAN_HOME="$HOME/cmdstan-2.25.0/"
 
 run: |
