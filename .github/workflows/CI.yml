@@ -7,7 +7,7 @@ on:
   pull_request:
 
 env:
-  JULIA_CMDSTAN_HOME: "$HOME/cmdstan-2.25.0/"
+  JULIA_CMDSTAN_HOME: "~/cmdstan-2.25.0/"
 
 jobs:
   test:
@@ -38,6 +38,8 @@ jobs:
           tar -xzpf cmdstan-2.25.0.tar.gz
           make -C $JULIA_CMDSTAN_HOME build
           cd $OLDWD
+        env:
+          JULIA_CMDSTAN_HOME: "~/cmdstan-2.25.0/"
       - uses: actions/checkout@v2
       - uses: julia-actions/setup-julia@v1
         with:
