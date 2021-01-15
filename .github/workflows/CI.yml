@@ -31,6 +31,11 @@ jobs:
           - os: macOS-latest
             arch: x86
     steps:
+      - name: Install extra dependency on main branch
+        shell: julia --project=. {0}
+        run: |
+          println(pwd())
+          println(ENV["JULIA_CMDSTAN_HOME"])
       - run: |
           OLDWD=`pwd`
           cd ~
