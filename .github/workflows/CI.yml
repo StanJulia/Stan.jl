@@ -7,7 +7,7 @@ on:
   pull_request:
 
 env:
-  JULIA_CMDSTAN_HOME: "~/cmdstan-2.25.0/"
+  JULIA_CMDSTAN_HOME: "/home/worker/cmdstan-2.25.0/"
 
 jobs:
   test:
@@ -37,9 +37,11 @@ jobs:
           println(pwd())
           println(ENV["JULIA_CMDSTAN_HOME"])
           println(expanduser("~"))
+          println(Env["HOME"])
       - run: |
           OLDWD=`pwd`
           cd ~
+          pwd
           wget https://github.com/stan-dev/cmdstan/releases/download/v2.25.0/cmdstan-2.25.0.tar.gz
           tar -xzpf cmdstan-2.25.0.tar.gz
           make -C $JULIA_CMDSTAN_HOME build
