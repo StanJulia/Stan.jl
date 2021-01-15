@@ -37,7 +37,7 @@ jobs:
           println(pwd())
           println(ENV["JULIA_CMDSTAN_HOME"])
           println(expanduser("~"))
-          println(Env["HOME"])
+          println(ENV["HOME"])
       - run: |
           OLDWD=`pwd`
           cd ~
