@@ -1,6 +1,5 @@
 *.cpp
 *.d
-*.csv
 *.o
 *.log
 bernoulli.bugs
