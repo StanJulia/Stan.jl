@@ -1,8 +1,8 @@
-using CSV, DataFrames, StanQuap
+using Test, CSV, DataFrames, StanQuap
 
 ProjDir = @__DIR__
 
-df = CSV.read(joinpath(ProjDir,  "..", "..", "data", "Howell1.csv"), DataFrame)
+df = CSV.read(joinpath(ProjDir,  "..", "..", "..", "data", "Howell1.csv"), DataFrame)
 df = filter(row -> row[:age] >= 18, df);
 
 stan4_1 = "
