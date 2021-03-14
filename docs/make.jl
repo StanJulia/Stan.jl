@@ -7,6 +7,7 @@ page_list = Array{Pair{String, Any}, 1}();
 append!(page_list, [Pair("Intro", "INTRO.md")]);
 append!(page_list, [Pair("Installation", "INSTALLATION.md")]);
 append!(page_list, [Pair("Walkthrough", "WALKTHROUGH.md")]);
+append!(page_list, [Pair("Walkthrough2", "WALKTHROUGH2.md")]);
 append!(page_list, [Pair("Versions", "VERSIONS.md")]);
 
 makedocs(

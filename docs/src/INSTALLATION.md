@@ -12,7 +12,7 @@ In order for Stan.jl to find the cmdstan you need to set the environment variabl
 
 ```
 export JULIA_CMDSTAN_HOME=/Users/rob/Projects/Stan/cmdstan
-launchctl setenv JULIA_CMDSTAN_HOME /Users/rob/Projects/Stan/cmdstan
+launchctl setenv JULIA_CMDSTAN_HOME /Users/rob/Projects/Stan/cmdstan # Mac specific
 ```
 
 to `~/.bash_profile` or add

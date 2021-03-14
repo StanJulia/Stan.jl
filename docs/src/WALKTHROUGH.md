@@ -46,6 +46,4 @@ if success(rc)
 end
 ```
 
-Many examples are provided in the 3 Example subdirectories. In the test directory a similar set of examples is included that do not depend on MCMCChains.jl.
-
-Additional examples can be found in [StanSample.jl](https://github.com/StanJulia/StanSample.jl) and [StatisticalRethinking.jl](https://github.com/StatisticalRethinkingJulia/StatisticalRethinking.jl).
+Another example can be found in WALKTHROUGH2.md.
