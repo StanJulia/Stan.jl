@@ -14,11 +14,21 @@ Updates for new releases of Julia and cmdstan bump the appropriate level.
 
 ## Testing
 
-This version of the package has primarily been tested on Travis and Mac OSX 10.15, Julia 1.3 and cmdstan 2.21.0.
+This version of the package has primarily been tested on Travis and Mac OSX 10.15, Julia 1.3 and cmdstan 2.26.1.
 
 ## Versions
 
-### Version 6.0.0
+### Version 6.4
+
+1. Default output_format for read_samples() is now :namedtuple.
+2. Updates for StanQuap
+3. Version bound updates
+4. CmdStan is in maintenance mode, new features will be added to StanSample, etc.
+5. Additional testing (by users) on Windows 10
+6. Doc updates
+7. Use of Github workflows
+
+### Version 6.3
 
 This is a breaking release. Instead of by default returning an MCMCChains.Chains object,
 Requires.jl is used to:

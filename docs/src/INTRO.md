@@ -10,14 +10,18 @@
 
 ## StanJulia overview
 
-Stan.jl is part of the [StanJulia Github organization](https://github.com/StanJulia) set of packages. CmdStan.jl is one of two options in StanJulia to capture draws from a Stan language program. The other option is *under development* and is illustrated in Stan.jl and [StatisticalRethinking.jl](https://github.com/StatisticalRethinkingJulia/StatisticalRethinking.jl).
+Stan.jl is part of the [StanJulia Github organization](https://github.com/StanJulia) set of packages. Stan.jl is primary option in StanJulia to capture draws from a Stan language program.  The use of the component packages in StanJulia is illustrated in Stan.jl and [StatisticalRethinking.jl](https://github.com/StatisticalRethinkingJulia/StatisticalRethinking.jl).
+
+The other option is *CmdStan*, which is the older approach and is currently in maintenance mode. 
+
+New features are added to Stan.jl and supporting packages.
 
 These are not the only options to sample using Stan from Julia. Valid other options are PyCall.jl/PyStan and StanRun.jl.
 
 On a very high level, a typical workflow for using CmdStan.jl looks like:
 
 ```
-using CmdStan
+using Stan
 
 # Define a Stan language program.
 bernoulli = "..."
