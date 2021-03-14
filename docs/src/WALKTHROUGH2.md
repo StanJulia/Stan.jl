@@ -19,7 +19,7 @@ df.leg_left = df.leg_prop .* df.height + rand(Normal(0, 0.02), N)
 df.leg_right = df.leg_prop .* df.height + rand(Normal(0, 0.03), N)
 ```
 
-Define a variable 'stan6_1' to hold the [Stan language](https://mc-stan.org/docs/2_21/reference-manual/index.html) model definition:
+Define a variable `stan6_1` to hold the [Stan language](https://mc-stan.org/docs/2_21/reference-manual/index.html) model definition:
 
 ```
 stan6_1 = "
@@ -51,7 +51,7 @@ Create a SampleModel object:
 sm = SampleModel("m6.1s", stan6_1);
 ```
 
-Above SampleModel() call creates a default model for sampling. See `?SampleModel` for details.
+Above `SampleModel()` call creates a default model for sampling. See `?SampleModel` for details.
 
 The observed input data is defined below. Note here we use a NamedTuple for input:
 
@@ -59,7 +59,7 @@ The observed input data is defined below. Note here we use a NamedTuple for inpu
 data = (H = df.height, LL = df.leg_left, LR = df.leg_right, N = size(df, 1))
 ```
 
-Run a simulation by calling stan_sample(), passing in the model and data: 
+Run a simulation by calling `stan_sample()`, passing in the model and data: 
 ```
 rc6_1s = stan_sample(m6_1s; data);
 
@@ -99,6 +99,8 @@ println()
 
 part6_1s = read_samples(m6_1s; output_format=:particles)
 ```
+
+Walkthrough.jl is available as a script in the `examples` directory.
 
 Many more examples are provided in the 3 Example subdirectories. In the test directory a similar set of examples is included that do not depend on MCMCChains.jl.
 
