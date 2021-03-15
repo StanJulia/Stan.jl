@@ -7,7 +7,7 @@ using StanSample, Distributions
 
 Include also Distributions.jl as we'll be using that package to create an example model. This example is derived from an example in [StatisticalRethinking.jl](https://xcelab.net/rm/statistical-rethinking/).
 
-It shows more features than the Berboulli example in WALKTHROUGH.md.
+It shows a few more features than the Bernoulli example in WALKTHROUGH.md.
 
 ```
 N = 100
@@ -45,7 +45,7 @@ model {
 ";
 ```
 
-Create a SampleModel object:
+Create and compile a SampleModel object. By "compile" here is meant that `SampleModel()` will take care of compiling the Stan language program first to a C++ program and subsequantly compile that C++ program to an executable which will be executed in `stan_sample()`.
 
 ```
 sm = SampleModel("m6.1s", stan6_1);
@@ -59,7 +59,7 @@ The observed input data is defined below. Note here we use a NamedTuple for inpu
 data = (H = df.height, LL = df.leg_left, LR = df.leg_right, N = size(df, 1))
 ```
 
-Run a simulation by calling `stan_sample()`, passing in the model and data: 
+Generate posterior draws by calling `stan_sample()`, passing in the model and optionally data and sometimes initial settings: 
 ```
 rc6_1s = stan_sample(m6_1s; data);
 
@@ -73,7 +73,7 @@ Samples_nt now contains a NamedTuple:
 nt6_1s.b
 ```
 
-Compute the mean for b:
+Compute the mean for vector b:
 ```
 mean(nt6_1s.b, dims=2)
 ```
@@ -102,7 +102,7 @@ part6_1s = read_samples(m6_1s; output_format=:particles)
 
 Walkthrough2.jl is also available as a script in the `examples/Walkthrough2` directory.
 
-Many more examples are provided in the 3 Example subdirectories.
+Many more examples are provided in the six Example subdirectories. 
 
 Additional examples can be found in [StanSample.jl](https://github.com/StanJulia/StanSample.jl) and [StatisticalRethinking.jl](https://github.com/StatisticalRethinkingJulia/StatisticalRethinking.jl).
 

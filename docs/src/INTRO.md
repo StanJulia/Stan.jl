@@ -2,9 +2,9 @@
 
 ## Stan.jl
 
-[Stan](https://github.com/stan-dev/stan) is a system for statistical modeling, data analysis, and prediction. It is extensively used in social, biological, and physical sciences, engineering, and business. The Stan program language and interfaces are documented [here](http://mc-stan.org/documentation/).
+[Stan](https://github.com/stan-dev/stan) is a system for statistical modeling, data analysis, and prediction. It is extensively used in social, biological, and physical sciences, engineering, and business. The Stan language and the interfaces to execute a Stan language program are documented [here](http://mc-stan.org/documentation/).
 
-[cmdstan](http://mc-stan.org/interfaces/cmdstan.html) is the shell/command line interface to run Stan language programs. 
+[Cmdstan](http://mc-stan.org/interfaces/cmdstan.html) is the shell/command line interface to run Stan language programs. 
 
 [Stan.jl](https://github.com/StanJulia/Stan.jl) wraps cmdstan and captures the samples for further processing.
 
@@ -12,13 +12,11 @@
 
 Stan.jl is part of the [StanJulia Github organization](https://github.com/StanJulia) set of packages.
 
-Stan.jl is the primary option in StanJulia to capture draws from a Stan language program.  The use of component packages in StanJulia, e.g. StanSample.jl and StanOptimize.jl, is illustrated in Stan.jl and in a much broader context in [StatisticalRethinking.jl](https://github.com/StatisticalRethinkingJulia/StatisticalRethinking.jl).
+Stan.jl is the primary option in StanJulia to capture draws from a Stan language program.  How to use the underlying component packages in StanJulia, e.g. StanSample.jl, StanOptimize.jl and StanVariational.jl, is illustrated in Stan.jl and in a much broader context in [StatisticalRethinking.jl](https://github.com/StatisticalRethinkingJulia).
 
-The other option to capture draws from a Stan language program in StanJulia is *CmdStan*, which is the older approach and is currently in maintenance mode. 
+The other option to capture draws from a Stan language program in StanJulia is *CmdStan*, which is the older approach and is currently in maintenance mode. Thus new features will be added to Stan.jl and the supporting component packages.
 
-New features will be added to Stan.jl and supporting component packages.
-
-These are not the only options to sample using Stan from Julia. Valid other options are PyCall.jl/PyStan and StanRun.jl. In addition, Julia provides other, pure Julia, options such as DynamicHMC.jl, Turing.jl and Mamba.jl.
+These are not the only options to sample using Stan from Julia. Valid other options are PyCall.jl/PyStan and StanRun.jl. In addition, Julia provides other, pure Julia, mcmc options such as DynamicHMC.jl, Turing.jl and Mamba.jl.
 
 On a very high level, a typical workflow for using Stan.jl looks like:
 
@@ -28,20 +26,20 @@ using Stan
 # Define a Stan language program.
 bernoulli = "..."
 
-# Prepare for calling cmdstan.
+# Create and compile a SampleModel, an OptimizeModel, etc.:
 sm = SampleModel(...)
 
-# Compile and run Stan program, collect draws.
+# Run the compiled Stan languauge program and collect draws:
 rc = stan_sample(...)
 
-if rc == 0
-  # Stan's `stansummary` executable result:
+if success(rc)
+  # Retrieve Stan's `stansummary` executable result:
   sdf = read_summary(sm)
 
-  # Display the summary as a DataFrame
+  # Display the summary as a DataFrame:
   sdf |> display
 
-  # Show the draws
+  # Extract the draws from the SampleModel:
   named_tuple_of_samples = read_samples(sm)
 
 end
@@ -50,13 +48,13 @@ This workflow creates an NamedTuple with the draws, the default value for the `o
 
 If a vector of DataFrames (a DataFrame for each chain) is preferred:
 ```
-df = read_samples(sm; output_format=:dataframes)
+df = read_samples(sm; output_format=:dataframe)
 ```
-Other options are `:dataframe, :dataframes`, `:mcmcchains`, `:array` and `:particles`. See
+Other options are `:dataframes`, `:mcmcchains`, `:array` and `:particles`. See
 ```
 ?read_samples
 ```
-for more details.
+for more details. Walkthrough and Walkthrough2 show StanSample.jl in action.
 
 ## References
 

@@ -1,6 +1,8 @@
 # A walk-through example (using StanSample.jl)
 
-This script assumes StanSample has been installed in your environment. A better approach would be to use projects, e.g. DrWatson.jl, to manage which packages are available.
+This script assumes StanSample has been installed in your environment.
+
+A better approach would be to use projects, e.g. DrWatson.jl, to manage which packages are available.
 
 Make StanSample.jl available:
 ```
@@ -25,7 +27,7 @@ model {
 ";
 ```
 
-Create a SampleModel object:
+Create and compile a SampleModel object:
 
 ```
 sm = SampleModel("bernoulli", model);
