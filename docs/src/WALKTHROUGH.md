@@ -43,12 +43,14 @@ data = Dict("N" => 10, "y" => [0, 1, 0, 1, 0, 0, 0, 0, 0, 1]);
 
 Run a simulation by calling stan_sample(), passing in the model and data: 
 ```
-rc = stan_sample(sm, data);
+rc = stan_sample(sm; data);
 
 if success(rc)
   samples_df = read_samples(sm; output_format=:dataframe);
   samples_df |> display
 end
 ```
+
+Notice that data and init are optional keyword arguments to `stan_sample()`. Julia expands `data` to `data=data` or you can use `data=your_data`.
 
 A further example can be found in WALKTHROUGH2.md.
