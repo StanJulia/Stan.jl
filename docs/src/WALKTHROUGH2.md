@@ -100,12 +100,12 @@ println()
 part6_1s = read_samples(m6_1s; output_format=:particles)
 ```
 
-Walkthrough.jl is available as a script in the `examples` directory.
+Walkthrough2.jl is also available as a script in the `examples/Walkthrough2` directory.
 
-Many more examples are provided in the 3 Example subdirectories. In the test directory a similar set of examples is included that do not depend on MCMCChains.jl.
+Many more examples are provided in the 3 Example subdirectories.
 
 Additional examples can be found in [StanSample.jl](https://github.com/StanJulia/StanSample.jl) and [StatisticalRethinking.jl](https://github.com/StatisticalRethinkingJulia/StatisticalRethinking.jl).
 
-StatisticalRethinking.jl add features to compare models, plotting (including `trankplots()` for chains) and summarizing results (`precis()`).
+StatisticalRethinking.jl add features to compare models and coefficients, plotting (including `trankplots()` for chains) and summarizing results (`precis()`). MCMCChains.jl, part of the Turing ecosystem, provides additional tools to evaluate the chains.
 
 StatsModelComparisons.jl add WAIC, PSIS and a few other model comparison methods.

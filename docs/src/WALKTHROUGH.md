@@ -33,7 +33,7 @@ sm = SampleModel("bernoulli", model);
 
 Above SampleModel() call creates a default model for sampling. See `?SampleModel` for details.
 
-The observed input data:
+The observed input data as a Dict:
 
 ```
 data = Dict("N" => 10, "y" => [0, 1, 0, 1, 0, 0, 0, 0, 0, 1]);
@@ -41,11 +41,12 @@ data = Dict("N" => 10, "y" => [0, 1, 0, 1, 0, 0, 0, 0, 0, 1]);
 
 Run a simulation by calling stan_sample(), passing in the model and data: 
 ```
-rc = stan_sample(sm, data=data);
+rc = stan_sample(sm, data);
 
 if success(rc)
-  samples = read_samples(sm);
+  samples_df = read_samples(sm; output_format=:dataframe);
+  samples_df |> display
 end
 ```
 
-Another example can be found in WALKTHROUGH2.md.
+A further example can be found in WALKTHROUGH2.md.

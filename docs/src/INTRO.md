@@ -10,15 +10,17 @@
 
 ## StanJulia overview
 
-Stan.jl is part of the [StanJulia Github organization](https://github.com/StanJulia) set of packages. Stan.jl is primary option in StanJulia to capture draws from a Stan language program.  The use of the component packages in StanJulia is illustrated in Stan.jl and [StatisticalRethinking.jl](https://github.com/StatisticalRethinkingJulia/StatisticalRethinking.jl).
+Stan.jl is part of the [StanJulia Github organization](https://github.com/StanJulia) set of packages.
 
-The other option is *CmdStan*, which is the older approach and is currently in maintenance mode. 
+Stan.jl is the primary option in StanJulia to capture draws from a Stan language program.  The use of component packages in StanJulia, e.g. StanSample.jl and StanOptimize.jl, is illustrated in Stan.jl and in a much broader context in [StatisticalRethinking.jl](https://github.com/StatisticalRethinkingJulia/StatisticalRethinking.jl).
 
-New features are added to Stan.jl and supporting packages.
+The other option to capture draws from a Stan language program in StanJulia is *CmdStan*, which is the older approach and is currently in maintenance mode. 
 
-These are not the only options to sample using Stan from Julia. Valid other options are PyCall.jl/PyStan and StanRun.jl.
+New features will be added to Stan.jl and supporting component packages.
 
-On a very high level, a typical workflow for using CmdStan.jl looks like:
+These are not the only options to sample using Stan from Julia. Valid other options are PyCall.jl/PyStan and StanRun.jl. In addition, Julia provides other, pure Julia, options such as DynamicHMC.jl, Turing.jl and Mamba.jl.
+
+On a very high level, a typical workflow for using Stan.jl looks like:
 
 ```
 using Stan
@@ -33,30 +35,28 @@ sm = SampleModel(...)
 rc = stan_sample(...)
 
 if rc == 0
-  # Cmdstan summary of result
+  # Stan's `stansummary` executable result:
   sdf = read_summary(sm)
 
   # Display the summary as a DataFrame
   sdf |> display
 
   # Show the draws
-  samples = read_samples(sm, output_format=:array)
+  named_tuple_of_samples = read_samples(sm)
 
 end
 ```
-This workflow creates an array of draws, the default value for the `output_format` argument in read_samples().
+This workflow creates an NamedTuple with the draws, the default value for the `output_format` argument in read_samples().
 
-If at this point a vector of DataFrames (a DataFrame for each chain) is preferred:
+If a vector of DataFrames (a DataFrame for each chain) is preferred:
 ```
 df = read_samples(sm; output_format=:dataframes)
 ```
-Other options are `:dataframe, :dataframes`, `:mcmcchains` and `:particles`. See
+Other options are `:dataframe, :dataframes`, `:mcmcchains`, `:array` and `:particles`. See
 ```
 ?read_samples
 ```
 for more details.
-
-Version 5 of Stan.jl used `:mcmcchains` by default but the dependencies of MCMCChains.jl, including access to plotting features, lead to long compile times. In version 6 the default is :array again. In order to use the other options glue code is needed which is handled by Requires.jl.
 
 ## References
 
