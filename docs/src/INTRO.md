@@ -46,7 +46,7 @@ end
 ```
 This workflow creates an NamedTuple with the draws, the default value for the `output_format` argument in read_samples().
 
-If a vector of DataFrames (a DataFrame for each chain) is preferred:
+If a DataFrame (with all chains appended) is preferred:
 ```
 df = read_samples(sm; output_format=:dataframe)
 ```
@@ -68,8 +68,16 @@ There is no shortage of good books on Bayesian statistics. A few of my favorites
 
 4. [McElreath: Statistical Rethinking](http://xcelab.net/rm/statistical-rethinking/)
 
-5. [Gelman, Carlin, and others: Bayesian Data Analysis](http://www.stat.columbia.edu/~gelman/book/)
+5. [Kruschke: Doing Bayesian Data Analysis](https://sites.google.com/site/doingbayesiandataanalysis/what-s-new-in-2nd-ed)
 
-and a great read (and implementation in DynamicHMC.jl):
+6. [Lee, Wagenmakers: Bayesian Cognitive Modeling](https://www.cambridge.org/us/academic/subjects/psychology/psychology-research-methods-and-statistics/bayesian-cognitive-modeling-practical-course?format=PB&isbn=9781107603578)
 
-5. [Betancourt: A Conceptual Introduction to Hamiltonian Monte Carlo](https://arxiv.org/abs/1701.02434)
+7. [Gelman, Carlin, and others: Bayesian Data Analysis](http://www.stat.columbia.edu/~gelman/book/)
+
+8. [Causal Inference in Statistics - A Primer](https://www.wiley.com/en-us/Causal+Inference+in+Statistics%3A+A+Primer-p-9781119186847)
+
+9. [Betancourt: A Conceptual Introduction to Hamiltonian Monte Carlo](https://arxiv.org/abs/1701.02434)
+
+10. [Gelman, Carlin, and others: Bayesian Data Analysis](http://www.stat.columbia.edu/~gelman/book/)
+
+11. [Pearl, Judea and MacKenzie, Dana: The Book of Why](https://www.basicbooks.com/titles/judea-pearl/the-book-of-why/9780465097616/)
