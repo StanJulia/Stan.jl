@@ -21,7 +21,7 @@ Test = "8dfed614-e22c-5e08-85e1-65c5234f0b40"
 
 [compat]
 CSV = "0.8"
-DataFrames = "0.21, 0.22"
+DataFrames = "0.21, 0.22, 1.0"
 Distributions = "0.24"
 DocStringExtensions = "0.8"
 StanBase = "2.0, 3.0"
