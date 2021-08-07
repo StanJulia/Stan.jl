@@ -9,7 +9,7 @@ Make StanSample.jl available:
 using StanSample
 ```
 
-Define a variable 'model' to hold the [Stan language](https://mc-stan.org/docs/2_21/reference-manual/index.html) model definition:
+Define a 'model' to hold the [Stan language](https://mc-stan.org/docs/2_21/reference-manual/index.html) program:
 
 ```
 model = "
@@ -46,8 +46,8 @@ Run a simulation by calling stan_sample(), passing in the model and data:
 rc = stan_sample(sm; data);
 
 if success(rc)
-  samples_df = read_samples(sm; output_format=:dataframe);
-  samples_df |> display
+  chns = read_samples(sm);
+  chns |> display
 end
 ```
 

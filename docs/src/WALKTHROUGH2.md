@@ -63,49 +63,99 @@ Generate posterior draws by calling `stan_sample()`, passing in the model and op
 ```
 rc6_1s = stan_sample(m6_1s; data);
 
-if success(rc)
-  samples_nt = read_samples(sm);
+
+if success(rc6_1s)
+    chns = read_samples(m6_1s)
+
+    # Display the chns
+
+    chns |> display
+    println()
+
+    # Display the keys
+
+    axiskeys(chns) |> display
+    println()
+
+    mean(chns_a, dims=1) |> display
+    println()
+
+    chns(chain=1) |> display
+    println()
+
+    chns[:, 1, 8] |> display
+    println()
+
+    chns(chain=1, param=:bp) |> display
+    println()
+
+    chns(chain=[1, 3], param=[:bp, :bpC]) |> display
+    println()
+
+    # Select all elements starting with 'a'
+
+    chns_a = matrix(chns, :a)
+    chns_a |> display
+    println()
+
+    typeof(chns_a.data) |> display
+    println()
+
+    ndraws_a, nchains_a, nparams_a = size(chns_a)
+    chn_a = reshape(chns_a, ndraws_a*nchains_a, nparams_a)
+    println()
+
+    for row in eachrow(chn_a)
+        # ...
+    end
+
+    # Or use read_samples to only use chains 2 and 4 using the chains kwarg.
+
+    chns2 = read_samples(m10_4s; chains=[2, 4])
+    chns2_a = matrix(chns2, :a)
+    ndraws2_a, nchains2_a, nparams2_a = size(chns2_a)
+    chn2_a = reshape(chns2_a, ndraws2_a*nchains2_a, nparams2_a)
+    mean(chns2_a, dims=1) |> display
+
 end
-```
 
-Samples_nt now contains a NamedTuple:
-```
-nt6_1s.b
-```
 
-Compute the mean for vector b:
-```
-mean(nt6_1s.b, dims=2)
-```
-
-Some more options:
-```
 init = (a = 2.0, b = [1.0, 2.0], sigma = 1.0)
 rc6_2s = stan_sample(m6_1s; data, init);
-if success(rc6_1s)
-    nt6_2s = read_samples(m6_1s)
+
+if success(rc6_2s)
+
+    read_summary(m6_1s, true)
+    println()
+
+    post6_1s_df = read_samples(m6_1s, :dataframe)
+    post6_1s_df |> display
+    println()
+
+    part6_1s = read_samples(m6_1s, :particles)
+    part6_1s |> display
+    println()
+
+    # Use a NamedTuple:
+    
+    nt6_1s = read_samples(m6_1s, :namedtuple)
+    nt6_1s |> display
+    println()
+
+    nt6_1s.b |> display
+
+    # Compute the mean for vector b:
+
+    mean(nt6_1s.b, dims=2)
+
 end
 
-nt6_2s.b
-println()
-mean(nt6_2s.b, dims=2)
-println()
-
-read_summary(m6_1s)
-println()
-
-post6_1s_df = read_samples(m6_1s; output_format=:dataframe)
-println()
-
-part6_1s = read_samples(m6_1s; output_format=:particles)
 ```
 
-Walkthrough2.jl is also available as a script in the `examples/Walkthrough2` directory.
+Many more examples are provided in the five Example subdirectories.
 
-Many more examples are provided in the six Example subdirectories. 
+A new member of the StanJulia family is DiffEqBayesStan.jl.
 
 Additional examples can be found in [StanSample.jl](https://github.com/StanJulia/StanSample.jl) and [StatisticalRethinking.jl](https://github.com/StatisticalRethinkingJulia/StatisticalRethinking.jl).
 
 StatisticalRethinking.jl add features to compare models and coefficients, plotting (including `trankplots()` for chains) and summarizing results (`precis()`). MCMCChains.jl, part of the Turing ecosystem, provides additional tools to evaluate the chains.
-
-StatsModelComparisons.jl add WAIC, PSIS and a few other model comparison methods.
