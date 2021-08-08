@@ -94,6 +94,9 @@ if success(rc6_1s)
 
     # Select all elements starting with 'a'
 
+    # Use `matrix(...)` - with a twist - from the Tables.jl interface.
+    # `matrix(...) is overloaded to extract a block of parameters:
+
     chns_a = matrix(chns, :a)
     chns_a |> display
     println()
@@ -119,14 +122,17 @@ if success(rc6_1s)
 
 end
 
-
 init = (a = 2.0, b = [1.0, 2.0], sigma = 1.0)
 rc6_2s = stan_sample(m6_1s; data, init);
 
 if success(rc6_2s)
 
+    # Retrieve the summary created by the stansummary executable:
+
     read_summary(m6_1s, true)
     println()
+
+    # For simple models often a DataFrame is attractive to work with:
 
     post6_1s_df = read_samples(m6_1s, :dataframe)
     post6_1s_df |> display
