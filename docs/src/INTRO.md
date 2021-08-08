@@ -6,17 +6,15 @@
 
 [Cmdstan](http://mc-stan.org/interfaces/cmdstan.html) is the shell/command line interface to run Stan language programs. 
 
-[Stan.jl](https://github.com/StanJulia/Stan.jl) wraps cmdstan and captures the samples for further processing.
+[Stan.jl](https://github.com/StanJulia/Stan.jl) wraps the cmdstan methods and captures the draws for further processing.
 
 ## StanJulia overview
 
 Stan.jl is part of the [StanJulia Github organization](https://github.com/StanJulia) set of packages.
 
-Stan.jl is the primary option in StanJulia to capture draws from a Stan language program.  How to use the underlying component packages in StanJulia, e.g. StanSample.jl, StanOptimize.jl and StanVariational.jl, is illustrated in Stan.jl and in a much broader context in [StatisticalRethinking.jl](https://github.com/StatisticalRethinkingJulia).
+Stan.jl is the primary option in StanJulia to capture draws from a Stan language program.  How to use the underlying method packages in StanJulia, e.g. StanSample.jl, StanOptimize.jl and StanVariational.jl, is illustrated in Stan.jl and in a much broader context in [StatisticalRethinking.jl](https://github.com/StatisticalRethinkingJulia).
 
-The other option to capture draws from a Stan language program in StanJulia is *CmdStan*, which is the older approach and is currently in maintenance mode. Thus new features will be added to Stan.jl and the supporting component packages.
-
-These are not the only options to sample using Stan from Julia. Valid other options are PyCall.jl/PyStan and StanRun.jl. In addition, Julia provides other, pure Julia, mcmc options such as DynamicHMC.jl, Turing.jl and Mamba.jl.
+Stan.jl is not the only Stan mcmc option in Julia. Valid other options are PyCall.jl/PyStan and StanRun.jl. In addition, Julia provides other, pure Julia, mcmc options such as DynamicHMC.jl, Turing.jl and Mamba.jl.
 
 On a very high level, a typical workflow for using Stan.jl looks like:
 
@@ -44,13 +42,13 @@ if success(rc)
 
 end
 ```
-This workflow creates an NamedTuple with the draws, the default value for the `output_format` argument in read_samples().
+This workflow creates a KeyedArray chnains object with the draws, the default value for `read_samples(...)`.
 
 If a DataFrame (with all chains appended) is preferred:
 ```
-df = read_samples(sm; output_format=:dataframe)
+df = read_samples(sm, :dataframe)
 ```
-Other options are `:dataframes`, `:mcmcchains`, `:array` and `:particles`. See
+Other options are `:namedtuple`, `:mcmcchains`, `:particles`, etc. See
 ```
 ?read_samples
 ```
