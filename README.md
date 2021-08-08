@@ -1,4 +1,4 @@
-# Stan
+# Stan V7
 
 | **Project Status**                                                               |  **Documentation**                                                               | **Build Status**                                                                                |
 |:-------------------------------------------------------------------------------:|:-------------------------------------------------------------------------------:|:-----------------------------------------------------------------------------------------------:|
@@ -35,3 +35,14 @@ My intention is to continue maintenance of CmdStan.jl at least until late 2021.
 Stan's cmdstan executable needs to be installed separatedly. Please see [cmdstan installation](https://stanjulia.github.io/Stan.jl/latest/INSTALLATION/). 
 
 For more info on Stan, please go to <http://mc-stan.org>.
+
+## Versions
+
+### Version 7.0
+
+**This is a breaking update!**
+
+1. Use KeyedArray chains as default output format returned by read_samples.
+2. Drop the output_format keyword argument in favor of a regulare argument.
+3. Removed mostly outdated cluster and thread based examples.
+4. Added a new package DiffEqBayesStan.jl.

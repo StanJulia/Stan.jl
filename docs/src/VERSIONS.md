@@ -24,6 +24,8 @@ This version of the package has primarily been tested with GitHub workflows and 
 
 1. Use KeyedArray chains as default output format returned by read_samples.
 2. Drop the output_format keyword argument in favor of a regulare argument.
+3. Removed mostly outdated cluster and thread based examples.
+4. Added a new package DiffEqBayesStan.jl.
 
 ### Version 6.4
 

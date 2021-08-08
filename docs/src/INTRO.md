@@ -1,6 +1,6 @@
 # A Julia interface to Stan's cmdstan executable
 
-## Stan.jl
+## Stan.jl v7
 
 [Stan](https://github.com/stan-dev/stan) is a system for statistical modeling, data analysis, and prediction. It is extensively used in social, biological, and physical sciences, engineering, and business. The Stan language and the interfaces to execute a Stan language program are documented [here](http://mc-stan.org/documentation/).
 
@@ -31,6 +31,7 @@ sm = SampleModel(...)
 rc = stan_sample(...)
 
 if success(rc)
+
   # Retrieve Stan's `stansummary` executable result:
   sdf = read_summary(sm)
 
@@ -38,12 +39,14 @@ if success(rc)
   sdf |> display
 
   # Extract the draws from the SampleModel:
-  chns = read_samples(sm)
+  chns = read_samples(sm)   # Equivalent to: read_samples(sm, :keyedarray)
   chns |> display
 
 end
 ```
-This workflow returns the chains as a KeyedArray object, the default value for `read_samples(...)`.
+This workflow returns the chains as a KeyedArray object, the new default value for `read_samples(...)` in StanSample.jl v4 and Stan.jl v7.
+
+KeyedArray based chains support [Axiskeys.jl](https://github.com/mcabbott/AxisKeys.jl) indexing and lookup and also the [Tables.jl](https://github.com/JuliaData/Tables.jl) interface. Introductory examples showing some benefits of this setup can be found in `./Examples/Basic_intros`.
 
 If a DataFrame (with all chains appended) is preferred:
 ```

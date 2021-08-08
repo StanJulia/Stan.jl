@@ -1,4 +1,4 @@
-# Cmdstan installation
+# Stan.jl installation
 
 ## Minimal requirement
 

@@ -158,7 +158,7 @@ end
 
 ```
 
-Many more examples are provided in the five Example subdirectories.
+Many more examples are provided in the Example subdirectories.
 
 A new member of the StanJulia family is DiffEqBayesStan.jl.
 
