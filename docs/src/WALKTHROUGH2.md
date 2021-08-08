@@ -164,4 +164,6 @@ A new member of the StanJulia family is DiffEqBayesStan.jl.
 
 Additional examples can be found in [StanSample.jl](https://github.com/StanJulia/StanSample.jl) and [StatisticalRethinking.jl](https://github.com/StatisticalRethinkingJulia/StatisticalRethinking.jl).
 
-StatisticalRethinking.jl add features to compare models and coefficients, plotting (including `trankplots()` for chains) and summarizing results (`precis()`). MCMCChains.jl, part of the Turing ecosystem, provides additional tools to evaluate the chains.
+StatisticalRethinking.jl add features to compare models and coefficients, plotting (including `trankplots()` for chains) and summarizing results (`precis()`).
+
+MCMCChains.jl, part of the Turing ecosystem, provides additional tools to evaluate the chains.

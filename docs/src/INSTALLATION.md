@@ -25,4 +25,4 @@ to `./julia/config/startup.jl`. Remember to use `expanduser()` if you use `~` in
 
 I typically prefer cmdstan not to include the cmdstan version number in the above path to cmdstan (no update needed when the cmdstan version is updated).
 
-Currently tested with cmdstan 2.26.1
+Currently tested with cmdstan 2.27.0
