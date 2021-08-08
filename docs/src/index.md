@@ -4,14 +4,15 @@
 
 These are some of the common mcmc examples:
 
-1. ARM
-2. Bernoulli
-3. Binomial
-4. Diagnose
-5. Dyes
-6. EightSchools
-7. RedCardsStudy
-8. Walkthrough2
+1. Basic_intros
+2. ARM
+3. Bernoulli
+4. Binomial
+5. Diagnose
+6. Dyes
+7. EightSchools
+8. RedCardsStudy
+
 
 ## Examples using cmdstan methods
 
@@ -36,18 +37,10 @@ Data and input test cases:
 6. ScalarObs
 7. ZeroLengthArray
 
-# Experimental examples
+To be completed:
 
-## Examples of using a cluster to run Stan.jl
-
-1. Possible ways to use a cluster.
-
-## Examples of solving differential equations using cmdstan
+## Examples of solving differential equations (DiffEqBayesStan)
 
 1. LotkaVolterra benchmark
 2. Lynx_hare example
-3. DiffEqBayes example runs
-
-## Examples of using Julia threads model
-
-1. Initial experiment with a threads formulation
+3. SIR model
