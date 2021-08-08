@@ -28,7 +28,7 @@ StanBase = "2.0, 3.0"
 StanDiagnose = "2.0, 3.0"
 StanOptimize = "2.0, 3.0"
 StanQuap = "1.0, 2.0, 3.0"
-StanSample = "3.0, 4.0"
+StanSample = "3.0, 4"
 StanVariational = "2.0, 3.0"
 julia = "1"
 
