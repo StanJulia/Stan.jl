@@ -1,4 +1,4 @@
-using StanSample, MCMCChains
+using StanSample
 
 ProjDir = @__DIR__
 
@@ -32,15 +32,14 @@ rc = stan_sample(stanmodel; data=gq_data)
 
 if success(rc)
   # Convert to an MCMCChains.Chains object
-  chns = read_samples(stanmodel; output_format=:mcmcchains)
-  
-  # Describe the MCMCChains using MCMCChains statistics
-  cdf = describe(chns)
-  display(cdf)
+  chns = read_samples(stanmodel)
+  chns |> display
+  println()
 
   # Show the same output in DataFrame format
   df = StanSample.read_summary(stanmodel)
   display(df)
+  println()
   
   StanSample.stan_generate_quantities(stanmodel, 1)
 end

@@ -38,11 +38,12 @@ if success(rc)
   sdf |> display
 
   # Extract the draws from the SampleModel:
-  named_tuple_of_samples = read_samples(sm)
+  chns = read_samples(sm)
+  chns |> display
 
 end
 ```
-This workflow creates a KeyedArray chnains object with the draws, the default value for `read_samples(...)`.
+This workflow returns the chains as a KeyedArray object, the default value for `read_samples(...)`.
 
 If a DataFrame (with all chains appended) is preferred:
 ```

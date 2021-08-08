@@ -24,9 +24,9 @@ A collection of examples demonstrating the use Stan's cmdstan (as an external pr
 
 The first 2 generations of Stan.jl took a similar approach as the recently released [CmdStanR](https://mc-stan.org/cmdstanr/) and [CmdStanPy](https://github.com/stan-dev/cmdstanpy) options to use Stan's [cmdstan executable](https://mc-stan.org/users/interfaces/cmdstan.html).
 
-Stan.jl v6.x constitutes the third generation and covers all of cmdstan's methods in separate modules, i.e. StanVariational, StanSample, etc., including an option to run `generate_quantities`. In a sense, it extends Tamas Papp's approach taken in StanRun, StanDump and StanSamples. 
+Stan.jl v7.x constitutes the third generation and covers all of cmdstan's methods in separate modules, i.e. StanVariational, StanSample, etc., including an option to run `generate_quantities`. In a sense, it extends Tamas Papp's approach taken in StanRun, StanDump and StanSamples. 
 
-Stan.jl v6.x will contain examples using the features available in [StanJulia](https://github.com/StanJulia) method packages. 
+Stan.jl v7.x will contain examples using the features available in [StanJulia](https://github.com/StanJulia) method packages. 
 
 My intention is to continue maintenance of CmdStan.jl at least until late 2021.
 
