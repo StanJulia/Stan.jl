@@ -21,7 +21,7 @@ StatsBase = "2913bbd2-ae8a-5f71-8c99-4fb6c76f3a91"
 Test = "8dfed614-e22c-5e08-85e1-65c5234f0b40"
 
 [compat]
-CSV = "0.8"
+CSV = "0.8, 0.9"
 DataFrames = "0.21, 0.22, 1.0"
 Distributions = "0.24, 0.25"
 DocStringExtensions = "0.8"
