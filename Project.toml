@@ -3,7 +3,7 @@ uuid = "682df890-35be-576f-97d0-3d8c8b33a550"
 license = "MIT"
 desc = "Illustrate StanJulia's interface options to cmdstan"
 authors = ["Rob J Goedman <goedman@icloud.com>"]
-version = "7.0.0"
+version = "7.0.1"
 
 [deps]
 CSV = "336ed68f-0bac-5ca0-87d4-7b16caf5d00b"
@@ -17,6 +17,7 @@ StanOptimize = "fbd8da12-e93d-5a64-9231-612a0707ab99"
 StanQuap = "e4723793-2808-4fc5-8a98-c57f4c160c53"
 StanSample = "c1514b29-d3a0-5178-b312-660c88baa699"
 StanVariational = "6ede68ce-8466-5085-8a79-4c4de3d9cf4a"
+StatsBase = "2913bbd2-ae8a-5f71-8c99-4fb6c76f3a91"
 Test = "8dfed614-e22c-5e08-85e1-65c5234f0b40"
 
 [compat]
