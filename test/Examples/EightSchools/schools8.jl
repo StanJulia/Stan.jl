@@ -1,6 +1,8 @@
 ######### Stan program example  ###########
 
-using StanSample, Test
+using AxisKeys, Statistics
+using StanSample
+using Test
 
 eightschools ="
 data {

@@ -1,8 +1,10 @@
 ######### Stan program example  ###########
 
-using StanSample, Test
+using AxisKeys, DataFrames
+using StanSample
+using Test
 
-  binorm_model = "
+binorm_model = "
   transformed data {
       matrix[2,2] Sigma;
       vector[2] mu;
