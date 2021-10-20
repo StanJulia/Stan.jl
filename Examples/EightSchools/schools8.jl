@@ -35,17 +35,5 @@ sm = SampleModel("schools8", eightschools)
 rc = stan_sample(sm, data=schools8data)
 
 if success(rc)
-  chns = read_samples(sm; output_format=:mcmcchains, include_internals=true)
-  
-  chn = set_section(chns, Dict(
-    :parameters => ["mu", "tau"],
-    :thetas => ["theta.$i" for i in 1:8],
-    :etas => ["eta.$i" for i in 1:8],
-    :internals => ["lp__", "accept_stat__", "stepsize__", "treedepth__", "n_leapfrog__",
-      "divergent__", "energy__"]
-    )
-  )
-  
-  show(chn)
-  
+  chns = read_samples(sm, :mcmcchains)
 end

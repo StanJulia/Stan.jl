@@ -38,7 +38,7 @@ rc = stan_sample(sm, data=schools8data)
 
 if success(rc)
 
-    chns = read_samples(sm)
+    chns = read_samples(sm, :keyedarray)
     chns |> display
     println()
 
