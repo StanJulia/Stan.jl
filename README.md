@@ -38,6 +38,16 @@ For more info on Stan, please go to <http://mc-stan.org>.
 
 ## Versions
 
+### Version 7.1.1
+
+1. Doc fixes by Jeremiah P S Lewis.
+2. Switch default output_format for read_samples() to :table.
+3. Add block extract for DataFrames, e.g. DataFrame(m1_1s, :log_lik)
+
+### Version 7.1.0
+
+1. Doc fixes. Prepare for switching default output_format for read_samples() to :table.
+
 ### Version 7.0
 
 **This is a breaking update!**
