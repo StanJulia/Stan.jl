@@ -14,7 +14,7 @@ Updates for new releases of Julia and cmdstan bump the appropriate level.
 
 ## Testing
 
-This version of the package has primarily been tested with GitHub workflows and macOS Big Sur v11.5, Julia 1.6+ and cmdstan-2.27.0.
+This version of the package has primarily been tested with GitHub workflows and macOS Big Sur v11.5, Julia 1.6+ and cmdstan-2.28.1.
 
 ## Versions
 
