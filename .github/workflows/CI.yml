@@ -42,7 +42,7 @@ jobs:
           OLDWD=`pwd`
           cd ~
           pwd
-          wget https://github.com/stan-dev/cmdstan/releases/download/v2.28.0/cmdstan-2.28.1.tar.gz
+          wget https://github.com/stan-dev/cmdstan/releases/download/v2.28.1/cmdstan-2.28.1.tar.gz
           tar -xzpf cmdstan-2.28.1.tar.gz
           ls -lia .
           make -C $JULIA_CMDSTAN_HOME build
