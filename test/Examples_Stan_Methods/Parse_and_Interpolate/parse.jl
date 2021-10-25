@@ -37,7 +37,7 @@ cd(ProjDir) do
 
   observeddata = Dict("N" => 10, "y" => [0, 1, 0, 1, 0, 0, 0, 0, 0, 1])
 
-  rc = stan_sample(stanmodel, data=observeddata)
+  rc = stan_sample(stanmodel; data=observeddata)
 
   if success(rc)
     # Convert to an MCMCChains.Chains object

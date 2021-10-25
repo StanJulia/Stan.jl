@@ -21,7 +21,7 @@ inittheta = joinpath(@__DIR__ , "bernoulli.init.R")
 
 sm = SampleModel("init_file", bernoullimodel);
 
-rc = stan_sample(sm, data=datatheta, init=inittheta)
+rc = stan_sample(sm; data=datatheta, init=inittheta)
 
 if success(rc)
   samples = read_samples(sm)
