@@ -22,10 +22,9 @@ inittheta = [
   Dict("theta" => 0.6), Dict("theta" => 0.4), 
   Dict("theta" => 0.2), Dict("theta" => 0.1)]
 
-sm = SampleModel("init_dict_array", bernoullimodel,
-  seed=StanSample.RandomSeed(seed=-1));
+sm = SampleModel("init_dict_array", bernoullimodel);
 
-rc = stan_sample(sm, data=bernoullidata, init=inittheta)
+rc = stan_sample(sm; data=bernoullidata, init=inittheta)
   
 if success(rc)
   samples = read_samples(sm)

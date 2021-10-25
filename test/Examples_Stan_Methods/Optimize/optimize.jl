@@ -20,7 +20,7 @@ bernoulli_data = Dict("N" => 10, "y" => [0, 1, 0, 1, 0, 0, 0, 0, 0, 1])
 
 stanmodel = OptimizeModel("optimize_1",  bernoulli_model);
 
-rc = stan_optimize(stanmodel, data=bernoulli_data);
+rc = stan_optimize(stanmodel; data=bernoulli_data);
 
 if success(rc)
   optim1, cnames = read_optimize(stanmodel)

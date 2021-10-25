@@ -20,7 +20,7 @@ bernoullidata = Dict("N" => 1, "y" => [0])
 
 sm = SampleModel("scalar", bernoullimodel);
 
-rc = stan_sample(sm, data=bernoullidata);
+rc = stan_sample(sm; data=bernoullidata);
 
 if success(rc)
   samples = read_samples(sm)

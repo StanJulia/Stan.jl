@@ -20,7 +20,7 @@ observeddata = Dict("N" => 10, "y" => [0, 1, 0, 1, 0, 0, 0, 0, 0, 1])
 
 sm = SampleModel("diagnostics", bernoullimodel);
 
-rc = stan_sample(sm, data=observeddata);
+rc = stan_sample(sm; data=observeddata);
 
 if success(rc)
   samples = read_samples(sm)

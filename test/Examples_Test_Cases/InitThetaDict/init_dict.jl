@@ -19,10 +19,9 @@ model {
 bernoullidata = Dict("N" => 10, "y" => [0, 1, 0, 1, 0, 0, 0, 0, 0, 1])
 inittheta = Dict("theta" => 0.60)
 
-sm = SampleModel("init_dict", bernoullimodel,
-  seed=StanSample.RandomSeed(seed=-1));
+sm = SampleModel("init_dict", bernoullimodel);
 
-rc = stan_sample(sm, data=bernoullidata, init=inittheta)
+rc = stan_sample(sm; data=bernoullidata, init=inittheta, seed=-1)
 
 if success(rc)
   samples = read_samples(sm)
