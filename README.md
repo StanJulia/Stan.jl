@@ -38,6 +38,10 @@ For more info on Stan, please go to <http://mc-stan.org>.
 
 ## Versions
 
+### Version 8.0.0
+
+
+
 ### Version 7.1.1
 
 1. Doc fixes by Jeremiah P S Lewis.
