@@ -29,10 +29,8 @@ if success(rc)
 end
 
 # Same with saved iterations
-sm = OptimizeModel("optimize_2", bernoulli_model;
-  method = StanOptimize.Optimize(save_iterations = true));
-
-rc2  = stan_optimize(sm, data=bernoulli_data);
+sm = OptimizeModel("optimize_2", bernoulli_model);
+rc2  = stan_optimize(sm, data=bernoulli_data; save_iterations=true);
 
 if success(rc2)
   optim2, cnames = read_optimize(sm)
