@@ -16,6 +16,8 @@ rc = stan_sample(model; num_chains=2, seed=123, delta=0.85)
 
 Stan.jl is part of the [StanJulia Github organization](https://github.com/StanJulia) set of packages.
 
+A new member of the StanJulia family is DiffEqBayesStan.jl.
+
 The use of the underlying method packages in StanJulia, i.e. StanSample.jl (the primary workhorse package), StanOptimize.jl, StanVariational.jl, StanQuap.jl and DiffEqBayesStan.jl are (or will be) illustrated in Stan.jl and in a much broader context in [StatisticalRethinking.jl](https://github.com/StatisticalRethinkingJulia).
 
 Stan.jl is not the only Stan mcmc option in Julia. Other options are PyCall.jl/PyStan and StanRun.jl. In addition, Julia provides other, pure Julia, mcmc options such as DynamicHMC.jl, Turing.jl and Mamba.jl.
