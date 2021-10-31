@@ -1,10 +1,16 @@
 # A Julia interface to Stan's cmdstan executable
 
-## Stan.jl v7
+## Stan.jl v8
 
 [Stan](https://github.com/stan-dev/stan) is a system for statistical modeling, data analysis, and prediction. It is extensively used in social, biological, and physical sciences, engineering, and business. The Stan language and the interfaces to execute a Stan language program are documented [here](http://mc-stan.org/documentation/).
 
 [Stan.jl](https://github.com/StanJulia/Stan.jl) illustrates how the packages available in [StanJulia's ecosystem](https://github.com/StanJulia) wrap the methods available in Stan's **cmdstan** executable.
+
+Stan.jl v8.0.0 uses te latest versions of StanSample.jl (v5), StanOptimize.jl (v3) and StanQuap.jl. Both StanSample.jl (v5) and StanOptimize.jl (v3) use keyword arguments in the `stan_sample()` call to update the commandline options for running the cmdstan binary, e.g.
+```Julia
+rc = stan_sample(model; num_chains=2, seed=123, delta=0.85)
+```
+
 
 ## StanJulia overview
 
@@ -12,7 +18,7 @@ Stan.jl is part of the [StanJulia Github organization](https://github.com/StanJu
 
 The use of the underlying method packages in StanJulia, i.e. StanSample.jl (the primary workhorse package), StanOptimize.jl, StanVariational.jl, StanQuap.jl and DiffEqBayesStan.jl are (or will be) illustrated in Stan.jl and in a much broader context in [StatisticalRethinking.jl](https://github.com/StatisticalRethinkingJulia).
 
-Stan.jl is not the only Stan mcmc option in Julia. Valid other options are PyCall.jl/PyStan and StanRun.jl. In addition, Julia provides other, pure Julia, mcmc options such as DynamicHMC.jl, Turing.jl and Mamba.jl.
+Stan.jl is not the only Stan mcmc option in Julia. Other options are PyCall.jl/PyStan and StanRun.jl. In addition, Julia provides other, pure Julia, mcmc options such as DynamicHMC.jl, Turing.jl and Mamba.jl.
 
 On a very high level, a typical workflow for using Stan.jl looks like:
 
@@ -37,24 +43,21 @@ if success(rc)
   sdf |> display
 
   # Extract the draws from the SampleModel:
-  chns = read_samples(sm)   # Equivalent to: read_samples(sm, :keyedarray)
-  chns |> display
+  tbl = read_samples(sm, :table)
+  tbl |> display
 
+  # Or converted to a DataFrame
+
+  DataFrame(tbl) |> display
 end
 ```
-This workflow returns the chains as a KeyedArray object, the new default value for `read_samples(...)` in StanSample.jl v4 and Stan.jl v7.
+This workflow returns a StanTable.Table object with all chains appended. 
 
-KeyedArray based chains support [Axiskeys.jl](https://github.com/mcabbott/AxisKeys.jl) indexing and lookup and also the [Tables.jl](https://github.com/JuliaData/Tables.jl) interface. Introductory examples showing some benefits of this setup can be found in `./Examples/Basic_intros`.
-
-If a DataFrame (with all chains appended) is preferred:
+If e.g. a DataFrame (with all chains appended) is preferred:
 ```
 df = read_samples(sm, :dataframe)
 ```
-Other options are `:namedtuple`, `:mcmcchains`, `:particles`, etc. See
-```
-?read_samples
-```
-for more details. Walkthrough and Walkthrough2 show StanSample.jl in action.
+Other options are `:namedtuple`, `:particles`, `:keyedarray`, `:dimdata`, `:mcmcchains`, etc. See `?read_samples` for more details. Walkthrough and Walkthrough2 show StanSample.jl in action.
 
 ## References
 

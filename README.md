@@ -28,6 +28,8 @@ Stan.jl v7.x constitutes the third generation and covers all of cmdstan's method
 
 Stan.jl v8.0 is based on StanSample.jl v5, StanOptimize.jl v3 and StanQuap.jl v2.
 
+Note: Future versions of the StanJulia packages, in particular StanSample.jl v5.1, will start to support multithreading in the `cmdstan` binary and will require cmdstan v2.28.1 and up.
+
 My intention is to continue maintenance of CmdStan.jl at least until late 2021.
 
 ## Requirements

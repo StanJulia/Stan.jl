@@ -2,7 +2,7 @@
 
 Make StanSample.jl available:
 ```
-using StanSample, Distributions
+using StanSample, Distributions, AxisKeys
 ```
 
 Include also Distributions.jl as we'll be using that package to create an example model. This example is derived from an example in [StatisticalRethinking.jl](https://xcelab.net/rm/statistical-rethinking/).
@@ -59,23 +59,26 @@ The observed input data is defined below. Note here we use a NamedTuple for inpu
 data = (H = df.height, LL = df.leg_left, LR = df.leg_right, N = size(df, 1))
 ```
 
-Generate posterior draws by calling `stan_sample()`, passing in the model and optionally data and sometimes initial settings: 
+Generate posterior draws by calling `stan_sample()`, passing in the model and optionally data, initial settings and keyword arguments to influence how `cmdstan` is to be called: 
 ```
-rc6_1s = stan_sample(m6_1s; data);
+rc6_1s = stan_sample(m6_1s; data, seed=-1, num_chains=2, delta=0.85);
 
 
 if success(rc6_1s)
-    chns = read_samples(m6_1s)
+    tbl = read_samples(m6_1s) # By default a StanTable object is returned
 
-    # Display the chns
+    # Display the schema of the tbl
 
-    chns |> display
+    tbl |> display
     println()
 
     # Display the keys
 
-    axiskeys(chns) |> display
+    DataFrame(tbl) |> display
     println()
+
+    # Or using a KeyedArray object from AxisKeys.jl
+    chns = read_samples(m6_1s, :keyedarray)
 
     mean(chns_a, dims=1) |> display
     println()
@@ -114,7 +117,7 @@ if success(rc6_1s)
 
     # Or use read_samples to only use chains 2 and 4 using the chains kwarg.
 
-    chns2 = read_samples(m10_4s; chains=[2, 4])
+    chns2 = read_samples(m10_4s, :keyedarray; chains=[2, 4])
     chns2_a = matrix(chns2, :a)
     ndraws2_a, nchains2_a, nparams2_a = size(chns2_a)
     chn2_a = reshape(chns2_a, ndraws2_a*nchains2_a, nparams2_a)

@@ -18,6 +18,18 @@ This version of the package has primarily been tested with GitHub workflows and 
 
 ## Versions
 
+### Version 8.0.0
+
+**This is a breaking update!**
+
+1. Change the default output format returned by read_samples to :table.
+2. Keyword based cmdline modification.
+3. Dropped dependency on StanBase.
+4. Will need cmdstan 2.28.1 (for num_threads).
+5. `tmpdir` now positional argument when creating a CmdStanModel.
+
+Note: StanVariational.jl and StanDiagnose.jl have not yet been updated to use keywords in the `stan_variational()` and `stan_diagnose()` calls. They still depend on StanBase.jl.
+
 ### Version 7.0
 
 **This is a breaking update!**

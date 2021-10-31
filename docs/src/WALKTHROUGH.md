@@ -1,8 +1,6 @@
 # A walk-through example (using StanSample.jl)
 
-This script assumes StanSample has been installed in your environment.
-
-A better approach would be to use projects, e.g. DrWatson.jl, to manage which packages are available.
+This script assumes StanSample has been installed in your Julia environment. A better approach would be to use projects, e.g. DrWatson.jl, to manage which packages are available.
 
 Make StanSample.jl available:
 ```
@@ -46,8 +44,8 @@ Run a simulation by calling stan_sample(), passing in the model and data:
 rc = stan_sample(sm; data);
 
 if success(rc)
-  chns = read_samples(sm);
-  chns |> display
+  df = read_samples(sm, :dataframe);
+  df |> display
 end
 ```
 
