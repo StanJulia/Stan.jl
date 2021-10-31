@@ -2,10 +2,14 @@
 
 Make StanSample.jl available:
 ```
-using StanSample, Distributions, AxisKeys
+using Distributions
+using DataFrames
+using MonteCarloMeasurements, AxisKeys
+using StanSample
+
 ```
 
-Include also Distributions.jl as we'll be using that package to create an example model. This example is derived from an example in [StatisticalRethinking.jl](https://xcelab.net/rm/statistical-rethinking/).
+Include Distributions.jl as we'll be using that package to create an example model. This example is derived from an example in [StatisticalRethinking.jl](https://xcelab.net/rm/statistical-rethinking/).
 
 It shows a few more features than the Bernoulli example in WALKTHROUGH.md.
 
@@ -72,57 +76,15 @@ if success(rc6_1s)
     tbl |> display
     println()
 
-    # Display the keys
+    # Display the draws
 
     DataFrame(tbl) |> display
     println()
 
     # Or using a KeyedArray object from AxisKeys.jl
+
     chns = read_samples(m6_1s, :keyedarray)
-
-    mean(chns_a, dims=1) |> display
-    println()
-
-    chns(chain=1) |> display
-    println()
-
-    chns[:, 1, 8] |> display
-    println()
-
-    chns(chain=1, param=:bp) |> display
-    println()
-
-    chns(chain=[1, 3], param=[:bp, :bpC]) |> display
-    println()
-
-    # Select all elements starting with 'a'
-
-    # Use `matrix(...)` - with a twist - from the Tables.jl interface.
-    # `matrix(...) is overloaded to extract a block of parameters:
-
-    chns_a = matrix(chns, :a)
-    chns_a |> display
-    println()
-
-    typeof(chns_a.data) |> display
-    println()
-
-    ndraws_a, nchains_a, nparams_a = size(chns_a)
-    chn_a = reshape(chns_a, ndraws_a*nchains_a, nparams_a)
-    println()
-
-    for row in eachrow(chn_a)
-        # ...
-    end
-
-    # Or use read_samples to only use chains 2 and 4 using the chains kwarg.
-
-    chns2 = read_samples(m10_4s, :keyedarray; chains=[2, 4])
-    chns2_a = matrix(chns2, :a)
-    ndraws2_a, nchains2_a, nparams2_a = size(chns2_a)
-    chn2_a = reshape(chns2_a, ndraws2_a*nchains2_a, nparams2_a)
-    mean(chns2_a, dims=1) |> display
-
+    chns |> display
 end
 
 init = (a = 2.0, b = [1.0, 2.0], sigma = 1.0)
@@ -141,6 +103,8 @@ if success(rc6_2s)
     post6_1s_df |> display
     println()
 
+    # Or from MonteCarloMeasurements.jl:
+    
     part6_1s = read_samples(m6_1s, :particles)
     part6_1s |> display
     println()
@@ -162,8 +126,6 @@ end
 ```
 
 Many more examples are provided in the Example subdirectories.
-
-A new member of the StanJulia family is DiffEqBayesStan.jl.
 
 Additional examples can be found in [StanSample.jl](https://github.com/StanJulia/StanSample.jl) and [StatisticalRethinking.jl](https://github.com/StatisticalRethinkingJulia/StatisticalRethinking.jl).
 

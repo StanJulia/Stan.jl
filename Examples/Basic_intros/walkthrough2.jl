@@ -53,6 +53,7 @@ if success(rc6_1s)
     println()
 
     # Or using a KeyedArray object from AxisKeys.jl
+    
     chns = read_samples(m6_1s, :keyedarray)
     chns |> display
 end
