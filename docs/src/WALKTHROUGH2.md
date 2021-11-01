@@ -11,6 +11,8 @@ using StanSample
 
 Include Distributions.jl as we'll be using that package to create an example model. This example is derived from an example in [StatisticalRethinking.jl](https://xcelab.net/rm/statistical-rethinking/).
 
+Inclusion of MonteCarloMeasurements and AxisKeys in this script is for illustration purposes only (see ??read_samples in StanSample.jl).
+
 It shows a few more features than the Bernoulli example in WALKTHROUGH.md.
 
 ```
