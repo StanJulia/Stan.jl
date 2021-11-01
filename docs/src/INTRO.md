@@ -6,23 +6,22 @@
 
 [Stan.jl](https://github.com/StanJulia/Stan.jl) illustrates how the packages available in [StanJulia's ecosystem](https://github.com/StanJulia) wrap the methods available in Stan's **cmdstan** executable.
 
-Stan.jl v8.0.0 uses te latest versions of StanSample.jl (v5), StanOptimize.jl (v3) and StanQuap.jl. Both StanSample.jl (v5) and StanOptimize.jl (v3) use keyword arguments in the `stan_sample()` call to update the commandline options for running the cmdstan binary, e.g.
+Stan.jl v8.0.0 uses te latest versions of StanSample.jl (v5), StanOptimize.jl (v3) and StanQuap.jl (v2). Both StanSample.jl (v5) and StanOptimize.jl (v3) use keyword arguments in the `stan_sample()` call to update the command line options for running the cmdstan binary, e.g.
 ```Julia
-rc = stan_sample(model; num_chains=2, seed=123, delta=0.85)
+rc = stan_sample(model; data, init, num_chains=2, seed=123, delta=0.85)
 ```
 
+Stan.jl v8 (and the updated StanJulia packages) are intended to use Stan's `cmdstan` v2.28.1 as a next step in StanJulia is to take advantage of the C++ level multi-threading options enabled in cmdstan v2.28.1.
 
 ## StanJulia overview
 
 Stan.jl is part of the [StanJulia Github organization](https://github.com/StanJulia) set of packages.
 
-A new member of the StanJulia family is DiffEqBayesStan.jl.
-
-The use of the underlying method packages in StanJulia, i.e. StanSample.jl (the primary workhorse package), StanOptimize.jl, StanVariational.jl, StanQuap.jl and DiffEqBayesStan.jl are (or will be) illustrated in Stan.jl and in a much broader context in [StatisticalRethinking.jl](https://github.com/StatisticalRethinkingJulia).
+The use of the underlying method packages in StanJulia, i.e. StanSample.jl (the primary workhorse package), StanOptimize.jl, StanVariational.jl, StanQuap.jl and DiffEqBayesStan.jl are demonstrated in Stan.jl and in a much broader context in [StatisticalRethinking.jl](https://github.com/StatisticalRethinkingJulia).
 
 Stan.jl is not the only Stan mcmc option in Julia. Other options are PyCall.jl/PyStan and StanRun.jl. In addition, Julia provides other, pure Julia, mcmc options such as DynamicHMC.jl, Turing.jl and Mamba.jl.
 
-On a very high level, a typical workflow for using Stan.jl looks like:
+On a high level, a typical workflow to use Stan.jl looks like:
 
 ```
 using Stan
@@ -44,16 +43,19 @@ if success(rc)
   # Display the summary as a DataFrame:
   sdf |> display
 
-  # Extract the draws from the SampleModel:
+  # Extract the draws from the SampleModel and show the schema:
   tbl = read_samples(sm, :table)
   tbl |> display
 
   # Or converted to a DataFrame
 
   DataFrame(tbl) |> display
+
+  # See below for reading in the draws directly into a DataFrame.
+
 end
 ```
-This workflow returns a StanTable.Table object with all chains appended. 
+Above workflow returns a StanTable.Table object with all chains appended. 
 
 If e.g. a DataFrame (with all chains appended) is preferred:
 ```
