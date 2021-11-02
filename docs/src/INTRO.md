@@ -6,7 +6,7 @@
 
 [Stan.jl](https://github.com/StanJulia/Stan.jl) illustrates how the packages available in [StanJulia's ecosystem](https://github.com/StanJulia) wrap the methods available in Stan's **cmdstan** executable.
 
-Stan.jl v8.0.0 uses te latest versions of StanSample.jl (v5), StanOptimize.jl (v3) and StanQuap.jl (v2). Both StanSample.jl (v5) and StanOptimize.jl (v3) use keyword arguments in the `stan_sample()` call to update the command line options for running the cmdstan binary, e.g.
+Stan.jl v8.0.0 uses the latest versions of StanSample.jl (v5), StanOptimize.jl (v3) and StanQuap.jl (v2). Both StanSample.jl (v5) and StanOptimize.jl (v3) use keyword arguments in the `stan_sample()` call to update the command line options for running the cmdstan binary, e.g.
 ```Julia
 rc = stan_sample(model; data, init, num_chains=2, seed=123, delta=0.85)
 ```
@@ -79,12 +79,10 @@ There is no shortage of good books on Bayesian statistics. A few of my favorites
 
 6. [Lee, Wagenmakers: Bayesian Cognitive Modeling](https://www.cambridge.org/us/academic/subjects/psychology/psychology-research-methods-and-statistics/bayesian-cognitive-modeling-practical-course?format=PB&isbn=9781107603578)
 
-7. [Gelman, Carlin, and others: Bayesian Data Analysis](http://www.stat.columbia.edu/~gelman/book/)
+7. [Betancourt: A Conceptual Introduction to Hamiltonian Monte Carlo](https://arxiv.org/abs/1701.02434)
 
-8. [Causal Inference in Statistics - A Primer](https://www.wiley.com/en-us/Causal+Inference+in+Statistics%3A+A+Primer-p-9781119186847)
+8. [Gelman, Carlin, and others: Bayesian Data Analysis](http://www.stat.columbia.edu/~gelman/book/)
 
-9. [Betancourt: A Conceptual Introduction to Hamiltonian Monte Carlo](https://arxiv.org/abs/1701.02434)
+9. [Causal Inference in Statistics - A Primer](https://www.wiley.com/en-us/Causal+Inference+in+Statistics%3A+A+Primer-p-9781119186847)
 
-10. [Gelman, Carlin, and others: Bayesian Data Analysis](http://www.stat.columbia.edu/~gelman/book/)
-
-11. [Pearl, Judea and MacKenzie, Dana: The Book of Why](https://www.basicbooks.com/titles/judea-pearl/the-book-of-why/9780465097616/)
+10. [Pearl, Judea and MacKenzie, Dana: The Book of Why](https://www.basicbooks.com/titles/judea-pearl/the-book-of-why/9780465097616/)
