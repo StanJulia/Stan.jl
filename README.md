@@ -24,7 +24,7 @@ A collection of examples demonstrating the use Stan's cmdstan (as an external pr
 
 The first 2 generations of Stan.jl took a similar approach as the recently released [CmdStanR](https://mc-stan.org/cmdstanr/) and [CmdStanPy](https://github.com/stan-dev/cmdstanpy) options to use Stan's [cmdstan executable](https://mc-stan.org/users/interfaces/cmdstan.html).
 
-Stan.jl v7.x constitutes the third generation and covers all of cmdstan's methods in separate modules, i.e. StanVariational, StanSample, etc., including an option to run `generate_quantities`. In a sense, it extends Tamas Papp's approach taken in StanRun, StanDump and StanSamples. 
+Stan.jl v7.x constitutes the third generation and covers all of cmdstan's methods in separate packages, i.e. StanSample.jl, StanOptimize.jl, .jl, etc., including an option to run `generate_quantities`. In a sense, it extends Tamas Papp's approach taken in StanRun, StanDump and StanSamples. 
 
 Stan.jl v8.0 is based on StanSample.jl v5, StanOptimize.jl v3 and StanQuap.jl v2.
 

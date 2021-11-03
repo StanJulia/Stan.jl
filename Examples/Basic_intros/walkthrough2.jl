@@ -39,23 +39,28 @@ rc6_1s = stan_sample(m6_1s; data, seed=-1, num_chains=2, delta=0.85);
 
 
 if success(rc6_1s)
-    tbl = read_samples(m6_1s) # By default a StanTable object is returned
+    st6_1s = read_samples(m6_1s) # By default a StanTable object is returned
 
     # Display the schema of the tbl
 
-    tbl |> display
+    st6_1s |> display
     println()
 
     # Display the keys
 
-    dft = DataFrame(tbl)
-    dft |> display
+    df6_1s = DataFrame(st6_1s)
+    df6_1s |> display
+    println()
+
+    # Select a block of related parameters
+    
+    DataFrame(df6_1s, :b) |> display
     println()
 
     # Or using a KeyedArray object from AxisKeys.jl
     
-    chns = read_samples(m6_1s, :keyedarray)
-    chns |> display
+    chns6_1s = read_samples(m6_1s, :keyedarray)
+    chns6_1s |> display
 end
 
 init = (a = 2.0, b = [1.0, 2.0], sigma = 1.0)
@@ -65,6 +70,7 @@ if success(rc6_2s)
 
     # Retrieve the summary created by the stansummary executable:
 
+    println()
     read_summary(m6_1s, true)
     println()
 

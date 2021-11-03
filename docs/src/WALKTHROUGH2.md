@@ -54,7 +54,7 @@ model {
 Create and compile a SampleModel object. By "compile" here is meant that `SampleModel()` will take care of compiling the Stan language program first to a C++ program and subsequantly compile that C++ program to an executable which will be executed in `stan_sample()`.
 
 ```
-sm = SampleModel("m6.1s", stan6_1);
+m6_1s = SampleModel("m6.1s", stan6_1);
 ```
 
 Above `SampleModel()` call creates a default model for sampling. See `?SampleModel` for details.
@@ -71,22 +71,23 @@ rc6_1s = stan_sample(m6_1s; data, seed=-1, num_chains=2, delta=0.85);
 
 
 if success(rc6_1s)
-    tbl = read_samples(m6_1s) # By default a StanTable object is returned
+    st6_1s = read_samples(m6_1s) # By default a StanTable object is returned
 
     # Display the schema of the tbl
 
-    tbl |> display
+    st6_1s |> display
     println()
 
     # Display the draws
 
-    DataFrame(tbl) |> display
+    df6_1s = DataFrame(st6_1s)
+    df6_1s |> display
     println()
 
     # Or using a KeyedArray object from AxisKeys.jl
 
-    chns = read_samples(m6_1s, :keyedarray)
-    chns |> display
+    chns6_1s = read_samples(m6_1s, :keyedarray)
+    chns6_1s |> display
 end
 
 init = (a = 2.0, b = [1.0, 2.0], sigma = 1.0)
