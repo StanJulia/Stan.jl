@@ -17,9 +17,7 @@ model {
 "
 bernoulli_data = Dict("N" => 10, "y" => [0, 1, 0, 1, 0, 0, 0, 0, 0, 1])
 
-sm = DiagnoseModel("diagnose", bernoulli_model;
-  method=StanDiagnose.Diagnose(StanDiagnose.Gradient(epsilon=1e-6)));
-
+sm = DiagnoseModel("diagnose", bernoulli_model);
 rc = stan_diagnose(sm; data=bernoulli_data);
 
 if success(rc)
