@@ -7,7 +7,7 @@ on:
   pull_request:
 
 env:
-  JULIA_CMDSTAN_HOME: "/home/worker/cmdstan-2.28.2/"
+  CMDSTAN: "/home/worker/cmdstan-2.28.2/"
 
 jobs:
   test:
@@ -36,7 +36,7 @@ jobs:
         shell: julia --project=. {0}
         run: |
           println(pwd())
-          println(ENV["JULIA_CMDSTAN_HOME"])
+          println(ENV["CMDSTAN"])
           println(ENV["HOME"])
       - run: |
           OLDWD=`pwd`
@@ -45,10 +45,10 @@ jobs:
           wget https://github.com/stan-dev/cmdstan/releases/download/v2.28.2/cmdstan-2.28.2.tar.gz
           tar -xzpf cmdstan-2.28.2.tar.gz
           ls -lia .
-          make -C $JULIA_CMDSTAN_HOME build
+          make -C $CMDSTAN build
           cd $OLDWD
         env:
-          JULIA_CMDSTAN_HOME: "/home/runner/cmdstan-2.28.2/"
+          CMDSTAN: "/home/runner/cmdstan-2.28.2/"
       - uses: actions/checkout@v2
       - uses: julia-actions/setup-julia@v1
         with:
@@ -67,7 +67,7 @@ jobs:
       - uses: julia-actions/julia-buildpkg@latest
       - uses: julia-actions/julia-runtest@latest
         env:
-          JULIA_CMDSTAN_HOME: "/home/runner/cmdstan-2.28.2/"
+          CMDSTAN: "/home/runner/cmdstan-2.28.2/"
       - uses: julia-actions/julia-processcoverage@v1
         if: matrix.version == '1' && matrix.os == 'ubuntu-latest' && matrix.num_threads == 1
       - uses: codecov/codecov-action@v1
