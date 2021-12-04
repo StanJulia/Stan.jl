@@ -30,7 +30,7 @@ examples = [
   "Examples_Stan_Methods/Parse_and_Interpolate/parse.jl"
 ]
 
-if haskey(ENV, "JULIA_CMDSTAN_HOME")
+if haskey(ENV, "JULIA_CMDSTAN_HOME") || haskey(ENV, "CMDSTAN")
   println("\nRunning Stan.jl v8.x test examples")
 
   for example in examples
