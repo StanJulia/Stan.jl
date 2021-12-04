@@ -24,11 +24,11 @@ This version of the package has primarily been tested with GitHub workflows and 
 
 1. Change the default output format returned by read_samples to :table.
 2. Keyword based cmdline modification.
-3. Dropped dependency on StanBase.
+3. Refactored code between StanBase.jl and the other StanJulia packages.
 4. Will need cmdstan 2.28.1 (for num_threads).
 5. `tmpdir` now positional argument when creating a CmdStanModel.
-
-Note: StanVariational.jl and StanDiagnose.jl have not yet been updated to use keywords in the `stan_variational()` and `stan_diagnose()` calls. They still depend on StanBase.jl.
+6. Supports both CMDSTAN and JULIA_CMDSTAN_HOME environment variables to point to the cmdstan installation (for compatibility between cmdstan for R and Python).
+7. Thanks to @jfb-h completed testing with using conda to install cmdstan
 
 ### Version 7.0
 

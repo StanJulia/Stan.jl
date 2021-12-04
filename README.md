@@ -28,10 +28,6 @@ Stan.jl v7.x constitutes the third generation and covers all of cmdstan's method
 
 Stan.jl v8.0 is based on StanSample.jl v5, StanOptimize.jl v3 and StanQuap.jl v2.
 
-Note: Future versions of the StanJulia packages, in particular StanSample.jl v5.1, will start to support multithreading in the `cmdstan` binary and will require cmdstan v2.28.1 and up.
-
-My intention is to continue maintenance of CmdStan.jl at least until late 2021.
-
 ## Requirements
 
 Stan's cmdstan executable needs to be installed separatedly. Please see [cmdstan installation](https://stanjulia.github.io/Stan.jl/latest/INSTALLATION/). 
@@ -42,7 +38,9 @@ For more info on Stan, please go to <http://mc-stan.org>.
 
 ### Version 8.0.0
 
-
+1. Supports both CMDSTAN and JULIA_CMDSTAN_HOME environment variables to point to the cmdstan installation.
+2. Thanks to @jfb-h completed testing with using conda to install cmdstan
+3. Refactored code between StanBase.jl and the other StanJulia packages.
 
 ### Version 7.1.1
 
