@@ -34,6 +34,22 @@ Stan's cmdstan executable needs to be installed separatedly. Please see [cmdstan
 
 For more info on Stan, please go to <http://mc-stan.org>.
 
+### Conda based installation walkthrough for running Stan from Julia on Windows
+
+Make sure you have conda installed on your system and available from the command line (you can use the conda version that comes with Conda.jl or install your own).
+
+Activate the conda environment into which you want to install cmdstan (e.g. run `conda activate stan-env` from the command line) or create a new environment (`conda create --name stan-env`) and then activate it.
+
+Install cmdstan into the active conda environment by running `conda install -c conda-forge cmdstan`.
+
+You can check that cmdstan, g++, and mingw32-make are installed properly by running `conda list cmdstan, g++ --version` and `mingw32-make --version`, respectively, from the activated conda environment.
+
+Start a Julia session from the conda environment in which cmdstan has been installed (this is necessary for the cmdstan installation and the tools to be found).
+
+Add the StanSample.jl package by running ] add StanSample from the REPL.
+
+Set the CMDSTAN environment variable so that Julia can find the cmdstan installation, e.g. from the Julia REPL do: ENV["CMDSTAN"] = "C:/Users/Jakob/.julia/conda/3/envs/stan-env/Library/bin/cmdstan" This needs to be set before you load the StanSample package by e.g. using it. You can add this line to your startup.jl file so that you don't have to run it again in every fresh Julia session.
+
 ## Versions
 
 ### Version 8.0.0
