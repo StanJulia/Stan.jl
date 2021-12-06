@@ -14,7 +14,7 @@
 
 [issues-url]: https://github.com/stanjulia/Stan.jl/issues
 
-[project-status-img]: https://img.shields.io/badge/lifecycle-wip-orange.svg
+[project-status-img]: https://img.shields.io/badge/lifecycle-stable-green.svg
 
 ## Purpose
 
