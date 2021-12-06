@@ -36,6 +36,8 @@ For more info on Stan, please go to <http://mc-stan.org>.
 
 ### Conda based installation walkthrough for running Stan from Julia on Windows
 
+Note: The conda way of installing also works on other platforms. See [also](https://mc-stan.org/docs/2_28/cmdstan-guide/index.html).
+
 Make sure you have conda installed on your system and available from the command line (you can use the conda version that comes with Conda.jl or install your own).
 
 Activate the conda environment into which you want to install cmdstan (e.g. run `conda activate stan-env` from the command line) or create a new environment (`conda create --name stan-env`) and then activate it.
