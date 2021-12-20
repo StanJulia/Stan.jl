@@ -37,6 +37,12 @@ The environment variable will take precedence and a warning will be printed if t
 
 The default value of num_threads in the SampleModel is 4.
 
+For CI testing using Github workflows, define an environment variable:
+```
+STAN_NUM_THREADS: "1"
+```
+int the Github CI.yml workflow.
+
 ### Conda based installation walkthrough for running Stan from Julia on Windows
 
 Note: The conda way of installing also works on other platforms. See [also](https://mc-stan.org/docs/2_28/cmdstan-guide/index.html).
