@@ -1,5 +1,3 @@
-#Pkg.instantiate()
-
 using Distributed, StanSample, CSV, DataFrames
 Pkg.instantiate()
 
@@ -106,6 +104,13 @@ for i in 1:1
   end
 end
 
+println("Timing of logitic_1 (num_threads=1, num_cpp_chains=4, num_chains=1):")
+@time rc_1 = stan_sample(logistic_1;
+  data, num_threads=1, num_cpp_chains=4, num_chains=1);
+dfs_2 = read_summary(logistic_1)
+dfs_2[8:9, [1,2,4,8,9,10]] |> display
+println()
+
 println("Timing of logitic_1 (num_threads=4, num_cpp_chains=4, num_chains=1):")
 @time rc_1 = stan_sample(logistic_1;
   data, num_threads=4, num_cpp_chains=4, num_chains=1);
@@ -113,9 +118,10 @@ dfs_2 = read_summary(logistic_1)
 dfs_2[8:9, [1,2,4,8,9,10]] |> display
 println()
 
-println("Timing of logitic_1 (num_threads=4, num_cpp_chains=2, num_chains=2):")
+println("Timing of logitic_1 (num_threads=8, num_cpp_chains=4, num_chains=1):")
 @time rc_1 = stan_sample(logistic_1;
   data, num_threads=4, num_cpp_chains=4, num_chains=1);
 dfs_2 = read_summary(logistic_1)
 dfs_2[8:9, [1,2,4,8,9,10]] |> display
 println()
+
