@@ -1,4 +1,4 @@
-Pkg.instantiate()
+#Pkg.instantiate()
 
 using Distributed, StanSample, CSV, DataFrames
 Pkg.instantiate()
@@ -65,7 +65,7 @@ else
   tmp0 = joinpath(ProjDir, "tmp0")
 end;
 
-logistic_0 = SampleModel("logistic0", stan_logistic_0, [1]; tmpdir=tmp0)
+logistic_0 = SampleModel("logistic0", stan_logistic_0, tmp0)
 
 #isdir("tmp1") && rm("tmp1", recursive=true);
 if !isdir("tmp1")
@@ -74,7 +74,7 @@ else
   tmp1 = joinpath(ProjDir, "tmp1")
 end;
 
-logistic_1 = SampleModel("logistic1", stan_logistic_1; tmpdir=tmp1)
+logistic_1 = SampleModel("logistic1", stan_logistic_1, tmp1)
 
 data = Dict(
     :N => size(rcd, 1),
@@ -86,15 +86,17 @@ data = Dict(
 
 for i in 1:1
   #addprocs(1)
-  println("\nUsing $(nprocs()) cores.\n")
+  println("\nUsing $(Threads.nthreads()) threads.\n")
   @time rc_0 = stan_sample(logistic_0; data);
 
   if success(rc_0)
       dfs_0 = read_summary(logistic_0)
+      println("Timing of logitic_0:")
       dfs_0[8:9, [1,2,4,8,9,10]] |> display
       println()
   end
 
+  println("Timing of logitic_1:")
   @time rc_1 = stan_sample(logistic_1; data);
 
   if success(rc_1)
@@ -103,3 +105,17 @@ for i in 1:1
       println()
   end
 end
+
+println("Timing of logitic_1 (num_threads=4, num_cpp_chains=4, num_chains=1):")
+@time rc_1 = stan_sample(logistic_1;
+  data, num_threads=4, num_cpp_chains=4, num_chains=1);
+dfs_2 = read_summary(logistic_1)
+dfs_2[8:9, [1,2,4,8,9,10]] |> display
+println()
+
+println("Timing of logitic_1 (num_threads=4, num_cpp_chains=2, num_chains=2):")
+@time rc_1 = stan_sample(logistic_1;
+  data, num_threads=4, num_cpp_chains=4, num_chains=1);
+dfs_2 = read_summary(logistic_1)
+dfs_2[8:9, [1,2,4,8,9,10]] |> display
+println()

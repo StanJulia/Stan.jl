@@ -1,0 +1,46 @@
+# stan_version_major = 2
+# stan_version_minor = 28
+# stan_version_patch = 2
+# model = logistic1_model
+# start_datetime = 2021-12-27 20:18:59 UTC
+# method = sample (Default)
+#   sample
+#     num_samples = 1000 (Default)
+#     num_warmup = 1000 (Default)
+#     save_warmup = 0 (Default)
+#     thin = 1 (Default)
+#     adapt
+#       engaged = 1 (Default)
+#       gamma = 0.050000000000000003 (Default)
+#       delta = 0.80000000000000004 (Default)
+#       kappa = 0.75 (Default)
+#       t0 = 10 (Default)
+#       init_buffer = 75 (Default)
+#       term_buffer = 75
+#       window = 25 (Default)
+#     algorithm = hmc (Default)
+#       hmc
+#         engine = nuts (Default)
+#           nuts
+#             max_depth = 10 (Default)
+#         metric = diag_e (Default)
+#         metric_file =  (Default)
+#         stepsize = 1 (Default)
+#         stepsize_jitter = 0 (Default)
+#     num_chains = 4
+# id = 1 (Default)
+# data
+#   file = /Users/rob/.julia/dev/Stan/Examples/RedCardsStudy/tmp1/logistic1_data_1.R
+# init = 2 (Default)
+# random
+#   seed = 78996673 (Default)
+# output
+#   file = /Users/rob/.julia/dev/Stan/Examples/RedCardsStudy/tmp1/logistic1_chain_1.csv
+#   diagnostic_file =  (Default)
+#   refresh = 100 (Default)
+#   sig_figs = -1 (Default)
+#   profile_file = profile.csv (Default)
+# num_threads = 1 (Default)
+# stanc_version = stanc3 59e2660
+# stancflags = 
+lp__,accept_stat__,stepsize__,treedepth__,n_leapfrog__,divergent__,energy__,beta.1,beta.2
