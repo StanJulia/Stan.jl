@@ -1,5 +1,4 @@
-using Distributed, StanSample, CSV, DataFrames
-Pkg.instantiate()
+using Distributed, StanSample, CSV, DataFrames, StatsPlots
 
 ProjDir = @__DIR__
 
@@ -100,7 +99,7 @@ for k = 1:4
     res[i] = @elapsed stan_sample(logistic_0; 
       data, num_threads=i, num_cpp_chains=1, num_chains=k);
   end
-  df[!, "log_0, $k chns"] = res
+  df[!, "log_0, $k julia"] = res
   df |> display
 end
 for k = 1:4
@@ -109,8 +108,31 @@ for k = 1:4
     res[i] = @elapsed stan_sample(logistic_1; 
       data, num_threads=i, num_cpp_chains=1, num_chains=k);
   end
-  df[!, "log_1, $k chns"] = res
+  df[!, "log_1, $k julia"] = res
   df |> display
+for k = 1:4
+  res = zeros(9);
+  for i in 1:9
+    res[i] = @elapsed stan_sample(logistic_1; 
+      data, num_threads=i, num_cpp_chains=k, num_chains=1);
+  end
+  df[!, "log_1, $k c++"] = res
 end
 
-CSV.write(joinpath(ProjDir, "arm.csv"), df)
+#CSV.write(joinpath(ProjDir, "arm.csv"), df)
+#CSV.write(joinpath(ProjDir, "intel.csv"), df)
+
+arm = CSV.read(joinpath(ProjDir, "arm.csv"), DataFrame)
+intel = CSV.read(joinpath(ProjDir, "intel.csv"), DataFrame)
+
+fig1 = plot(; title="M1/ARM results", ylims=(0, 140))
+for name in names(df)
+  plot!(arm[:, name[1:8]], marker="o", lab=name)
+end
+fig2 = plot(; title="Intel results", ylims=(0, 140))
+for name in names(df)
+  plot!(intel[:, name[1:8]], marker=:xcross, lab=name)
+end
+plot(fig1, fig2, layout=(1, 2))
+
+savefig(joinpath(ProjDir, "rcd_perf_plots.png"))
