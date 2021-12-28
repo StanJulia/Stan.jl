@@ -93,11 +93,6 @@ if success(rc_1)
     println()
 end
 
-println("Timing of logitic_0:")
-for i in 1:9
-  @time stan_sample(logistic_0; data, num_threads=i, num_cpp_chains=1, num_chains=1);
-end
-
 df = DataFrame()
 for k = 1:4
   res = zeros(9);
@@ -118,3 +113,4 @@ for k = 1:4
   df |> display
 end
 
+CSV.write(joinpath(ProjDir, "arm.csv"), df)
