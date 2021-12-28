@@ -2,7 +2,6 @@ using Distributed, StanSample, CSV, DataFrames
 Pkg.instantiate()
 
 ProjDir = @__DIR__
-cd(ProjDir)
 
 rcd = CSV.read(joinpath(ProjDir, "RedCardData.csv"), DataFrame; missingstring = "NA")
 rcd = dropmissing(rcd, :rater1)
@@ -56,23 +55,15 @@ model {
 }
 ";
 
-#isdir("tmp0") && rm("tmp0", recursive=true);
-if !isdir("tmp0")
-  tmp0 = mkdir(joinpath(ProjDir, "tmp0"))
+isdir("tmp") && rm("tmp", recursive=true);
+if !isdir("tmp")
+  tmp = mkdir(joinpath(ProjDir, "tmp"))
 else
-  tmp0 = joinpath(ProjDir, "tmp0")
+  tmp = joinpath(ProjDir, "tmp")
 end;
 
-logistic_0 = SampleModel("logistic0", stan_logistic_0, tmp0)
-
-#isdir("tmp1") && rm("tmp1", recursive=true);
-if !isdir("tmp1")
-  tmp1 = mkdir(joinpath(ProjDir, "tmp1"))
-else
-  tmp1 = joinpath(ProjDir, "tmp1")
-end;
-
-logistic_1 = SampleModel("logistic1", stan_logistic_1, tmp1)
+logistic_0 = SampleModel("logistic0", stan_logistic_0, tmp)
+logistic_1 = SampleModel("logistic1", stan_logistic_1, tmp)
 
 data = Dict(
     :N => size(rcd, 1),
@@ -82,46 +73,48 @@ data = Dict(
     :rating => rcd.rater1
 )
 
-for i in 1:1
-  #addprocs(1)
-  println("\nUsing $(Threads.nthreads()) threads.\n")
-  @time rc_0 = stan_sample(logistic_0; data);
+println("\nUsing $(Threads.nthreads()) threads.\n")
 
-  if success(rc_0)
-      dfs_0 = read_summary(logistic_0)
-      println("Timing of logitic_0:")
-      dfs_0[8:9, [1,2,4,8,9,10]] |> display
-      println()
-  end
+println("Timing of logitic_0 (4 Julia chains):")
+@time rc_0 = stan_sample(logistic_0; data);
 
-  println("Timing of logitic_1:")
-  @time rc_1 = stan_sample(logistic_1; data);
-
-  if success(rc_1)
-      dfs_1 = read_summary(logistic_1)
-      dfs_1[8:9, [1,2,4,8,9,10]] |> display
-      println()
-  end
+if success(rc_0)
+    dfs_0 = read_summary(logistic_0)
+    dfs_0[8:9, [1,2,4,8,9,10]] |> display
+    println()
 end
 
-println("Timing of logitic_1 (num_threads=1, num_cpp_chains=4, num_chains=1):")
-@time rc_1 = stan_sample(logistic_1;
-  data, num_threads=1, num_cpp_chains=4, num_chains=1);
-dfs_2 = read_summary(logistic_1)
-dfs_2[8:9, [1,2,4,8,9,10]] |> display
-println()
+println("Timing of logitic_1 (4 Julia chains):")
+@time rc_1 = stan_sample(logistic_1; data);
 
-println("Timing of logitic_1 (num_threads=4, num_cpp_chains=4, num_chains=1):")
-@time rc_1 = stan_sample(logistic_1;
-  data, num_threads=4, num_cpp_chains=4, num_chains=1);
-dfs_2 = read_summary(logistic_1)
-dfs_2[8:9, [1,2,4,8,9,10]] |> display
-println()
+if success(rc_1)
+    dfs_1 = read_summary(logistic_1)
+    dfs_1[8:9, [1,2,4,8,9,10]] |> display
+    println()
+end
 
-println("Timing of logitic_1 (num_threads=8, num_cpp_chains=4, num_chains=1):")
-@time rc_1 = stan_sample(logistic_1;
-  data, num_threads=4, num_cpp_chains=4, num_chains=1);
-dfs_2 = read_summary(logistic_1)
-dfs_2[8:9, [1,2,4,8,9,10]] |> display
-println()
+println("Timing of logitic_0:")
+for i in 1:9
+  @time stan_sample(logistic_0; data, num_threads=i, num_cpp_chains=1, num_chains=1);
+end
+
+df = DataFrame()
+for k = 1:4
+  res = zeros(9);
+  for i in 1:9
+    res[i] = @elapsed stan_sample(logistic_0; 
+      data, num_threads=i, num_cpp_chains=1, num_chains=k);
+  end
+  df[!, "log_0, $k chns"] = res
+  df |> display
+end
+for k = 1:4
+  res = zeros(9);
+  for i in 1:9
+    res[i] = @elapsed stan_sample(logistic_1; 
+      data, num_threads=i, num_cpp_chains=1, num_chains=k);
+  end
+  df[!, "log_1, $k chns"] = res
+  df |> display
+end
 
