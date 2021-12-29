@@ -93,18 +93,18 @@ if success(rc_1)
 end
 
 log_0_df = DataFrame()
-for k = 1:2:5
-  res = zeros(length(1:4:9));
-  for i in 1:4:9
+for k = 1:4
+  res = zeros(9);
+  for i in 1:9
     res[i] = @elapsed stan_sample(logistic_0; 
       data, num_threads=i, num_cpp_chains=1, num_chains=k);
   end
   log_0_df[!, "1_$(k)"] = res
   log_0_df |> display
 end
-for k = 1:2:5
-  res = zeros(length(1:2:9));
-  for i in 1:2:9
+for k = 1:4
+  res = zeros(9);
+  for i in 1:9
     res[i] = @elapsed stan_sample(logistic_0; 
       data, num_threads=i, num_cpp_chains=k, num_chains=1);
   end
@@ -135,7 +135,7 @@ log_1_df = DataFrame()
 for k = 1:4
   res = zeros(9);
   for i in 1:9
-    res[i] = @elapsed stan_sample(logistic_0; 
+    res[i] = @elapsed stan_sample(logistic_1; 
       data, num_threads=i, num_cpp_chains=1, num_chains=k);
   end
   log_1_df[!, "1_$(k)"] = res
@@ -148,6 +148,7 @@ for k = 1:4
       data, num_threads=i, num_cpp_chains=k, num_chains=1);
   end
   log_1_df[!, "_$(k)_1"] = res
+  log_1_df |> display
 end
 
 CSV.write(joinpath(ProjDir, "arm_log_1.csv"), log_1_df)
