@@ -110,6 +110,7 @@ for k = 1:4
   end
   df[!, "log_1, $k julia"] = res
   df |> display
+end
 for k = 1:4
   res = zeros(9);
   for i in 1:9
@@ -126,11 +127,11 @@ arm = CSV.read(joinpath(ProjDir, "arm.csv"), DataFrame)
 intel = CSV.read(joinpath(ProjDir, "intel.csv"), DataFrame)
 
 fig1 = plot(; title="M1/ARM results", ylims=(0, 140))
-for name in names(df)
+for name in names(arm)
   plot!(arm[:, name[1:8]], marker="o", lab=name)
 end
 fig2 = plot(; title="Intel results", ylims=(0, 140))
-for name in names(df)
+for name in names(intel)
   plot!(intel[:, name[1:8]], marker=:xcross, lab=name)
 end
 plot(fig1, fig2, layout=(1, 2))
