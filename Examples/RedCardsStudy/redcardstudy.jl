@@ -119,12 +119,12 @@ arm_log_0 = CSV.read(joinpath(ProjDir, "arm_log_0.csv"), DataFrame)
 #intel_log_0 = CSV.read(joinpath(ProjDir, "intel_log_0.csv"), DataFrame)
 
 fig1 = plot(; title="M1/ARM log_0 results", ylims=(0, 140))
-for name in names(arm_log_0)[1:8]
+for name in names(arm_log_0)
   plot!(arm_log_0[:, name], marker=:dot, lab=name)
 end
 #=
 fig2 = plot(; title="Intel log_0 results", ylims=(0, 140))
-for name in names(intel_log_0)[1:8]
+for name in names(intel_log_0)
   plot!(intel_log_0[:, name], marker=:xcross, lab=name)
 end
 plot(fig1, fig2, layout=(1, 2))
@@ -157,12 +157,12 @@ arm_log_1 = CSV.read(joinpath(ProjDir, "arm_log_1.csv"), DataFrame)
 #intel_log_1 = CSV.read(joinpath(ProjDir, "intel_log_1.csv"), DataFrame)
 
 fig1 = plot(; title="M1/ARM log_1 results", ylims=(0, 140))
-for name in names(arm_log_1)[1:8]
+for name in names(arm_log_1)
   plot!(arm_log_1[:, name], marker=:dot, lab=name)
 end
 #=
 fig2 = plot(; title="Intel log_1 results", ylims=(0, 140))
-for name in names(intel_log_1)[1:8]
+for name in names(intel_log_1)
   plot!(intel_log_1[:, name], marker=:xcross, lab=name)
 end
 plot(fig1, fig2, layout=(1, 2))
