@@ -54,7 +54,7 @@ model {
 }
 ";
 
-isdir("tmp") && rm("tmp", recursive=true);
+isdir(joinpath(ProjDir, "tmp")) && rm(joinpath(ProjDir, "tmp"), recursive=true);
 if !isdir("tmp")
   tmp = mkdir(joinpath(ProjDir, "tmp"))
 else
@@ -92,24 +92,54 @@ if success(rc_1)
     println()
 end
 
-df = DataFrame()
+log_0_df = DataFrame()
+for k = 1:2:5
+  res = zeros(length(1:4:9));
+  for i in 1:4:9
+    res[i] = @elapsed stan_sample(logistic_0; 
+      data, num_threads=i, num_cpp_chains=1, num_chains=k);
+  end
+  log_0_df[!, "1_$(k)"] = res
+  log_0_df |> display
+end
+for k = 1:2:5
+  res = zeros(length(1:2:9));
+  for i in 1:2:9
+    res[i] = @elapsed stan_sample(logistic_0; 
+      data, num_threads=i, num_cpp_chains=k, num_chains=1);
+  end
+  log_0_df[!, "_$(k)_1"] = res
+  log_0_df |> display
+end
+
+CSV.write(joinpath(ProjDir, "arm_log_0.csv"), log_0_df)
+#CSV.write(joinpath(ProjDir, "intel_log_0.csv"), log_0_df)
+
+arm_log_0 = CSV.read(joinpath(ProjDir, "arm_log_0.csv"), DataFrame)
+#intel_log_0 = CSV.read(joinpath(ProjDir, "intel_log_0.csv"), DataFrame)
+
+fig1 = plot(; title="M1/ARM log_0 results", ylims=(0, 140))
+for name in names(arm_log_0)[1:8]
+  plot!(arm_log_0[:, name], marker=:dot, lab=name)
+end
+#=
+fig2 = plot(; title="Intel log_0 results", ylims=(0, 140))
+for name in names(intel_log_0)[1:8]
+  plot!(intel_log_0[:, name], marker=:xcross, lab=name)
+end
+plot(fig1, fig2, layout=(1, 2))
+=#
+savefig(joinpath(ProjDir, "rcd_log_0.png"))
+
+log_1_df = DataFrame()
 for k = 1:4
   res = zeros(9);
   for i in 1:9
     res[i] = @elapsed stan_sample(logistic_0; 
       data, num_threads=i, num_cpp_chains=1, num_chains=k);
   end
-  df[!, "log_0, $k julia"] = res
-  df |> display
-end
-for k = 1:4
-  res = zeros(9);
-  for i in 1:9
-    res[i] = @elapsed stan_sample(logistic_1; 
-      data, num_threads=i, num_cpp_chains=1, num_chains=k);
-  end
-  df[!, "log_1, $k julia"] = res
-  df |> display
+  log_1_df[!, "1_$(k)"] = res
+  log_1_df |> display
 end
 for k = 1:4
   res = zeros(9);
@@ -117,23 +147,26 @@ for k = 1:4
     res[i] = @elapsed stan_sample(logistic_1; 
       data, num_threads=i, num_cpp_chains=k, num_chains=1);
   end
-  df[!, "log_1, $k c++"] = res
+  log_1_df[!, "_$(k)_1"] = res
 end
 
-#CSV.write(joinpath(ProjDir, "arm.csv"), df)
-#CSV.write(joinpath(ProjDir, "intel.csv"), df)
+CSV.write(joinpath(ProjDir, "arm_log_1.csv"), log_1_df)
+#CSV.write(joinpath(ProjDir, "intel_log_1.csv"), log_1_df)
 
-arm = CSV.read(joinpath(ProjDir, "arm.csv"), DataFrame)
-intel = CSV.read(joinpath(ProjDir, "intel.csv"), DataFrame)
+arm_log_1 = CSV.read(joinpath(ProjDir, "arm_log_1.csv"), DataFrame)
+#intel_log_1 = CSV.read(joinpath(ProjDir, "intel_log_1.csv"), DataFrame)
 
-fig1 = plot(; title="M1/ARM results", ylims=(0, 140))
-for name in names(arm)
-  plot!(arm[:, name[1:8]], marker="o", lab=name)
+fig1 = plot(; title="M1/ARM log_1 results", ylims=(0, 140))
+for name in names(arm_log_1)[1:8]
+  plot!(arm_log_1[:, name], marker=:dot, lab=name)
 end
-fig2 = plot(; title="Intel results", ylims=(0, 140))
-for name in names(intel)
-  plot!(intel[:, name[1:8]], marker=:xcross, lab=name)
+#=
+fig2 = plot(; title="Intel log_1 results", ylims=(0, 140))
+for name in names(intel_log_1)[1:8]
+  plot!(intel_log_1[:, name], marker=:xcross, lab=name)
 end
 plot(fig1, fig2, layout=(1, 2))
+=#
+savefig(joinpath(ProjDir, "rcd_log_1.png"))
 
-savefig(joinpath(ProjDir, "rcd_perf_plots.png"))
+
