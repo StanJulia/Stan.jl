@@ -5,7 +5,7 @@ function timings_check!(df::DataFrame, model::SampleModel; N = 6, upper=0.25)
             println("\n\nFixing row=$row: $(df[row, :])")
 
             #
-            dft = timings(model.
+            dft = timings(model,
                 [df[row, :].num_threads], [df[row, :].num_cpp_chains], 
                 [df[row, :].num_chains], N)
             #
@@ -40,7 +40,7 @@ function fix_row!(df::DataFrame, model, row)
 end
 
 #=
-for i in 1:3
+for i in 6:6
     fix_row!(df, model, i)
 end
 =#

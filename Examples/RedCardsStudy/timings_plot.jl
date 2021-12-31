@@ -1,62 +1,48 @@
-using DataFrames, CSV, Plots, StatsPlots
+using DataFrames, CSV, StatsPlots
 
 ProjDir = @__DIR__
 
 nts = [1, 2, 4, 8]
 N = 6
 
-arm_no_tbb = CSV.read(joinpath(ProjDir, "results", "arm_no_tbb.csv"), DataFrame)
-intel_tbb = CSV.read(joinpath(ProjDir, "results", "intel_tbb.csv"), DataFrame)
-
-#arm_no_tbb |> display
-#intel_tbb |> display
+arm_log_0 = CSV.read(joinpath(ProjDir, "results", "arm_log_0_df.csv"), DataFrame)
+arm_log_1 = CSV.read(joinpath(ProjDir, "results", "arm_log_1_df.csv"), DataFrame)
+intel_tbb_log_0 = CSV.read(joinpath(ProjDir, "results", "intel_tbb_log_0_df.csv"), DataFrame)
+intel_tbb_log_1 = CSV.read(joinpath(ProjDir, "results", "intel_tbb_log_1_df.csv"), DataFrame)
 
 # Sort on (:num_threads,:num_chains0 instead on (:num_threads, :num_cpp_chains)
-#sort(intel_tbb, [:num_threads, :num_chains])
+#sort(arm_log_1, [:num_threads, :num_chains])
 
-function timings_plot(arm::DataFrame, intel::DataFrame; ts = [1, 8])
-    ptype = ["arm", "intel"]
+function timings_plot(df::DataFrame; model = "1", ylim=(0, 100))
     colors = [:darkred, :darkblue, :darkgreen, :black]
-    fig = plot(; xlim=(0, 9), ylim=(0, 100),
-        xlab="chains (Julia or c++)", ylab="elapsed time [s]")
-    for (indx, df) in enumerate([arm, intel])
-        for t in ts[1]
-            dft = df[df.num_threads .== t .&& df.num_cpp_chains .== 1, :]
-            #println(dft)
-            marksym = :cross
-            plot!(dft.num_chains, dft.median; 
-                marker=marksym, lab="$(ptype[indx])_julia", color=colors[indx])
-        end
-        for t in ts[2]
-            dft = df[df.num_threads .== t .&& df.num_chains .== 1, :]
-            #println(dft)
-            marksym = :xcross
-            plot!(dft.num_cpp_chains, dft.median; 
-                marker=marksym, lab="$(ptype[indx])_c++", color=:grey)
-        end
-    end
-    title!("Julia & c++\n(8 threads)")
-    fig
-end
-
-f1 = timings_plot(arm_no_tbb, intel_tbb)
-
-function threads_plot(df::DataFrame; ts = [1, 2, 4, 8])
-    colors = [:darkred, :darkblue, :darkgreen, :black]
-    fig = plot(; xlim=(0, 9), ylim=(0, 100),
-        xlab="num_c++_chains", ylab="elapsed time [s]", leg=:topleft)
-    for (indx, t) in enumerate(ts)
-        dft = df[df.num_threads .== t .&& df.num_chains .== 1, :]
-        #println(dft)
+    fig1 = plot(; xlim=(0, 9), ylim=ylim,
+    xlab="c++ num_threads", ylab="elapsed time [s]")
+    for (indx, i) in enumerate([1, 2, 4])
+        dft = df[df.num_cpp_chains .== 1 .&& df.num_chains .== i, :]
+        println(dft)
         marksym = :cross
-        plot!(dft.num_cpp_chains, dft.median; 
-            marker=marksym, lab="threads = $(t)", color=colors[indx])
+        plot!(dft.num_threads, dft.median; 
+            marker=marksym, lab="$(i) num_chains")
+        title!("Log_$(model) Julia\n(4 Julia threads)")
     end
-    title!("TBB & c++\n(8 core Intel)")
-    fig
+    fig2 = plot(; xlim=(0, 9), ylim=ylim,
+    xlab="c++ num_threads", ylab="elapsed time [s]")
+    for (indx, i) in enumerate([1, 2, 4])
+        dft = df[df.num_chains .== 1 .&& df.num_cpp_chains .== i, :]
+        println(dft)
+        marksym = :cross
+        plot!(dft.num_threads, dft.median; 
+            marker=marksym, lab="$(i) num_cpp_chains")
+        title!("Log_$(model) C++\n(4 Julia threads)")
+    end
+    plot(fig1, fig2, layout=(1, 2))
 end
 
-f2 = threads_plot(intel_tbb)
-
-fig = plot(f1, f2; layout=(1, 2))
-savefig(joinpath(ProjDir, "graphs", "performance.png"))
+f0 = timings_plot(arm_log_0; model="0", ylim=(0, 250))
+savefig(joinpath(ProjDir, "graphs", "arm_log_0.png"))
+f1 = timings_plot(arm_log_1)
+savefig(joinpath(ProjDir, "graphs", "arm_log_1.png"))
+f3 = timings_plot(intel_tbb_log_0; model="0", ylim=(0, 250))
+savefig(joinpath(ProjDir, "graphs", "intel_tbb_log_0.png"))
+f4 = timings_plot(intel_tbb_log_1; ylim=(0, 250))
+savefig(joinpath(ProjDir, "graphs", "intel_tbb_log_1.png"))
