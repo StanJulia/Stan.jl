@@ -72,10 +72,10 @@ data = Dict(
     :rating => rcd.rater1
 )
 
-println("\nUsing $(Threads.nthreads()) threads.\n")
+println("\nUsing $(Threads.nthreads()) Julia threads.\n")
 
-println("Timing of logitic_0 (4 Julia chains):")
-@time rc_0 = stan_sample(logistic_0; data);
+println("Timing of logitic_0 (4 Julia chains, 8 num_threads):")
+@time rc_0 = stan_sample(logistic_0; data, num_threads=8);
 
 if success(rc_0)
     dfs_0 = read_summary(logistic_0)
@@ -83,11 +83,14 @@ if success(rc_0)
     println()
 end
 
-println("Timing of logitic_1 (4 Julia chains):")
-@time rc_1 = stan_sample(logistic_1; data);
+println("Timing of logitic_1 (4 Julia chains 8 num_threads):")
+@time rc_1 = stan_sample(logistic_1; data, num_threads=8);
 
 if success(rc_1)
     dfs_1 = read_summary(logistic_1)
     dfs_1[8:9, [1,2,4,8,9,10]] |> display
     println()
 end
+
+println("Timing of logitic_1 (4 Julia chains, 8 num_threads):")
+@time rc_2 = stan_sample(logistic_1; data, num_threads=16);
