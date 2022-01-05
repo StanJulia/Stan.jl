@@ -83,7 +83,7 @@ if success(rc_0)
     println()
 end
 
-println("Timing of logitic_1 (4 Julia chains 8 num_threads):")
+println("Timing of logitic_1 (4 Julia chains, 8 num_threads):")
 @time rc_1 = stan_sample(logistic_1; data, num_threads=8);
 
 if success(rc_1)
@@ -92,5 +92,5 @@ if success(rc_1)
     println()
 end
 
-println("Timing of logitic_1 (4 Julia chains, 8 num_threads):")
+println("Timing of logitic_1 (4 Julia chains, 16 num_threads):")
 @time rc_2 = stan_sample(logistic_1; data, num_threads=16);
