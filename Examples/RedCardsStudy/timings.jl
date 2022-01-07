@@ -47,7 +47,6 @@ nts = [1, 4, 7, 9]
 ncs = [1, 2, 4]
 N = 2
 
-
 model = logistic_0
 arm_log_0_df = timings(model, nts, ncs; N)
 arm_log_0_df |> display

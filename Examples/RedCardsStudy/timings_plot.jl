@@ -6,7 +6,6 @@ arm_log_0 = CSV.read(joinpath(ProjDir, "results", "arm_log_0_df.csv"), DataFrame
 arm_log_1 = CSV.read(joinpath(ProjDir, "results", "arm_log_1_df.csv"), DataFrame)
 intel_log_0 = CSV.read(joinpath(ProjDir, "results", "intel_log_0_df.csv"), DataFrame)
 intel_log_1 = CSV.read(joinpath(ProjDir, "results", "intel_log_1_df.csv"), DataFrame)
-intel_log_1_1 = CSV.read(joinpath(ProjDir, "results", "intel_log_1_1_df.csv"), DataFrame)
 intel_tbb_log_0 = CSV.read(joinpath(ProjDir, "results", "intel_tbb_log_0_df.csv"), DataFrame)
 intel_tbb_log_1 = CSV.read(joinpath(ProjDir, "results", "intel_tbb_log_1_df.csv"), DataFrame)
 
@@ -38,7 +37,7 @@ function timings_plot(df::DataFrame; model = "1", ylim=(0, 250))
     plot(fig1, fig2, layout=(1, 2))
 end
 
-f0 = timings_plot(arm_log_0; model="0", ylim=(0, 300))
+f0 = timings_plot(arm_log_0; model="0")
 savefig(joinpath(ProjDir, "graphs", "arm_log_0.png"))
 f1 = timings_plot(arm_log_1)
 savefig(joinpath(ProjDir, "graphs", "arm_log_1.png"))
@@ -48,6 +47,6 @@ f4 = timings_plot(intel_tbb_log_1)
 savefig(joinpath(ProjDir, "graphs", "intel_tbb_log_1.png"))
 f5 = timings_plot(intel_log_0; model="0", ylim=(0, 300))
 savefig(joinpath(ProjDir, "graphs", "intel_log_0.png"))
-f6 = timings_plot(intel_log_0; ylim=(0, 300))
+f6 = timings_plot(intel_log_1; ylim=(0, 300))
 savefig(joinpath(ProjDir, "graphs", "intel_log_1.png"))
 
