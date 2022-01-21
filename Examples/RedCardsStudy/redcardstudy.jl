@@ -1,8 +1,10 @@
-using StanSample, CSV, DataFrames, StatsPlots
+using CSV, DataFrames, StatsPlots
+using StanSample
 
 ProjDir = @__DIR__
 
-rcd = CSV.read(joinpath(ProjDir, "RedCardData.csv"), DataFrame; missingstring = "NA")
+rcd = CSV.read(joinpath(ProjDir, "RedCardData.csv"), DataFrame;
+  missingstring = "NA")
 rcd = dropmissing(rcd, :rater1)
 rcd[!, :rater1] = Float64.(rcd.rater1)
 

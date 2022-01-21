@@ -13,23 +13,26 @@ examples = [
   "../Examples/Binomial/binomial.jl",
   "../Examples/Binormal/binormal.jl",
   
-  #"../Examples/Chimpanzees/chimpanzees.jl",
+  "../Examples/Chimpanzees/chimpanzees.jl",
   "../Examples/Chimpanzees/chimpanzees_keyedarray.jl",
 
   "../Examples/Diagnose/diagnose.jl",
   "../Examples/Dyes/dyes.jl",
   "../Examples/EightSchools/schools8.jl",
 
-  "../Examples/RedCardsStudy/redcardstudy.jl",
+  #"../Examples/RedCardsStudy/redcardstudy.jl",
 
   "../Examples/WaffleDivorce/waffle_divorce_keyedarray.jl",
 
   "../Examples/Walkthrough/walkthrough2.jl",
 
-  "../Examples_Stan_Methods/Diagnose/diagnose.jl",
-  "../Examples_Stan_Methods/Optimize/optimize.jl",
-  "../Examples_Stan_Methods/Variational/variational.jl",
-  "../Examples_Stan_Methods/StanQuap/howell1.jl",
+  "../Examples_Stan_Methods/Diagnose/bernoulli_diagnose.jl",
+  "../Examples_Stan_Methods/Optimize/bernoulli_optimize.jl",
+  "../Examples_Stan_Methods/Generate_Quantities/generate_quantities.jl",
+  "../Examples_Stan_Methods/Parse_and_Interpolate/parse.jl",
+
+  #"../Examples/Variational/variational.jl",
+  "../Examples/StanQuap/howell1.jl",
 
   "../Examples_Test_Cases/Diagnostics/diagnostics.jl",
   "../Examples_Test_Cases/InitThetaDict/init_dict.jl",
@@ -37,9 +40,6 @@ examples = [
   "../Examples_Test_Cases/InitThetaFile/init_file.jl",
   "../Examples_Test_Cases/ScalarObs/scalar.jl",
   "../Examples_Test_Cases/ZeroLengthArray/zerolengtharray.jl",
-
-  "../Examples_Stan_Methods/Generate_Quantities/generate_quantities.jl",
-  "../Examples_Stan_Methods/Parse_and_Interpolate/parse.jl",
 
   "Examples/ARM/Ch03/Kid/kidscore.jl",
   "Examples/Bernoulli/bernoulli.jl",

@@ -38,16 +38,6 @@ if success(rc)
   first(df, 5)
   println()
   
-  # Check if StatsPlots is available and show basic MCMCChains plots
-  if isdefined(Main, :StatsPlots)
-    cd(@__DIR__) do
-      p1 = plot(chns)
-      savefig(p1, joinpath(tmpdir, "traceplot.pdf"))
-      p2 = pooleddensity(chns)
-      savefig(p2, joinpath(tmpdir, "pooleddensity.pdf"))
-    end
-  end
-  
   df = read_summary(sm)
   df[df.parameters .== :theta, [:mean, :ess]]
 end

@@ -54,18 +54,6 @@ if success(rc6_1s)
     axiskeys(chns) |> display
     println("\n")
 
-    chns(chain=1) |> display
-    println()
-
-    chns[:, 1, 1] |> display
-    println()
-
-    chns(chain=1, param=:a) |> display
-    println()
-
-    chns(chain=[1, 3], param=[:a, :sigma]) |> display
-    println()
-
     # Select all elements starting with 'a'
 
     chns_b = matrix(chns, :b)
