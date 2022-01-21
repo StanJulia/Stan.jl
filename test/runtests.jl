@@ -29,7 +29,7 @@ examples = [
   "../Examples_Stan_Methods/Diagnose/bernoulli_diagnose.jl",
   "../Examples_Stan_Methods/Optimize/bernoulli_optimize.jl",
   "../Examples_Stan_Methods/Generate_Quantities/generate_quantities.jl",
-  "../Examples_Stan_Methods/Parse_and_Interpolate/parse.jl",
+  "../Examples_Stan_Methods/Parse_and_Interpolate/example.jl",
 
   #"../Examples/Variational/variational.jl",
   "../Examples/StanQuap/howell1.jl",
