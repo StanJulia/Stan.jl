@@ -31,7 +31,7 @@ examples = [
 
   "../Examples_Stan_Methods/Parse_and_Interpolate/parse.jl",
 
-  "../Examples_Stan_Methods/Variational/variational.jl",
+  #"../Examples_Stan_Methods/Variational/variational.jl",
   "../Examples_Stan_Methods/StanQuap/howell1.jl",
 
   "../Examples_Test_Cases/Diagnostics/diagnostics.jl",
@@ -50,7 +50,7 @@ examples = [
 
   "Examples_Stan_Methods/Diagnose/diagnose.jl",
   "Examples_Stan_Methods/Optimize/optimize.jl",
-  "Examples_Stan_Methods/Variational/variational.jl",
+  #"Examples_Stan_Methods/Variational/variational.jl",
   "Examples_Stan_Methods/StanQuap/howell1.jl",
 
   "Examples_Test_Cases/Diagnostics/diagnostics.jl",
