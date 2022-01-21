@@ -23,24 +23,19 @@ observed_data = Dict("N" => 10, "y" => [0, 1, 0, 1, 0, 0, 0, 0, 0, 1])
 # To prevent recompilation of a Stan progam, choose a fixed location,
 tmpdir=mktempdir()
 
-sm = SampleModel("bernoulli", bernoullimodel,
-  tmpdir=tmpdir);
+sm = SampleModel("bernoulli", bernoullimodel, tmpdir);
 
 rc = stan_sample(sm, data=observed_data);
 
 if success(rc)
-  chns = read_samples(sm; output_format=:mcmcchains)
+  chns = read_samples(sm, :mcmcchains)
   
   # Describe the results
-  chns
+  chns |> display
   
   # Optionally, read samples as a a DataFrame
-  df=read_samples(sm, output_format=:dataframe)
+  df=read_samples(sm, :dataframe)
   first(df, 5)
-  println()
-  
-  # Look at effective sample saize
-  ess(chns) |> display
   println()
   
   # Check if StatsPlots is available and show basic MCMCChains plots

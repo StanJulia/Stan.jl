@@ -23,6 +23,6 @@ sm = SampleModel("bernoulli", bernoullimodel);
 rc = stan_sample(sm, data=bernoullidata);
 
 if success(rc)
-  chn = read_samples(sm; output_format=:mcmcchains)
-  show(chn)
+  chn = read_samples(sm, :mcmcchains)
+  chn |> display
 end

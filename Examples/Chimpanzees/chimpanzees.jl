@@ -1,6 +1,11 @@
 # A walk-through example (using StanSample.jl)
 
-using StanSample, Distributions
+using StanSample
+using Distributions
+using DataFrames
+using MonteCarloMeasurements
+using AxisKeys
+using Tables
 
 N = 100
 df = DataFrame(
@@ -37,17 +42,17 @@ data = (H = df.height, LL = df.leg_left, LR = df.leg_right, N = size(df, 1))
 rc6_1s = stan_sample(m6_1s; data);
 
 if success(rc6_1s)
-    chns = read_samples(m6_1s)
+    chns = read_samples(m6_1s, :keyedarray)
 
     # Display the chns
 
     chns |> display
-    println()
+    println("\n")
 
     # Display the keys
 
     axiskeys(chns) |> display
-    println()
+    println("\n")
 
     chns(chain=1) |> display
     println()
@@ -81,13 +86,15 @@ if success(rc6_1s)
         # ...
     end
 
+    # Obtain  b.1 , b,2 as a matrix
+
+    chns2 = read_samples(m6_1s, :table)
+    chns2_b = matrix(chns2, :b)
+
     # Or use read_samples to only use chains 2 and 4 using the chains kwarg.
 
-    chns2 = read_samples(m6_1s; chains=[2, 4])
-    chns2_b = matrix(chns2, :b)
-    ndraws2_b, nchains2_b, nparams2_b = size(chns2_b)
-    chn2_b = reshape(chns2_b, ndraws2_b*nchains2_b, nparams2_b)
-    mean(chns2_b, dims=1) |> display
+    chns2 = read_samples(m6_1s, :dataframe; chains=[2, 4])
+    mean.(eachcol(chns2)) |> display
 
 end
 

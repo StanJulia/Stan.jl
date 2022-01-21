@@ -1,9 +1,7 @@
-using CSV, DataFrames, Statistics
-using AxisKeys, MonteCarloMeasurements, DimensionalData
 using StatsBase, NamedTupleTools
-using StanSample
+using StanSample, CSV
 
-df = CSV.read(joinpath(@__DIR__, "..", "..", "..", "data", "WaffleDivorce.csv"), DataFrame);
+df = CSV.read(joinpath(@__DIR__, "..", "..", "data", "WaffleDivorce.csv"), DataFrame);
 df.D = zscore(df.Divorce)
 df.M = zscore(df.Marriage)
 df.A = zscore(df.MedianAgeMarriage)
@@ -46,9 +44,6 @@ if success(rc5_1s)
     nt5_1s = read_samples(m5_1s, :particles)
     NamedTupleTools.select(nt5_1s, (:a, :bA, :sigma)) |> display
 
-    ka_chns = read_samples(m5_1s, :keyedarray)
-    ka_chns |> display
-
-    da_chns = read_samples(m5_1s, :dimarray)
-    da_chns |> display
+    chns = read_samples(m5_1s)
+    chns |> display
 end

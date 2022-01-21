@@ -24,13 +24,12 @@ observed_data = Dict("N" => 10, "y" => [0, 1, 0, 1, 0, 0, 0, 0, 0, 1])
 # To prevent recompilation of a Stan progam, choose a fixed location,
 tmpdir= ProjDir * "/tmp"
 
-sm = SampleModel("bernoulli2", bernoullimodel,
-  method=StanSample.Sample(save_warmup=true, num_warmup=1000,
-  num_samples=1000, thin=1, adapt=StanSample.Adapt(delta=0.85)),
-  tmpdir=tmpdir
-);
+sm = SampleModel("bernoulli2", bernoullimodel, tmpdir);
 
-rc = stan_sample(sm, data=observed_data);
+rc = stan_sample(sm; data=observed_data,
+  save_warmup=true, num_warmups=1000,
+  num_samples=1000, thin=1, delta=0.85
+);
 
 if success(rc)
   df = read_summary(sm, true)

@@ -27,10 +27,6 @@ sm = SampleModel("binormal", binorm_model);
 rc = stan_sample(sm)
 
 if success(rc)
-  chn = read_samples(sm; output_format=:mcmcchains)
-  
-  # Update parameter names
-  chn = set_names(chn, Dict(["y.$i" => "y[$i]" for i in 1:2]))
-  
-  show(chn)
+  chn = read_samples(sm, :mcmcchains)
+  chn |> display
 end

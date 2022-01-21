@@ -32,7 +32,7 @@ schools8data = Dict("J" => 8,
 
 sm = SampleModel("schools8", eightschools)
 
-rc = stan_sample(sm, data=schools8data)
+rc = stan_sample(sm; data=schools8data)
 
 if success(rc)
   chns = read_samples(sm, :mcmcchains)

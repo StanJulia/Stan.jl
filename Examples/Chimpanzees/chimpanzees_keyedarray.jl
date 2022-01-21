@@ -1,6 +1,8 @@
 # Load Julia packages (libraries)
 
-using Pkg, DrWatson
+using CSV
+using AxisKeys, DataFrames
+using Statistics
 
 using StanSample
 
@@ -9,7 +11,7 @@ df = CSV.read(joinpath(@__DIR__, "..", "..", "data", "chimpanzees.csv"), DataFra
 # Define the Stan language model
 
 stan10_4 = "
-data{
+data {
     int N;
     int N_actors;
     int pulled_left[N];
@@ -45,7 +47,7 @@ m10_4s = SampleModel("m10.4s", stan10_4)
 rc10_4s = stan_sample(m10_4s; data);
 
 if success(rc10_4s)
-    chns = read_samples(m10_4s)
+    chns = read_samples(m10_4s, :keyedarray)
 
     # Display the chns
 
@@ -55,21 +57,6 @@ if success(rc10_4s)
     # Display the keys
 
     axiskeys(chns) |> display
-    println()
-
-    mean(chns_a, dims=1) |> display
-    println()
-
-    chns(chain=1) |> display
-    println()
-
-    chns[:, 1, 8] |> display
-    println()
-
-    chns(chain=1, param=:bp) |> display
-    println()
-
-    chns(chain=[1, 3], param=[:bp, :bpC]) |> display
     println()
 
     # Select all elements starting with 'a'
@@ -91,10 +78,8 @@ if success(rc10_4s)
 
     # Or use read_samples to only use chains 2 and 4 using the chains kwarg.
 
-    chns2 = read_samples(m10_4s; chains=[2, 4])
+    chns2 = read_samples(m10_4s; chains=[1, 4])
     chns2_a = matrix(chns2, :a)
-    ndraws2_a, nchains2_a, nparams2_a = size(chns2_a)
-    chn2_a = reshape(chns2_a, ndraws2_a*nchains2_a, nparams2_a)
+    ndraws2_a, nparams2_a = size(chns2_a)
     mean(chns2_a, dims=1) |> display
-
 end

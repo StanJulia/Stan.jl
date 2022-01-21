@@ -1,4 +1,4 @@
-using Distributed, StanSample, CSV, DataFrames, StatsPlots
+using StanSample, CSV, DataFrames, StatsPlots
 
 ProjDir = @__DIR__
 

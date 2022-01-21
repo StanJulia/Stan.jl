@@ -23,6 +23,6 @@ sm = SampleModel("bernoulli", bernoullimodel);
 rc = stan_sample(sm, data=observeddata);
 
 if success(rc)
-  df = read_samples(sm; output_format=:dataframe)
+  df = read_samples(sm, :dataframe)
   display(df)
 end

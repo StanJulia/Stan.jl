@@ -22,12 +22,11 @@ inittheta = [
   Dict("theta" => 0.6), Dict("theta" => 0.4), 
   Dict("theta" => 0.2), Dict("theta" => 0.1)]
 
-sm = SampleModel("bernoulli", bernoullimodel,
-  seed=StanSample.RandomSeed(seed=-1));
+sm = SampleModel("bernoulli", bernoullimodel);
 
 rc = stan_sample(sm, data=bernoullidata, init=inittheta)
   
 if success(rc)
-  chn = read_samples(sm; output_format=:mcmcchains)
-  show(chn)
+  chn = read_samples(sm, :mcmcchains)
+  chn |> display
 end

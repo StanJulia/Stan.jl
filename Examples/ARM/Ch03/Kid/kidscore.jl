@@ -1,6 +1,6 @@
 ######### ARM Ch03: kid score example  ###########
 
-using StanSample
+using StanSample, StanBase, Statistics
 
 kid = "
 data {
