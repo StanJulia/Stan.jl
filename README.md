@@ -34,7 +34,12 @@ Stan's cmdstan executable needs to be installed separatedly. Please see [cmdstan
 
 Note: StanSample.jl v5.3, supports multithreading in the `cmdstan` binary and requires cmdstan v2.28.2 and up. To activate multithreading in `cmdstan` this needs to be specified during the build process of `cmdstan`. 
 
-Once multithreading is included in `cmdstan`, set the num_threads in the call to stan_sample, e.g. `rc = stan_sample(sm; data, num_threads=3, num_chains=2, seed=-1)`
+Once multithreading is included in `cmdstan`, set the num_threads and num_cpp_chains in the call to stan_sample, e.g.
+```
+rc = stan_sample(sm; data, num_threads=4, num_cpp_chains=4, num_chains=1, seed=-1)`
+```
+
+Note that by leaving out `num_chains=1` will result in 16 chains! Future versions of StanSample.jl might update these default values in SampleModel!
 
 For more info on Stan, please go to <http://mc-stan.org>.
 
