@@ -45,6 +45,10 @@ jobs:
           wget https://github.com/stan-dev/cmdstan/releases/download/v2.28.2/cmdstan-2.28.2.tar.gz
           tar -xzpf cmdstan-2.28.2.tar.gz
           ls -lia .
+          ls -lia ./cmdstan-2.28.2
+          ls -lia ./cmdstan-2.28.2/make
+          touch ./cmdstan-2.28.2/make/local
+          echo "STAN_THREADS=true" > ./cmdstan-2.28.2/make/local
           make -C $CMDSTAN build
           cd $OLDWD
         env:
