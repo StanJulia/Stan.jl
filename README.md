@@ -32,7 +32,7 @@ Stan.jl v9.0 uses StanSample.jl v6, StanOptimize.jl v4, StanQuap.jl v4, StanDiag
 
 Stan's cmdstan executable needs to be installed separatedly. Please see [cmdstan installation](https://stanjulia.github.io/Stan.jl/latest/INSTALLATION/). 
 
-Note: StanSample.jl v6 uses c++ multithreading in the `cmdstan` binary and requires cmdstan v2.28.2 and up. To activate multithreading in `cmdstan` this needs to be specified during the build process of `cmdstan`. 
+Note: StanSample.jl v6 uses c++ multithreading in the `cmdstan` binary and requires cmdstan v2.28.2 and up. To activate multithreading in `cmdstan` this needs to be specified during the build process of `cmdstan`. I typically create a `path_to_cmdstan_directory/make/local` file (before running `make -j9 build`) containing `STAN_THREADS=true`.
 
 By default StanSample.jl's SampleModel sets the num_threads and num_cpp_chains in the call to `stan_sample` as shown below: 
 ```
