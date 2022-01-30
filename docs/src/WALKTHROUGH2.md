@@ -67,8 +67,7 @@ data = (H = df.height, LL = df.leg_left, LR = df.leg_right, N = size(df, 1))
 
 Generate posterior draws by calling `stan_sample()`, passing in the model and optionally data, initial settings and keyword arguments to influence how `cmdstan` is to be called: 
 ```
-rc6_1s = stan_sample(m6_1s; data, seed=-1, num_chains=2, delta=0.85);
-
+rc6_1s = stan_sample(m6_1s; data, seed=-1, delta=0.85);
 
 if success(rc6_1s)
     st6_1s = read_samples(m6_1s) # By default a StanTable object is returned

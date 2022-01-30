@@ -57,14 +57,14 @@ dyesdata = Dict(:BATCHES => 6,
     ], 6, 5)
   )
 
-#data = (BATCHES=6, SAMPLES=5, y=dyesdata[:y])
-data = joinpath(ProjDir, "dyes.json")
+data = (BATCHES=6, SAMPLES=5, y=dyesdata[:y])
+#data = joinpath(ProjDir, "dyes.json")
 
 tmpdir = joinpath(@__DIR__, "tmp")
 sm = SampleModel("dyes", dyes, tmpdir);
   
 #rc = stan_sample(sm; data)
-rc = stan_sample(sm; data)
+rc = stan_sample(sm, false; data)
 
 if success(rc)
   chns = read_samples(sm, :mcmcchains; include_internals=true)

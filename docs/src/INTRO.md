@@ -1,17 +1,26 @@
 # A Julia interface to Stan's cmdstan executable
 
-## Stan.jl v8
+## Stan.jl v9
 
 [Stan](https://github.com/stan-dev/stan) is a system for statistical modeling, data analysis, and prediction. It is extensively used in social, biological, and physical sciences, engineering, and business. The Stan language and the interfaces to execute a Stan language program are documented [here](http://mc-stan.org/documentation/).
 
 [Stan.jl](https://github.com/StanJulia/Stan.jl) illustrates how the packages available in [StanJulia's ecosystem](https://github.com/StanJulia) wrap the methods available in Stan's **cmdstan** executable.
 
-Stan.jl v8.0.0 uses the latest versions of StanSample.jl (v5), StanOptimize.jl (v3) and StanQuap.jl (v2). Both StanSample.jl (v5) and StanOptimize.jl (v3) use keyword arguments in the `stan_sample()` call to update the command line options for running the cmdstan binary, e.g.
+Stan.jl v9.0.0 uses the latest versions of StanSample.jl (v6), StanOptimize.jl (v4) and StanQuap.jl (v4). Both StanSample.jl (v5+) and StanOptimize.jl (v3+) use keyword arguments in the `stan_sample()` call to update the command line options for running the cmdstan binary, e.g.
 ```Julia
 rc = stan_sample(model; data, init, num_chains=2, seed=123, delta=0.85)
 ```
 
-Stan.jl v8 (and the updated StanJulia packages) are intended to use Stan's `cmdstan` v2.28.1 as a next step in StanJulia is to take advantage of the C++ level multi-threading options enabled in cmdstan v2.28.1.
+Stan.jl v9 (and the updated StanJulia packages) are intended to use Stan's `cmdstan` v2.28.2 which enables StanJulia to take full advantage of the C++ level multi-threading options in cmdstan v2.28.2.
+
+In fact, by default, SampleModels in StanSample.jl now use 4 C++ `num_threads` and 4 C++ `num_cpp_chains` and a single Julia chain (`num_chains=1`). All of this can be tailored using the above 3 keyword arguments to `stan_sample()`
+
+Note: Currently I do not suggest to use both C++ level chains and Julia
+level chains. By default, if `num_chains > 1` this method will set
+`num_cpp_chains` to 1 and a message will be displayed. Set the
+postional `check_num_chains` argument to `false` to prevent this.
+
+An example of the possible trade-offs between `num_threads`, `num_cpp_chains` and `num_chains` can be found in the `Examples/RedCardsStudy` directory.
 
 ## StanJulia overview
 

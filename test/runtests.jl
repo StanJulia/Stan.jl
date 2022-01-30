@@ -18,6 +18,7 @@ examples = [
 
   "../Examples/Diagnose/diagnose.jl",
   "../Examples/Dyes/dyes.jl",
+  "../Examples/Dyes/dyes_2.jl",
   "../Examples/EightSchools/schools8.jl",
 
   #"../Examples/RedCardsStudy/redcardstudy.jl",
@@ -41,6 +42,8 @@ examples = [
   "../Examples_Test_Cases/ScalarObs/scalar.jl",
   "../Examples_Test_Cases/ZeroLengthArray/zerolengtharray.jl",
 
+  # Test the examples in the test directory
+  
   "Examples/ARM/Ch03/Kid/kidscore.jl",
   "Examples/Bernoulli/bernoulli.jl",
   "Examples/Binomial/binomial.jl",

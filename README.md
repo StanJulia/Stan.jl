@@ -1,4 +1,4 @@
-# Stan V8
+# Stan V9
 
 | **Project Status**                                                               |  **Documentation**                                                               | **Build Status**                                                                                |
 |:-------------------------------------------------------------------------------:|:-------------------------------------------------------------------------------:|:-----------------------------------------------------------------------------------------------:|
@@ -26,20 +26,23 @@ The first 2 generations of Stan.jl took a similar approach as the recently relea
 
 Stan.jl v7.x constitutes the third generation and covers all of cmdstan's methods in separate packages, i.e. StanSample.jl, StanOptimize.jl, .jl, etc., including an option to run `generate_quantities`. In a sense, it extends Tamas Papp's approach taken in StanRun, StanDump and StanSamples. 
 
-Stan.jl v8.0 is based on StanSample.jl v5, StanOptimize.jl v3 and StanQuap.jl v2.
+Stan.jl v9.0 uses StanSample.jl v6, StanOptimize.jl v4, StanQuap.jl v4, StanDiagnose.jl v4 and StanVariational v4.
 
 ## Requirements
 
 Stan's cmdstan executable needs to be installed separatedly. Please see [cmdstan installation](https://stanjulia.github.io/Stan.jl/latest/INSTALLATION/). 
 
-Note: StanSample.jl v5.3, supports multithreading in the `cmdstan` binary and requires cmdstan v2.28.2 and up. To activate multithreading in `cmdstan` this needs to be specified during the build process of `cmdstan`. 
+Note: StanSample.jl v6 uses c++ multithreading in the `cmdstan` binary and requires cmdstan v2.28.2 and up. To activate multithreading in `cmdstan` this needs to be specified during the build process of `cmdstan`. 
 
-Once multithreading is included in `cmdstan`, set the num_threads and num_cpp_chains in the call to stan_sample, e.g.
+By default StanSample.jl's SampleModel sets the num_threads and num_cpp_chains in the call to `stan_sample` as shown below: 
 ```
 rc = stan_sample(sm; data, num_threads=4, num_cpp_chains=4, num_chains=1, seed=-1)`
 ```
 
-Note that by leaving out `num_chains=1` will result in 16 chains! Future versions of StanSample.jl might update these default values in SampleModel!
+Note: Currently I do not suggest to use both C++ level chains and Julia
+level chains. By default, if `num_chains > 1` this method will set
+`num_cpp_chains` to 1 and a message will be displayed. Set the
+postional `check_num_chains` argument in the call to `stan_sample()` to `false` to prevent this.
 
 For more info on Stan, please go to <http://mc-stan.org>.
 
@@ -62,6 +65,11 @@ Add the StanSample.jl package by running ] add StanSample from the REPL.
 Set the CMDSTAN environment variable so that Julia can find the cmdstan installation, e.g. from the Julia REPL do: ENV["CMDSTAN"] = "C:/Users/Jakob/.julia/conda/3/envs/stan-env/Library/bin/cmdstan" This needs to be set before you load the StanSample package by e.g. using it. You can add this line to your startup.jl file so that you don't have to run it again in every fresh Julia session.
 
 ## Versions
+
+### Version 9.0.0
+
+1. Use C++ multithreading features by default (4 `num_threads`, 4 `num_cpp_chains`).
+2. By default use JSON3.jl to create data.json and init.json input files.
 
 ### Version 8.1.0
 

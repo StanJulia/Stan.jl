@@ -32,10 +32,11 @@ model {
 }
 ";
 
-m6_1s = SampleModel("m6.1s", stan6_1);
+tmpdir = joinpath(@__DIR__, "tmp")
+m6_1s = SampleModel("m6.1s", stan6_1, tmpdir);
 
 data = (H = df.height, LL = df.leg_left, LR = df.leg_right, N = size(df, 1))
-rc6_1s = stan_sample(m6_1s; data, seed=-1, num_chains=2, delta=0.85);
+rc6_1s = stan_sample(m6_1s; data, seed=-1, delta=0.85);
 
 
 if success(rc6_1s)
@@ -64,7 +65,8 @@ if success(rc6_1s)
 end
 
 init = (a = 2.0, b = [1.0, 2.0], sigma = 1.0)
-rc6_2s = stan_sample(m6_1s; data, init);
+#rc6_2s = stan_sample(m6_1s; data, init);
+rc6_2s = stan_sample(m6_1s; data);
 
 if success(rc6_2s)
 

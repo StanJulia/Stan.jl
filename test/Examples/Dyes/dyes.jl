@@ -1,6 +1,7 @@
 ######### Stan batch program example  ###########
 
 using StanSample, Test
+ProjDir = @__DIR__
 
 dyes ="
 data {
@@ -43,21 +44,9 @@ generated quantities {
 }
 "
 
-dyesdata = Dict("BATCHES" => 6,
-    "SAMPLES" => 5,
-    "y" => reshape([
-      [1545, 1540, 1595, 1445, 1595]; 
-      [1520, 1440, 1555, 1550, 1440]; 
-      [1630, 1455, 1440, 1490, 1605]; 
-      [1595, 1515, 1450, 1520, 1560]; 
-      [1510, 1465, 1635, 1480, 1580]; 
-      [1495, 1560, 1545, 1625, 1445]
-    ], 6, 5)
-  )
-
+data = joinpath(ProjDir, "dyes.json")
 sm = SampleModel("dyes", dyes);
-  
-rc = stan_sample(sm, data=dyesdata)
+rc = stan_sample(sm; data)
 
 if success(rc)
   samples = read_samples(sm)

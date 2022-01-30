@@ -22,6 +22,7 @@ inittheta = Dict("theta" => 0.60)
 sm = SampleModel("init_dict", bernoullimodel);
 
 rc = stan_sample(sm; data=bernoullidata, init=inittheta, seed=-1)
+#rc = stan_sample(sm; data=bernoullidata, seed=-1)
 
 if success(rc)
   samples = read_samples(sm)
