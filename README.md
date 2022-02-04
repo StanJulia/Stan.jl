@@ -32,17 +32,23 @@ Stan.jl v9.0 uses StanSample.jl v6, StanOptimize.jl v4, StanQuap.jl v4, StanDiag
 
 Stan's cmdstan executable needs to be installed separatedly. Please see [cmdstan installation](https://stanjulia.github.io/Stan.jl/latest/INSTALLATION/). 
 
-Note: StanSample.jl v6 uses c++ multithreading in the `cmdstan` binary and requires cmdstan v2.28.2 and up. To activate multithreading in `cmdstan` this needs to be specified during the build process of `cmdstan`. I typically create a `path_to_cmdstan_directory/make/local` file (before running `make -j9 build`) containing `STAN_THREADS=true`.
+StanSample.jl v6 uses c++ multithreading in the `cmdstan` binary and requires cmdstan v2.28.2 and up. To activate multithreading in `cmdstan` this needs to be specified during the build process of `cmdstan`. I typically create a `path_to_cmdstan_directory/make/local` file (before running `make -j9 build`) containing `STAN_THREADS=true`.
 
-By default StanSample.jl's SampleModel sets the num_threads and num_cpp_chains in the call to `stan_sample` as shown below: 
+This means StanSample now supports 2 mechanisms for in paralel drawing samples for chains, i.e. on C++ level (using threads) and on Julia level (by spawing a Julia process for each chain). 
+
+The `use_cpp_chains` keyword argument for `stan_sampe()` determines if chains are executed on C++ level or on Julia level. By default, `use_cpp_chains=true`.
+
+If your build of cmdstan does not support C++ threads or you prefer to use Julia level chains, specify:
 ```
-rc = stan_sample(sm; data, num_threads=4, num_cpp_chains=4, num_chains=1, seed=-1)`
+rc = stan_sample(model; use_cpp_chains=false, [data | init | ...])
 ```
+
+By default in ether case `num_chains=4`. See `??stan_sample`. Internally, `num_chains` will be copied to either `num_cpp_chains` or `num_julia_chains'.`
 
 Note: Currently I do not suggest to use both C++ level chains and Julia
-level chains. By default, if `num_chains > 1` this method will set
-`num_cpp_chains` to 1 and a message will be displayed. Set the
-postional `check_num_chains` argument in the call to `stan_sample()` to `false` to prevent this.
+level chains. By default, based on  `use_cpp_chains` the `stan_sample()` method will set either `num_cpp_chains=num_chains; num_julia_chains=1` (the default) or `num_julia_chains=num_chains;num_cpp_chain=1`. Set the postional `check_num_chains` argument in the call to `stan_sample()` to `false` to prevent this default behavior.
+
+Threads on C++ level can be used in multiple ways, e.g. to run separate chains and to speed up certain operations. By default StanSample.jl's SampleModel sets the C++ num_threads to 4. See the `graphs` subdirectory in the RedCardsStudy in the Examples directory for an example.
 
 For more info on Stan, please go to <http://mc-stan.org>.
 
