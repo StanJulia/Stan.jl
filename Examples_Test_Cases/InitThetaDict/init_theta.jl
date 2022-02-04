@@ -21,7 +21,7 @@ init = Dict("theta" => 0.60)
 
 sm = SampleModel("bernoulli", bernoullimodel);
 
-#rc = stan_sample(sm, false; num_chains=4, data, init)
+#rc = stan_sample(sm, false; data, init)
 rc = stan_sample(sm; data, init)
 
 if success(rc)
