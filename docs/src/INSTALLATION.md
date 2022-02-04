@@ -26,11 +26,7 @@ I typically prefer cmdstan not to include the cmdstan version number in the abov
 
 Currently tested with cmdstan 2.28.2.
 
-Note: StanSample.jl v5.3, supports multithreading in the `cmdstan` binary and requires cmdstan v2.28.2 and up. To activate multithreading in `cmdstan` this needs to be specified during the build process of `cmdstan`. 
-
-Once multithreading is included in `cmdstan`, set the num_threads in the call to stan_sample, e.g. `rc = stan_sample(sm; data, num_threads=3, num_chains=2, seed=-1)`
-
-The default value of num_threads in the SampleModel is 4.
+Note: StanSample.jl v6, supports multithreading in the `cmdstan` binary and requires cmdstan v2.28.2 and up. To activate multithreading in `cmdstan` this needs to be specified during the build process of `cmdstan`. 
 
 ### Conda based installation walkthrough for running Stan from Julia on Windows
 
