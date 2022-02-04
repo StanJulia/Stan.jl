@@ -72,6 +72,14 @@ Set the CMDSTAN environment variable so that Julia can find the cmdstan installa
 
 ## Versions
 
+### Version 9.1.1
+
+1. Documentation improvement.
+
+### version 9.1.0
+
+1. Modified (simplified?) use of `num_chains` to define either number of chains on C++ or Julia level based on `use_cpp_chains` keyword argument to `stan_sample()`.
+
 ### Version 9.0.0
 
 1. Use C++ multithreading features by default (4 `num_threads`, 4 `num_cpp_chains`).
