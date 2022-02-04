@@ -18,17 +18,34 @@ This version of the package has primarily been tested with GitHub workflows and 
 
 ## Versions
 
+### Version 9.1.1
+
+1. Documentation improvement.
+
+### version 9.1.0
+
+1. Modified (simplified?) use of `num_chains` to define either the number of chains on C++ or Julia level based on the value of the `use_cpp_chains` keyword argument to `stan_sample()`.
+
+### Version 9.0.0
+
+1. Use C++ multithreading features by default (`num_threads=5`, `num_cpp_chains=num_chains=4`).
+2. By default use JSON3.jl to create data.json and init.json input files.
+
+### Version 8.1.0
+
+1. Support StanSanple.jl v5.3 multithreading in cmdstan
+
 ### Version 8.0.0
 
-**This is a breaking update!**
-
-1. Change the default output format returned by read_samples to :table.
-2. Keyword based cmdline modification.
+1. Supports both CMDSTAN and JULIA_CMDSTAN_HOME environment variables to point to the cmdstan installation (for compatibility between cmdstan for R and Python).
+2. Thanks to @jfb-h completed testing with using conda to install cmdstan
 3. Refactored code between StanBase.jl and the other StanJulia packages.
-4. Will need cmdstan 2.28.1 (for num_threads).
-5. `tmpdir` now positional argument when creating a CmdStanModel.
-6. Supports both CMDSTAN and JULIA_CMDSTAN_HOME environment variables to point to the cmdstan installation (for compatibility between cmdstan for R and Python).
-7. Thanks to @jfb-h completed testing with using conda to install cmdstan
+4. Change the default output format returned by read_samples to :table.
+5. Keyword based cmdline modification.
+6. Refactored code between StanBase.jl and the other StanJulia packages.
+7. Will need cmdstan 2.28.1 (for num_threads).
+8. `tmpdir` now positional argument when creating a CmdStanModel.
+9. Thanks to @jfb-h completed testing with using conda to install cmdstan
 
 ### Version 7.0
 
