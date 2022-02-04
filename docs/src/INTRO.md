@@ -31,7 +31,7 @@ level chains. By default, based on  `use_cpp_chains` the `stan_sample()` method 
 
 Threads on C++ level can be used in multiple ways, e.g. to run separate chains and to speed up certain operations. By default StanSample.jl's SampleModel sets the C++ num_threads to 4. 
 
-An example of the possible trade-offs between `use_cpp_threads`, `num_cpp_chains` and `num_julia_chains` can be found in the `Examples/RedCardsStudy/graphs` directory.
+An example of the possible trade-offs between `use_cpp_threads`, `num_cpp_chains` and `num_julia_chains` can be found in the [graphs](https://github.com/StanJulia/Stan.jl/tree/master/Examples/RedCardsStudy/graphs) directory.
 
 ## StanJulia overview
 

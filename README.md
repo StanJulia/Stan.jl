@@ -48,7 +48,7 @@ By default in ether case `num_chains=4`. See `??stan_sample`. Internally, `num_c
 Note: Currently I do not suggest to use both C++ level chains and Julia
 level chains. By default, based on  `use_cpp_chains` the `stan_sample()` method will set either `num_cpp_chains=num_chains; num_julia_chains=1` (the default) or `num_julia_chains=num_chains;num_cpp_chain=1`. Set the postional `check_num_chains` argument in the call to `stan_sample()` to `false` to prevent this default behavior.
 
-Threads on C++ level can be used in multiple ways, e.g. to run separate chains and to speed up certain operations. By default StanSample.jl's SampleModel sets the C++ num_threads to 4. See the `graphs` subdirectory in the RedCardsStudy in the Examples directory for an example.
+Threads on C++ level can be used in multiple ways, e.g. to run separate chains and to speed up certain operations. By default StanSample.jl's SampleModel sets the C++ num_threads to 4. See the [graphs](https://github.com/StanJulia/Stan.jl/tree/master/Examples/RedCardsStudy/graphs) subdirectory in the RedCardsStudy in the Examples directory for an example.
 
 For more info on Stan, please go to <http://mc-stan.org>.
 
