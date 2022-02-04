@@ -1,4 +1,3 @@
-sm
 ######### StanSample example  ###########
 
 using StanSample, MCMCChains, Random
@@ -17,13 +16,13 @@ model {
 }
 "
 
-bernoullidata = Dict("N" => 10, "y" => [0, 1, 0, 1, 0, 0, 0, 0, 0, 1])
-inittheta = Dict("theta" => 0.60)
+data = Dict("N" => 10, "y" => [0, 1, 0, 1, 0, 0, 0, 0, 0, 1])
+init = Dict("theta" => 0.60)
 
 sm = SampleModel("bernoulli", bernoullimodel);
 
-rc = stan_sample(sm, data=bernoullidata, init=inittheta, seed=-1)
-#rc = stan_sample(sm, data=bernoullidata, seed=-1)
+#rc = stan_sample(sm, false; num_chains=4, data, init)
+rc = stan_sample(sm; data, init)
 
 if success(rc)
   chn = read_samples(sm, :mcmcchains)

@@ -68,7 +68,7 @@ examples = [
 ]
 
 if haskey(ENV, "JULIA_CMDSTAN_HOME") || haskey(ENV, "CMDSTAN")
-  println("\nRunning Stan.jl v8.x test examples")
+  println("\nRunning Stan.jl v9.x test examples")
 
   for example in examples
       println("\n* $(joinpath(TestDir, example)) *\n")
