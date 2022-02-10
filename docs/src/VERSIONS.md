@@ -18,6 +18,15 @@ This version of the package has primarily been tested with GitHub workflows and 
 
 ## Versions
 
+### Version 9.3.0
+
+1. Switch to cmdstan-2.29.0 for CI testing.
+
+### Version 9.2.0
+
+1. Switch back to Julia level chains as default.
+2. Replace JSON3.jl by JSON.jl (support for 2D arrays).
+
 ### Version 9.1.1
 
 1. Documentation improvement.

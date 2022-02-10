@@ -17,12 +17,7 @@ StanSample.jl v6 uses c++ multithreading in the `cmdstan` binary and requires cm
 
 This means StanSample now supports 2 mechanisms for in paralel drawing samples for chains, i.e. on C++ level (using threads) and on Julia level (by spawing a Julia process for each chain). 
 
-The `use_cpp_chains` keyword argument for `stan_sampe()` determines if chains are executed on C++ level or on Julia level. By default, `use_cpp_chains=true`.
-
-If your build of cmdstan does not support C++ threads or you prefer to use Julia level chains, specify:
-```
-rc = stan_sample(model; use_cpp_chains=false, [data | init | ...])
-```
+The `use_cpp_chains` keyword argument for `stan_sampe()` determines if chains are executed on C++ level or on Julia level. By default, `use_cpp_chains=false`.
 
 By default in ether case `num_chains=4`. See `??stan_sample`. Internally, `num_chains` will be copied to either `num_cpp_chains` or `num_julia_chains'.`
 

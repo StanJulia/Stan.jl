@@ -30,18 +30,13 @@ Stan.jl v9.0 uses StanSample.jl v6, StanOptimize.jl v4, StanQuap.jl v4, StanDiag
 
 ## Requirements
 
-Stan's cmdstan executable needs to be installed separatedly. Please see [cmdstan installation](https://stanjulia.github.io/Stan.jl/latest/INSTALLATION/). 
+Stan's cmdstan executable needs to be installed separatedly. Please see [cmdstan installation](https://stanjulia.github.io/Stan.jl/latest/INSTALLATION/). If you plan to use C++ level threads, please read the `make/local-example` instructions.
 
-StanSample.jl v6 uses c++ multithreading in the `cmdstan` binary and requires cmdstan v2.28.2 and up. To activate multithreading in `cmdstan` this needs to be specified during the build process of `cmdstan`. I typically create a `path_to_cmdstan_directory/make/local` file (before running `make -j9 build`) containing `STAN_THREADS=true`.
+StanSample.jl v6 enables c++ multithreading in the `cmdstan` binary and requires cmdstan v2.28.2 and up. To activate multithreading in `cmdstan` this needs to be specified during the build process of `cmdstan`. I typically create a `path_to_cmdstan_directory/make/local` file (before running `make -j9 build`) containing `STAN_THREADS=true`.
 
 This means StanSample now supports 2 mechanisms for in paralel drawing samples for chains, i.e. on C++ level (using threads) and on Julia level (by spawing a Julia process for each chain). 
 
-The `use_cpp_chains` keyword argument for `stan_sampe()` determines if chains are executed on C++ level or on Julia level. By default, `use_cpp_chains=true`.
-
-If your build of cmdstan does not support C++ threads or you prefer to use Julia level chains, specify:
-```
-rc = stan_sample(model; use_cpp_chains=false, [data | init | ...])
-```
+The `use_cpp_chains` keyword argument for `stan_sampe()` determines if chains are executed on C++ level or on Julia level. By default, `use_cpp_chains=false`.
 
 By default in ether case `num_chains=4`. See `??stan_sample`. Internally, `num_chains` will be copied to either `num_cpp_chains` or `num_julia_chains'.`
 
@@ -71,6 +66,15 @@ Add the StanSample.jl package by running ] add StanSample from the REPL.
 Set the CMDSTAN environment variable so that Julia can find the cmdstan installation, e.g. from the Julia REPL do: ENV["CMDSTAN"] = "C:/Users/Jakob/.julia/conda/3/envs/stan-env/Library/bin/cmdstan" This needs to be set before you load the StanSample package by e.g. using it. You can add this line to your startup.jl file so that you don't have to run it again in every fresh Julia session.
 
 ## Versions
+
+### Version 9.2.1 (soon)
+
+1. Switch to cmdstan-2.29.0
+
+### Version 9.2.0
+
+1. Switched from JSON3.jl to JSON.jl (JSON.jl supports 2D arrays)
+2. Switched back to by default using Julia level chains.
 
 ### Version 9.1.1
 
