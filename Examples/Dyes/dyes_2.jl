@@ -47,14 +47,13 @@ generated quantities {
 
 dyesdata = Dict(:BATCHES => 6,
     :SAMPLES => 5,
-    :y => reshape([
-      [1545, 1540, 1595, 1445, 1595]; 
-      [1520, 1440, 1555, 1550, 1440]; 
-      [1630, 1455, 1440, 1490, 1605]; 
-      [1595, 1515, 1450, 1520, 1560]; 
-      [1510, 1465, 1635, 1480, 1580]; 
-      [1495, 1560, 1545, 1625, 1445]
-    ], 6, 5)
+    :y => [
+      1545  1520  1630  1595  1510  1495;
+      1540  1440  1455  1515  1465  1560;
+      1595  1555  1440  1450  1635  1545;
+      1445  1550  1490  1520  1480  1625;
+      1595  1440  1605  1560  1580  1445;
+    ]
   )
 
 data = (BATCHES=6, SAMPLES=5, y=dyesdata[:y])
@@ -63,8 +62,8 @@ data = (BATCHES=6, SAMPLES=5, y=dyesdata[:y])
 tmpdir = joinpath(@__DIR__, "tmp")
 sm = SampleModel("dyes", dyes, tmpdir);
   
-#rc = stan_sample(sm; data)
-rc = stan_sample(sm, false; data)
+rc = stan_sample(sm; data)
+#rc = stan_sample(sm, false; data)
 
 if success(rc)
   chns = read_samples(sm, :mcmcchains; include_internals=true)
