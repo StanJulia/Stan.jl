@@ -24,13 +24,15 @@ A collection of examples demonstrating the use Stan's cmdstan (as an external pr
 
 The first 2 generations of Stan.jl took a similar approach as the recently released [CmdStanR](https://mc-stan.org/cmdstanr/) and [CmdStanPy](https://github.com/stan-dev/cmdstanpy) options to use Stan's [cmdstan executable](https://mc-stan.org/users/interfaces/cmdstan.html).
 
-Stan.jl v7.x constitutes the third generation and covers all of cmdstan's methods in separate packages, i.e. StanSample.jl, StanOptimize.jl, .jl, etc., including an option to run `generate_quantities`. In a sense, it extends Tamas Papp's approach taken in StanRun, StanDump and StanSamples. 
+Stan.jl v7.x constitutes the third generation and covers all of cmdstan's methods in separate packages, i.e. StanSample.jl, StanOptimize.jl, etc., including an option to run `generate_quantities`. In a sense, it extends Tamas Papp's approach taken in StanRun, StanDump and StanSamples. 
 
-Stan.jl v9.0 uses StanSample.jl v6, StanOptimize.jl v4, StanQuap.jl v4, StanDiagnose.jl v4 and StanVariational v4.
+Stan.jl v9 uses StanSample.jl v6, StanOptimize.jl v4, StanQuap.jl v4, StanDiagnose.jl v4 and StanVariational v4.
+
+Stan.jl v9 also uses JSON.jl to generate data and init input files for cmdstan.
 
 ## Requirements
 
-Stan's cmdstan executable needs to be installed separatedly. Please see [cmdstan installation](https://stanjulia.github.io/Stan.jl/latest/INSTALLATION/). If you plan to use C++ level threads, please read the `make/local-example` instructions.
+**Stan's cmdstan executable needs to be installed separatedly.** Please see [cmdstan installation](https://stanjulia.github.io/Stan.jl/latest/INSTALLATION/). If you plan to use C++ level threads, please read the `make/local-example` instructions and below section.
 
 ## Options for multi-threading and multi-chaining
 
