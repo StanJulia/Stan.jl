@@ -5,6 +5,9 @@ using DataFrames, Test
 TestDir = @__DIR__
 ExampleDir = joinpath(TestDir, "..")
 
+import CompatHelperLocal as CHL
+CHL.@check()
+
 examples = [
 
   "../Examples/ARM/Ch03/Kid/kidscore.jl",
