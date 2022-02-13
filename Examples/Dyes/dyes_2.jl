@@ -62,8 +62,8 @@ data = (BATCHES=6, SAMPLES=5, y=dyesdata[:y])
 tmpdir = joinpath(@__DIR__, "tmp")
 sm = SampleModel("dyes", dyes, tmpdir);
   
-rc = stan_sample(sm; data)
-#rc = stan_sample(sm, false; data)
+rc = stan_sample(sm; use_json=true, data)
+#rc = stan_sample(sm; use_json=false, data)
 
 if success(rc)
   chns = read_samples(sm, :mcmcchains; include_internals=true)
