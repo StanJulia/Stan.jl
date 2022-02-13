@@ -18,17 +18,17 @@
 
 ## Purpose
 
-A collection of examples demonstrating the use Stan's cmdstan (as an external program) from Julia. 
+A collection of example Stan Language programs demonstrating the use Stan's cmdstan executable (as an external program) from Julia. 
 
 ## Background info
 
-The first 2 generations of Stan.jl took a similar approach as the recently released [CmdStanR](https://mc-stan.org/cmdstanr/) and [CmdStanPy](https://github.com/stan-dev/cmdstanpy) options to use Stan's [cmdstan executable](https://mc-stan.org/users/interfaces/cmdstan.html).
+Early on (2012) Stan.jl took a similar approach as the recently released [CmdStanR](https://mc-stan.org/cmdstanr/) and [CmdStanPy](https://github.com/stan-dev/cmdstanpy) options to use Stan's [cmdstan executable](https://mc-stan.org/users/interfaces/cmdstan.html).
 
-Stan.jl v7.x constitutes the third generation and covers all of cmdstan's methods in separate packages, i.e. StanSample.jl, StanOptimize.jl, etc., including an option to run `generate_quantities`. In a sense, it extends Tamas Papp's approach taken in StanRun, StanDump and StanSamples. 
+Stan.jl v7 covers all of cmdstan's methods in separate packages, i.e. StanSample.jl, StanOptimize.jl, StanVariational.jl and StanDiagnose.jl, including an option to run `generate_quantities` as part of StanSample.jl. 
 
-Stan.jl v9 uses StanSample.jl v6, StanOptimize.jl v4, StanQuap.jl v4, StanDiagnose.jl v4 and StanVariational v4.
+Stan.jl v9 uses StanSample.jl v6, StanOptimize.jl v4, StanQuap.jl v4, StanDiagnose.jl v4 and StanVariational v4 and supports multithreading on C++ level. Stan.jl v9 also uses JSON.jl to generate data and init input files for cmdstan.
 
-Stan.jl v9 also uses JSON.jl to generate data and init input files for cmdstan.
+The StanJulia ecosystem includes 2 additional packages, StanQuap.jl (to compute [MAP](https://en.wikipedia.org/wiki/Maximum_a_posteriori_estimation) estimates) and DiffEqBayesStan.jl.
 
 ## Requirements
 
@@ -36,7 +36,7 @@ Stan.jl v9 also uses JSON.jl to generate data and init input files for cmdstan.
 
 ## Options for multi-threading and multi-chaining
 
-Stan.jl v9 and the updated StanJulia packages are intended to use Stan's `cmdstan` v2.28.2+ and StanSample.jl v6.
+Stan.jl v9 is intended to use Stan's `cmdstan` v2.28.2+ and StanSample.jl v6.
 
 StanSample.jl v6 enables the use of c++ multithreading in the `cmdstan` binary. To activate multithreading in `cmdstan` this needs to be specified during the build process of `cmdstan`. I typically create a `path_to_cmdstan_directory/make/local` file (before running `make -j9 build`) containing `STAN_THREADS=true`. For an example, see the `.github/CI.yml` script
 
@@ -46,16 +46,16 @@ The `use_cpp_chains` keyword argument for `stan_sample()` determines if chains a
 
 By default in ether case `num_chains=4`. See `??stan_sample`. Internally, `num_chains` will be copied to either `num_cpp_chains` or `num_julia_chains'.`
 
-Note: Currently I do not suggest to use both C++ level chains and Julia
+**Note:** Currently I do not suggest to use both C++ level chains and Julia
 level chains. Based on  `use_cpp_chains` the `stan_sample()` method will set either `num_cpp_chains=num_chains; num_julia_chains=1` (the default) or `num_julia_chains=num_chains;num_cpp_chain=1`. Set the `check_num_chains` keyword argument in the call to `stan_sample()` to `false` to prevent this default behavior.
 
-Threads on C++ level can be used in multiple ways, e.g. to run separate chains and to speed up certain operations. By default StanSample.jl's SampleModel sets the C++ num_threads to 4 but for compatibility with previous versions of StanJulia this is by default (`use_cpp_chains=false`) not included in the generated command line, e.g. see `sm.cmds` where `sm` is your SampleModel. 
+Threads on C++ level can be used in multiple ways, e.g. to run separate chains and to speed up certain operations. By default StanSample.jl's SampleModel sets the C++ `num_threads` to 4 but for compatibility with previous versions of StanJulia this is by default (`use_cpp_chains=false`) not included in the generated command line, e.g. see `sm.cmds` where `sm` is your SampleModel. 
 
 An example of the possible trade-offs between `use_cpp_threads`, `num_cpp_chains` and `num_julia_chains` can be found in the [graphs](https://github.com/StanJulia/Stan.jl/tree/master/Examples/RedCardsStudy/graphs) directory.
 
 ### Conda based installation walkthrough for running Stan from Julia on Windows
 
-Note: The conda way of installing also works on other platforms. See [also](https://mc-stan.org/docs/2_28/cmdstan-guide/index.html).
+**Note:** The conda way of installing also works on other platforms. See [also](https://mc-stan.org/docs/2_28/cmdstan-guide/index.html).
 
 Make sure you have conda installed on your system and available from the command line (you can use the conda version that comes with Conda.jl or install your own).
 
@@ -73,11 +73,11 @@ Set the CMDSTAN environment variable so that Julia can find the cmdstan installa
 
 ## Versions
 
-### Version 9.2.1 (soon)
+### Version 9.2.3 (soon)
 
 1. Switch to cmdstan-2.29.0
 
-### Version 9.2.0
+### Version 9.2.0 - 9.2.3
 
 1. Switched from JSON3.jl to JSON.jl (JSON.jl supports 2D arrays)
 2. Switched back to by default using Julia level chains.
