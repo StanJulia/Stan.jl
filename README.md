@@ -32,7 +32,8 @@ The StanJulia ecosystem includes 2 additional packages, StanQuap.jl (to compute 
 
 ## Requirements
 
-**Stan's cmdstan executable needs to be installed separatedly.** Please see [cmdstan installation](https://stanjulia.github.io/Stan.jl/latest/INSTALLATION/). If you plan to use C++ level threads, please read the `make/local-example` instructions and below section.
+**Stan's cmdstan executable needs to be installed separatedly.** Please see [cmdstan installation](https://stanjulia.github.io/Stan.jl/latest/INSTALLATION/). If you plan to use C++ level threads, please read the `make/local-example` instructions and below section and [this file](https://github.com/StanJulia/StanSample.jl/blob/master/INSTALLING_CMDSTAN.md).
+
 
 ## Options for multi-threading and multi-chaining
 
