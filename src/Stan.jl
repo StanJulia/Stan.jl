@@ -1,5 +1,10 @@
 module Stan
 
-using StanSample, StanOptimize, StanDiagnose, StanVariational, StanQuap
+using StanBase
+using StanSample
+using StanOptimize
+using StanDiagnose
+using StanVariational
+using StanQuap
 
 end # module

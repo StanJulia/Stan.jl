@@ -65,8 +65,8 @@ if success(rc6_1s)
 end
 
 init = (a = 2.0, b = [1.0, 2.0], sigma = 1.0)
-#rc6_2s = stan_sample(m6_1s; data, init);
-rc6_2s = stan_sample(m6_1s; data);
+rc6_2s = stan_sample(m6_1s; data, init);
+#rc6_2s = stan_sample(m6_1s; data);
 
 if success(rc6_2s)
 
