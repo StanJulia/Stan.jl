@@ -94,5 +94,24 @@ if success(rc_1)
     println()
 end
 
-println("Timing of logitic_1 (4 Julia chains, 16 num_threads):")
-@time rc_2 = stan_sample(logistic_1; data, num_threads=16);
+println("Timing of logistic_1 (4 C++ chains, 4 num_threads):")
+@time rc_2 = stan_sample(logistic_1; data, 
+  use_cpp_chains=true, num_threads=4);
+
+if success(rc_2)
+    dfs_2 = read_summary(logistic_1)
+    dfs_2[8:9, [1,2,4,8,9,10]] |> display
+    println()
+end
+
+println("Timing of logistic_1 (4 C++ chains, 9 num_threads):")
+@time rc_3 = stan_sample(logistic_1; data,
+  use_cpp_chains=true, num_threads=9);
+
+if success(rc_3)
+    dfs_3 = read_summary(logistic_1)
+    dfs_3[8:9, [1,2,4,8,9,10]] |> display
+    println()
+end
+
+

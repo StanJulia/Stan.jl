@@ -16,22 +16,24 @@ function timings_plot(df::DataFrame; model = "1", ylim=(0, 250))
     colors = [:darkred, :darkblue, :darkgreen, :black]
     fig1 = plot(; xlim=(0, 9), ylim=ylim,
     xlab="c++ num_threads", ylab="elapsed time [s]")
+    println("\nuse_cpp_chains == false\n")
     for (indx, i) in enumerate([1, 4])
-        dft = df[df.num_cpp_chains .== 1 .&& df.num_chains .== i, :]
+        dft = df[df.num_chains .== i .&& df.use_cpp_chains .== false, :]
         println(dft)
         marksym = :cross
         plot!(dft.num_threads, dft.median; 
             marker=marksym, lab="$(i) num_chains")
         title!("Log_$(model) Julia\n(4 Julia threads)")
     end
+    println("\nuse_cpp_chains == true\n")
     fig2 = plot(; xlim=(0, 9), ylim=ylim,
     xlab="c++ num_threads", ylab="elapsed time [s]")
     for (indx, i) in enumerate([1, 4])
-        dft = df[df.num_chains .== 1 .&& df.num_cpp_chains .== i, :]
+        dft = df[df.num_chains .== i .&& df.use_cpp_chains .== true, :]
         println(dft)
         marksym = :cross
         plot!(dft.num_threads, dft.median; 
-            marker=marksym, lab="$(i) num_cpp_chains")
+            marker=marksym, lab="$(i) cpp_chains")
         title!("Log_$(model) C++\n(4 Julia threads)")
     end
     plot(fig1, fig2, layout=(1, 2))
@@ -41,6 +43,8 @@ f0 = timings_plot(arm_log_0; model="0")
 savefig(joinpath(ProjDir, "graphs", "arm_log_0.png"))
 f1 = timings_plot(arm_log_1)
 savefig(joinpath(ProjDir, "graphs", "arm_log_1.png"))
+
+#=
 f3 = timings_plot(intel_tbb_log_0; model="0", ylim=(0, 300))
 savefig(joinpath(ProjDir, "graphs", "intel_tbb_log_0.png"))
 f4 = timings_plot(intel_tbb_log_1)
@@ -49,4 +53,4 @@ f5 = timings_plot(intel_log_0; model="0", ylim=(0, 300))
 savefig(joinpath(ProjDir, "graphs", "intel_log_0.png"))
 f6 = timings_plot(intel_log_1; ylim=(0, 300))
 savefig(joinpath(ProjDir, "graphs", "intel_log_1.png"))
-
+=#
