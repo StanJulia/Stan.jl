@@ -17,30 +17,32 @@ function timings_plot(df::DataFrame; model = "1", ylim=(0, 250))
     fig1 = plot(; xlim=(0, 9), ylim=ylim,
     xlab="c++ num_threads", ylab="elapsed time [s]")
     println("\nuse_cpp_chains == false\n")
-    for (indx, i) in enumerate([1, 4])
-        dft = df[df.num_chains .== i .&& df.use_cpp_chains .== false, :]
+    for (indx, i) in enumerate([1, 2, 4])
+        dft = df[df.num_julia_chains .== i .&& df.num_cpp_chains .== 1, :]
         println(dft)
         marksym = :cross
         plot!(dft.num_threads, dft.median; 
             marker=marksym, lab="$(i) num_chains")
-        title!("Log_$(model) Julia\n(4 Julia threads)")
+        title!("Log_$(model) Julia chains/n")
     end
     println("\nuse_cpp_chains == true\n")
     fig2 = plot(; xlim=(0, 9), ylim=ylim,
     xlab="c++ num_threads", ylab="elapsed time [s]")
-    for (indx, i) in enumerate([1, 4])
-        dft = df[df.num_chains .== i .&& df.use_cpp_chains .== true, :]
+    for (indx, i) in enumerate([1, 2, 4])
+        dft = df[df.num_cpp_chains .== i .&& df.num_julia_chains .== 1, :]
         println(dft)
         marksym = :cross
         plot!(dft.num_threads, dft.median; 
             marker=marksym, lab="$(i) cpp_chains")
-        title!("Log_$(model) C++\n(4 Julia threads)")
+        title!("Log_$(model) C++chains")
     end
     plot(fig1, fig2, layout=(1, 2))
 end
 
+#=
 f0 = timings_plot(arm_log_0; model="0")
 savefig(joinpath(ProjDir, "graphs", "arm_log_0.png"))
+=#
 f1 = timings_plot(arm_log_1)
 savefig(joinpath(ProjDir, "graphs", "arm_log_1.png"))
 

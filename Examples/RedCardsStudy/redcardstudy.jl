@@ -1,5 +1,5 @@
 using CSV, DataFrames, StatsPlots
-using StanSample
+using StanSample, Statistics
 
 ProjDir = @__DIR__
 
@@ -76,6 +76,7 @@ data = Dict(
 
 println("\nUsing $(Threads.nthreads()) Julia threads.\n")
 
+#=
 println("Timing of logitic_0 (4 Julia chains, 8 num_threads):")
 @time rc_0 = stan_sample(logistic_0; data, num_threads=8);
 
@@ -111,6 +112,19 @@ println("Timing of logistic_1 (4 C++ chains, 9 num_threads):")
 if success(rc_3)
     dfs_3 = read_summary(logistic_1)
     dfs_3[8:9, [1,2,4,8,9,10]] |> display
+    println()
+end
+=#
+
+println("Timing of logistic_1 (2 C++ chains, 2 Julia chains, 9 num_threads):")
+@time rc_4 = stan_sample(logistic_1; data,
+  use_cpp_chains=true, check_num_chains=false,
+  num_threads=9, num_cpp_chains=1, num_julia_chains=1);
+
+if success(rc_4)
+    dfs_4 = read_samples(logistic_1, :dataframe)
+    size(dfs_4) |> display
+    mean(Array(dfs_4), dims=1) |> display
     println()
 end
 
