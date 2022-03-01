@@ -18,7 +18,12 @@ This version of the package has primarily been tested with GitHub workflows and 
 
 ## Versions
 
-### Version 9.3.0
+### Version 9.4.0
+
+1. Updated redcradsstudy results for cmdstan-2.29.0.
+2. Added a README to the `Examples/RedCardsStudy` directory
+
+### Version 9.3.0-1
 
 1. Switch to cmdstan-2.29.0 for CI testing.
 
