@@ -74,11 +74,16 @@ Set the CMDSTAN environment variable so that Julia can find the cmdstan installa
 
 ## Versions
 
-### Version 9.2.3 (soon)
+### Version 9.4.0
+
+1. Updated redcradsstudy results for cmdstan-2.29.0.
+2. Added a README to the `Examples/RedCardsStudy` directory
+
+### Version 9.2.3
 
 1. Switch to cmdstan-2.29.0
 
-### Version 9.2.0 - 9.2.3
+### Version 9.2.0 - 9.2.2
 
 1. Switched from JSON3.jl to JSON.jl (JSON.jl supports 2D arrays)
 2. Switched back to by default using Julia level chains.

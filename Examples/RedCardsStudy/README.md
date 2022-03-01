@@ -29,7 +29,7 @@ Note: The results for C++ chains with only a single thread are not relevant for 
 
 4. Overall I find for this example the M1 performance pretty impressive (about 25% better that a 2 years older Intel machine).
 
-5. For many models the use of Julia level chains is a good alternative. If constructs like reduce-sum and map-rectare are used in the Stan Laguage program, C++ threads definitely help.
+5. For many models the use of Julia level chains is a good alternative. If constructs like reduce-sum and map-rectare are used in the Stan Language program, C++ threads definitely help.
 
 6. Too many (combined in all processes) threads do not help.
 
