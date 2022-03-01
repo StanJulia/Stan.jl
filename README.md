@@ -47,16 +47,17 @@ The `use_cpp_chains` keyword argument for `stan_sample()` determines if chains a
 
 By default in ether case `num_chains=4`. See `??stan_sample`. Internally, `num_chains` will be copied to either `num_cpp_chains` or `num_julia_chains'.`
 
-**Note:** Currently I do not suggest to use both C++ level chains and Julia
-level chains. Based on  `use_cpp_chains` the `stan_sample()` method will set either `num_cpp_chains=num_chains; num_julia_chains=1` (the default) or `num_julia_chains=num_chains;num_cpp_chain=1`. Set the `check_num_chains` keyword argument in the call to `stan_sample()` to `false` to prevent this default behavior.
+**Note:** Currently I do not suggest to use both C++ level chains and Julia level chains. Based on  `use_cpp_chains` the `stan_sample()` method will set either `num_cpp_chains=num_chains; num_julia_chains=1` or `num_julia_chains=num_chains;num_cpp_chain=1` (the default of `use_cpp_chains` is false) . Set the `check_num_chains` keyword argument in the call to `stan_sample()` to `false` to prevent this default behavior. See the example in the `Examples/RedCardsStudy` directory for more details and an example.
 
 Threads on C++ level can be used in multiple ways, e.g. to run separate chains and to speed up certain operations. By default StanSample.jl's SampleModel sets the C++ `num_threads` to 4 but for compatibility with previous versions of StanJulia this is by default (`use_cpp_chains=false`) not included in the generated command line, e.g. see `sm.cmds` where `sm` is your SampleModel. 
 
-An example of the possible trade-offs between `use_cpp_threads`, `num_cpp_chains` and `num_julia_chains` can be found in the [graphs](https://github.com/StanJulia/Stan.jl/tree/master/Examples/RedCardsStudy/graphs) directory.
+An example of the possible trade-offs between `use_cpp_threads`, `num_cpp_chains` and `num_julia_chains` can be found in the [this](https://github.com/StanJulia/Stan.jl/tree/master/Examples/RedCardsStudy/graphs) directory.
 
 ### Conda based installation walkthrough for running Stan from Julia on Windows
 
-**Note:** The conda way of installing also works on other platforms. See [also](https://mc-stan.org/docs/2_28/cmdstan-guide/index.html).
+**Note 1:** The conda way of installing also works on other platforms. See [also](https://mc-stan.org/docs/2_28/cmdstan-guide/index.html). 
+
+**Note 2:** I believe if you have used CmdstanR (or CmdstanPy?) to install cmdstan you can use that cmdstan version in Julia.
 
 Make sure you have conda installed on your system and available from the command line (you can use the conda version that comes with Conda.jl or install your own).
 
