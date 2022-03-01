@@ -14,7 +14,8 @@ function timings(model, nts, ncs; N=6, use_cpp=[false, true])
           num_julia_chains=$n) runs")
         for i in 1:N
             res_t[i] = @elapsed stan_sample(model; data,
-              check_num_chains=false, num_threads=nt,
+              use_cpp_chains=true, check_num_chains=false,
+              num_threads=nt,
               num_cpp_chains=1, num_julia_chains=n)
             println("Iteration=$i, time=$(res_t[i])") 
         end
@@ -31,7 +32,8 @@ function timings(model, nts, ncs; N=6, use_cpp=[false, true])
             num_julia_chains=1) runs")
           for i in 1:N
               res_t[i] = @elapsed stan_sample(model; data,
-                check_num_chains=false, num_threads=nt,
+                use_cpp_chains=true, check_num_chains=false,
+                num_threads=nt,
                 num_cpp_chains=n, num_julia_chains=1)
               println("Iteration=$i, time=$(res_t[i])") 
           end
@@ -54,14 +56,14 @@ nts = [1, 4, 8]
 ncs = [1, 2, 4]
 N = 2
 
-#=
+
 println("\nlogistic_0 runs\n")
 model = logistic_0
 arm_log_0_df = timings(model, nts, ncs; N)
 arm_log_0_df |> display
 
 CSV.write(joinpath(ProjDir, "results", "arm_log_0_df.csv"), arm_log_0_df)
-=#
+
 
 println("\nlogistic_1 runs\n")
 model = logistic_1

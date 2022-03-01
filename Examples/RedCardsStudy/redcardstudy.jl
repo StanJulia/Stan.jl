@@ -76,9 +76,9 @@ data = Dict(
 
 println("\nUsing $(Threads.nthreads()) Julia threads.\n")
 
-#=
-println("Timing of logitic_0 (4 Julia chains, 8 num_threads):")
-@time rc_0 = stan_sample(logistic_0; data, num_threads=8);
+
+println("Timing of logistic_0 (4 Julia chains):")
+@time rc_0 = stan_sample(logistic_0; data);
 
 if success(rc_0)
     dfs_0 = read_summary(logistic_0)
@@ -86,8 +86,8 @@ if success(rc_0)
     println()
 end
 
-println("Timing of logitic_1 (4 Julia chains, 8 num_threads):")
-@time rc_1 = stan_sample(logistic_1; data, num_threads=8);
+println("Timing of logistic_1 (4 Julia chains):")
+@time rc_1 = stan_sample(logistic_1; data);
 
 if success(rc_1)
     dfs_1 = read_summary(logistic_1)
@@ -105,26 +105,26 @@ if success(rc_2)
     println()
 end
 
-println("Timing of logistic_1 (4 C++ chains, 9 num_threads):")
+println("Timing of logistic_1 (4 C++ chains, 8 num_threads):")
 @time rc_3 = stan_sample(logistic_1; data,
-  use_cpp_chains=true, num_threads=9);
+  use_cpp_chains=true, num_threads=8);
 
 if success(rc_3)
     dfs_3 = read_summary(logistic_1)
     dfs_3[8:9, [1,2,4,8,9,10]] |> display
     println()
 end
-=#
 
-println("Timing of logistic_1 (2 C++ chains, 2 Julia chains, 9 num_threads):")
+println("Timing of logistic_1 (2 C++ chains, 2 Julia chains, 8 num_threads):")
 @time rc_4 = stan_sample(logistic_1; data,
   use_cpp_chains=true, check_num_chains=false,
-  num_threads=9, num_cpp_chains=1, num_julia_chains=1);
+  num_threads=8, num_cpp_chains=2, num_julia_chains=2);
 
 if success(rc_4)
     dfs_4 = read_samples(logistic_1, :dataframe)
     size(dfs_4) |> display
     mean(Array(dfs_4), dims=1) |> display
+    read_summary(logistic_1, true) |> display
     println()
 end
 
