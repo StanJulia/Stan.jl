@@ -18,6 +18,10 @@ This version of the package has primarily been tested with GitHub workflows and 
 
 ## Versions
 
+### Version 9.4.1 (Not yet published)
+
+1. Doc updates
+
 ### Version 9.4.0
 
 1. Updated redcradsstudy results for cmdstan-2.29.0.

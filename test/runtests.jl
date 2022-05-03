@@ -65,6 +65,10 @@ examples = [
   "Examples_Test_Cases/InitThetaFile/init_file.jl",
   "Examples_Test_Cases/ScalarObs/scalar.jl",
   "Examples_Test_Cases/ZeroLengthArray/zerolengtharray.jl",
+  "Examples_Test_Cases/MatrixInput/input_array.jl",
+  "Examples_Test_Cases/MatrixInput/input_dict_symbol.jl",
+  "Examples_Test_Cases/MatrixInput/input_dict_string.jl",
+  "Examples_Test_Cases/MatrixInput/input_nt.jl",
 
   "Examples_Stan_Methods/Generate_Quantities/generate_quantities.jl",
   "Examples_Stan_Methods/Parse_and_Interpolate/parse.jl"

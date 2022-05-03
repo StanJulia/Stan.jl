@@ -18,7 +18,9 @@
 
 ## Purpose
 
-A collection of example Stan Language programs demonstrating the use Stan's cmdstan executable (as an external program) from Julia. 
+A collection of example Stan Language programs demonstrating all methods available in Stan's cmdstan executable (as an external program) from Julia.
+
+For most applications one of the method packages is a better choice for day to day use and for executing a Stan Language program use the most important method (sample) in StanSample.jl.
 
 ## Background info
 
