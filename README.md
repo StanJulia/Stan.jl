@@ -81,9 +81,13 @@ Set the CMDSTAN environment variable so that Julia can find the cmdstan installa
 
 ## Versions
 
+### Version 9.5.0
+
+1. Fix for matrix input files using JSON.
+
 ### Version 9.4.0
 
-1. Updated redcradsstudy results for cmdstan-2.29.0.
+1. Updated redcardsstudy results for cmdstan-2.29.0.
 2. Added a README to the `Examples/RedCardsStudy` directory
 
 ### Version 9.2.3
