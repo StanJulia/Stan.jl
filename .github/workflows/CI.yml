@@ -7,7 +7,7 @@ on:
   pull_request:
 
 env:
-  CMDSTAN: "/home/worker/cmdstan-2.29.0/"
+  CMDSTAN: "/home/worker/cmdstan-2.29.2/"
 
 jobs:
   test:
