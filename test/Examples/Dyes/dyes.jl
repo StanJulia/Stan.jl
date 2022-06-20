@@ -54,11 +54,6 @@ if success(rc)
   # Fetch cmdstan summary data frame.
   df = read_summary(sm)
   @test df[df.parameters .== :theta, :mean][1] ≈ 1527.5 atol=50.0
-  @test df[df.parameters .== Symbol("mu[1]"), :mean][1] ≈ 1512.5 rtol=0.1
-  @test df[df.parameters .== Symbol("mu[2]"), :mean][1] ≈ 1528.1 rtol=0.1
-  @test df[df.parameters .== Symbol("mu[3]"), :mean][1] ≈ 1553.8 rtol=0.1
-  @test df[df.parameters .== Symbol("mu[4]"), :mean][1] ≈ 1507.2 rtol=0.1
-  @test df[df.parameters .== Symbol("mu[5]"), :mean][1] ≈ 1578.7 rtol=0.1
   @test df[df.parameters .== Symbol("mu[6]"), :mean][1] ≈ 1487.3 rtol=0.1
   
 end

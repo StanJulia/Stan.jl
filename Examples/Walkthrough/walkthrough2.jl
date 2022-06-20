@@ -45,23 +45,19 @@ if success(rc6_1s)
     # Display the schema of the tbl
 
     st6_1s |> display
-    println()
 
     # Display the keys
 
     df6_1s = DataFrame(st6_1s)
-    df6_1s |> display
-    println()
 
     # Select a block of related parameters
     
-    DataFrame(df6_1s, :b) |> display
-    println()
+    DataFrame(df6_1s, :b)
 
     # Or using a KeyedArray object from AxisKeys.jl
     
     chns6_1s = read_samples(m6_1s, :keyedarray)
-    chns6_1s |> display
+    chns6_1s
 end
 
 init = (a = 2.0, b = [1.0, 2.0], sigma = 1.0)
@@ -72,27 +68,19 @@ if success(rc6_2s)
 
     # Retrieve the summary created by the stansummary executable:
 
-    println()
     read_summary(m6_1s, true)
-    println()
 
     # For simple models often a DataFrame is attractive to work with:
 
     post6_1s_df = read_samples(m6_1s, :dataframe)
-    post6_1s_df |> display
-    println()
 
     part6_1s = read_samples(m6_1s, :particles)
-    part6_1s |> display
-    println()
 
     # Use a NamedTuple:
     
-    nt6_1s = read_samples(m6_1s, :namedtuple)
-    nt6_1s |> display
     println()
-
-    nt6_1s.b |> display
+    nt6_1s = read_samples(m6_1s, :namedtuple)
+    nt6_1s.b
 
     # Compute the mean for vector b:
 

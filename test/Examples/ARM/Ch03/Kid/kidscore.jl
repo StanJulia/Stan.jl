@@ -181,9 +181,9 @@ if success(rc)
 
   # Fetch the cmdstan summary.
   
-  df = read_summary(sm)
-  @test df[df.parameters .== Symbol("beta[1]"), :mean][1] ≈ 25.5 rtol=0.1
-  @test df[df.parameters .== Symbol("beta[2]"), :mean][1] ≈ 6.01 rtol=0.1
-  @test df[df.parameters .== Symbol("beta[3]"), :mean][1] ≈ 0.565 rtol=0.1
-  @test df[df.parameters .== Symbol("sigma"), :mean][1] ≈ 18.2 rtol=0.1
+  sdf = read_summary(sm)
+  @test sdf[sdf.parameters .== Symbol("beta[1]"), :mean][1] ≈ 25.5 rtol=0.1
+  @test sdf[sdf.parameters .== Symbol("beta[2]"), :mean][1] ≈ 6.01 rtol=0.1
+  @test sdf[sdf.parameters .== Symbol("beta[3]"), :mean][1] ≈ 0.565 rtol=0.1
+  @test sdf[sdf.parameters .== Symbol("sigma"), :mean][1] ≈ 18.2 rtol=0.1
 end

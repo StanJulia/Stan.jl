@@ -35,19 +35,14 @@ rc = stan_sample(stanmodel; data,
 if success(rc)
   # Convert to an MCMCChains.Chains object
   chns = read_samples(stanmodel)
-  chns |> display
-  println()
 
   # Show the same output in DataFrame format
   df = StanSample.read_summary(stanmodel)
-  display(df)
-  println()
   
   available_chains(stanmodel) |> display
   println()
   
   gq_df = stan_generate_quantities(stanmodel, 1, "2_3")
-  gq_df |> display
 end
 
 

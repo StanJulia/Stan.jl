@@ -179,12 +179,9 @@ rc = stan_sample(sm, data=kiddata)
 if success(rc)
     chns = read_samples(sm)
     chns |> display
-    println()
 
     chns_beta = matrix(chns, :beta)
-    chns_beta |> display
-    println()
+    chns_beta
 
-    mean(chns_beta, dims=1) |> display
-    println()
+    mean(chns_beta, dims=1)
 end

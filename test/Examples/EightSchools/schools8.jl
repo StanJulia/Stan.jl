@@ -39,12 +39,8 @@ rc = stan_sample(sm, data=schools8data)
 if success(rc)
 
     chns = read_samples(sm, :keyedarray)
-    chns |> display
-    println()
 
     chns_eta = matrix(chns, :eta)
-    chns_eta |> display
-    println()
     
     ndraws, nchains, nparams = size(chns_eta)
     chn_eta = reshape(chns_eta, ndraws*nchains, nparams)

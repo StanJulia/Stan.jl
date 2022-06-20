@@ -51,7 +51,7 @@ if success(rc10_4s)
 
     # Display the chns
 
-    chns |> display
+    chns
     println()
 
     # Display the keys
@@ -62,7 +62,7 @@ if success(rc10_4s)
     # Select all elements starting with 'a'
 
     chns_a = matrix(chns, :a)
-    chns_a |> display
+    chns_a
     println()
 
     typeof(chns_a.data) |> display

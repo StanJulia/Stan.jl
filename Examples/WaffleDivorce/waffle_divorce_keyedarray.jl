@@ -45,5 +45,4 @@ if success(rc5_1s)
     NamedTupleTools.select(nt5_1s, (:a, :bA, :sigma)) |> display
 
     chns = read_samples(m5_1s)
-    chns |> display
 end

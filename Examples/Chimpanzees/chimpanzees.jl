@@ -44,27 +44,15 @@ rc6_1s = stan_sample(m6_1s; data);
 if success(rc6_1s)
     chns = read_samples(m6_1s, :keyedarray)
 
-    # Display the chns
-
-    chns |> display
-    println("\n")
-
-    # Display the keys
-
     axiskeys(chns) |> display
     println("\n")
 
     # Select all elements starting with 'a'
 
     chns_b = matrix(chns, :b)
-    chns_b |> display
-    println()
 
-    mean(chns_b, dims=1) |> display
-    println()
-
-    typeof(chns_b.data) |> display
-    println()
+    mean(chns_b, dims=1)
+    typeof(chns_b.data)
 
     ndraws_b, nchains_b, nparams_b = size(chns_b)
     chn_b = reshape(chns_b, ndraws_b*nchains_b, nparams_b)
@@ -98,18 +86,11 @@ if success(rc6_2s)
     println()
 
     post6_1s_df = read_samples(m6_1s, :dataframe)
-    post6_1s_df |> display
-    println()
 
     part6_1s = read_samples(m6_1s, :particles)
     part6_1s |> display
     println()
 
     nt6_1s = read_samples(m6_1s, :namedtuple)
-    nt6_1s.b |> display
-    println()
-
-    mean(nt6_1s.b, dims=2) |> display
-    println()
-
+    mean(nt6_1s.b, dims=2)
 end

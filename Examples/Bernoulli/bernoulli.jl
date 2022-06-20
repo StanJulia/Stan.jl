@@ -36,7 +36,6 @@ if success(rc)
   # Optionally, read samples as a a DataFrame
   df=read_samples(sm, :dataframe)
   first(df, 5)
-  println()
   
   df = read_summary(sm)
   df[df.parameters .== :theta, [:mean, :ess]]
