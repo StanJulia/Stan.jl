@@ -4,7 +4,6 @@ using StanSample
 using Distributions
 using DataFrames
 using MonteCarloMeasurements
-using AxisKeys
 using Tables
 
 N = 100
@@ -42,30 +41,12 @@ data = (H = df.height, LL = df.leg_left, LR = df.leg_right, N = size(df, 1))
 rc6_1s = stan_sample(m6_1s; data);
 
 if success(rc6_1s)
-    chns = read_samples(m6_1s, :keyedarray)
-
-    axiskeys(chns) |> display
-    println("\n")
-
-    # Select all elements starting with 'a'
-
-    chns_b = matrix(chns, :b)
-
-    mean(chns_b, dims=1)
-    typeof(chns_b.data)
-
-    ndraws_b, nchains_b, nparams_b = size(chns_b)
-    chn_b = reshape(chns_b, ndraws_b*nchains_b, nparams_b)
-    println()
-
-    for row in eachrow(chn_b)
-        # ...
-    end
+    chns = read_samples(m6_1s, :nesteddataframe)
+    chns |> display
 
     # Obtain  b.1 , b,2 as a matrix
 
-    chns2 = read_samples(m6_1s, :table)
-    chns2_b = matrix(chns2, :b)
+    chns = matrix(chns, :b)
 
     # Or use read_samples to only use chains 2 and 4 using the chains kwarg.
 

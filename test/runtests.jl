@@ -17,7 +17,7 @@ examples = [
   "../Examples/Binormal/binormal.jl",
   
   "../Examples/Chimpanzees/chimpanzees.jl",
-  "../Examples/Chimpanzees/chimpanzees_keyedarray.jl",
+  #"../Examples/Chimpanzees/chimpanzees_keyedarray.jl",
 
   "../Examples/Diagnose/diagnose.jl",
   "../Examples/Dyes/dyes.jl",
@@ -26,7 +26,7 @@ examples = [
 
   #"../Examples/RedCardsStudy/redcardstudy.jl",
 
-  "../Examples/WaffleDivorce/waffle_divorce_keyedarray.jl",
+  "../Examples/WaffleDivorce/waffle_divorce.jl",
 
   "../Examples/Walkthrough/walkthrough2.jl",
   "../Examples_Stan_Methods/Diagnose/diagnose.jl",

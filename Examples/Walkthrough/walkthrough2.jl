@@ -1,5 +1,5 @@
 using Distributions, DataFrames
-using MonteCarloMeasurements, AxisKeys
+using MonteCarloMeasurements
 using StanSample
 
 N = 100
@@ -54,10 +54,14 @@ if success(rc6_1s)
     
     DataFrame(df6_1s, :b)
 
-    # Or using a KeyedArray object from AxisKeys.jl
+    # Or using a :nesteddataframe object to group the parameters
     
-    chns6_1s = read_samples(m6_1s, :keyedarray)
+    chns6_1s = read_samples(m6_1s, :nesteddataframe)
     chns6_1s
+
+    # or
+
+    matrix(chns6_1s, :b)
 end
 
 init = (a = 2.0, b = [1.0, 2.0], sigma = 1.0)

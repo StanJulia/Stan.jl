@@ -1,6 +1,6 @@
 ######### Stan program example  ###########
 
-using AxisKeys, DataFrames
+using DataFrames
 using StanSample
 using Test
 

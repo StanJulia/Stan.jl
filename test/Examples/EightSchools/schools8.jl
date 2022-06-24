@@ -1,6 +1,6 @@
 ######### Stan program example  ###########
 
-using AxisKeys, Statistics
+using Statistics
 using StanSample
 using Test
 
@@ -38,12 +38,12 @@ rc = stan_sample(sm, data=schools8data)
 
 if success(rc)
 
-    chns = read_samples(sm, :keyedarray)
+    chns = read_samples(sm, :nesteddataframe)
 
     chns_eta = matrix(chns, :eta)
     
-    ndraws, nchains, nparams = size(chns_eta)
-    chn_eta = reshape(chns_eta, ndraws*nchains, nparams)
+    ndraws, nparams = size(chns_eta)
+    chn_eta = reshape(chns_eta, ndraws, nparams)
     means = mean(chn_eta, dims=1)
     means |> display
     println()
