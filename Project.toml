@@ -55,7 +55,7 @@ StanSample = "6.7"
 StanVariational = "4"
 StatsBase = "0.33"
 StatsFuns = "1"
-StatsPlots = "0.14"
+StatsPlots = "0.14, 0.15"
 Tables = "1.6"
 julia = "1"
 
