@@ -61,7 +61,7 @@ if success(rc6_1s)
 
     # or
 
-    matrix(chns6_1s, :b)
+    array(chns6_1s, :b)
 end
 
 init = (a = 2.0, b = [1.0, 2.0], sigma = 1.0)

@@ -40,7 +40,7 @@ if success(rc)
 
     chns = read_samples(sm, :nesteddataframe)
 
-    chns_eta = matrix(chns, :eta)
+    chns_eta = array(chns, :eta)
     
     ndraws, nparams = size(chns_eta)
     chn_eta = reshape(chns_eta, ndraws, nparams)

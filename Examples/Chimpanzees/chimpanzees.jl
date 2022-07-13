@@ -46,7 +46,7 @@ if success(rc6_1s)
 
     # Obtain  b.1 , b,2 as a matrix
 
-    chns = matrix(chns, :b)
+    chns = array(chns, :b)
 
     # Or use read_samples to only use chains 2 and 4 using the chains kwarg.
 
