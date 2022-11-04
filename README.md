@@ -81,6 +81,10 @@ Set the CMDSTAN environment variable so that Julia can find the cmdstan installa
 
 ## Versions
 
+### versions 9.6 - 9.9.2
+
+1. Updates following StanSample.jl
+
 ### Version 9.5.0
 
 1. Fix for matrix input files using JSON.
@@ -114,7 +118,7 @@ Set the CMDSTAN environment variable so that Julia can find the cmdstan installa
 
 ### Version 8.1.0
 
-1. Support StanSanple.jl v5.3 multithreading in cmdstan
+1. Support StanSample.jl v5.3 multithreading in cmdstan
 
 ### Version 8.0.0
 
