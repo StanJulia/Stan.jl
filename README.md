@@ -26,16 +26,17 @@ For most applications one of the method packages is a better choice for day to d
 
 Early on (2012) Stan.jl took a similar approach as the recently released [CmdStanR](https://mc-stan.org/cmdstanr/) and [CmdStanPy](https://github.com/stan-dev/cmdstanpy) options to use Stan's [cmdstan executable](https://mc-stan.org/users/interfaces/cmdstan.html).
 
-Stan.jl v7 covers all of cmdstan's methods in separate packages, i.e. StanSample.jl, StanOptimize.jl, StanVariational.jl and StanDiagnose.jl, including an option to run `generate_quantities` as part of StanSample.jl. 
+In Stan.jl v7 all of cmdstan's methods were moved to separate packages, i.e. StanSample.jl, StanOptimize.jl, StanVariational.jl and StanDiagnose.jl, including an option to run `generate_quantities` as part of StanSample.jl. 
 
 Stan.jl v9 uses StanSample.jl v6, StanOptimize.jl v4, StanQuap.jl v4, StanDiagnose.jl v4 and StanVariational v4 and supports multithreading on C++ level. Stan.jl v9 also uses JSON.jl to generate data and init input files for cmdstan.
+
+Stan.jl v9 also supports BridgeStan.jl, InferenceObjects.jl and PosteriorDB.jl. See the example notebooks.
 
 The StanJulia ecosystem includes 2 additional packages, StanQuap.jl (to compute [MAP](https://en.wikipedia.org/wiki/Maximum_a_posteriori_estimation) estimates) and DiffEqBayesStan.jl.
 
 ## Requirements
 
 **Stan's cmdstan executable needs to be installed separatedly.** Please see [cmdstan installation](https://stanjulia.github.io/Stan.jl/latest/INSTALLATION/). If you plan to use C++ level threads, please read the `make/local-example` instructions and below section and [this file](https://github.com/StanJulia/StanSample.jl/blob/master/INSTALLING_CMDSTAN.md).
-
 
 ## Options for multi-threading and multi-chaining
 
@@ -81,9 +82,17 @@ Set the CMDSTAN environment variable so that Julia can find the cmdstan installa
 
 ## Versions
 
-### versions 9.6 - 9.9.2
+### Version 9.10.0
 
-1. Updates following StanSample.jl
+1. Preliminary PosteriorDB example notebook added
+2. InferenceData example notebook added
+3. BridgeStan example notebook added
+4. Package updates
+
+### Versions 9.6 - 9.9.4
+
+1. Primarily following StanSample.jl updates
+2. Initial InferenceObjects.jl notebook example
 
 ### Version 9.5.0
 
