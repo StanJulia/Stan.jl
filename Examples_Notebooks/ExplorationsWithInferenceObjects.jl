@@ -1,5 +1,5 @@
 ### A Pluto.jl notebook ###
-# v0.19.15
+# v0.19.16
 
 using Markdown
 using InteractiveUtils
@@ -45,6 +45,9 @@ Vector(idata.observed_data.y)
 
 # ╔═╡ 89146fb9-548c-47ed-9112-0d9cb6c8d542
 DataFrame(idata.observed_data.y)
+
+# ╔═╡ ca0b6b39-13f4-4354-8467-8940c174aafe
+keys(idata.posterior)
 
 # ╔═╡ f0ab1080-c951-4387-9308-eaa71dfd360f
 DataFrame(idata.posterior)
@@ -410,6 +413,7 @@ version = "17.4.0+0"
 # ╠═0b03405d-e222-4984-9269-fcb0abcb0ca2
 # ╠═cbe94c16-3bda-4b84-90ad-9747aa66d93f
 # ╠═89146fb9-548c-47ed-9112-0d9cb6c8d542
+# ╠═ca0b6b39-13f4-4354-8467-8940c174aafe
 # ╠═f0ab1080-c951-4387-9308-eaa71dfd360f
 # ╟─00000000-0000-0000-0000-000000000001
 # ╟─00000000-0000-0000-0000-000000000002

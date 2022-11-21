@@ -1,5 +1,5 @@
 ### A Pluto.jl notebook ###
-# v0.19.15
+# v0.19.16
 
 using Markdown
 using InteractiveUtils
@@ -174,9 +174,6 @@ let
 	end
 end
 
-# ╔═╡ 7939f021-d684-49e6-a8cf-72f851eaa1cc
-
-
 # ╔═╡ 44eccff8-f882-45aa-879e-3b245770196e
 let
 	global smb1_2s = create_smb(m1_2s, joinpath(m1_2s.tmpdir, m1_2s.name * "_data_4.json"))
@@ -315,7 +312,7 @@ PLUTO_MANIFEST_TOML_CONTENTS = """
 
 julia_version = "1.10.0-DEV"
 manifest_format = "2.0"
-project_hash = "961835d4efe1d8279fba2e16663e034b26d61ad7"
+project_hash = "afbf712bf10a92dbf34f0eecf10e2c6c247f7cf3"
 
 [[deps.ANSIColoredPrinters]]
 git-tree-sha1 = "574baf8110975760d391c710b6341da1afa48d8c"
@@ -1780,7 +1777,6 @@ version = "3.5.0+0"
 # ╟─9fb10ce6-9ea3-4857-bc4d-5b139d27eb06
 # ╠═1f512a86-6a42-4f3c-bb50-ebb53791c1b9
 # ╠═bdd4422c-0eea-4f08-b9ae-efc396c0bce4
-# ╠═7939f021-d684-49e6-a8cf-72f851eaa1cc
 # ╠═44eccff8-f882-45aa-879e-3b245770196e
 # ╠═c6792359-c10a-4c1a-a764-c12b85cf24e8
 # ╟─3539edb8-bb39-402a-8641-cadcedae905a

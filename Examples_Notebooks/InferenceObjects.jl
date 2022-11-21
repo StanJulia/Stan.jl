@@ -1,5 +1,5 @@
 ### A Pluto.jl notebook ###
-# v0.19.15
+# v0.19.16
 
 using Markdown
 using InteractiveUtils
@@ -96,12 +96,6 @@ else
 end
 
 
-# ╔═╡ d9b44dd0-26c7-493e-beb2-9680f624d9ec
-md" #### Groups defined:"
-
-# ╔═╡ a9ccc58e-5248-44bb-8cc9-e1eaf2c5184f
-idata
-
 # ╔═╡ 150f9cea-91da-4648-8469-dfb4c852227a
 md" ##### To see more details, click on any of the triangles above or specify group as shown below."
 
@@ -109,6 +103,18 @@ md" ##### To see more details, click on any of the triangles above or specify gr
 if :observed_data in propertynames(idata)
 	idata.observed_data
 end
+
+# ╔═╡ 5bf5c448-5b76-4c77-9529-9106f94bc1ef
+keys(idata.posterior)
+
+# ╔═╡ 4da97b66-2c45-4c19-aa32-487a95fb23e9
+DataFrame(idata.posterior)
+
+# ╔═╡ 9a15cd96-2863-4b87-b3eb-3d14fb128b6d
+post_schools = read_samples(m_schools, :dataframe)
+
+# ╔═╡ 8a6367b7-92f9-498e-874d-868b0a402d3e
+DataFrame(idata.observed_data)
 
 # ╔═╡ 00000000-0000-0000-0000-000000000001
 PLUTO_PROJECT_TOML_CONTENTS = """
@@ -134,7 +140,7 @@ PLUTO_MANIFEST_TOML_CONTENTS = """
 
 julia_version = "1.10.0-DEV"
 manifest_format = "2.0"
-project_hash = "ae44de63df444ba476e72c536643e3f4974df324"
+project_hash = "2d278ad40de2b27f492adfd3d81a21f26f1af193"
 
 [[deps.ANSIColoredPrinters]]
 git-tree-sha1 = "574baf8110975760d391c710b6341da1afa48d8c"
@@ -610,9 +616,11 @@ version = "17.4.0+0"
 # ╠═b7291faa-3487-4ed5-ae41-501f83f0bf3c
 # ╠═a1e486d9-ad7f-48ae-8d51-9ae446e6c030
 # ╠═d572fb32-4ccf-4ba9-a995-48877e90f232
-# ╟─d9b44dd0-26c7-493e-beb2-9680f624d9ec
-# ╠═a9ccc58e-5248-44bb-8cc9-e1eaf2c5184f
 # ╟─150f9cea-91da-4648-8469-dfb4c852227a
 # ╠═4d703d31-d03e-4c37-b4b9-c29f29b5cc62
+# ╠═5bf5c448-5b76-4c77-9529-9106f94bc1ef
+# ╠═4da97b66-2c45-4c19-aa32-487a95fb23e9
+# ╠═9a15cd96-2863-4b87-b3eb-3d14fb128b6d
+# ╠═8a6367b7-92f9-498e-874d-868b0a402d3e
 # ╟─00000000-0000-0000-0000-000000000001
 # ╟─00000000-0000-0000-0000-000000000002
