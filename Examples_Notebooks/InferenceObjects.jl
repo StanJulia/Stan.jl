@@ -104,17 +104,17 @@ if :observed_data in propertynames(idata)
 	idata.observed_data
 end
 
+# ╔═╡ 8a6367b7-92f9-498e-874d-868b0a402d3e
+DataFrame(idata.observed_data)
+
 # ╔═╡ 5bf5c448-5b76-4c77-9529-9106f94bc1ef
 keys(idata.posterior)
-
-# ╔═╡ 4da97b66-2c45-4c19-aa32-487a95fb23e9
-DataFrame(idata.posterior)
 
 # ╔═╡ 9a15cd96-2863-4b87-b3eb-3d14fb128b6d
 post_schools = read_samples(m_schools, :dataframe)
 
-# ╔═╡ 8a6367b7-92f9-498e-874d-868b0a402d3e
-DataFrame(idata.observed_data)
+# ╔═╡ 4da97b66-2c45-4c19-aa32-487a95fb23e9
+DataFrame(idata.posterior)
 
 # ╔═╡ 00000000-0000-0000-0000-000000000001
 PLUTO_PROJECT_TOML_CONTENTS = """
@@ -131,7 +131,7 @@ CSV = "~0.10.7"
 DataFrames = "~1.4.3"
 InferenceObjects = "~0.2.5"
 NamedTupleTools = "~0.14.1"
-StanSample = "~6.12.0"
+StanSample = "~6.13.0"
 """
 
 # ╔═╡ 00000000-0000-0000-0000-000000000002
@@ -140,7 +140,7 @@ PLUTO_MANIFEST_TOML_CONTENTS = """
 
 julia_version = "1.10.0-DEV"
 manifest_format = "2.0"
-project_hash = "2d278ad40de2b27f492adfd3d81a21f26f1af193"
+project_hash = "ae44de63df444ba476e72c536643e3f4974df324"
 
 [[deps.ANSIColoredPrinters]]
 git-tree-sha1 = "574baf8110975760d391c710b6341da1afa48d8c"
@@ -508,9 +508,9 @@ version = "4.7.4"
 
 [[deps.StanSample]]
 deps = ["CSV", "CompatHelperLocal", "DataFrames", "DelimitedFiles", "Distributed", "DocStringExtensions", "InferenceObjects", "JSON", "NamedTupleTools", "OrderedCollections", "Parameters", "Random", "Reexport", "Requires", "Serialization", "StanBase", "TableOperations", "Tables", "Unicode"]
-git-tree-sha1 = "2d0f677b0abfc1cca818da28daabfe69d1f1d751"
+git-tree-sha1 = "87947bfe48590e360a1435701d0a6663a396c75a"
 uuid = "c1514b29-d3a0-5178-b312-660c88baa699"
-version = "6.12.0"
+version = "6.13.0"
 
 [[deps.Statistics]]
 deps = ["LinearAlgebra", "SparseArrays"]
@@ -618,9 +618,9 @@ version = "17.4.0+0"
 # ╠═d572fb32-4ccf-4ba9-a995-48877e90f232
 # ╟─150f9cea-91da-4648-8469-dfb4c852227a
 # ╠═4d703d31-d03e-4c37-b4b9-c29f29b5cc62
-# ╠═5bf5c448-5b76-4c77-9529-9106f94bc1ef
-# ╠═4da97b66-2c45-4c19-aa32-487a95fb23e9
-# ╠═9a15cd96-2863-4b87-b3eb-3d14fb128b6d
 # ╠═8a6367b7-92f9-498e-874d-868b0a402d3e
+# ╠═5bf5c448-5b76-4c77-9529-9106f94bc1ef
+# ╠═9a15cd96-2863-4b87-b3eb-3d14fb128b6d
+# ╠═4da97b66-2c45-4c19-aa32-487a95fb23e9
 # ╟─00000000-0000-0000-0000-000000000001
 # ╟─00000000-0000-0000-0000-000000000002

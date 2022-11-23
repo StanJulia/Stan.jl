@@ -53,6 +53,8 @@ examples = [
   "Examples/Binormal/binormal.jl",
   "Examples/Dyes/dyes.jl",
   "Examples/EightSchools/schools8.jl",
+  "Examples/InferenceData/inferencedata.jl",
+  "Examples/BridgeStan/bridgestan.jl",
 
   "Examples_Stan_Methods/Diagnose/diagnose.jl",
   "Examples_Stan_Methods/Optimize/optimize.jl",
@@ -71,7 +73,7 @@ examples = [
   "Examples_Test_Cases/MatrixInput/input_nt.jl",
 
   "Examples_Stan_Methods/Generate_Quantities/generate_quantities.jl",
-  "Examples_Stan_Methods/Parse_and_Interpolate/parse.jl"
+  "Examples_Stan_Methods/Parse_and_Interpolate/parse.jl",
 ]
 
 if haskey(ENV, "JULIA_CMDSTAN_HOME") || haskey(ENV, "CMDSTAN")
