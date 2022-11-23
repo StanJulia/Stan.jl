@@ -55,6 +55,7 @@ examples = [
   "Examples/EightSchools/schools8.jl",
   "Examples/InferenceData/inferencedata.jl",
   "Examples/BridgeStan/bridgestan.jl",
+  "Examples/PosteriorDB/posteriordb.jl",
 
   "Examples_Stan_Methods/Diagnose/diagnose.jl",
   "Examples_Stan_Methods/Optimize/optimize.jl",

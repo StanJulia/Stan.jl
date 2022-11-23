@@ -72,6 +72,7 @@ keys(idata.posterior)
 
 post_schools = read_samples(m_schools, :dataframe)
 
-# This fails!
-DataFrame(idata.posterior) |> display
+DataFrame(idata.posterior)
+
+idata |> display
 
