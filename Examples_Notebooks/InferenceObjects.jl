@@ -114,7 +114,16 @@ keys(idata.posterior)
 post_schools = read_samples(m_schools, :dataframe)
 
 # ╔═╡ 4da97b66-2c45-4c19-aa32-487a95fb23e9
-DataFrame(idata.posterior)
+posterior_schools = DataFrame(idata.posterior)
+
+# ╔═╡ 997c2c5a-eeb7-4093-aa72-eb40592a40d9
+md" ##### 1000 draws * 4 chains * 8 theta_tilde * 8 theta"
+
+# ╔═╡ 11dd5db9-13d3-466b-97ed-b7a7cac8d8f0
+1000 * 4 * 8 * 8
+
+# ╔═╡ bcd078c4-63a6-4fa6-a5b7-ce30dd465ed9
+posterior_schools[:, :theta]
 
 # ╔═╡ 00000000-0000-0000-0000-000000000001
 PLUTO_PROJECT_TOML_CONTENTS = """
@@ -131,7 +140,7 @@ CSV = "~0.10.7"
 DataFrames = "~1.4.3"
 InferenceObjects = "~0.2.5"
 NamedTupleTools = "~0.14.1"
-StanSample = "~6.13.0"
+StanSample = "~6.13.1"
 """
 
 # ╔═╡ 00000000-0000-0000-0000-000000000002
@@ -508,9 +517,9 @@ version = "4.7.4"
 
 [[deps.StanSample]]
 deps = ["CSV", "CompatHelperLocal", "DataFrames", "DelimitedFiles", "Distributed", "DocStringExtensions", "InferenceObjects", "JSON", "NamedTupleTools", "OrderedCollections", "Parameters", "Random", "Reexport", "Requires", "Serialization", "StanBase", "TableOperations", "Tables", "Unicode"]
-git-tree-sha1 = "87947bfe48590e360a1435701d0a6663a396c75a"
+git-tree-sha1 = "3660fd5960575f1dbfc93372072d4f1cea1e147f"
 uuid = "c1514b29-d3a0-5178-b312-660c88baa699"
-version = "6.13.0"
+version = "6.13.1"
 
 [[deps.Statistics]]
 deps = ["LinearAlgebra", "SparseArrays"]
@@ -622,5 +631,8 @@ version = "17.4.0+0"
 # ╠═5bf5c448-5b76-4c77-9529-9106f94bc1ef
 # ╠═9a15cd96-2863-4b87-b3eb-3d14fb128b6d
 # ╠═4da97b66-2c45-4c19-aa32-487a95fb23e9
+# ╟─997c2c5a-eeb7-4093-aa72-eb40592a40d9
+# ╠═11dd5db9-13d3-466b-97ed-b7a7cac8d8f0
+# ╠═bcd078c4-63a6-4fa6-a5b7-ce30dd465ed9
 # ╟─00000000-0000-0000-0000-000000000001
 # ╟─00000000-0000-0000-0000-000000000002
