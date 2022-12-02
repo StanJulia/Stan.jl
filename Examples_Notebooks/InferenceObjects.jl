@@ -125,6 +125,9 @@ md" ##### 1000 draws * 4 chains * 8 theta_tilde * 8 theta"
 # ╔═╡ bcd078c4-63a6-4fa6-a5b7-ce30dd465ed9
 posterior_schools[:, :theta]
 
+# ╔═╡ 77a65905-f05d-444e-8214-476d89596420
+stan_nts = read_samples(m_schools, :namedtuples; include_internals=true)
+
 # ╔═╡ 00000000-0000-0000-0000-000000000001
 PLUTO_PROJECT_TOML_CONTENTS = """
 [deps]
@@ -634,5 +637,6 @@ version = "17.4.0+0"
 # ╟─997c2c5a-eeb7-4093-aa72-eb40592a40d9
 # ╠═11dd5db9-13d3-466b-97ed-b7a7cac8d8f0
 # ╠═bcd078c4-63a6-4fa6-a5b7-ce30dd465ed9
+# ╠═77a65905-f05d-444e-8214-476d89596420
 # ╟─00000000-0000-0000-0000-000000000001
 # ╟─00000000-0000-0000-0000-000000000002
