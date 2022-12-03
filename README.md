@@ -82,7 +82,7 @@ Set the CMDSTAN environment variable so that Julia can find the cmdstan installa
 
 ## Versions
 
-### Version 9.10-9.10.3
+### Version 9.10-9.10.2
 
 1. Many more (minor and a bit more) updates to `inferencedata()`
 2. Updates to BridgeStan (more to be expected soon)
