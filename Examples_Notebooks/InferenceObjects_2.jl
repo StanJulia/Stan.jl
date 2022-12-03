@@ -72,32 +72,10 @@ data = Dict(
 
 # ╔═╡ a1e486d9-ad7f-48ae-8d51-9ae446e6c030
 # Sample using cmdstan
-
-# the stan part
 begin
 	m_schools = SampleModel("eight_schools", stan_schools)
 	rc = stan_sample(m_schools; data, save_warmup=true)
-end
-
-# ╔═╡ 76d8554c-74b5-46f3-ab3b-b34f2a8d6cdb
-function arviz_names(sym::Symbol)
-	# Define the "proper" ArviZ names for the sample statistics group.
-    sample_stats_key_map = (
-        n_leapfrog__=:n_steps,
-        treedepth__=:tree_depth,
-        energy__=:energy,
-        lp__=:lp,
-        stepsize__=:step_size,
-        divergent__=:diverging,
-        accept_stat__=:acceptance_rate,
-    )
-	if sym in keys(sample_stats_key_map)
-		return sample_stats_key_map[sym]
-	else
-		return sym
-	end
-end
-
+end;
 
 # ╔═╡ 2f998c7e-33cc-4c32-9932-31bd0b72d0a4
 idata = inferencedata2(m_schools)
@@ -123,7 +101,7 @@ CSV = "~0.10.7"
 DataFrames = "~1.4.4"
 InferenceObjects = "~0.2.5"
 NamedTupleTools = "~0.14.1"
-StanSample = "~6.13.3"
+StanSample = "~6.13.4"
 """
 
 # ╔═╡ 00000000-0000-0000-0000-000000000002
@@ -500,9 +478,9 @@ version = "4.7.4"
 
 [[deps.StanSample]]
 deps = ["CSV", "CompatHelperLocal", "DataFrames", "DelimitedFiles", "Distributed", "DocStringExtensions", "InferenceObjects", "JSON", "NamedTupleTools", "OrderedCollections", "Parameters", "Random", "Reexport", "Requires", "Serialization", "StanBase", "TableOperations", "Tables", "Unicode"]
-git-tree-sha1 = "d9d7686109bdf8a94da2778853fed3b331c5e814"
+git-tree-sha1 = "414a7570e3c513799dc9fdb400aaf11e7e251297"
 uuid = "c1514b29-d3a0-5178-b312-660c88baa699"
-version = "6.13.3"
+version = "6.13.4"
 
 [[deps.Statistics]]
 deps = ["LinearAlgebra", "SparseArrays"]
@@ -607,7 +585,6 @@ version = "17.4.0+0"
 # ╠═8579afa5-4b67-4b64-9f4a-5de9add5fec4
 # ╠═b7291faa-3487-4ed5-ae41-501f83f0bf3c
 # ╠═a1e486d9-ad7f-48ae-8d51-9ae446e6c030
-# ╠═76d8554c-74b5-46f3-ab3b-b34f2a8d6cdb
 # ╠═2f998c7e-33cc-4c32-9932-31bd0b72d0a4
 # ╠═2b6ad02f-1b7f-4aa6-945e-4745dcbed307
 # ╠═9a15cd96-2863-4b87-b3eb-3d14fb128b6d

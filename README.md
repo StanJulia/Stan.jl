@@ -82,6 +82,14 @@ Set the CMDSTAN environment variable so that Julia can find the cmdstan installa
 
 ## Versions
 
+### Version 9.10-9.10.3
+
+1. Many more (minor and a bit more) updates to `inferencedata()`
+2. Updates to BridgeStan (more to be expected soon)
+3. Fix for chain numbering when using CPP threads (thanks to @apinter)
+4. Switched to use cmdstan-2.32.0 for testing
+5. Updates to Examples_Notebooks (in particular now using both `inferencedata()` and `inferencedata2()`)
+
 ### Version 9.10.0
 
 1. Preliminary PosteriorDB example notebook added
