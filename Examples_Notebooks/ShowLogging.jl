@@ -10,8 +10,8 @@ using Pkg
 # ╔═╡ a92b66bc-4869-4bd1-8a5a-c519df844fcf
 begin
 	using CSV, DataFrames, NamedTupleTools
-	using StanSample
 	using InferenceObjects
+	using StanSample
 end
 
 # ╔═╡ cecf32d4-6047-11ed-31d9-9514b3067c9c
@@ -68,23 +68,26 @@ data = Dict(
     "J" => 8,
     "y" => [28.0, 8.0, -3.0, 7.0, -1.0, 1.0, 18.0, 12.0],
     "sigma" => [15.0, 10.0, 16.0, 11.0, 9.0, 11.0, 10.0, 18.0]
-)
+);
 
 # ╔═╡ a1e486d9-ad7f-48ae-8d51-9ae446e6c030
 # Sample using cmdstan
 begin
 	m_schools = SampleModel("eight_schools", stan_schools)
-	rc = stan_sample(m_schools; data, save_warmup=true)
+	rc = stan_sample(m_schools; data)
 end;
 
-# ╔═╡ 2f998c7e-33cc-4c32-9932-31bd0b72d0a4
-idata = inferencedata2(m_schools)
-
-# ╔═╡ 2b6ad02f-1b7f-4aa6-945e-4745dcbed307
-DataFrame(idata.posterior)
-
 # ╔═╡ 9a15cd96-2863-4b87-b3eb-3d14fb128b6d
-post_schools = read_samples(m_schools, :dataframe; start=m_schools.num_warmups+1)
+post_schools = read_samples(m_schools, :dataframe)
+
+# ╔═╡ ee1a3352-fd5c-4a11-a430-1825d0b57a92
+Array(DataFrame(post_schools, :theta_tilde))
+
+# ╔═╡ 46d18428-b5ef-4c70-986d-fef0fa5c6862
+let
+	m_schools = SampleModel("eight_schools", stan_schools)
+	rc = stan_sample(m_schools; data, num_chains=5, use_cpp_chains=true, show_logging=true)
+end;
 
 # ╔═╡ 00000000-0000-0000-0000-000000000001
 PLUTO_PROJECT_TOML_CONTENTS = """
@@ -101,7 +104,7 @@ CSV = "~0.10.7"
 DataFrames = "~1.4.4"
 InferenceObjects = "~0.2.5"
 NamedTupleTools = "~0.14.1"
-StanSample = "~6.13.4"
+StanSample = "~6.13.7"
 """
 
 # ╔═╡ 00000000-0000-0000-0000-000000000002
@@ -110,7 +113,7 @@ PLUTO_MANIFEST_TOML_CONTENTS = """
 
 julia_version = "1.10.0-DEV"
 manifest_format = "2.0"
-project_hash = "8c5ee6dd2a22e492f4eef10cd3ec871b12f63b4a"
+project_hash = "ae44de63df444ba476e72c536643e3f4974df324"
 
 [[deps.ANSIColoredPrinters]]
 git-tree-sha1 = "574baf8110975760d391c710b6341da1afa48d8c"
@@ -213,9 +216,9 @@ version = "1.9.0"
 
 [[deps.DimensionalData]]
 deps = ["Adapt", "ArrayInterfaceCore", "ConstructionBase", "Dates", "Extents", "IntervalSets", "IteratorInterfaceExtensions", "LinearAlgebra", "Random", "RecipesBase", "SparseArrays", "Statistics", "TableTraits", "Tables"]
-git-tree-sha1 = "d27931da7e3ec81c355e6895ba53034c03e17a7e"
+git-tree-sha1 = "0da97e5280d6e3d375e992f687c413a4789e1fa9"
 uuid = "0703355e-b756-11e9-17c0-8b28908087d0"
-version = "0.23.0"
+version = "0.23.1"
 
 [[deps.Distributed]]
 deps = ["Random", "Serialization", "Sockets"]
@@ -477,10 +480,10 @@ uuid = "d0ee94f6-a23d-54aa-bbe9-7f572d6da7f5"
 version = "4.7.4"
 
 [[deps.StanSample]]
-deps = ["CSV", "CompatHelperLocal", "DataFrames", "DelimitedFiles", "Distributed", "DocStringExtensions", "InferenceObjects", "JSON", "NamedTupleTools", "OrderedCollections", "Parameters", "Random", "Reexport", "Requires", "Serialization", "StanBase", "TableOperations", "Tables", "Unicode"]
-git-tree-sha1 = "414a7570e3c513799dc9fdb400aaf11e7e251297"
+deps = ["CSV", "CompatHelperLocal", "DataFrames", "DelimitedFiles", "Distributed", "DocStringExtensions", "JSON", "NamedTupleTools", "OrderedCollections", "Parameters", "Random", "Reexport", "Requires", "Serialization", "StanBase", "TableOperations", "Tables", "Unicode"]
+git-tree-sha1 = "7b8c4ab8bb993296e93a64d1a4a09b9f79b8ffb5"
 uuid = "c1514b29-d3a0-5178-b312-660c88baa699"
-version = "6.13.4"
+version = "6.13.7"
 
 [[deps.Statistics]]
 deps = ["LinearAlgebra", "SparseArrays"]
@@ -585,8 +588,8 @@ version = "17.4.0+0"
 # ╠═8579afa5-4b67-4b64-9f4a-5de9add5fec4
 # ╠═b7291faa-3487-4ed5-ae41-501f83f0bf3c
 # ╠═a1e486d9-ad7f-48ae-8d51-9ae446e6c030
-# ╠═2f998c7e-33cc-4c32-9932-31bd0b72d0a4
-# ╠═2b6ad02f-1b7f-4aa6-945e-4745dcbed307
 # ╠═9a15cd96-2863-4b87-b3eb-3d14fb128b6d
+# ╠═ee1a3352-fd5c-4a11-a430-1825d0b57a92
+# ╠═46d18428-b5ef-4c70-986d-fef0fa5c6862
 # ╟─00000000-0000-0000-0000-000000000001
 # ╟─00000000-0000-0000-0000-000000000002

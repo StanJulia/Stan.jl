@@ -10,8 +10,8 @@ using Pkg
 # ╔═╡ a92b66bc-4869-4bd1-8a5a-c519df844fcf
 begin
 	using CSV, DataFrames, NamedTupleTools
-	using StanSample
 	using InferenceObjects
+	using StanSample
 end
 
 # ╔═╡ cecf32d4-6047-11ed-31d9-9514b3067c9c
@@ -108,22 +108,10 @@ DataFrame(idata.observed_data)
 keys(idata.posterior)
 
 # ╔═╡ 9a15cd96-2863-4b87-b3eb-3d14fb128b6d
-post_schools = read_samples(m_schools, :dataframe)
+post_schools = read_samples(m_schools, :dataframe; start=1001)
 
 # ╔═╡ 4da97b66-2c45-4c19-aa32-487a95fb23e9
 posterior_schools = DataFrame(idata.posterior)
-
-# ╔═╡ 997c2c5a-eeb7-4093-aa72-eb40592a40d9
-md" ##### 1000 draws * 4 chains * 8 theta_tilde * 8 theta"
-
-# ╔═╡ 11dd5db9-13d3-466b-97ed-b7a7cac8d8f0
-1000 * 4 * 8 * 8
-
-# ╔═╡ bcd078c4-63a6-4fa6-a5b7-ce30dd465ed9
-posterior_schools[:, :theta]
-
-# ╔═╡ 77a65905-f05d-444e-8214-476d89596420
-stan_nts = read_samples(m_schools, :namedtuples; include_internals=true)
 
 # ╔═╡ 00000000-0000-0000-0000-000000000001
 PLUTO_PROJECT_TOML_CONTENTS = """
@@ -140,7 +128,7 @@ CSV = "~0.10.7"
 DataFrames = "~1.4.4"
 InferenceObjects = "~0.2.5"
 NamedTupleTools = "~0.14.1"
-StanSample = "~6.13.3"
+StanSample = "~6.13.7"
 """
 
 # ╔═╡ 00000000-0000-0000-0000-000000000002
@@ -149,7 +137,7 @@ PLUTO_MANIFEST_TOML_CONTENTS = """
 
 julia_version = "1.10.0-DEV"
 manifest_format = "2.0"
-project_hash = "ae44de63df444ba476e72c536643e3f4974df324"
+project_hash = "04f1bdf71c794e2f6ac06ca8d047f7f659ab5ecb"
 
 [[deps.ANSIColoredPrinters]]
 git-tree-sha1 = "574baf8110975760d391c710b6341da1afa48d8c"
@@ -252,9 +240,9 @@ version = "1.9.0"
 
 [[deps.DimensionalData]]
 deps = ["Adapt", "ArrayInterfaceCore", "ConstructionBase", "Dates", "Extents", "IntervalSets", "IteratorInterfaceExtensions", "LinearAlgebra", "Random", "RecipesBase", "SparseArrays", "Statistics", "TableTraits", "Tables"]
-git-tree-sha1 = "d27931da7e3ec81c355e6895ba53034c03e17a7e"
+git-tree-sha1 = "0da97e5280d6e3d375e992f687c413a4789e1fa9"
 uuid = "0703355e-b756-11e9-17c0-8b28908087d0"
-version = "0.23.0"
+version = "0.23.1"
 
 [[deps.Distributed]]
 deps = ["Random", "Serialization", "Sockets"]
@@ -516,10 +504,10 @@ uuid = "d0ee94f6-a23d-54aa-bbe9-7f572d6da7f5"
 version = "4.7.4"
 
 [[deps.StanSample]]
-deps = ["CSV", "CompatHelperLocal", "DataFrames", "DelimitedFiles", "Distributed", "DocStringExtensions", "InferenceObjects", "JSON", "NamedTupleTools", "OrderedCollections", "Parameters", "Random", "Reexport", "Requires", "Serialization", "StanBase", "TableOperations", "Tables", "Unicode"]
-git-tree-sha1 = "d9d7686109bdf8a94da2778853fed3b331c5e814"
+deps = ["CSV", "CompatHelperLocal", "DataFrames", "DelimitedFiles", "Distributed", "DocStringExtensions", "JSON", "NamedTupleTools", "OrderedCollections", "Parameters", "Random", "Reexport", "Requires", "Serialization", "StanBase", "TableOperations", "Tables", "Unicode"]
+git-tree-sha1 = "7b8c4ab8bb993296e93a64d1a4a09b9f79b8ffb5"
 uuid = "c1514b29-d3a0-5178-b312-660c88baa699"
-version = "6.13.3"
+version = "6.13.7"
 
 [[deps.Statistics]]
 deps = ["LinearAlgebra", "SparseArrays"]
@@ -631,9 +619,5 @@ version = "17.4.0+0"
 # ╠═5bf5c448-5b76-4c77-9529-9106f94bc1ef
 # ╠═9a15cd96-2863-4b87-b3eb-3d14fb128b6d
 # ╠═4da97b66-2c45-4c19-aa32-487a95fb23e9
-# ╟─997c2c5a-eeb7-4093-aa72-eb40592a40d9
-# ╠═11dd5db9-13d3-466b-97ed-b7a7cac8d8f0
-# ╠═bcd078c4-63a6-4fa6-a5b7-ce30dd465ed9
-# ╠═77a65905-f05d-444e-8214-476d89596420
 # ╟─00000000-0000-0000-0000-000000000001
 # ╟─00000000-0000-0000-0000-000000000002
