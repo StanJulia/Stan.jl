@@ -20,17 +20,21 @@
 
 A collection of example Stan Language programs demonstrating all methods available in Stan's cmdstan executable (as an external program) from Julia.
 
-For most applications one of the method packages is a better choice for day to day use and for executing a Stan Language program use the most important method (sample) in StanSample.jl.
+For most applications one of the "single method" packages, e.g. StanSample.jl, StanDiagnose.jl, etc., is a better choice for day to day use. 
+
+To execute the most important method in Stan ("sample"), use StanSample.jl.
+
+Over time more examples will be added as Pluto notebooks.
 
 ## Background info
 
-Early on (2012) Stan.jl took a similar approach as the recently released [CmdStanR](https://mc-stan.org/cmdstanr/) and [CmdStanPy](https://github.com/stan-dev/cmdstanpy) options to use Stan's [cmdstan executable](https://mc-stan.org/users/interfaces/cmdstan.html).
+Early versions of Stan.jl took a similar approach as the recently released [CmdStanR](https://mc-stan.org/cmdstanr/) and [CmdStanPy](https://github.com/stan-dev/cmdstanpy) options to use Stan's [cmdstan executable](https://mc-stan.org/users/interfaces/cmdstan.html).
 
 In Stan.jl v7 all of cmdstan's methods were moved to separate packages, i.e. StanSample.jl, StanOptimize.jl, StanVariational.jl and StanDiagnose.jl, including an option to run `generate_quantities` as part of StanSample.jl. 
 
 Stan.jl v9 uses StanSample.jl v6, StanOptimize.jl v4, StanQuap.jl v4, StanDiagnose.jl v4 and StanVariational v4 and supports multithreading on C++ level. Stan.jl v9 also uses JSON.jl to generate data and init input files for cmdstan.
 
-Stan.jl v9 also supports BridgeStan.jl, InferenceObjects.jl and PosteriorDB.jl. See the example notebooks.
+Stan.jl v9 also supports BridgeStan.jl, InferenceObjects.jl and PosteriorDB.jl. See the example notebooks in the Examples_Notebooks subdirectory. Note that these are new packages and updates are to be expected.
 
 The StanJulia ecosystem includes 2 additional packages, StanQuap.jl (to compute [MAP](https://en.wikipedia.org/wiki/Maximum_a_posteriori_estimation) estimates) and DiffEqBayesStan.jl.
 
@@ -82,7 +86,13 @@ Set the CMDSTAN environment variable so that Julia can find the cmdstan installa
 
 ## Versions
 
-### Version 9.10-9.10.2
+### Version 9.10.5 (under development)
+
+1. Enforce the latest compatible version of StanSample.jl (6.13.7)
+2. `inferencedata()` now uses the Dict based `inferencedata3()` in StanSample.jl
+3. 
+
+### Versions 9.10-9.10.4
 
 1. Many more (minor and a bit more) updates to `inferencedata()`
 2. Updates to BridgeStan (more to be expected soon)
