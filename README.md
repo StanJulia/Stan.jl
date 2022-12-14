@@ -34,7 +34,7 @@ In Stan.jl v7 all of cmdstan's methods were moved to separate packages, i.e. Sta
 
 Stan.jl v9 uses StanSample.jl v6, StanOptimize.jl v4, StanQuap.jl v4, StanDiagnose.jl v4 and StanVariational v4 and supports multithreading on C++ level. Stan.jl v9 also uses JSON.jl to generate data and init input files for cmdstan.
 
-Stan.jl v9 also supports BridgeStan.jl, InferenceObjects.jl and PosteriorDB.jl. See the example notebooks in the Examples_Notebooks subdirectory. Note that these are new packages and updates are to be expected.
+Stan.jl v9 also supports InferenceObjects.jl and PosteriorDB.jl. See the example notebooks in the Examples_Notebooks subdirectory. Note that these are new packages and updates are to be expected. Unfortunately BridgeStan v1.0 is no longer supported.
 
 The StanJulia ecosystem includes 2 additional packages, StanQuap.jl (to compute [MAP](https://en.wikipedia.org/wiki/Maximum_a_posteriori_estimation) estimates) and DiffEqBayesStan.jl.
 

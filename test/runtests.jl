@@ -52,7 +52,7 @@ examples = [
   "Examples/Dyes/dyes.jl",
   "Examples/EightSchools/schools8.jl",
   "Examples/InferenceData/inferencedata.jl",
-  "Examples/BridgeStan/bridgestan.jl",
+  #"Examples/BridgeStan/bridgestan.jl",
   "Examples/PosteriorDB/posteriordb.jl",
 
   "Examples_Stan_Methods/Diagnose/diagnose.jl",
@@ -86,6 +86,8 @@ if haskey(ENV, "JULIA_CMDSTAN_HOME") || haskey(ENV, "CMDSTAN")
       end
 
   end
+
+  println("Tests completed.")
 else
   println("\nCMDSTAN or JULIA_CMDSTAN_HOME not set. Skipping tests")
 end
