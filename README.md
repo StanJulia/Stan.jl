@@ -86,6 +86,12 @@ Set the CMDSTAN environment variable so that Julia can find the cmdstan installa
 
 ## Versions
 
+### Version 9.10.6 (under development)
+
+1. Switch to InferenceObjects v0.3
+2. BridgeStan support has been removed fron StanSample.jl v6.13.8
+3. New example notebook to demonstrate use of BridgeStan
+
 ### Version 9.10.5 (under development)
 
 1. Enforce the latest compatible version of StanSample.jl (6.13.7)
