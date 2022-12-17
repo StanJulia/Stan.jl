@@ -8,7 +8,6 @@ using InteractiveUtils
 begin
 	using StanSample
 	using DataFrames
-	using JSON
 	import StanSample: BS
 end
 
@@ -23,9 +22,6 @@ html"""
 	}
 </style>
 """
-
-# ╔═╡ e4b6f17e-ac4f-4755-8500-4647bce4fae0
-cd(@__DIR__)
 
 # ╔═╡ 3e8be11d-40a3-465b-8941-6c7f4ce24745
 pwd()
@@ -66,8 +62,14 @@ end;
 # ╔═╡ 77321ebd-fe28-4e97-a81f-c59d9906f096
 md" ##### Creade the BridgeStan model library"
 
+# ╔═╡ acccac71-e62d-4a1d-8fb4-ebb379ee572d
+available_chains(sm)
+
 # ╔═╡ b3d88396-fcb9-44ed-8e6a-16030c9d4f36
-smb = BS.StanModel(stan_file = sm.output_base * ".stan", data = json(data));
+begin
+	chain_id = 2
+	smb = BS.StanModel(stan_file = sm.output_base * ".stan", data = sm.output_base * "_data_$(chain_id).json")
+end;
 
 # ╔═╡ 0f43e4c5-6c4b-4a2b-bcf3-fee8862b28fd
 md" ###### Model name:"
@@ -116,7 +118,7 @@ if typeof(smb) == BS.StanModel
 end
 
 # ╔═╡ e5fd63fd-f08e-46a8-94dc-9edf59ed9929
-md" ###### Check the model library has been created in the tmpdir"
+md" ###### Check the BridgeStan model library has been created in the tmpdir"
 
 # ╔═╡ 0554224d-f04c-4cfb-825f-38974792f7c8
 readdir(sm.tmpdir)
@@ -125,12 +127,10 @@ readdir(sm.tmpdir)
 PLUTO_PROJECT_TOML_CONTENTS = """
 [deps]
 DataFrames = "a93c6f00-e57d-5684-b7b6-d8193f3e46c0"
-JSON = "682c06a0-de6a-54ab-a142-c8b1cf79cde6"
 StanSample = "c1514b29-d3a0-5178-b312-660c88baa699"
 
 [compat]
 DataFrames = "~1.4.4"
-JSON = "~0.21.3"
 StanSample = "~6.13.9"
 """
 
@@ -140,7 +140,7 @@ PLUTO_MANIFEST_TOML_CONTENTS = """
 
 julia_version = "1.10.0-DEV"
 manifest_format = "2.0"
-project_hash = "32a3de2184f7f59a125861503215d5912acd0079"
+project_hash = "2fb547ce144ccf3a354b7eea550c267ce2baedb4"
 
 [[deps.ANSIColoredPrinters]]
 git-tree-sha1 = "574baf8110975760d391c710b6341da1afa48d8c"
@@ -565,7 +565,6 @@ version = "17.4.0+0"
 # ╔═╡ Cell order:
 # ╠═6a5a6122-08d1-44da-8881-48b23450dc83
 # ╠═eedbb8c6-2e87-4712-a9ce-cad9382d06a1
-# ╠═e4b6f17e-ac4f-4755-8500-4647bce4fae0
 # ╠═3e8be11d-40a3-465b-8941-6c7f4ce24745
 # ╟─8f2ed639-a384-4fd2-bed6-2d9571ef3457
 # ╟─fa746109-80dd-4d68-88ba-a38eca97c206
@@ -574,6 +573,7 @@ version = "17.4.0+0"
 # ╠═a976cf4b-6f49-4141-a56a-132f358fb4c4
 # ╠═7c2c46d0-b61e-41ca-8ba4-8fe31640d41e
 # ╟─77321ebd-fe28-4e97-a81f-c59d9906f096
+# ╠═acccac71-e62d-4a1d-8fb4-ebb379ee572d
 # ╠═b3d88396-fcb9-44ed-8e6a-16030c9d4f36
 # ╟─0f43e4c5-6c4b-4a2b-bcf3-fee8862b28fd
 # ╠═4023e439-8af1-46e7-b484-24544c7dda8f

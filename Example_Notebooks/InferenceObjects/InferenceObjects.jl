@@ -68,7 +68,7 @@ data = Dict(
     "J" => 8,
     "y" => [28.0, 8.0, -3.0, 7.0, -1.0, 1.0, 18.0, 12.0],
     "sigma" => [15.0, 10.0, 16.0, 11.0, 9.0, 11.0, 10.0, 18.0]
-)
+);
 
 # ╔═╡ a1e486d9-ad7f-48ae-8d51-9ae446e6c030
 begin
@@ -133,7 +133,7 @@ CSV = "~0.10.8"
 DataFrames = "~1.4.4"
 InferenceObjects = "~0.3.0"
 NamedTupleTools = "~0.14.2"
-StanSample = "~6.13.8"
+StanSample = "~6.13.9"
 """
 
 # ╔═╡ 00000000-0000-0000-0000-000000000002
@@ -142,7 +142,7 @@ PLUTO_MANIFEST_TOML_CONTENTS = """
 
 julia_version = "1.10.0-DEV"
 manifest_format = "2.0"
-project_hash = "498f157a57bdaaa3b79b78400c3190231a66dd92"
+project_hash = "59a20335f856f22346b23fdbd1af13f559ba4bf3"
 
 [[deps.ANSIColoredPrinters]]
 git-tree-sha1 = "574baf8110975760d391c710b6341da1afa48d8c"
@@ -510,9 +510,9 @@ version = "4.7.5"
 
 [[deps.StanSample]]
 deps = ["CSV", "CompatHelperLocal", "DataFrames", "DelimitedFiles", "Distributed", "DocStringExtensions", "JSON", "NamedTupleTools", "OrderedCollections", "Parameters", "Random", "Reexport", "Requires", "Serialization", "StanBase", "TableOperations", "Tables", "Unicode"]
-git-tree-sha1 = "18c30df5440f6d569a570ef4b6f1afc7fc5586a6"
+git-tree-sha1 = "7d23ff7df22661703127a707a649b42c0f28e457"
 uuid = "c1514b29-d3a0-5178-b312-660c88baa699"
-version = "6.13.8"
+version = "6.13.9"
 
 [[deps.Statistics]]
 deps = ["LinearAlgebra", "SparseArrays"]
