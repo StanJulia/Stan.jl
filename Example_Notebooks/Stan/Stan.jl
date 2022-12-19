@@ -426,7 +426,7 @@ StanSample = "c1514b29-d3a0-5178-b312-660c88baa699"
 GLM = "~1.8.1"
 GLMakie = "~0.8.0"
 RegressionAndOtherStories = "~0.7.4"
-StanSample = "~6.13.9"
+StanSample = "~7.0.0"
 """
 
 # ╔═╡ 00000000-0000-0000-0000-000000000002
@@ -1590,9 +1590,9 @@ version = "4.7.5"
 
 [[deps.StanSample]]
 deps = ["CSV", "CompatHelperLocal", "DataFrames", "DelimitedFiles", "Distributed", "DocStringExtensions", "JSON", "NamedTupleTools", "OrderedCollections", "Parameters", "Random", "Reexport", "Requires", "Serialization", "StanBase", "TableOperations", "Tables", "Unicode"]
-git-tree-sha1 = "7d23ff7df22661703127a707a649b42c0f28e457"
+git-tree-sha1 = "4abc6edd53c11ebba1f3e6f8f410de7cf07a0fdd"
 uuid = "c1514b29-d3a0-5178-b312-660c88baa699"
-version = "6.13.9"
+version = "7.0.0"
 
 [[deps.StaticArrays]]
 deps = ["LinearAlgebra", "Random", "StaticArraysCore", "Statistics"]

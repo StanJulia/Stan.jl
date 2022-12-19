@@ -116,7 +116,7 @@ Statistics = "10745b16-79ce-11e8-11f9-7d13ad32a3b2"
 [compat]
 DataFrames = "~1.4.4"
 PosteriorDB = "~0.3.1"
-StanSample = "~6.13.8"
+StanSample = "~7.0.0"
 """
 
 # ╔═╡ 00000000-0000-0000-0000-000000000002
@@ -125,7 +125,7 @@ PLUTO_MANIFEST_TOML_CONTENTS = """
 
 julia_version = "1.10.0-DEV"
 manifest_format = "2.0"
-project_hash = "9cfd9bd6715a2e805004497a75547f14436b90df"
+project_hash = "6d33b3d450b408a8aa6cd319e36f66b7d977b0a9"
 
 [[deps.ANSIColoredPrinters]]
 git-tree-sha1 = "574baf8110975760d391c710b6341da1afa48d8c"
@@ -177,9 +177,9 @@ uuid = "a8cc5b0e-0ffa-5ad4-8c14-923d3ee1735f"
 version = "4.1.1"
 
 [[deps.DataAPI]]
-git-tree-sha1 = "e08915633fcb3ea83bf9d6126292e5bc5c739922"
+git-tree-sha1 = "e8119c1a33d267e16108be441a287a6981ba1630"
 uuid = "9a962f9c-6df0-11e9-0e5d-c546b8b5ee8a"
-version = "1.13.0"
+version = "1.14.0"
 
 [[deps.DataFrames]]
 deps = ["Compat", "DataAPI", "Future", "InvertedIndices", "IteratorInterfaceExtensions", "LinearAlgebra", "Markdown", "Missings", "PooledArrays", "PrettyTables", "Printf", "REPL", "Random", "Reexport", "SnoopPrecompile", "SortingAlgorithms", "Statistics", "TableTraits", "Tables", "Unicode"]
@@ -458,9 +458,9 @@ version = "4.7.5"
 
 [[deps.StanSample]]
 deps = ["CSV", "CompatHelperLocal", "DataFrames", "DelimitedFiles", "Distributed", "DocStringExtensions", "JSON", "NamedTupleTools", "OrderedCollections", "Parameters", "Random", "Reexport", "Requires", "Serialization", "StanBase", "TableOperations", "Tables", "Unicode"]
-git-tree-sha1 = "18c30df5440f6d569a570ef4b6f1afc7fc5586a6"
+git-tree-sha1 = "4abc6edd53c11ebba1f3e6f8f410de7cf07a0fdd"
 uuid = "c1514b29-d3a0-5178-b312-660c88baa699"
-version = "6.13.8"
+version = "7.0.0"
 
 [[deps.Statistics]]
 deps = ["LinearAlgebra", "SparseArrays"]

@@ -4,135 +4,155 @@
 using Markdown
 using InteractiveUtils
 
-# ╔═╡ 3a1b3129-e17b-48c5-b7c2-a8caaa55a442
+# ╔═╡ d89204c4-7ee5-11ed-3356-1581fcf877fa
 using Pkg
 
-# ╔═╡ a92b66bc-4869-4bd1-8a5a-c519df844fcf
+# ╔═╡ bcfd62c6-dbd3-41af-b329-9fddb22b18c2
 begin
-	using CSV, DataFrames, NamedTupleTools
-	using InferenceObjects
+	using CSV, DataFrames
+	using Statistics, Test
+	using DimensionalData
 	using StanSample
 end
 
-# ╔═╡ cecf32d4-6047-11ed-31d9-9514b3067c9c
+# ╔═╡ d4b95015-b202-475b-bc70-9389fcb90b70
+include(joinpath(pkgdir(StanSample), "src", "utils", "dimarray.jl"))
+
+# ╔═╡ 567821e6-18a9-43ba-a35f-c75cc3146d98
+md" #### Example of the use of :dimarray and :dimarrays in read_samples()."
+
+# ╔═╡ 9be99d72-d78e-494a-8d4b-8cafeb9f2f4c
+md" ###### Unfortunately this conflict with InferenceObjects.jl, hence it is currently not directly provided by StanSample."
+
+# ╔═╡ a0f056fc-f537-4778-8433-ffd53cb75db3
 html"""
 <style>
 	main {
 		margin: 0 auto;
 		max-width: 2000px;
     	padding-left: max(160px, 10%);
-    	padding-right: max(160px, 10%);
+    	padding-right: max(160px, 30%);
 	}
 </style>
 """
 
-# ╔═╡ 8579afa5-4b67-4b64-9f4a-5de9add5fec4
-stan_schools = """
-data {
-    int<lower=0> J;
-    real y[J];
-    real<lower=0> sigma[J];
-}
 
-parameters {
-    real mu;
-    real<lower=0> tau;
-    real theta_tilde[J];
-}
+# ╔═╡ 05d79a9b-8506-40a4-8a5f-16bf9956f7f5
+pkgdir(StanSample)
 
-transformed parameters {
-    real theta[J];
-    for (j in 1:J)
-        theta[j] = mu + tau * theta_tilde[j];
-}
+# ╔═╡ d6ab26aa-fe54-49a0-97ae-90f626337fc7
+df = CSV.read(joinpath(pkgdir(StanSample), "data", "chimpanzees.csv"), DataFrame);
 
-model {
-    mu ~ normal(0, 5);
-    tau ~ cauchy(0, 5);
-    theta_tilde ~ normal(0, 1);
-    y ~ normal(theta, sigma);
-}
+# ╔═╡ 0dbe88e2-14e2-43c1-8f49-754547a369e9
+# Define the Stan language model
 
-generated quantities {
-    vector[J] log_lik;
-    vector[J] y_hat;
-    for (j in 1:J) {
-        log_lik[j] = normal_lpdf(y[j] | theta[j], sigma[j]);
-        y_hat[j] = normal_rng(theta[j], sigma[j]);
+stan10_4 = "
+data{
+    int N;
+    int N_actors;
+    int pulled_left[N];
+    int prosoc_left[N];
+    int condition[N];
+    int actor[N];
+}
+parameters{
+    vector[N_actors] a;
+    real bp;
+    real bpC;
+}
+model{
+    vector[N] p;
+    bpC ~ normal( 0 , 10 );
+    bp ~ normal( 0 , 10 );
+    a ~ normal( 0 , 10 );
+    for ( i in 1:504 ) {
+        p[i] = a[actor[i]] + (bp + bpC * condition[i]) * prosoc_left[i];
+        p[i] = inv_logit(p[i]);
     }
+    pulled_left ~ binomial( 1 , p );
 }
-""";
+";
 
-# ╔═╡ b7291faa-3487-4ed5-ae41-501f83f0bf3c
-data = Dict(
-    "J" => 8,
-    "y" => [28.0, 8.0, -3.0, 7.0, -1.0, 1.0, 18.0, 12.0],
-    "sigma" => [15.0, 10.0, 16.0, 11.0, 9.0, 11.0, 10.0, 18.0]
-);
+# ╔═╡ 63aad88a-a263-40d3-bb78-d643b9b66d82
+data10_4 = (N = size(df, 1), N_actors = length(unique(df.actor)), 
+    actor = df.actor, pulled_left = df.pulled_left,
+    prosoc_left = df.prosoc_left, condition = df.condition);
 
-# ╔═╡ a1e486d9-ad7f-48ae-8d51-9ae446e6c030
+# ╔═╡ 32bdb60f-b347-453a-8384-4c3fe0f465e6
+# Sample using cmdstan
+
 begin
-	m_schools = SampleModel("eight_schools", stan_schools)
-	rc = stan_sample(m_schools; data, save_warmup=true)
+	m10_4s = SampleModel("m10.4s", stan10_4)
+	rc10_4s = stan_sample(m10_4s; data=data10_4);
 end;
 
-# ╔═╡ d572fb32-4ccf-4ba9-a995-48877e90f232
-if success(rc)
-
-    idata = inferencedata(m_schools; log_likelihood_var=:log_lik, posterior_predictive_var=:y_hat)
-    idata = merge(idata, from_namedtuple(; observed_data = namedtuple(data)))
-else
-    @warn "Sampling failed."
+# ╔═╡ 55ac1b70-dcd4-49a8-8fb1-5164370f7ade
+if success(rc10_4s)
+	read_samples(m10_4s, :dimarray)
 end
 
-
-# ╔═╡ 150f9cea-91da-4648-8469-dfb4c852227a
-md" ##### To see more details, click on any of the triangles above or specify group as shown below."
-
-# ╔═╡ 3b2eee33-a2f2-4dc8-a4a1-89fa036a1385
-idata.posterior
-
-# ╔═╡ 4d703d31-d03e-4c37-b4b9-c29f29b5cc62
-if :observed_data in propertynames(idata)
-	idata.observed_data
+# ╔═╡ eb31f80c-7b81-458c-a217-2374bd83962d
+if success(rc10_4s)
+	da = read_samples(m10_4s, :dimarrays)
+	da1 = da[param=At(Symbol("a.1"))]
 end
 
-# ╔═╡ 8a6367b7-92f9-498e-874d-868b0a402d3e
-DataFrame(idata.observed_data)
+# ╔═╡ ad36dba7-5934-4510-8ec7-7b9ed8498d1c
+if success(rc10_4s)
+	# Other manipulations
+	
+	@test Tables.istable(da) == true
 
-# ╔═╡ 5bf5c448-5b76-4c77-9529-9106f94bc1ef
-keys(idata.posterior)
+	# All of parameters
+	dar = reshape(Array(da), 4000, 9);
+	@test size(dar) == (4000, 9)
 
-# ╔═╡ 9a15cd96-2863-4b87-b3eb-3d14fb128b6d
-post_schools = read_samples(m_schools, :dataframe; start=1001)
+	# Check :param axis names
+	@test dims(da, :param).val == vcat([Symbol("a.$i") for i in 1:7], :bp, :bpC)  
 
-# ╔═╡ 4da97b66-2c45-4c19-aa32-487a95fb23e9
-posterior_schools = DataFrame(idata.posterior)
+	# Test combining vector param 'a'
+	ma = matrix(da, "a");
+	rma = reshape(ma, 4000, size(ma, 3))
+	@test mean(rma, dims=1) ≈ [-0.7 10.9 -1 -1 -0.7 0.2 1.8] atol=0.7
+end
 
-# ╔═╡ 8f52ef47-46e2-4028-83f1-c9cd183bc799
-DataFrame(inferencedata(m_schools).posterior) |> size
+# ╔═╡ 02d42039-9510-4dfd-bbe7-7bbaba18445f
+if success(rc10_4s)
+	da2 = read_samples(m10_4s, :dimarray)
+	da2
+end
 
-# ╔═╡ 2e19a32a-4a26-4b53-8173-ea3d74eb19f4
-DataFrame(inferencedata(m_schools; dims=(theta=[:school], theta_tilde=[:school])).posterior)
+# ╔═╡ 81671185-b8e7-4b61-8109-450374d9b348
+if success(rc10_4s)
+	da3= da2[param=At(Symbol("a.1"))]
 
-# ╔═╡ 30b9724d-73f4-4888-9698-b01f0ed1c720
-DataFrame(inferencedata(m_schools; dims=(theta=[:school], theta_tilde=[:school])).posterior) |> size
+	# Other manipulations
+	
+	@test Tables.istable(da3) == true
+
+	# Check :param axis names
+	@test dims(da2, :param).val == vcat([Symbol("a.$i") for i in 1:7], :bp, :bpC)  
+
+	# Test combining vector param 'a'
+	ma3 = matrix(da2, "a");
+	@test mean(ma3, dims=1) ≈ [-0.7 10.9 -1 -1 -0.7 0.2 1.8] atol=0.7
+end
 
 # ╔═╡ 00000000-0000-0000-0000-000000000001
 PLUTO_PROJECT_TOML_CONTENTS = """
 [deps]
 CSV = "336ed68f-0bac-5ca0-87d4-7b16caf5d00b"
 DataFrames = "a93c6f00-e57d-5684-b7b6-d8193f3e46c0"
-InferenceObjects = "b5cf5a8d-e756-4ee3-b014-01d49d192c00"
-NamedTupleTools = "d9ec5142-1e00-5aa0-9d6a-321866360f50"
+DimensionalData = "0703355e-b756-11e9-17c0-8b28908087d0"
 Pkg = "44cfe95a-1eb2-52ea-b672-e2afdf69b78f"
 StanSample = "c1514b29-d3a0-5178-b312-660c88baa699"
+Statistics = "10745b16-79ce-11e8-11f9-7d13ad32a3b2"
+Test = "8dfed614-e22c-5e08-85e1-65c5234f0b40"
 
 [compat]
 CSV = "~0.10.8"
 DataFrames = "~1.4.4"
-InferenceObjects = "~0.3.1"
-NamedTupleTools = "~0.14.2"
+DimensionalData = "~0.24.0"
 StanSample = "~7.0.0"
 """
 
@@ -142,7 +162,7 @@ PLUTO_MANIFEST_TOML_CONTENTS = """
 
 julia_version = "1.10.0-DEV"
 manifest_format = "2.0"
-project_hash = "ae44de63df444ba476e72c536643e3f4974df324"
+project_hash = "68d0f9a62eea1a84aa50baacc5b2544681472c57"
 
 [[deps.ANSIColoredPrinters]]
 git-tree-sha1 = "574baf8110975760d391c710b6341da1afa48d8c"
@@ -299,12 +319,6 @@ deps = ["Logging", "Random"]
 git-tree-sha1 = "f7be53659ab06ddc986428d3a9dcc95f6fa6705a"
 uuid = "b5f81e59-6552-4d32-b1f0-c071b021bf89"
 version = "0.2.2"
-
-[[deps.InferenceObjects]]
-deps = ["Compat", "Dates", "DimensionalData", "Tables"]
-git-tree-sha1 = "361745ffe5c136123a8235ac11724e34931ac7a5"
-uuid = "b5cf5a8d-e756-4ee3-b014-01d49d192c00"
-version = "0.3.1"
 
 [[deps.InlineStrings]]
 deps = ["Parsers"]
@@ -616,22 +630,21 @@ version = "17.4.0+0"
 """
 
 # ╔═╡ Cell order:
-# ╠═cecf32d4-6047-11ed-31d9-9514b3067c9c
-# ╠═3a1b3129-e17b-48c5-b7c2-a8caaa55a442
-# ╠═a92b66bc-4869-4bd1-8a5a-c519df844fcf
-# ╠═8579afa5-4b67-4b64-9f4a-5de9add5fec4
-# ╠═b7291faa-3487-4ed5-ae41-501f83f0bf3c
-# ╠═a1e486d9-ad7f-48ae-8d51-9ae446e6c030
-# ╠═d572fb32-4ccf-4ba9-a995-48877e90f232
-# ╟─150f9cea-91da-4648-8469-dfb4c852227a
-# ╠═3b2eee33-a2f2-4dc8-a4a1-89fa036a1385
-# ╠═4d703d31-d03e-4c37-b4b9-c29f29b5cc62
-# ╠═8a6367b7-92f9-498e-874d-868b0a402d3e
-# ╠═5bf5c448-5b76-4c77-9529-9106f94bc1ef
-# ╠═9a15cd96-2863-4b87-b3eb-3d14fb128b6d
-# ╠═4da97b66-2c45-4c19-aa32-487a95fb23e9
-# ╠═8f52ef47-46e2-4028-83f1-c9cd183bc799
-# ╠═2e19a32a-4a26-4b53-8173-ea3d74eb19f4
-# ╠═30b9724d-73f4-4888-9698-b01f0ed1c720
+# ╟─567821e6-18a9-43ba-a35f-c75cc3146d98
+# ╟─9be99d72-d78e-494a-8d4b-8cafeb9f2f4c
+# ╠═a0f056fc-f537-4778-8433-ffd53cb75db3
+# ╠═d89204c4-7ee5-11ed-3356-1581fcf877fa
+# ╠═bcfd62c6-dbd3-41af-b329-9fddb22b18c2
+# ╠═05d79a9b-8506-40a4-8a5f-16bf9956f7f5
+# ╠═d4b95015-b202-475b-bc70-9389fcb90b70
+# ╠═d6ab26aa-fe54-49a0-97ae-90f626337fc7
+# ╠═0dbe88e2-14e2-43c1-8f49-754547a369e9
+# ╠═63aad88a-a263-40d3-bb78-d643b9b66d82
+# ╠═32bdb60f-b347-453a-8384-4c3fe0f465e6
+# ╠═55ac1b70-dcd4-49a8-8fb1-5164370f7ade
+# ╠═eb31f80c-7b81-458c-a217-2374bd83962d
+# ╠═ad36dba7-5934-4510-8ec7-7b9ed8498d1c
+# ╠═02d42039-9510-4dfd-bbe7-7bbaba18445f
+# ╠═81671185-b8e7-4b61-8109-450374d9b348
 # ╟─00000000-0000-0000-0000-000000000001
 # ╟─00000000-0000-0000-0000-000000000002

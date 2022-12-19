@@ -1,4 +1,4 @@
-# Stan V9
+# Stan V10
 
 | **Project Status**                                                               |  **Documentation**                                                               | **Build Status**                                                                                |
 |:-------------------------------------------------------------------------------:|:-------------------------------------------------------------------------------:|:-----------------------------------------------------------------------------------------------:|
@@ -32,13 +32,15 @@ Early versions of Stan.jl took a similar approach as the recently released [CmdS
 
 In Stan.jl v7 all of cmdstan's methods were moved to separate packages, i.e. StanSample.jl, StanOptimize.jl, StanVariational.jl and StanDiagnose.jl, including an option to run `generate_quantities` as part of StanSample.jl. 
 
-Stan.jl v9 uses StanSample.jl v6, StanOptimize.jl v4, StanQuap.jl v4, StanDiagnose.jl v4 and StanVariational v4 and supports multithreading on C++ level. Stan.jl v9 also uses JSON.jl to generate data and init input files for cmdstan.
+Stan.jl v10 uses StanSample.jl v7, StanOptimize.jl v4, StanQuap.jl v4, StanDiagnose.jl v4 and StanVariational v4 and supports multithreading on C++ level. Stan.jl v10 also uses JSON.jl to generate data and init input files for cmdstan.
 
-Stan.jl v9 also supports InferenceObjects.jl and PosteriorDB.jl. See the example notebooks in the Examples_Notebooks subdirectory.
+Stan.jl v10 supports InferenceObjects.jl and PosteriorDB.jl. See the example notebooks in the Examples_Notebooks subdirectory.
 
 BridgeStan v1.0 is no longer included in StanSample.jl but support for it is setup if bridgestan and cmdstan have been installed in the same directory. See the notebook `bridgestan.jl` in Example_Notebooks.
 
-Note that these are new packages and updates are to be expected. Unfortunately 
+Note that these are new packages and more updates are to be expected!
+
+To use the :dimarray or :dimarrays option in `read_samples())`, see the example notebook `dimarray.jl`.
 
 The StanJulia ecosystem includes 2 additional packages, StanQuap.jl (to compute [MAP](https://en.wikipedia.org/wiki/Maximum_a_posteriori_estimation) estimates) and DiffEqBayesStan.jl.
 
@@ -48,9 +50,9 @@ The StanJulia ecosystem includes 2 additional packages, StanQuap.jl (to compute 
 
 ## Options for multi-threading and multi-chaining
 
-Stan.jl v9 is intended to use Stan's `cmdstan` v2.28.2+ and StanSample.jl v6.
+Stan.jl v10 is intended to use Stan's `cmdstan` v2.28.2+ and StanSample.jl v6.
 
-StanSample.jl v6 enables the use of c++ multithreading in the `cmdstan` binary. To activate multithreading in `cmdstan` this needs to be specified during the build process of `cmdstan`. I typically create a `path_to_cmdstan_directory/make/local` file (before running `make -j9 build`) containing `STAN_THREADS=true`. For an example, see the `.github/CI.yml` script
+StanSample.jl v6+ enables the use of c++ multithreading in the `cmdstan` binary. To activate multithreading in `cmdstan` this needs to be specified during the build process of `cmdstan`. I typically create a `path_to_cmdstan_directory/make/local` file (before running `make -j9 build`) containing `STAN_THREADS=true`. For an example, see the `.github/CI.yml` script
 
 This means StanSample supports 2 mechanisms for in parallel drawing samples for chains, i.e. on C++ level (using C++ threads) and on Julia level (by spawing a Julia process for each chain). 
 
@@ -90,17 +92,23 @@ Set the CMDSTAN environment variable so that Julia can find the cmdstan installa
 
 ## Versions
 
-### Version 9.10.6 (under development)
+### Version 10.0.0
+
+1. Uses StanSample.jl v7.
+2. Updated example notebooks.
+3. Added some pdf versions of the notebooks.
+4. Added a short README to the Example_Notebooks directory.
+
+### Version 9.10.6 (experimental release)
 
 1. Switch to InferenceObjects v0.3
 2. BridgeStan support has been removed fron StanSample.jl v6.13.8
 3. New example notebook to demonstrate use of BridgeStan
 
-### Version 9.10.5 (under development)
+### Version 9.10.5 (experimental release)
 
 1. Enforce the latest compatible version of StanSample.jl (6.13.7)
 2. `inferencedata()` now uses the Dict based `inferencedata3()` in StanSample.jl
-3. 
 
 ### Versions 9.10-9.10.4
 
