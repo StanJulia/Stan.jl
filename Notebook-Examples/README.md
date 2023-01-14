@@ -14,5 +14,3 @@ julia> Pluto.run()   # A page should open up in your default browser
 Select a notebook in Pluto "Open a notebook" box, e.g. type "./".
 
 See [this](https://github.com/fonsp/Pluto.jl/) page for more details.
-
-For a limited set of these notebooks, a pdf version has been added.
