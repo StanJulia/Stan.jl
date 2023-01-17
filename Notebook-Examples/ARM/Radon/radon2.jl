@@ -1,279 +1,477 @@
 ### A Pluto.jl notebook ###
-# v0.19.19
+# v0.19.18
 
 using Markdown
 using InteractiveUtils
 
-# ╔═╡ 1d6c9e3b-b20d-462d-b633-a808305afdec
+# ╔═╡ 5084b8f0-65ac-4704-b1fc-2a9008132bd7
 using Pkg
 
-# ╔═╡ 5d720373-d1c8-4947-b29e-9bedb9a63a2c
+# ╔═╡ 550371ad-d411-4e66-9d63-7329322c6ea1
 begin
-	# Specific to ROSStanPluto
+    # Specific to ROSStanPluto
     using StanSample
-	using Distributions
+	using DataFramesMeta
 	
 	# Graphics related
     using GLMakie
-
-	# Common data files and functions
+		
+	# Include basic packages
 	using RegressionAndOtherStories
 end
 
-# ╔═╡ 5eaece93-07bf-4550-b393-2a4891cd9b99
-md" ##### Widen the notebook."
+# ╔═╡ cf39df58-3371-4535-88e4-f3f6c0404500
+md" ##### Widen the cells."
 
-# ╔═╡ 1d5532f7-cc38-446b-a6da-458a9564afcc
+# ╔═╡ 0616ece8-ccf8-4281-bfed-9c1192edf88e
 html"""
 <style>
 	main {
 		margin: 0 auto;
 		max-width: 2000px;
     	padding-left: max(160px, 10%);
-    	padding-right: max(160px, 10%);
+    	padding-right: max(160px, 30%);
 	}
 </style>
 """
 
-# ╔═╡ f5ccc087-1ad0-42cd-b09a-02eb46cc441a
-md"##### A typical set of Julia packages to include in notebooks."
+# ╔═╡ 4755dab0-d228-41d3-934a-56f2863a5652
+md"###### A typical set of Julia packages to include in notebooks."
 
-# ╔═╡ 7c435cd5-769c-477b-bccf-398053bcbd74
-function zscore_transform(data)
-    μ = mean(data)
-    σ = std(data)
-    z(d) = (d .- μ) ./ σ
-    return z
-end
+# ╔═╡ 64b4a0ff-57ab-40e0-846c-607ba56f87c0
+pwd()
 
-# ╔═╡ d8ca810d-1bb6-4087-a760-ded35b3ea5b5
+# ╔═╡ f41a688c-dd21-499b-a8fd-e04479d65833
 begin
-	N = 500
-	U_sim = rand(Normal(), N )
-	Q_sim = sample(1:4 , N ; replace=true )
-	sim_df = DataFrame(
-		E_sim = [rand(Normal( U_sim[i] + Q_sim[i]), 1)[1] for i in 1:length(U_sim)],
-		W_sim = [rand(Normal( U_sim[i] + 0 * Q_sim[i]), 1)[1] for i in 1:length(U_sim)]
-	)
+	mn_radon = CSV.read(joinpath(pwd(), "data", "mn_radon.csv"), DataFrame)
+	mn_radon.county = rstrip.(String.(mn_radon.county))
+	mn_radon
 end
 
-# ╔═╡ 4a762650-2f97-483c-a2d8-ca9a5e15038e
-stan14_6 = "
-data{
-    vector[500] W;
-    vector[500] E;
-    vector[500] Q;
-}
-parameters{
-    real aE;
-    real aW;
-    real bQE;
-    real bEW;
-    corr_matrix[2] Rho;
-    vector<lower=0>[2] Sigma;
-}
-model{
-    vector[500] muW;
-    vector[500] muE;
-    Sigma ~ exponential( 1 );
-    Rho ~ lkj_corr( 2 );
-    bEW ~ normal( 0 , 0.5 );
-    bQE ~ normal( 0 , 0.5 );
-    aW ~ normal( 0 , 0.2 );
-    aE ~ normal( 0 , 0.2 );
-    for ( i in 1:500 ) {
-        muE[i] = aE + bQE * Q[i];
-    }
-    for ( i in 1:500 ) {
-        muW[i] = aW + bEW * E[i];
-    }
-    {
-        vector[2] YY[500];
-        vector[2] MU[500];
-        for ( j in 1:500 ) MU[j] = [ muW[j] , muE[j] ]';
-        for ( j in 1:500 ) YY[j] = [ W[j] , E[j] ]';
-        YY ~ multi_normal( MU , quad_form_diag(Rho , Sigma) );
-    }
-}";
+# ╔═╡ eaf0cef7-49c0-407f-8490-56df84a87c30
+begin
+	mn_uranium = CSV.read(joinpath(pwd(), "data", "mn_uranium.csv"), DataFrame)
+	mn_uranium.county = rstrip.(String.(mn_uranium.county))
+	mn_uranium
+end
 
-# ╔═╡ d24ea359-a900-453f-bd15-19a073dacc1f
-# ╠═╡ show_logs = false
+# ╔═╡ cb6e55ba-1423-49d8-b84e-f7a7766e5ebb
+begin
+	mn_not_sorted = leftjoin(mn_radon, mn_uranium[:, [:county, :homes]]; on=:county)
+	mn_basement = mn_not_sorted[mn_not_sorted.floor .== 0, :]
+	mn_floor = mn_not_sorted[mn_not_sorted.floor .== 1, :]
+	mn_basement_length = nrow(mn_basement)
+	mn_floor_length = nrow(mn_floor)
+	# Sort according no of homes with measurements
+	mn_sorted = sort(mn_not_sorted, [order(:homes, rev=false), order(:county_id, rev=true)])
+	mn_basement_sorted = mn_sorted[mn_sorted.floor .== 0, :]
+	mn_floor_sorted = mn_sorted[mn_sorted.floor .== 1, :]
+	# Sort mn_uranium the same way
+	mn_uranium_sorted = sort(mn_uranium, [order(:homes, rev=false), order(:county_id, rev=true)])
+	mn_sorted
+end
+
+# ╔═╡ 534496cf-d97c-4584-b220-a7b642447c6a
+begin
+	df_by = @by(mn_not_sorted,:county, :mean_log_radon = mean(:log_radon))
+	df_by.log_uranium = mn_uranium.log_uranium
+	df_by.homes = mn_uranium.homes
+	df_by.county_id = mn_uranium.county_id
+	df_by
+end
+
+# ╔═╡ 6e4893d8-e11b-4bda-8f65-d14476b1b4f8
+sort(df_by, [order(:homes), order(:county_id, rev=true)])
+
+# ╔═╡ a78cf2d0-0c7e-470c-9f31-d1140416f31f
+mn_sorted
+
+# ╔═╡ d73b3781-4c42-420f-ad0b-5d7ed5629049
+mn_uranium_sorted
+
+# ╔═╡ 1b78d487-9072-4e3a-9a9d-eaaec00d2a4e
 let
-    data = (
-        W=standardize(ZScoreTransform, sim_df.W_sim),
-        E=standardize(ZScoreTransform, sim_df.E_sim),
-        Q=standardize(ZScoreTransform, Float64.(Q_sim))
-    )
+	f = Figure()
+	ax = Axis(f[1, 1], xlabel="log_radon", ylabel="count")
+	h1 = hist!(mn_basement.log_radon; bins = LinRange(-3, 4, 30), normalization = :none, color=:blue, strokewidth = 1,
+		strokecolor = :black)
+	h2 = hist!(mn_floor.log_radon; bins = LinRange(-3, 4, 30), normalization = :none, color=:red, strokewidth = 1,
+		strokecolor = :black)
+	Legend(f[1, 2], [h1, h2], ["Basenent", "First floor"])
+	f
+end
 
-	global m14_6s = SampleModel("m14_6s", stan14_6)
-	global rc14_6s = stan_sample(m14_6s; data)
-	if success(rc14_6s)
-		post14_6s = read_samples(m14_6s, :dataframe)
+# ╔═╡ 68b5b903-15e8-4b6e-a5c9-e9ff68eb9393
+let
+	f = Figure()
+	ax = Axis(f[1, 1], xlabel="log_radon", ylabel="count")
+	h1 = density!(mn_basement.log_radon; color=(:blue, 0.2), strokecolor = :blue, strokewidth = 3, strokearound = true)
+	h2 = density!(mn_floor.log_radon; color=(:red, 0.2), strokecolor = :red, strokewidth = 3, strokearound = true)
+	Legend(f[1, 2], [h1, h2], ["Basenent", "First floor"])
+	f
+end
+
+# ╔═╡ 66b541cd-303e-410d-8969-39c22ca92cc0
+let
+	cat_labels = [x == 0 ? "Basement" : "First floor" for x in mn_radon.floor]
+	colors = [x == 0 ? :blue : :red for x in mn_radon.floor]
+	f = Figure()
+	ax = Axis(f[1, 1])
+	rainclouds!(ax, cat_labels, mn_radon.log_radon; plot_boxplots=true, plot_clouds=true, color=colors)
+	f
+end
+
+# ╔═╡ 531f6333-19ad-4850-9773-d0fa4c46a4c7
+length(unique(mn_not_sorted.county))
+
+# ╔═╡ e472968a-47d9-4091-8518-e1bbd4947602
+length(unique(mn_basement.county))
+
+# ╔═╡ 49eefcd1-14f5-496a-8724-19ac3fa5fee1
+length(unique(mn_floor.county))
+
+# ╔═╡ 9467a274-4a6f-43e0-a4f8-23d43d17ff7e
+let
+	f = Figure()
+	ax = Axis(f[1, 1])
+	hist!(mn_uranium.homes; bins=LinRange(-10, 120, 60))
+	f
+end
+
+# ╔═╡ e1ac6e9d-46a8-4794-ae0f-c246e73c03a7
+let
+	labs = unique(mn_sorted.county)
+	counties = [findfirst(==(i), labs) for i in mn_sorted.county]
+	boxplot(counties, mn_sorted.log_radon; axis = (xticks = (1:85, labs), xticklabelrotation = pi/2, xticklabelsize=8))
+end
+
+# ╔═╡ 80c03d27-a44e-4967-812f-0d4523d86249
+let
+	f = Figure()
+	ax = Axis(f[1, 1]; xlabel="Observations per county", ylabel="County soil log_uranium")
+	scatter!(mn_not_sorted.homes, mn_not_sorted.log_uranium)
+	for r in eachrow(mn_not_sorted)
+		if r.homes > 25
+			annotations!(r.county; position=(r.homes - 4, r.log_uranium + 0.02), fontsize=10)
+		end
 	end
+	f
 end
 
-# ╔═╡ b2697f47-59be-49fe-8e58-dffd705b3b4c
-describe(m14_6s)
+# ╔═╡ df07541f-13ec-4192-acde-82c02ab6bcf6
+md" #### Complete pooling regression log_radon on floor."
 
-# ╔═╡ 54753000-d19f-4fa5-9d49-18e2ab052ffd
-md"
-!!! note
-
-In above cell the logs have been hidden!"
-
-# ╔═╡ c0c926ad-715d-4126-8bdd-ce6ea5b158a6
-md"
-```julia
-> precis( m14.6 , depth=3 )
-          mean   sd  5.5% 94.5% n_eff Rhat4
-aE        0.00 0.04 -0.06  0.06  1669     1
-aW        0.00 0.04 -0.07  0.07  1473     1
-bQE       0.59 0.03  0.53  0.64  1396     1
-bEW      -0.05 0.07 -0.17  0.07   954     1
-Rho[1,1]  1.00 0.00  1.00  1.00   NaN   NaN
-Rho[1,2]  0.54 0.05  0.46  0.62  1010     1
-Rho[2,1]  0.54 0.05  0.46  0.62  1010     1
-Rho[2,2]  1.00 0.00  1.00  1.00   NaN   NaN
-Sigma[1]  1.02 0.04  0.96  1.10  1011     1
-Sigma[2]  0.81 0.03  0.77  0.85  1656     1
-```
-"
-
-# ╔═╡ 6e60a2b8-5a3e-4e90-8c48-4e8b9a3d76ed
-if success(rc14_6s)
-    post14_6s = read_samples(m14_6s, :dataframe)
-end
-
-# ╔═╡ 4b53e73e-97a2-4a6c-a534-11361943c102
-StanSample.find_nested_columns(post14_6s)
-
-# ╔═╡ 175bcbdc-1749-41c2-8b99-475ca9c9b8c6
-StanSample.select_nested_column(post14_6s, :Sigma)
-
-# ╔═╡ 5a45f3b3-794b-4d67-b3b7-75a78d4f4b1f
-StanSample.select_nested_column(post14_6s, :Rho)
-
-# ╔═╡ 4f785e76-01a2-42c8-9863-3f3e1b6160c0
-nd = read_samples(m14_6s, :nesteddataframe)
-
-# ╔═╡ 9b015a56-a3e0-4a44-98ff-130aac93fdcd
-m = array(nd, :Rho)
-
-# ╔═╡ fb283b4f-42cf-4db7-bbf9-2fe67fcd21e0
-nd[3, :Rho]
-
-# ╔═╡ 54c3cd51-35d9-4973-8dc2-ab3e938966e5
-array(nd, :Sigma)
-
-# ╔═╡ eae9cc3e-e815-4678-9582-90f4734be215
-md" #### A more complicated example."
-
-# ╔═╡ df2623a0-75cf-45f0-a520-cecda8df93aa
-begin
-	Omega = [1 0.3 0.2; 0.3 1 0.1; 0.2 0.1 1]
-	sigma = [1, 2, 3]
-	Sigma = diagm(sigma) .* Omega .* diagm(sigma)
-	y = rand(MvNormal([0,0,0], Sigma), 100)
-	datat = (N = 100, J = 3, y=Matrix(transpose(y)), Zero=zeros(3))
-end
-
-# ╔═╡ 9d955aed-6e2a-4925-a13c-4d32b2dc47b2
-stan1_0 = "
+# ╔═╡ f11b4bdc-3ad4-467d-b75c-37da5e9dcb2c
+stan_cp = "
+/* simple linear regression model */
 data {
-  int<lower=1> N; // number of observations
-  int<lower=1> J; // dimension of observations
-  vector[J] y[N]; // observations
-  vector[J] Zero; // a vector of Zeros (fixed means of observations)
+  int<lower=0> N;
+  vector[N] x;
+  vector[N] y;
 }
 parameters {
-  corr_matrix[J] Omega; 
-  vector<lower=0>[J] sigma; 
-}
-transformed parameters {
-  cov_matrix[J] Sigma; 
-  Sigma <- quad_form_diag(Omega, sigma); 
+  real alpha;
+  real beta;
+  real<lower=0> sigma;
 }
 model {
-  y ~ multi_normal(Zero,Sigma); // sampling distribution of the observations
-  sigma ~ cauchy(0, 5); // prior on the standard deviations
-  Omega ~ lkj_corr(1); // LKJ prior on the correlation matrix 
+  y ~ normal(alpha + beta * x, sigma);
 }";
 
-# ╔═╡ e36f6ece-6a5a-4df3-a9ac-83dcb33e914c
-stan2_0 = "
+# ╔═╡ d2585fa2-0d5e-480f-863a-c7c515404057
+tmpdir = mktempdir()
+
+# ╔═╡ db6a5dab-a738-42d3-a97a-4ca60894b9ca
+begin
+	m_cp = SampleModel("cp", stan_cp, tmpdir)
+	rc_cp = stan_sample(m_cp; data=(N=length(mn_not_sorted.floor), x=mn_not_sorted.floor, y=mn_not_sorted.log_radon))
+	success(rc_cp) && describe(m_cp, [:alpha, :beta, :sigma]; digits=2)
+end
+
+# ╔═╡ 9e471ad3-6c48-4f8a-b204-4ee864837898
+begin
+	post_cp = read_samples(m_cp, :dataframe)
+	ms_cp = model_summary(post_cp, [:alpha, :beta, :sigma]; digits=2)
+end
+
+# ╔═╡ 10395123-f9c9-441d-a497-cb7be9fa7b18
+let
+	fig = Figure()
+	xlabel = "floor"
+	ylabel="log_radon"
+	ax = Axis(fig[1, 1]; title="Regression log_radon on floor, all counties.", 
+		xlabel, ylabel, xticks=([0, 1], ["Basement", "First floor"]))
+	scatter!(mn_basement.floor .+ rand(Normal(0, 0.01), mn_basement_length), mn_basement.log_radon, markersize=2, color=:blue)
+	scatter!(mn_floor.floor .+ rand(Normal(0, 0.01), mn_floor_length), mn_floor.log_radon, markersize=2, color=:red)
+	xrange = LinRange(0, 1, 30)
+	lines!(xrange, mean(post_cp.alpha) .+ mean(post_cp.beta) .* xrange, color = :darkgrey)
+	fig
+end
+
+# ╔═╡ fbe0ea14-69be-4cc6-9d38-4e114b2e2562
+let
+	f = Figure()
+	ax = Axis(f[1, 1], xlabel="county-level log_uranium", ylabel="home log_radon", title="Home log_radon basement")
+	scatter!(mn_basement.log_uranium, mn_basement.log_radon; markersize=6)
+	ax = Axis(f[1, 2], xlabel="county-level log_uranium", title="Home log_radon first floor")
+	scatter!(mn_floor.log_uranium, mn_floor.log_radon; color=:red, markersize=6)
+	f
+end
+
+# ╔═╡ 8fd8ec26-7c0c-43a2-ae4c-af6e89b185fd
+md" #### No pooling regression log_radon on floor."
+
+# ╔═╡ 6618c5b5-be74-40db-9488-f65581102556
+stan_np ="
 data {
-  int<lower=1> N; // number of observations
-  int<lower=1> J; // dimension of observations
-  vector[J] y[N]; // observations
-  vector[J] Zero; // a vector of Zeros (fixed means of observations)
+  int<lower=1> N;  // observations
+  int<lower=1> J;  // counties
+  array[N] int<lower=1, upper=J> county;
+  vector[N] x;     // floor
+  vector[N] y;     // radon
 }
 parameters {
-  cholesky_factor_corr[J] Lcorr;  
-  vector<lower=0>[J] sigma; 
+  vector[J] alpha;
+  real beta;
+  real<lower=0> sigma;
 }
 model {
-  y ~ multi_normal_cholesky(Zero, diag_pre_multiply(sigma, Lcorr));
-  sigma ~ cauchy(0, 5);
-  Lcorr ~ lkj_corr_cholesky(1);
+  y ~ normal(alpha[county] + beta * x, sigma);  
+  alpha ~ normal(0, 10);
+  beta ~ normal(0, 10);
+  sigma ~ normal(0, 10);
 }
 generated quantities {
-  matrix[J,J] Omega;
-  matrix[J,J] Sigma;
-  Omega <- multiply_lower_tri_self_transpose(Lcorr);
-  Sigma <- quad_form_diag(Omega, sigma); 
+  array[N] real y_rep = normal_rng(alpha[county] + beta * x, sigma);
 }";
 
-# ╔═╡ d513652f-7360-491a-a185-6263f8f39748
-# ╠═╡ show_logs = false
+# ╔═╡ 78a27a91-ed1d-4123-8c5c-db16937e38f1
 begin
-	m1_0s = SampleModel("stan1_0s", stan1_0)
-	rc1_0s = stan_sample(m1_0s; num_samples=9000, data=datat)
-	success(rc1_0s) && describe(m1_0s)
+	m_np = SampleModel("m_np", stan_np, tmpdir)
+	rc_np = stan_sample(m_np; data=(N=length(mn_not_sorted.floor), J=85, county=mn_not_sorted.county_id, x=mn_not_sorted.floor,
+		y=mn_not_sorted.log_radon))
+	sum_np = success(rc_np) && read_summary(m_np)
+	sum_np[1:12, :]
 end
 
-# ╔═╡ a72f7df7-9cf1-4845-9f67-5dfa8f003f6a
-md"
-!!! note
+# ╔═╡ 3c34799c-86bb-4e30-b0de-fda416ac26d5
+np_post = read_samples(m_np, :dataframe)
 
-Note that `hide logs` has been selected in above cell."
-
-# ╔═╡ e49078fc-a0b0-49b4-865c-d526e7bf7750
-if success(rc1_0s)
-  post1_0s = read_samples(m1_0s, :nesteddataframe)
+# ╔═╡ af7d7105-ba33-42d5-8e82-98fcff8d3d37
+function mlu(data, PI = (0.055, 0.945))
+    m = mean.(eachcol(data))
+    lower = quantile.(eachcol(data), PI[1])
+    upper = quantile.(eachcol(data), PI[2])
+    return (mean = m,
+            lower = lower,
+            upper = upper)
 end
 
-# ╔═╡ 392ecd83-ccb5-4312-a8f5-ea7e5a63a019
+# ╔═╡ bfe787fa-9512-47d9-af60-e71c4f43646b
+let
+	m, l, u = mlu(DataFrame(np_post, :alpha), (0.16, 0.84))
+	labs = unique(mn_not_sorted.county)
+	homes = [mn_not_sorted[mn_not_sorted.county .==  l, :homes][1] for l in labs]
+	global np_alpha = DataFrame(county=labs, county_id=mn_uranium.county_id, homes=homes, mean=m, lower=l, upper=u)
+end
+
+# ╔═╡ 14cfd6e9-0d8a-4e1e-b601-c924380bff27
+let
+	f = Figure()
+	ax = Axis(f[1, 1]; xticks = (1:85, np_alpha.county), xticklabelrotation = pi/2, xticklabelsize=8,
+		title="No-pooling estimates of alpha values in each county.", ylabel="alpha", xlabel="counties")
+	hlines!(ms_cp[:alpha, :mean]; color=:orange)
+	indx = 1
+	for r in eachrow(np_alpha)
+		lines!([indx, indx], [np_alpha.lower[indx], np_alpha.upper[indx]]; color=:grey)
+		scatter!(np_alpha.mean)
+		indx += 1
+	end
+	f
+end
+
+# ╔═╡ bcc93793-f264-4070-aca0-b166fb16c91d
+let
+	np_alpha = sort(np_alpha, [order(:homes), order(:county_id, rev=true)])
+	f = Figure()
+	ax = Axis(f[1, 1]; xticks = (1:85, np_alpha.county), xticklabelrotation = pi/2, xticklabelsize=8,
+		title="No-pooling estimates of alpha values in each county, sorted by homes.", ylabel="alpha", xlabel="counties")
+	hlines!(ms_cp[:alpha, :mean]; color=:orange)
+	indx = 1
+	for r in eachrow(np_alpha)
+		lines!([indx, indx], [np_alpha.lower[indx], np_alpha.upper[indx]]; color=:grey)
+		scatter!(np_alpha.mean)
+		indx += 1
+	end
+	f
+end
+
+# ╔═╡ 2ffeb590-d367-468c-aa2b-87fc462c6870
+md" #### Predictive values."
+
+# ╔═╡ 54cf46fb-fdef-493f-9d2c-89ff0675994a
 begin
-	m2_0s = SampleModel("stan2_0s", stan2_0)
-	rc2_0s = stan_sample(m2_0s; num_samples=9000, data=datat)
-	success(rc2_0s) && describe(m2_0s)
+	m_np_bsmt = SampleModel("m_np", stan_np, tmpdir)
+	rc_np_bsmt = stan_sample(m_np_bsmt; data=(N=length(mn_basement_sorted.floor), J=85, county=mn_basement_sorted.county_id,
+		x=mn_basement_sorted.floor, y=mn_basement_sorted.log_radon))
+	sum_np_bsmt = success(rc_np_bsmt) && read_summary(m_np_bsmt)
+	sum_np_bsmt
 end
 
-# ╔═╡ 6e6f09f4-7f7f-477d-8352-bf80819a63a9
-if success(rc2_0s)
-  post2_0s = read_samples(m2_0s, :nesteddataframe)
+# ╔═╡ 0df0c8ad-0499-4b89-9987-e01284f1fe5e
+function mslu(data, PI = (0.055, 0.945))
+    m = mean.(eachcol(data))
+	s = std.(eachcol(data))
+    lower = quantile.(eachcol(data), PI[1])
+    upper = quantile.(eachcol(data), PI[2])
+    return (mean = m,
+			std = s,
+            lower = lower,
+            upper = upper)
 end
 
-# ╔═╡ d76874f9-78d1-40ae-88fc-c75f415394e3
-stack(post2_0s.sigma; dims=1)
+# ╔═╡ fc03f276-2e2b-46a3-8059-5df0ae5eec6a
+let
+	global np_post_bsmt = read_samples(m_np_bsmt, :dataframe)
+	m, s, l, u = mslu(DataFrame(np_post_bsmt, :y_rep), (0.16, 0.84))
+	global np_y_rep_bsmt = DataFrame(county=mn_basement_sorted.county, mean=m, std=s,lower=l, upper=u)
+end
 
-# ╔═╡ 80aa8676-b6e5-4ee8-8622-498e055c9db8
-array(post2_0s, :Omega)
+# ╔═╡ c3d9fe98-003b-446c-a058-79b120309b83
+let
+	labs = unique(mn_basement_sorted.county)
+	counties = [findfirst(==(i), labs) for i in mn_basement_sorted.county]
+	
+	f = Figure()
+	ax = Axis(f[1, 1]; xticks = (1:85, labs), xticklabelrotation = pi/2, xticklabelsize=8,
+		xlabel="Counties (sorted by no of measurements)", ylabel="Predicted log_radon value", title="No pooling predictions")
+	scatter!(counties, np_y_rep_bsmt.mean)
+	hlines!(mean(Array(DataFrame(np_post_bsmt, :y_rep))); color=:orange)
+	for (indx, county) in enumerate(counties)
+		lines!([county, county], 
+			[
+				np_y_rep_bsmt.mean[indx] - np_y_rep_bsmt.std[indx]/sqrt(mn_basement_sorted.homes[indx]), 
+				np_y_rep_bsmt.mean[indx] + np_y_rep_bsmt.std[indx]/sqrt(mn_basement_sorted.homes[indx])
+			], color=:grey)
+	end
+	f
+end
 
-# ╔═╡ 52ebdcd8-9083-4d77-ae41-07115c721a2c
-post2_0s.Omega[1:3]
+# ╔═╡ 5fc3ef9b-c41c-4b7f-b1ac-1a60cc5d36d1
+DataFrame(np_post_bsmt, :y_rep)
+
+# ╔═╡ dd1492d2-e994-4371-9dcd-246ae498035d
+mean(Array(DataFrame(np_post_bsmt, :y_rep)))
+
+# ╔═╡ 52a15ff6-d705-4b62-bf45-dd6693f4f9d9
+md" #### Partial pooling regression log_radon on floor."
+
+# ╔═╡ d2087caa-d168-4a75-b8df-8d00e393bcfd
+stan_pp = "
+data {
+  int<lower=1> N;  // observations
+  int<lower=1> J;  // counties
+  array[N] int<lower=1, upper=J> county;
+  vector[N] x;
+  vector[N] y;
+}
+parameters {
+  real beta;
+  real<lower=0> sigma;
+  real mu_alpha;
+  real<lower=0> sigma_alpha;
+  vector<offset=mu_alpha, multiplier=sigma_alpha>[J] alpha;  // non-centered parameterization
+}
+model {
+  y ~ normal(alpha[county] + beta * x, sigma);  
+  alpha ~ normal(mu_alpha, sigma_alpha); // partial-pooling
+  beta ~ normal(0, 10);
+  sigma ~ normal(0, 10);
+  mu_alpha ~ normal(0, 10);
+  sigma_alpha ~ normal(0, 10);
+}
+generated quantities {
+  array[N] real y_rep = normal_rng(alpha[county] + beta * x, sigma);
+}";
+
+# ╔═╡ 8ed5bbeb-96cb-42e4-8617-bab46b1dbcdd
+begin
+	m_pp = SampleModel("m_pp", stan_pp, tmpdir)
+	rc_pp = stan_sample(m_pp; data=(N=length(mn_radon.floor), J=85, county=mn_radon.county_id, x=mn_radon.floor, y=mn_radon.log_radon))
+	success(rc_pp) && describe(m_pp, [:beta, :mu_alpha, :sigma_alpha, :sigma]; digits=2)
+end
+
+# ╔═╡ d176a5b2-1e33-4b81-998a-6f336a19b57f
+begin
+	post_pp = read_samples(m_pp, :dataframe)
+	ms_pp = model_summary(post_pp, [:beta, :mu_alpha, :sigma_alpha, :sigma], digits=2)
+end
+
+# ╔═╡ 9e27130e-e397-4014-a2ca-fbf4972651ad
+pp_post = read_samples(m_pp, :dataframe)
+
+# ╔═╡ db722a37-3044-4ab2-8a0d-a3a8565a5ccd
+let
+	m, l, u = mlu(DataFrame(pp_post, :alpha), (0.16, 0.84))
+	labs = unique(mn_not_sorted.county)
+	homes = [mn_not_sorted[mn_not_sorted.county .==  l, :homes][1] for l in labs]
+	global pp_alpha = DataFrame(county=labs, county_id=mn_uranium.county_id, homes=homes, mean=m, lower=l, upper=u)
+end
+
+# ╔═╡ c725ed6c-607d-4f09-93dd-70f8c39d7127
+let
+	pp_alpha = sort(np_alpha, [order(:homes), order(:county_id, rev=true)])
+	f = Figure()
+	ax = Axis(f[1, 1]; xticks = (1:85, pp_alpha.county), xticklabelrotation = pi/2, xticklabelsize=8,
+		title="Partial-pooling estimates of alpha values in each county, sorted by homes.", ylabel="alpha", xlabel="counties")
+	hlines!(ms_cp[:alpha, :mean]; color=:orange)
+	indx = 1
+	for r in eachrow(pp_alpha)
+		lines!([indx, indx], [pp_alpha.lower[indx], pp_alpha.upper[indx]]; color=:grey)
+		scatter!(pp_alpha.mean)
+		indx += 1
+	end
+	f
+end
+
+# ╔═╡ e5d7c810-35ff-4875-ba6b-485411b99640
+let
+	np_alpha = sort(np_alpha, [order(:homes), order(:county_id, rev=true)])
+	f = Figure()
+	ax = Axis(f[1, 1]; title="No-pooling", ylabel="alpha", xlabel="counties")
+	ylims!(ax, [0, 3.5])
+	hlines!(ms_cp[:alpha, :mean]; color=:orange)
+	indx = 1
+	for r in eachrow(np_alpha)
+		lines!([indx, indx], [np_alpha.lower[indx], np_alpha.upper[indx]]; color=:grey)
+		scatter!(np_alpha.mean; color=:darkblue, markersize=12, marker='+')
+		indx += 1
+	end
+	
+	pp_alpha = sort(pp_alpha, [order(:homes), order(:county_id, rev=true)])
+	ax = Axis(f[1, 2]; title="Partial-pooling", ylabel="alpha", xlabel="counties")
+	ylims!(ax, [0, 3.5])
+	hlines!(ms_cp[:alpha, :mean]; color=:orange)
+	indx = 1
+	for r in eachrow(pp_alpha)
+		lines!([indx, indx], [pp_alpha.lower[indx], pp_alpha.upper[indx]]; color=:grey)
+		scatter!(pp_alpha.mean; color=:darkred, markersize=12, marker='o')
+		indx += 1
+	end
+	f
+end
 
 # ╔═╡ 00000000-0000-0000-0000-000000000001
 PLUTO_PROJECT_TOML_CONTENTS = """
 [deps]
-Distributions = "31c24e10-a181-5473-b8eb-7969acd0382f"
+DataFramesMeta = "1313f7d8-7da2-5740-9ea0-a2ca25f37964"
 GLMakie = "e9467ef8-e4e7-5192-8a1a-b1aee30e663a"
 Pkg = "44cfe95a-1eb2-52ea-b672-e2afdf69b78f"
 RegressionAndOtherStories = "21324389-b050-441a-ba7b-9a837781bda0"
 StanSample = "c1514b29-d3a0-5178-b312-660c88baa699"
 
 [compat]
-Distributions = "~0.25.79"
+DataFramesMeta = "~0.12.0"
 GLMakie = "~0.8.0"
 RegressionAndOtherStories = "~0.7.4"
 StanSample = "~7.0.0"
@@ -285,7 +483,7 @@ PLUTO_MANIFEST_TOML_CONTENTS = """
 
 julia_version = "1.10.0-DEV"
 manifest_format = "2.0"
-project_hash = "b768cb182b6c0f8e4444a45fcdd99205410285f8"
+project_hash = "c88c8a755efcb767775c6189368cd1463d9a4cc2"
 
 [[deps.ANSIColoredPrinters]]
 git-tree-sha1 = "574baf8110975760d391c710b6341da1afa48d8c"
@@ -361,7 +559,7 @@ uuid = "336ed68f-0bac-5ca0-87d4-7b16caf5d00b"
 version = "0.10.8"
 
 [[deps.Cairo_jll]]
-deps = ["Artifacts", "Bzip2_jll", "CompilerSupportLibraries_jll", "Fontconfig_jll", "FreeType2_jll", "Glib_jll", "JLLWrappers", "LZO_jll", "Libdl", "Pixman_jll", "Pkg", "Xorg_libXext_jll", "Xorg_libXrender_jll", "Zlib_jll", "libpng_jll"]
+deps = ["Artifacts", "Bzip2_jll", "Fontconfig_jll", "FreeType2_jll", "Glib_jll", "JLLWrappers", "LZO_jll", "Libdl", "Pixman_jll", "Pkg", "Xorg_libXext_jll", "Xorg_libXrender_jll", "Zlib_jll", "libpng_jll"]
 git-tree-sha1 = "4b859a208b2397a7a623a03449e4636bdb17bcf2"
 uuid = "83423d85-b0ee-5818-9007-b63ccbeb887a"
 version = "1.16.1+1"
@@ -377,6 +575,11 @@ deps = ["DataAPI", "Future", "Missings", "Printf", "Requires", "Statistics", "Un
 git-tree-sha1 = "5084cc1a28976dd1642c9f337b28a3cb03e0f7d2"
 uuid = "324d7699-5711-5eae-9e2f-1d82baa6b597"
 version = "0.10.7"
+
+[[deps.Chain]]
+git-tree-sha1 = "8c4920235f6c561e401dfe569beb8b924adad003"
+uuid = "8be319e6-bccf-4806-a6f7-6fae938471bc"
+version = "0.5.0"
 
 [[deps.ChainRulesCore]]
 deps = ["Compat", "LinearAlgebra", "SparseArrays"]
@@ -446,7 +649,7 @@ version = "0.1.25"
 [[deps.CompilerSupportLibraries_jll]]
 deps = ["Artifacts", "Libdl"]
 uuid = "e66e0078-7015-5450-92f7-15fbd957f2ae"
-version = "1.0.2+0"
+version = "1.0.1+0"
 
 [[deps.ConstructionBase]]
 deps = ["LinearAlgebra"]
@@ -474,6 +677,12 @@ deps = ["Compat", "DataAPI", "Future", "InvertedIndices", "IteratorInterfaceExte
 git-tree-sha1 = "d4f69885afa5e6149d0cab3818491565cf41446d"
 uuid = "a93c6f00-e57d-5684-b7b6-d8193f3e46c0"
 version = "1.4.4"
+
+[[deps.DataFramesMeta]]
+deps = ["Chain", "DataFrames", "MacroTools", "OrderedCollections", "Reexport"]
+git-tree-sha1 = "a70c340c1306febfd770a932218561b5e19cf0f6"
+uuid = "1313f7d8-7da2-5740-9ea0-a2ca25f37964"
+version = "0.12.0"
 
 [[deps.DataStructures]]
 deps = ["Compat", "InteractiveUtils", "OrderedCollections"]
@@ -1155,7 +1364,7 @@ version = "1.4.1"
 [[deps.PCRE2_jll]]
 deps = ["Artifacts", "Libdl"]
 uuid = "efcefdf7-47ab-520b-bdef-62a2eaa19f15"
-version = "10.42.0+0"
+version = "10.40.0+0"
 
 [[deps.PDMats]]
 deps = ["LinearAlgebra", "SparseArrays", "SuiteSparse"]
@@ -1760,37 +1969,57 @@ version = "3.5.0+0"
 """
 
 # ╔═╡ Cell order:
-# ╟─5eaece93-07bf-4550-b393-2a4891cd9b99
-# ╠═1d5532f7-cc38-446b-a6da-458a9564afcc
-# ╠═1d6c9e3b-b20d-462d-b633-a808305afdec
-# ╟─f5ccc087-1ad0-42cd-b09a-02eb46cc441a
-# ╠═5d720373-d1c8-4947-b29e-9bedb9a63a2c
-# ╠═7c435cd5-769c-477b-bccf-398053bcbd74
-# ╠═d8ca810d-1bb6-4087-a760-ded35b3ea5b5
-# ╠═4a762650-2f97-483c-a2d8-ca9a5e15038e
-# ╠═d24ea359-a900-453f-bd15-19a073dacc1f
-# ╠═b2697f47-59be-49fe-8e58-dffd705b3b4c
-# ╟─54753000-d19f-4fa5-9d49-18e2ab052ffd
-# ╟─c0c926ad-715d-4126-8bdd-ce6ea5b158a6
-# ╠═6e60a2b8-5a3e-4e90-8c48-4e8b9a3d76ed
-# ╠═4b53e73e-97a2-4a6c-a534-11361943c102
-# ╠═175bcbdc-1749-41c2-8b99-475ca9c9b8c6
-# ╠═5a45f3b3-794b-4d67-b3b7-75a78d4f4b1f
-# ╠═4f785e76-01a2-42c8-9863-3f3e1b6160c0
-# ╠═9b015a56-a3e0-4a44-98ff-130aac93fdcd
-# ╠═fb283b4f-42cf-4db7-bbf9-2fe67fcd21e0
-# ╠═54c3cd51-35d9-4973-8dc2-ab3e938966e5
-# ╠═eae9cc3e-e815-4678-9582-90f4734be215
-# ╠═df2623a0-75cf-45f0-a520-cecda8df93aa
-# ╠═9d955aed-6e2a-4925-a13c-4d32b2dc47b2
-# ╠═e36f6ece-6a5a-4df3-a9ac-83dcb33e914c
-# ╠═d513652f-7360-491a-a185-6263f8f39748
-# ╟─a72f7df7-9cf1-4845-9f67-5dfa8f003f6a
-# ╠═e49078fc-a0b0-49b4-865c-d526e7bf7750
-# ╠═392ecd83-ccb5-4312-a8f5-ea7e5a63a019
-# ╠═6e6f09f4-7f7f-477d-8352-bf80819a63a9
-# ╠═d76874f9-78d1-40ae-88fc-c75f415394e3
-# ╠═80aa8676-b6e5-4ee8-8622-498e055c9db8
-# ╠═52ebdcd8-9083-4d77-ae41-07115c721a2c
+# ╟─cf39df58-3371-4535-88e4-f3f6c0404500
+# ╠═0616ece8-ccf8-4281-bfed-9c1192edf88e
+# ╟─4755dab0-d228-41d3-934a-56f2863a5652
+# ╠═5084b8f0-65ac-4704-b1fc-2a9008132bd7
+# ╠═550371ad-d411-4e66-9d63-7329322c6ea1
+# ╠═64b4a0ff-57ab-40e0-846c-607ba56f87c0
+# ╠═f41a688c-dd21-499b-a8fd-e04479d65833
+# ╠═eaf0cef7-49c0-407f-8490-56df84a87c30
+# ╠═cb6e55ba-1423-49d8-b84e-f7a7766e5ebb
+# ╠═534496cf-d97c-4584-b220-a7b642447c6a
+# ╠═6e4893d8-e11b-4bda-8f65-d14476b1b4f8
+# ╠═a78cf2d0-0c7e-470c-9f31-d1140416f31f
+# ╠═d73b3781-4c42-420f-ad0b-5d7ed5629049
+# ╠═1b78d487-9072-4e3a-9a9d-eaaec00d2a4e
+# ╠═68b5b903-15e8-4b6e-a5c9-e9ff68eb9393
+# ╠═66b541cd-303e-410d-8969-39c22ca92cc0
+# ╠═531f6333-19ad-4850-9773-d0fa4c46a4c7
+# ╠═e472968a-47d9-4091-8518-e1bbd4947602
+# ╠═49eefcd1-14f5-496a-8724-19ac3fa5fee1
+# ╠═9467a274-4a6f-43e0-a4f8-23d43d17ff7e
+# ╠═e1ac6e9d-46a8-4794-ae0f-c246e73c03a7
+# ╠═80c03d27-a44e-4967-812f-0d4523d86249
+# ╟─df07541f-13ec-4192-acde-82c02ab6bcf6
+# ╠═f11b4bdc-3ad4-467d-b75c-37da5e9dcb2c
+# ╠═d2585fa2-0d5e-480f-863a-c7c515404057
+# ╠═db6a5dab-a738-42d3-a97a-4ca60894b9ca
+# ╠═9e471ad3-6c48-4f8a-b204-4ee864837898
+# ╠═10395123-f9c9-441d-a497-cb7be9fa7b18
+# ╠═fbe0ea14-69be-4cc6-9d38-4e114b2e2562
+# ╟─8fd8ec26-7c0c-43a2-ae4c-af6e89b185fd
+# ╠═6618c5b5-be74-40db-9488-f65581102556
+# ╠═78a27a91-ed1d-4123-8c5c-db16937e38f1
+# ╠═3c34799c-86bb-4e30-b0de-fda416ac26d5
+# ╠═af7d7105-ba33-42d5-8e82-98fcff8d3d37
+# ╠═bfe787fa-9512-47d9-af60-e71c4f43646b
+# ╠═14cfd6e9-0d8a-4e1e-b601-c924380bff27
+# ╠═bcc93793-f264-4070-aca0-b166fb16c91d
+# ╟─2ffeb590-d367-468c-aa2b-87fc462c6870
+# ╠═54cf46fb-fdef-493f-9d2c-89ff0675994a
+# ╠═0df0c8ad-0499-4b89-9987-e01284f1fe5e
+# ╠═fc03f276-2e2b-46a3-8059-5df0ae5eec6a
+# ╠═c3d9fe98-003b-446c-a058-79b120309b83
+# ╠═5fc3ef9b-c41c-4b7f-b1ac-1a60cc5d36d1
+# ╠═dd1492d2-e994-4371-9dcd-246ae498035d
+# ╟─52a15ff6-d705-4b62-bf45-dd6693f4f9d9
+# ╠═d2087caa-d168-4a75-b8df-8d00e393bcfd
+# ╠═8ed5bbeb-96cb-42e4-8617-bab46b1dbcdd
+# ╠═d176a5b2-1e33-4b81-998a-6f336a19b57f
+# ╠═9e27130e-e397-4014-a2ca-fbf4972651ad
+# ╠═db722a37-3044-4ab2-8a0d-a3a8565a5ccd
+# ╠═c725ed6c-607d-4f09-93dd-70f8c39d7127
+# ╠═e5d7c810-35ff-4875-ba6b-485411b99640
 # ╟─00000000-0000-0000-0000-000000000001
 # ╟─00000000-0000-0000-0000-000000000002
