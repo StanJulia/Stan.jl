@@ -63,13 +63,17 @@ end;
 md" ##### Creade the BridgeStan model library"
 
 # ╔═╡ acccac71-e62d-4a1d-8fb4-ebb379ee572d
-available_chains(sm)
+chain_dict = available_chains(sm)
 
 # ╔═╡ b3d88396-fcb9-44ed-8e6a-16030c9d4f36
 begin
 	chain_id = 2
-	smb = BS.StanModel(stan_file = sm.output_base * ".stan", data = sm.output_base * "_data_$(chain_id).json")
-end;
+	smb = BS.StanModel(;
+		stan_file = sm.output_base * ".stan",
+	    stanc_args=["--warn-pedantic --O1"],
+    	make_args=["CXX=clang++", "STAN_THREADS=true"],
+		data = sm.output_base * "_data_$(chain_id).json")
+end
 
 # ╔═╡ 0f43e4c5-6c4b-4a2b-bcf3-fee8862b28fd
 md" ###### Model name:"

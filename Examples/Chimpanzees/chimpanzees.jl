@@ -42,7 +42,7 @@ rc6_1s = stan_sample(m6_1s; data);
 
 if success(rc6_1s)
     chns = read_samples(m6_1s, :nesteddataframe)
-    chns |> display
+    #chns |> display
 
     # Obtain  b.1 , b,2 as a matrix
 

@@ -18,7 +18,7 @@ html"""
 <style>
 	main {
 		margin: 0 auto;
-		max-width: 2000px;
+		max-width: 3500px;
     	padding-left: max(160px, 0%);
     	padding-right: max(160px, 30%);
 	}
