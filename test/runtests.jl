@@ -52,7 +52,6 @@ examples = [
   "Examples/Dyes/dyes.jl",
   "Examples/EightSchools/schools8.jl",
   "Examples/InferenceData/inferencedata.jl",
-  #"Examples/BridgeStan/bridgestan.jl",
   "Examples/PosteriorDB/posteriordb.jl",
 
   "Examples-Stan-Methods/Diagnose/diagnose.jl",
@@ -74,6 +73,10 @@ examples = [
   "Examples-Stan-Methods/Generate_Quantities/generate_quantities.jl",
   "Examples-Stan-Methods/Parse_and_Interpolate/parse.jl",
 ]
+
+if Int(VERSION.minor) > 8
+  push!(examples, "Examples/BridgeStan/bridgestan.jl")
+end
 
 if haskey(ENV, "JULIA_CMDSTAN_HOME") || haskey(ENV, "CMDSTAN")
   println("\nRunning Stan.jl v9.x test examples")

@@ -1,6 +1,8 @@
 ######### StanSample Bernoulli example  ###########
 
-using StanSample, DataFrames
+using BridgeStan
+using StanSample
+using DataFrames
 
 ProjDir = @__DIR__
 
@@ -30,10 +32,17 @@ rc = stan_sample(sm; data);
 
 if success(rc)
     st = read_samples(sm)
-    display(DataFrame(st))
+    #display(DataFrame(st))
 end
 
-smb = create_smb(sm)
+smb = BridgeStan.StanModel(;
+    stan_file = sm.output_base * ".stan",
+    stanc_args = ["--warn-pedantic --O1"],
+    make_args = ["CXX=clang++", "STAN_THREADS=true"],
+    data=sm.output_base * "_data_1.json",
+    seed = 204,
+    chain_id = 0
+)
 
 if typeof(smb) == BridgeStan.StanModel
     x = rand(BridgeStan.param_unc_num(smb))

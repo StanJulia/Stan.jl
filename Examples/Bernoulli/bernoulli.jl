@@ -1,7 +1,10 @@
 ######### Stan program example  ###########
 
-using StanSample, MCMCChains
-using StatsPlots
+using MCMCChains
+using AxisKeys
+using MonteCarloMeasurements
+using StanSample
+#using StatsPlots
 
 bernoullimodel = "
 data { 

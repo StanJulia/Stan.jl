@@ -1,5 +1,5 @@
 ### A Pluto.jl notebook ###
-# v0.19.19
+# v0.19.22
 
 using Markdown
 using InteractiveUtils
@@ -46,11 +46,18 @@ notebook_files = [
 ];
 
 # ╔═╡ 0f10a758-e442-4cd8-88bc-d82d8de97ede
-notebooks_df = DataFrame(
-    file = notebook_files,
-    reset = repeat([false], length(notebook_files)),
-	done = repeat([false], length(notebook_files))
-)
+begin
+    files = AbstractString[]
+    for i in 1:length(notebook_files)
+        append!(files, [split(notebook_files[i], "/")[end]])
+    end
+    notebooks_df = DataFrame(
+        name = files,
+        reset = repeat([false], length(notebook_files)),
+        done = repeat([false], length(notebook_files)),
+        file = notebook_files,
+    )
+end
 
 # ╔═╡ a4207232-61eb-4da7-8629-1bcc670ab524
 notebooks_df.reset .= true;

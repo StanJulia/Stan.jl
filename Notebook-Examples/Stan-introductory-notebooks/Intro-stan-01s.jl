@@ -1,5 +1,5 @@
 ### A Pluto.jl notebook ###
-# v0.19.19
+# v0.19.20
 
 using Markdown
 using InteractiveUtils
@@ -17,11 +17,8 @@ begin
 	using PlutoUI
 end
 
-# ╔═╡ 57f0ec9a-f913-11ea-2e7e-ad16a359b82d
-md"## Intro-stan-01s.jl"
-
 # ╔═╡ accc5535-2e9e-4a20-bd83-048477649d4b
-md" ### Another introduction to Stan, in the style used in StatisticalRethinking.jl."
+md" ## Another introduction to Stan, as used in StatisticalRethinking.jl."
 
 # ╔═╡ 6908ab8d-41be-4bca-9111-91cda8ea06b7
 md"
@@ -108,12 +105,6 @@ The use of StanOptimize.jl is shown in `Intro-stan-optimize.jl`.
 md"
 In the code clips I have opted for a less efficient way of computing the quadratic approximation to the posterior distribution by using StanQuap.jl which uses both StanOptimize.jl and StanSample.jl. The advantage is that this way, as in the StanOptimize.jl approach, the same Stan Language model can be used and it returns both the quapdratic approximation and a full SampleModel which makes comparing the two results easier.
 "
-
-# ╔═╡ c7dd5b98-f1dd-11ea-168c-07c643e283a7
-md"## Introduction to a Stan Language program"
-
-# ╔═╡ e1794cb4-f758-11ea-0888-9d7ce10db48f
-md"Additional context can be found in the cells at the end of this notebook."
 
 # ╔═╡ d12eb360-f1ea-11ea-1a2f-fd69805cb4b4
 md"##### This model represents N experiments each tossing a globe n times and recording the number of times the globe lands on water (`W`) in an array `k`."
@@ -273,7 +264,6 @@ end
 md"## End of intros/intro-stan-01s.jl"
 
 # ╔═╡ Cell order:
-# ╟─57f0ec9a-f913-11ea-2e7e-ad16a359b82d
 # ╟─accc5535-2e9e-4a20-bd83-048477649d4b
 # ╟─6908ab8d-41be-4bca-9111-91cda8ea06b7
 # ╠═2a0a2339-1c8b-42d0-93cb-a97c461e2dd9
@@ -285,8 +275,6 @@ md"## End of intros/intro-stan-01s.jl"
 # ╟─04330a22-8020-11eb-38f3-15f03a13f217
 # ╟─2e4c633e-f75a-11ea-2bcb-fb9800e518af
 # ╟─f2cd269c-801e-11eb-1e56-bfbb77a13ac9
-# ╟─c7dd5b98-f1dd-11ea-168c-07c643e283a7
-# ╟─e1794cb4-f758-11ea-0888-9d7ce10db48f
 # ╠═38677642-f1dd-11ea-2537-59511c140dab
 # ╠═5d9316ec-f1dd-11ea-1c0d-0d8566ab3a90
 # ╟─d12eb360-f1ea-11ea-1a2f-fd69805cb4b4

@@ -1,14 +1,14 @@
 ### A Pluto.jl notebook ###
-# v0.19.19
+# v0.19.22
 
 using Markdown
 using InteractiveUtils
 
 # ╔═╡ eedbb8c6-2e87-4712-a9ce-cad9382d06a1
 begin
+    using BridgeStan
 	using StanSample
 	using DataFrames
-	import StanSample: BS
 end
 
 # ╔═╡ 6a5a6122-08d1-44da-8881-48b23450dc83
@@ -22,6 +22,12 @@ html"""
 	}
 </style>
 """
+
+# ╔═╡ 81f620f0-411c-4286-8247-e9084812be01
+ENV["BRIDGESTAN"]
+
+# ╔═╡ 6d303f77-4a04-4ea3-9dcc-bf8e68779490
+ENV["BRIDGESTAN"] = ""
 
 # ╔═╡ 3e8be11d-40a3-465b-8941-6c7f4ce24745
 pwd()
@@ -68,33 +74,36 @@ chain_dict = available_chains(sm)
 # ╔═╡ b3d88396-fcb9-44ed-8e6a-16030c9d4f36
 begin
 	chain_id = 2
-	smb = BS.StanModel(;
+	smb = BridgeStan.StanModel(;
 		stan_file = sm.output_base * ".stan",
 	    stanc_args=["--warn-pedantic --O1"],
     	make_args=["CXX=clang++", "STAN_THREADS=true"],
-		data = sm.output_base * "_data_$(chain_id).json")
-end
+		data = sm.output_base * "_data_$(chain_id).json",
+        seed = 204,
+        chain_id = chain_id
+    )
+end;
 
 # ╔═╡ 0f43e4c5-6c4b-4a2b-bcf3-fee8862b28fd
 md" ###### Model name:"
 
 # ╔═╡ 4023e439-8af1-46e7-b484-24544c7dda8f
-BS.name(smb)
+BridgeStan.name(smb)
 
 # ╔═╡ 04f05b74-9b3e-4c49-b752-e6260eac1096
 md" ###### Number of model parameters:"
 
 # ╔═╡ 76dc6325-54a6-4fbd-bf67-80b738f49d4f
-BS.param_num(smb)
+BridgeStan.param_num(smb)
 
 # ╔═╡ 924c7420-9bef-4a30-b36c-e647e90c5a56
 md" ###### Compute log_density and gradient at a random observation"
 
 # ╔═╡ 6d31bc0d-321a-42d1-b851-dc6aed4aa6eb
 let
-	x = rand(BS.param_unc_num(smb))
+	x = rand(BridgeStan.param_unc_num(smb))
 	q = @. log(x / (1 - x)); # unconstrained scale
-	ld, grad = BS.log_density_gradient(smb, q, jacobian = false)
+	ld, grad = BridgeStan.log_density_gradient(smb, q, jacobian = false)
 	(log_density=ld, gradient=grad)
 end
 
@@ -102,17 +111,17 @@ end
 md" ###### Or a range of densities"
 
 # ╔═╡ ce23ee24-d13b-4e79-9dfb-9dcdd6b8f599
-if typeof(smb) == BS.StanModel
-    x = rand(BS.param_unc_num(smb))
+if typeof(smb) == BridgeStan.StanModel
+    x = rand(BridgeStan.param_unc_num(smb))
     q = @. log(x / (1 - x))        # unconstrained scale
 
-    function sim(smb::BS.StanModel, x=LinRange(0.1, 0.9, 100))
+    function sim(smb::BridgeStan.StanModel, x=LinRange(0.1, 0.9, 100))
         q = zeros(length(x))
         ld = zeros(length(x))
         g = Vector{Vector{Float64}}(undef, length(x))
         for (i, p) in enumerate(x)
             q[i] = @. log(p / (1 - p)) # unconstrained scale
-            ld[i], g[i] = BS.log_density_gradient(smb, q[i:i],
+            ld[i], g[i] = BridgeStan.log_density_gradient(smb, q[i:i],
                 jacobian = 0)
         end
         return DataFrame(x=x, q=q, log_density=ld, gradient=g)
@@ -129,6 +138,8 @@ readdir(sm.tmpdir)
 
 # ╔═╡ Cell order:
 # ╠═6a5a6122-08d1-44da-8881-48b23450dc83
+# ╠═81f620f0-411c-4286-8247-e9084812be01
+# ╠═6d303f77-4a04-4ea3-9dcc-bf8e68779490
 # ╠═eedbb8c6-2e87-4712-a9ce-cad9382d06a1
 # ╠═3e8be11d-40a3-465b-8941-6c7f4ce24745
 # ╟─8f2ed639-a384-4fd2-bed6-2d9571ef3457
