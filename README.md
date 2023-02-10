@@ -36,9 +36,7 @@ Stan.jl v10 uses StanSample.jl v7, StanOptimize.jl v4, StanQuap.jl v4, StanDiagn
 
 Stan.jl v10 supports InferenceObjects.jl and PosteriorDB.jl. See the example notebooks in the Examples_Notebooks subdirectory.
 
-BridgeStan v1.0 is no longer included in StanSample.jl but support for it is setup if bridgestan and cmdstan have been installed in the same directory. See the notebook `bridgestan.jl` in Example_Notebooks.
-
-Note that these are new packages and more updates are to be expected!
+BridgeStan v1.0.1 is supported. See the notebook `bridgestan.jl` in Example_Notebooks.
 
 To use the :dimarray or :dimarrays option in `read_samples())`, see the example notebook `dimarray.jl`.
 
