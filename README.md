@@ -24,19 +24,17 @@ For most applications one of the "single method" packages, e.g. StanSample.jl, S
 
 To execute the most important method in Stan ("sample"), use StanSample.jl.
 
-Over time more examples will be added as Pluto notebooks.
+Some Pluto notebook examples can be found [here](https://github.com/StanJulia/StanExampleNotebooks.jl).
 
 ## Background info
 
-Early versions of Stan.jl took a similar approach as the recently released [CmdStanR](https://mc-stan.org/cmdstanr/) and [CmdStanPy](https://github.com/stan-dev/cmdstanpy) options to use Stan's [cmdstan executable](https://mc-stan.org/users/interfaces/cmdstan.html).
+Stan.jl has always taken the approach as the recently released [CmdStanR](https://mc-stan.org/cmdstanr/) and [CmdStanPy](https://github.com/stan-dev/cmdstanpy) options to use Stan's [cmdstan executable](https://mc-stan.org/users/interfaces/cmdstan.html).
 
 In Stan.jl v7 all of cmdstan's methods were moved to separate packages, i.e. StanSample.jl, StanOptimize.jl, StanVariational.jl and StanDiagnose.jl, including an option to run `generate_quantities` as part of StanSample.jl. 
 
 Stan.jl v10 uses StanSample.jl v7, StanOptimize.jl v4, StanQuap.jl v4, StanDiagnose.jl v4 and StanVariational v4 and supports multithreading on C++ level. Stan.jl v10 also uses JSON.jl to generate data and init input files for cmdstan.
 
-Stan.jl v10 supports InferenceObjects.jl and PosteriorDB.jl. See the example notebooks in the Examples_Notebooks subdirectory.
-
-BridgeStan v1.0.1 is supported. See the notebook `bridgestan.jl` in Example_Notebooks.
+Stan.jl v10 supports InferenceObjects.jl, PosteriorDB.jl and BridgeStan v1.0.1. See the notebook examples [here](https://github.com/StanJulia/StanExampleNotebooks.jl).
 
 To use the :dimarray or :dimarrays option in `read_samples())`, see the example notebook `dimarray.jl`.
 
