@@ -88,6 +88,12 @@ Set the CMDSTAN environment variable so that Julia can find the cmdstan installa
 
 ## Versions
 
+### Version 10.3.1
+
+1. Move the example notebooks to it's own [project](https://github.com/StanJulia/StanExampleNotebooks.jl).
+2. Added a CausalInference.jl based example notebook.
+3. Upgraded to InferenceObjects v0.3.4
+
 ### Version 10.0.0
 
 1. Uses StanSample.jl v7.
