@@ -1,43 +1,43 @@
 using DataFrames
 using PosteriorDB
 
-pdb = database()
+pdb = PosteriorDB.database()
 
 pdb.path
 
-posterior_names(pdb)
+PosteriorDB.posterior_names(pdb)
 
-dataset_names(pdb)
+PosteriorDB.dataset_names(pdb)
 
-post = posterior(pdb, "eight_schools-eight_schools_centered")
+post = PosteriorDB.posterior(pdb, "eight_schools-eight_schools_centered")
 
-mod = model(post)
+mod = PosteriorDB.model(post)
 
-info(post)
+PosteriorDB.info(post)
 
-mod_code = implementation(mod, "stan")
+mod_code = PosteriorDB.implementation(mod, "stan")
 mod_code
 
-impl = implementation(mod, "stan")
+impl = PosteriorDB.implementation(mod, "stan")
 
-code = load(impl)
+code = PosteriorDB.load(impl)
 println(code)
 
 
-info(mod)
+PosteriorDB.info(mod)
 
-data = dataset(post)
+data = PosteriorDB.dataset(post)
 
-info(data)
+PosteriorDB.info(data)
 
-path(data)
+PosteriorDB.path(data)
 
-load(data)
+PosteriorDB.load(data)
 
-ref = reference_posterior(post)
+ref = PosteriorDB.reference_posterior(post)
 
-info(ref)
+PosteriorDB.info(ref)
 
-path(ref)
+PosteriorDB.path(ref)
 
-DataFrame(load(ref)) |> display
+DataFrame(PosteriorDB.load(ref)) |> display

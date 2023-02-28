@@ -3,7 +3,7 @@ uuid = "682df890-35be-576f-97d0-3d8c8b33a550"
 license = "MIT"
 desc = "Illustrate StanJulia's interface options to cmdstan"
 authors = ["Rob J Goedman <goedman@icloud.com>"]
-version = "10.3.1"
+version = "10.3.2"
 
 [deps]
 AxisKeys = "94b1ba4f-4ee9-5380-92f1-94cde586c3c5"
