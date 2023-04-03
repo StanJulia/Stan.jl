@@ -34,7 +34,7 @@ In Stan.jl v7 all of cmdstan's methods were moved to separate packages, i.e. Sta
 
 Stan.jl v10 uses StanSample.jl v7, StanOptimize.jl v4, StanQuap.jl v4, StanDiagnose.jl v4 and StanVariational v4 and supports multithreading on C++ level. Stan.jl v10 also uses JSON.jl to generate data and init input files for cmdstan.
 
-Stan.jl v10 supports InferenceObjects.jl, PosteriorDB.jl and BridgeStan v1.0.1. See the notebook examples [here](https://github.com/StanJulia/StanExampleNotebooks.jl).
+Stan.jl v10 supports InferenceObjects.jl and PosteriorDB.jl. See the notebook examples [here](https://github.com/StanJulia/StanExampleNotebooks.jl).
 
 To use the :dimarray or :dimarrays option in `read_samples())`, see the example notebook `dimarray.jl`.
 
@@ -87,6 +87,16 @@ Add the StanSample.jl package by running ] add StanSample from the REPL.
 Set the CMDSTAN environment variable so that Julia can find the cmdstan installation, e.g. from the Julia REPL do: ENV["CMDSTAN"] = "C:/Users/Jakob/.julia/conda/3/envs/stan-env/Library/bin/cmdstan" This needs to be set before you load the StanSample package by e.g. using it. You can add this line to your startup.jl file so that you don't have to run it again in every fresh Julia session.
 
 ## Versions
+
+### Version 10.3.3
+
+1. Removed direct testing of BridgeStan (as it was removed from StanSample.jl)
+2. An example of how to use Bridgestan can be found in PlutoExampleNotebooks.jl (`test_bridgestan.jl`).
+3. The `bridgestan_stansample_example.jl` in above mentioned Github repo shows the problem why I removed BridgeStan support from StanSample.
+
+### Version 10.3.2
+
+1. Moved Pluto notebook examples to PlutoExampleNotebooks.jl
 
 ### Version 10.3.1
 

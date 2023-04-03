@@ -75,7 +75,7 @@ examples = [
 ]
 
 if Int(VERSION.minor) > 8
-  push!(examples, "Examples/BridgeStan/bridgestan.jl")
+  #push!(examples, "Examples/BridgeStan/bridgestan.jl")
 end
 
 if haskey(ENV, "JULIA_CMDSTAN_HOME") || haskey(ENV, "CMDSTAN")
