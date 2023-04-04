@@ -91,8 +91,8 @@ Set the CMDSTAN environment variable so that Julia can find the cmdstan installa
 ### Version 10.3.3
 
 1. Removed direct testing of BridgeStan (as it was removed from StanSample.jl)
-2. An example of how to use Bridgestan can be found in PlutoExampleNotebooks.jl (`test_bridgestan.jl`).
-3. The `bridgestan_stansample_example.jl` in above mentioned Github repo shows the problem why I removed BridgeStan support from StanSample.
+2. Two examples of how to use Bridgestan can be found in PlutoExampleNotebooks.jl (`test_bridgestan.jl`and
+`bridgestan_stansample_example.jl`) in [above mentioned Github repo](https://github.com/StanJulia/StanExampleNotebooks.jl/tree/main/notebooks/BridgeStan).
 
 ### Version 10.3.2
 
