@@ -24,13 +24,13 @@ to `./julia/config/startup.jl`. Remember to use `expanduser()` if you use `~` in
 
 I typically prefer cmdstan not to include the cmdstan version number in the above path to cmdstan (no update needed when the cmdstan version is updated).
 
-Currently tested with cmdstan 2.28.2.
+Currently tested with cmdstan 2.32.0.
 
 Note: StanSample.jl v6, supports multithreading in the `cmdstan` binary and requires cmdstan v2.28.2 and up. To activate multithreading in `cmdstan` this needs to be specified during the build process of `cmdstan`. 
 
 ### Conda based installation walkthrough for running Stan from Julia on Windows
 
-Note: The conda way of installing also works on other platforms. See [also](https://mc-stan.org/docs/2_28/cmdstan-guide/index.html).
+Note: The conda way of installing also works on other platforms. See [also](https://mc-stan.org/docs/cmdstan-guide/index.html).
 
 Make sure you have conda installed on your system and available from the command line (you can use the conda version that comes with Conda.jl or install your own).
 

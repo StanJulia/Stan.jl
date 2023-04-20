@@ -88,6 +88,10 @@ Set the CMDSTAN environment variable so that Julia can find the cmdstan installa
 
 ## Versions
 
+### Version 10.4.0
+
+1. Switch to cmdstan.2.32.0 based testing.
+
 ### Version 10.3.3
 
 1. Removed direct testing of BridgeStan (as it was removed from StanSample.jl)
