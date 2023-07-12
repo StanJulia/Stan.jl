@@ -1,0 +1,89 @@
+<!DOCTYPE html>
+<html lang="en"><head><meta charset="UTF-8"/><meta name="viewport" content="width=device-width, initial-scale=1.0"/><title>Walkthrough2 · Stan.jl</title><script data-outdated-warner src="../assets/warner.js"></script><link href="https://cdnjs.cloudflare.com/ajax/libs/lato-font/3.0.0/css/lato-font.min.css" rel="stylesheet" type="text/css"/><link href="https://cdnjs.cloudflare.com/ajax/libs/juliamono/0.045/juliamono.min.css" rel="stylesheet" type="text/css"/><link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.4/css/fontawesome.min.css" rel="stylesheet" type="text/css"/><link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.4/css/solid.min.css" rel="stylesheet" type="text/css"/><link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.4/css/brands.min.css" rel="stylesheet" type="text/css"/><link href="https://cdnjs.cloudflare.com/ajax/libs/KaTeX/0.13.24/katex.min.css" rel="stylesheet" type="text/css"/><script>documenterBaseURL=".."</script><script src="https://cdnjs.cloudflare.com/ajax/libs/require.js/2.3.6/require.min.js" data-main="../assets/documenter.js"></script><script src="../siteinfo.js"></script><script src="../../versions.js"></script><link class="docs-theme-link" rel="stylesheet" type="text/css" href="../assets/themes/documenter-dark.css" data-theme-name="documenter-dark" data-theme-primary-dark/><link class="docs-theme-link" rel="stylesheet" type="text/css" href="../assets/themes/documenter-light.css" data-theme-name="documenter-light" data-theme-primary/><script src="../assets/themeswap.js"></script></head><body><div id="documenter"><nav class="docs-sidebar"><div class="docs-package-name"><span class="docs-autofit"><a href="../INTRO/">Stan.jl</a></span></div><form class="docs-search" action="../search/"><input class="docs-search-query" id="documenter-search-query" name="q" type="text" placeholder="Search docs"/></form><ul class="docs-menu"><li><a class="tocitem" href="../INTRO/">Intro</a></li><li><a class="tocitem" href="../INSTALLATION/">Installation</a></li><li><a class="tocitem" href="../WALKTHROUGH/">Walkthrough</a></li><li class="is-active"><a class="tocitem" href>Walkthrough2</a></li><li><a class="tocitem" href="../VERSIONS/">Versions</a></li></ul><div class="docs-version-selector field has-addons"><div class="control"><span class="docs-label button is-static is-size-7">Version</span></div><div class="docs-selector control is-expanded"><div class="select is-fullwidth is-size-7"><select id="documenter-version-selector"></select></div></div></div></nav><div class="docs-main"><header class="docs-navbar"><nav class="breadcrumb"><ul class="is-hidden-mobile"><li class="is-active"><a href>Walkthrough2</a></li></ul><ul class="is-hidden-tablet"><li class="is-active"><a href>Walkthrough2</a></li></ul></nav><div class="docs-right"><a class="docs-edit-link" href="https://github.com/StanJulia/Stan.jl/blob/master/docs/src/WALKTHROUGH2.md" title="Edit on GitHub"><span class="docs-icon fab"></span><span class="docs-label is-hidden-touch">Edit on GitHub</span></a><a class="docs-settings-button fas fa-cog" id="documenter-settings-button" href="#" title="Settings"></a><a class="docs-sidebar-button fa fa-bars is-hidden-desktop" id="documenter-sidebar-button" href="#"></a></div></header><article class="content" id="documenter-page"><h1 id="A-walk-through-example-(using-StanSample.jl)"><a class="docs-heading-anchor" href="#A-walk-through-example-(using-StanSample.jl)">A walk-through example (using StanSample.jl)</a><a id="A-walk-through-example-(using-StanSample.jl)-1"></a><a class="docs-heading-anchor-permalink" href="#A-walk-through-example-(using-StanSample.jl)" title="Permalink"></a></h1><p>Make StanSample.jl available:</p><pre><code class="nohighlight hljs">using Distributions
+using DataFrames
+using MonteCarloMeasurements, AxisKeys
+using StanSample
+</code></pre><p>Include Distributions.jl as we&#39;ll be using that package to create an example model. This example is derived from an example in <a href="https://xcelab.net/rm/statistical-rethinking/">StatisticalRethinking.jl</a>.</p><p>Inclusion of MonteCarloMeasurements and AxisKeys in this script is for illustration purposes only (see ??read_samples in StanSample.jl).</p><p>It shows a few more features than the Bernoulli example in WALKTHROUGH.md.</p><pre><code class="nohighlight hljs">N = 100
+df = DataFrame(
+    height = rand(Normal(10, 2), N),
+    leg_prop = rand(Uniform(0.4, 0.5), N),
+)
+df.leg_left = df.leg_prop .* df.height + rand(Normal(0, 0.02), N)
+df.leg_right = df.leg_prop .* df.height + rand(Normal(0, 0.03), N)</code></pre><p>Define a variable <code>stan6_1</code> to hold the <a href="https://mc-stan.org/docs/2_21/reference-manual/index.html">Stan language</a> model definition:</p><pre><code class="nohighlight hljs">stan6_1 = &quot;
+data {
+  int &lt;lower=1&gt; N;
+  vector[N] H;
+  vector[N] LL;
+  vector[N] LR;
+}
+parameters {
+  real a;
+  vector[2] b;
+  real &lt;lower=0&gt; sigma;
+}
+model {
+  vector[N] mu;
+  mu = a + b[1] * LL + b[2] * LR;
+  a ~ normal(10, 100);
+  b ~ normal(2, 10);
+  sigma ~ exponential(1);
+  H ~ normal(mu, sigma);
+}
+&quot;;</code></pre><p>Create and compile a SampleModel object. By &quot;compile&quot; here is meant that <code>SampleModel()</code> will take care of compiling the Stan language program first to a C++ program and subsequantly compile that C++ program to an executable which will be executed in <code>stan_sample()</code>.</p><pre><code class="nohighlight hljs">m6_1s = SampleModel(&quot;m6.1s&quot;, stan6_1);</code></pre><p>Above <code>SampleModel()</code> call creates a default model for sampling. See <code>?SampleModel</code> for details.</p><p>The observed input data is defined below. Note here we use a NamedTuple for input:</p><pre><code class="nohighlight hljs">data = (H = df.height, LL = df.leg_left, LR = df.leg_right, N = size(df, 1))</code></pre><p>Generate posterior draws by calling <code>stan_sample()</code>, passing in the model and optionally data, initial settings and keyword arguments to influence how <code>cmdstan</code> is to be called: </p><pre><code class="nohighlight hljs">rc6_1s = stan_sample(m6_1s; data, seed=-1, delta=0.85);
+
+if success(rc6_1s)
+    st6_1s = read_samples(m6_1s) # By default a StanTable object is returned
+
+    # Display the schema of the tbl
+
+    st6_1s |&gt; display
+    println()
+
+    # Display the draws
+
+    df6_1s = DataFrame(st6_1s)
+    df6_1s |&gt; display
+    println()
+
+    # Or using a KeyedArray object from AxisKeys.jl
+
+    chns6_1s = read_samples(m6_1s, :keyedarray)
+    chns6_1s |&gt; display
+end
+
+init = (a = 2.0, b = [1.0, 2.0], sigma = 1.0)
+rc6_2s = stan_sample(m6_1s; data, init);
+
+if success(rc6_2s)
+
+    # Retrieve the summary created by the stansummary executable:
+
+    read_summary(m6_1s, true)
+    println()
+
+    # For simple models often a DataFrame is attractive to work with:
+
+    post6_1s_df = read_samples(m6_1s, :dataframe)
+    post6_1s_df |&gt; display
+    println()
+
+    # Or from MonteCarloMeasurements.jl:
+    
+    part6_1s = read_samples(m6_1s, :particles)
+    part6_1s |&gt; display
+    println()
+
+    # Use a NamedTuple:
+    
+    nt6_1s = read_samples(m6_1s, :namedtuple)
+    nt6_1s |&gt; display
+    println()
+
+    nt6_1s.b |&gt; display
+
+    # Compute the mean for vector b:
+
+    mean(nt6_1s.b, dims=2)
+
+end
+</code></pre><p>Many more examples are provided in the Example subdirectories.</p><p>Additional examples can be found in <a href="https://github.com/StanJulia/StanSample.jl">StanSample.jl</a> and <a href="https://github.com/StatisticalRethinkingJulia/StatisticalRethinking.jl">StatisticalRethinking.jl</a>.</p><p>StatisticalRethinking.jl add features to compare models and coefficients, plotting (including <code>trankplots()</code> for chains) and summarizing results (<code>precis()</code>).</p><p>MCMCChains.jl, part of the Turing ecosystem, provides additional tools to evaluate the chains.</p></article><nav class="docs-footer"><a class="docs-footer-prevpage" href="../WALKTHROUGH/">« Walkthrough</a><a class="docs-footer-nextpage" href="../VERSIONS/">Versions »</a><div class="flexbox-break"></div><p class="footer-message">Powered by <a href="https://github.com/JuliaDocs/Documenter.jl">Documenter.jl</a> and the <a href="https://julialang.org/">Julia Programming Language</a>.</p></nav></div><div class="modal" id="documenter-settings"><div class="modal-background"></div><div class="modal-card"><header class="modal-card-head"><p class="modal-card-title">Settings</p><button class="delete"></button></header><section class="modal-card-body"><p><label class="label">Theme</label><div class="select"><select id="documenter-themepicker"><option value="documenter-light">documenter-light</option><option value="documenter-dark">documenter-dark</option></select></div></p><hr/><p>This document was generated with <a href="https://github.com/JuliaDocs/Documenter.jl">Documenter.jl</a> version 0.27.25 on <span class="colophon-date" title="Wednesday 12 July 2023 14:53">Wednesday 12 July 2023</span>. Using Julia version 1.9.2.</p></section><footer class="modal-card-foot"></footer></div></div></div></body></html>
