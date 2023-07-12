@@ -88,13 +88,18 @@ Set the CMDSTAN environment variable so that Julia can find the cmdstan installa
 
 ## Versions
 
+### Version 10.4.2
+
+1. Mainly package updates.
+2. Added an example (function) to duplicate a tmpdir on Windows. See `Examples/Bernoulli/bernoulli2.jl`.
+
 ### Version 10.4.0
 
 1. Switch to cmdstan.2.32.0 based testing.
 
 ### Version 10.3.3
 
-1. Removed direct testing of BridgeStan (as it was removed from StanSample.jl)
+1. Removed direct testing of BridgeStan (as it was removed from StanSample.jl).
 2. Two examples of how to use Bridgestan can be found in PlutoExampleNotebooks.jl (`test_bridgestan.jl`and
 `bridgestan_stansample_example.jl`) in [above mentioned Github repo](https://github.com/StanJulia/StanExampleNotebooks.jl/tree/main/notebooks/BridgeStan).
 
