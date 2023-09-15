@@ -9,7 +9,7 @@ stan4_1 = "
 // Inferring the mean and std
 data {
   int N;
-  real<lower=0> h[N];
+  array[N] real<lower=0> h;
 }
 parameters {
   real<lower=0.1> sigma;

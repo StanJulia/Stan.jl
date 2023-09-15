@@ -22,8 +22,8 @@ generated quantities {
   int<lower=0> postpredk;
   int<lower=0> priorpredk;
 
-  postpredk <- binomial_rng(n, theta);
-  priorpredk <- binomial_rng(n, thetaprior);
+  postpredk = binomial_rng(n, theta);
+  priorpredk = binomial_rng(n, thetaprior);
 }
 "
 

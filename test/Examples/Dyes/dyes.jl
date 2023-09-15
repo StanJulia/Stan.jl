@@ -7,22 +7,21 @@ dyes ="
 data {
   int BATCHES; 
   int SAMPLES; 
-  real y[BATCHES, SAMPLES]; 
-  // vector[SAMPLES] y[BATCHES]; 
+  matrix[BATCHES, SAMPLES] y; 
 } 
 
 parameters {
   real<lower=0> tau_between;
   real<lower=0> tau_within; 
   real theta;
-  real mu[BATCHES]; 
+  array[BATCHES] real mu; 
 } 
 
 transformed parameters {
   real sigma_between; 
   real sigma_within;
-  sigma_between <- 1/sqrt(tau_between); 
-  sigma_within <- 1/sqrt(tau_within); 
+  sigma_between = 1/sqrt(tau_between); 
+  sigma_within = 1/sqrt(tau_within); 
 } 
 
 model {
@@ -39,8 +38,8 @@ generated quantities {
   real sigmasq_between;
   real sigmasq_within;
 
-  sigmasq_between <- 1 / tau_between;
-  sigmasq_within <- 1 / tau_within;
+  sigmasq_between = 1 / tau_between;
+  sigmasq_within = 1 / tau_within;
 }
 "
 

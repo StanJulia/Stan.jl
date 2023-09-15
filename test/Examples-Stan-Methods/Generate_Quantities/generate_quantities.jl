@@ -7,7 +7,7 @@ ProjDir = @__DIR__
 gq = "
   data {
     int<lower=0> N;
-    int<lower=0> y[N];
+    array[N] int<lower=0> y;
   }
   parameters {
     real<lower=0.00001> Theta;

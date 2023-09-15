@@ -3,8 +3,8 @@ using StanSample, MCMCChains
 bernoullimodel = "
 data { 
   int<lower=1> N; 
-  int<lower=0,upper=1> y[N];
-  real empty[0];
+  array[N] int<lower=0,upper=1> y;
+  array[0] real empty;
 } 
 parameters {
   real<lower=0,upper=1> theta;
