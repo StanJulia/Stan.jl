@@ -41,7 +41,7 @@ jobs:
           OLDWD=`pwd`
           cd ~
           pwd
-          wget https://github.com/stan-dev/cmdstan/releases/download/v2.32.0/cmdstan-2.33.0.tar.gz
+          wget https://github.com/stan-dev/cmdstan/releases/download/v2.33.0/cmdstan-2.33.0.tar.gz
           tar -xzpf cmdstan-2.33.0.tar.gz
           ls -lia .
           ls -lia ./cmdstan-2.33.0
