@@ -66,13 +66,13 @@ if :observed_data in propertynames(idata)
     idata.observed_data
 end
 
-DataFrame(idata.observed_data)
+#DataFrame(idata.observed_data)
 
 keys(idata.posterior)
 
 post_schools = read_samples(m_schools, :dataframe)
 
-posterior_schools = DataFrame(idata.posterior)
+#posterior_schools = DataFrame(idata.posterior)
 
 idata |> display
 
