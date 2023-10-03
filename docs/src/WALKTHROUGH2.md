@@ -1,4 +1,4 @@
-# A walk-through example (using StanSample.jl)
+# A further walk-through example (using StanSample.jl)
 
 Make StanSample.jl available:
 ```
