@@ -36,11 +36,3 @@ Data and input test cases:
 5. NamedArray
 6. ScalarObs
 7. ZeroLengthArray
-
-To be completed:
-
-## Examples of solving differential equations (DiffEqBayesStan)
-
-1. LotkaVolterra benchmark
-2. Lynx_hare example
-3. SIR model

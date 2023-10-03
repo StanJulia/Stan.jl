@@ -24,7 +24,7 @@ to `./julia/config/startup.jl`. Remember to use `expanduser()` if you use `~` in
 
 I typically prefer cmdstan not to include the cmdstan version number in the above path to cmdstan (no update needed when the cmdstan version is updated).
 
-Currently tested with cmdstan 2.32.0.
+Currently tested with cmdstan 2.33.1.
 
 Note: StanSample.jl v6, supports multithreading in the `cmdstan` binary and requires cmdstan v2.28.2 and up. To activate multithreading in `cmdstan` this needs to be specified during the build process of `cmdstan`. 
 
