@@ -51,4 +51,3 @@ end
 
 Notice that data and init are optional keyword arguments to `stan_sample()`. Julia expands `data` to `data=data` or you can use `data=your_data`.
 
-A further example can be found in [A walk-through example (using StanSample.jl)](@ref).
