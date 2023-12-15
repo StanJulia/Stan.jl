@@ -42,11 +42,7 @@ rc6_1s = stan_sample(m6_1s; data);
 
 if success(rc6_1s)
     chns = read_samples(m6_1s, :nesteddataframe)
-    #chns |> display
-
-    # Obtain  b.1 , b,2 as a matrix
-
-    chns = array(chns, :b)
+    chns[1:10, :] |> display
 
     # Or use read_samples to only use chains 2 and 4 using the chains kwarg.
 

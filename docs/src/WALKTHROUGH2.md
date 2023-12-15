@@ -65,28 +65,13 @@ The observed input data is defined below. Note here we use a NamedTuple for inpu
 data = (H = df.height, LL = df.leg_left, LR = df.leg_right, N = size(df, 1))
 ```
 
-Generate posterior draws by calling `stan_sample()`, passing in the model and optionally data, initial settings and keyword arguments to influence how `cmdstan` is to be called: 
+Generate posterior draws by calling `stan_sample()`, passing in the model and optionally data, initial settings and keyword arguments to influence how `cmdstan` will be called: 
 ```
 rc6_1s = stan_sample(m6_1s; data, seed=-1, delta=0.85);
 
 if success(rc6_1s)
-    st6_1s = read_samples(m6_1s) # By default a StanTable object is returned
-
-    # Display the schema of the tbl
-
-    st6_1s |> display
-    println()
-
-    # Display the draws
-
-    df6_1s = DataFrame(st6_1s)
-    df6_1s |> display
-    println()
-
-    # Or using a KeyedArray object from AxisKeys.jl
-
-    chns6_1s = read_samples(m6_1s, :keyedarray)
-    chns6_1s |> display
+    ndf6_1s = read_samples(m6_1s, :nesteddataframe) # Combine arrays
+    ndf6_1s[1:10, :] |> display
 end
 
 init = (a = 2.0, b = [1.0, 2.0], sigma = 1.0)

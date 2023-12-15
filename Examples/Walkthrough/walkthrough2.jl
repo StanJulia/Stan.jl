@@ -40,28 +40,11 @@ rc6_1s = stan_sample(m6_1s; data, seed=-1, delta=0.85);
 
 
 if success(rc6_1s)
-    st6_1s = read_samples(m6_1s) # By default a StanTable object is returned
+    ndf6_1s = read_samples(m6_1s, :nesteddataframe) 
 
     # Display the schema of the tbl
 
-    st6_1s |> display
-
-    # Display the keys
-
-    df6_1s = DataFrame(st6_1s)
-
-    # Select a block of related parameters
-    
-    DataFrame(df6_1s, :b)
-
-    # Or using a :nesteddataframe object to group the parameters
-    
-    chns6_1s = read_samples(m6_1s, :nesteddataframe)
-    chns6_1s
-
-    # or
-
-    array(chns6_1s, :b)
+    ndf6_1s[1:10, :] |> display
 end
 
 init = (a = 2.0, b = [1.0, 2.0], sigma = 1.0)

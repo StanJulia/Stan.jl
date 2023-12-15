@@ -37,3 +37,7 @@ rc = stan_sample(sm; data=schools8data)
 if success(rc)
   chns = read_samples(sm, :mcmcchains)
 end
+
+if success(rc)
+  ndf = read_samples(sm, :nesteddataframe)
+end
