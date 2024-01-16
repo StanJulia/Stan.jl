@@ -69,6 +69,7 @@ examples = [
   "Examples-Test-Cases/MatrixInput/input_dict_symbol.jl",
   "Examples-Test-Cases/MatrixInput/input_dict_string.jl",
   "Examples-Test-Cases/MatrixInput/input_nt.jl",
+  "Examples-Test-Cases/Cholesky-factor-cov/test_cholesky_factor_cov.jl",
 
   "Examples-Stan-Methods/Generate_Quantities/generate_quantities.jl",
   "Examples-Stan-Methods/Parse_and_Interpolate/parse.jl",

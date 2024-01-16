@@ -1,6 +1,6 @@
 ######### Stan program example  ###########
 
-using StanSample
+using StanSample, DataFrames
 
 function duplicate_tmpdir_for_windows_only(sm)
 
