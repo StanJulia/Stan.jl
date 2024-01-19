@@ -2,18 +2,17 @@
 
 using StanSample, DataFrames
 
-function duplicate_tmpdir_for_windows_only(sm)
+function duplicate_tmpdir_for_windows_only(sm, tmpdir, tmpdirnew)
 
-    tmp2 = mktempdir()
     exefile = Sys.iswindows() ? joinpath(sm.name, ".exe") : sm.name
-    files = [sm.name * ".stan", sm.name * ".hpp", exefile]
+    files = readdir(tmpdir)
     for f in files
-        cp(joinpath(sm.tmpdir, f), joinpath(tmp2, f))
+        cp(joinpath(sm.tmpdir, f), joinpath(tmpdirnew, f))
     end
 
     sm2 = deepcopy(sm)
-    sm2.tmpdir = tmp2
-    sm2.output_base =  joinpath(tmp2, sm2.name)
+    sm2.tmpdir = tmpdirnew
+    sm2.output_base =  joinpath(tmpdirnew, sm2.name)
 
     return sm2
 end
@@ -54,8 +53,11 @@ end
 
 if true # Sys.iswindows()
     df1 = read_samples(sm, :dataframe)
+    tmpdir2 = ProjDir * "/tmp2"
+    isdir(tmpdir2) && rm(tmpdir2; recursive=true)
+    mkdir(tmpdir2)
 
-    sm2 = duplicate_tmpdir_for_windows_only(sm)
+    sm2 = duplicate_tmpdir_for_windows_only(sm, tmpdir, tmpdir2)
     rc2 = stan_sample(sm2; data=observed_data,
       save_warmup=true, num_warmups=1000,
       num_samples=1000, thin=1, delta=0.85)
