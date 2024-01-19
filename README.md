@@ -88,11 +88,13 @@ Set the CMDSTAN environment variable so that Julia can find the cmdstan installa
 
 ## Versions
 
-### Version 10.4.5
+### Vesrsion 10.5-10.7
 
-1. Cmdstan-2.33.1
+1. Cmdstan-2.34.0
 2. Moved LKJ example from StanSample.jl to Stan.jl
 3. Package updates
+4. Added Cholesky factor test
+5. Using StanBase 4.10+
 
 ### Version 10.4.2
 
