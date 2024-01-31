@@ -24,15 +24,15 @@ For most applications one of the "single method" packages, e.g. StanSample.jl, S
 
 To execute the most important method in Stan ("sample"), use StanSample.jl.
 
-Some Pluto notebook examples can be found [here](https://github.com/StanJulia/StanExampleNotebooks.jl).
+Additional Pluto notebook examples can be found [here](https://github.com/StanJulia/StanExampleNotebooks.jl).
 
 ## Background info
 
 Stan.jl has always taken the approach as the recently released [CmdStanR](https://mc-stan.org/cmdstanr/) and [CmdStanPy](https://github.com/stan-dev/cmdstanpy) options to use Stan's [cmdstan executable](https://mc-stan.org/users/interfaces/cmdstan.html).
 
-In Stan.jl v7 all of cmdstan's methods were moved to separate packages, i.e. StanSample.jl, StanOptimize.jl, StanVariational.jl and StanDiagnose.jl, including an option to run `generate_quantities` as part of StanSample.jl. 
+In Stan.jl v7 all of cmdstan's methods were moved to separate packages, i.e. StanSample.jl, StanOptimize.jl, StanVariational.jl and StanDiagnose.jl, including an option to run `generate_quantities` as part of StanSample.jl. Stan.jl v10.8 also supports Stan's `pathfinder` method, see StanPathfinder.jl.
 
-Stan.jl v10 uses StanSample.jl v7, StanOptimize.jl v4, StanQuap.jl v4, StanDiagnose.jl v4 and StanVariational v4 and supports multithreading on C++ level. Stan.jl v10 also uses JSON.jl to generate data and init input files for cmdstan.
+Stan.jl v10 uses StanSample.jl v7, StanOptimize.jl v4, StanQuap.jl v4, StanDiagnose.jl v4 and StanVariational v4 and supports multithreading on C++ level. Stan.jl v10 also uses JSON.jl to generate data and init input files for cmdstan. 
 
 Stan.jl v10 supports InferenceObjects.jl and PosteriorDB.jl. See the notebook examples [here](https://github.com/StanJulia/StanExampleNotebooks.jl).
 
@@ -46,7 +46,7 @@ The StanJulia ecosystem includes 2 additional packages, StanQuap.jl (to compute 
 
 ## Options for multi-threading and multi-chaining
 
-Stan.jl v10 is intended to use Stan's `cmdstan` v2.28.2+ and StanSample.jl v6.
+Stan.jl v10 is intended to use Stan's `cmdstan` v2.34.0+ and StanSample.jl v6.
 
 StanSample.jl v6+ enables the use of c++ multithreading in the `cmdstan` binary. To activate multithreading in `cmdstan` this needs to be specified during the build process of `cmdstan`. I typically create a `path_to_cmdstan_directory/make/local` file (before running `make -j9 build`) containing `STAN_THREADS=true`. For an example, see the `.github/CI.yml` script
 

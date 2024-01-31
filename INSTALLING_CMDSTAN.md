@@ -6,7 +6,7 @@
 git clone https://github.com/stan-dev/cmdstan.git --recursive cmdstan
 
 # or e.g.
-# git clone -b v2.28.2 https://github.com/stan-dev/cmdstan.git --recursive cmdstan
+# git clone -b v2.34.0 https://github.com/stan-dev/cmdstan.git --recursive cmdstan
 ```
 
 ## Customize cmdstan.

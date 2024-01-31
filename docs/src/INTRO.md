@@ -12,7 +12,7 @@ The StanJulia ecosystem includes 2 additional packages, StanQuap.jl (to compute 
 
 ## Options for multi-threading and multi-chaining
 
-Stan.jl v9 is intended to use Stan's `cmdstan` v2.28.2+ and StanSample.jl v6.
+Stan.jl v9 is intended to use Stan's `cmdstan` v2.34.0+ and StanSample.jl v6.
 
 StanSample.jl v6 enables the use of c++ multithreading in the `cmdstan` binary. To activate multithreading in `cmdstan` this needs to be specified during the build process of `cmdstan`. I typically create a `path_to_cmdstan_directory/make/local` file (before running `make -j9 build`) containing `STAN_THREADS=true`. For an example, see the `.github/CI.yml` script
 
