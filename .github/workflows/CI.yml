@@ -16,7 +16,7 @@ jobs:
     strategy:
       matrix:
         version:
-          - '1'
+          - '4'
           #- nightly
         os:
           - ubuntu-latest
