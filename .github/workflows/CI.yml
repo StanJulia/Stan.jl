@@ -7,7 +7,7 @@ on:
   pull_request:
 
 env:
-  CMDSTAN: "/home/worker/cmdstan-2.35.0/"
+  CMDSTAN: "/home/worker/cmdstan-2.37.0/"
 
 jobs:
   test:
@@ -41,17 +41,17 @@ jobs:
           OLDWD=`pwd`
           cd ~
           pwd
-          wget https://github.com/stan-dev/cmdstan/releases/download/v2.35.0/cmdstan-2.35.0.tar.gz
-          tar -xzpf cmdstan-2.35.0.tar.gz
+          wget https://github.com/stan-dev/cmdstan/releases/download/v2.37.0/cmdstan-2.37.0.tar.gz
+          tar -xzpf cmdstan-2.37.0.tar.gz
           ls -lia .
-          ls -lia ./cmdstan-2.35.0
-          ls -lia ./cmdstan-2.35.0/make
-          touch ./cmdstan-2.35.0/make/local
-          echo "STAN_THREADS=true" > ./cmdstan-2.35.0/make/local
+          ls -lia ./cmdstan-2.37.0
+          ls -lia ./cmdstan-2.37.0/make
+          touch ./cmdstan-2.37.0/make/local
+          echo "STAN_THREADS=true" > ./cmdstan-2.37.0/make/local
           make -C $CMDSTAN build
           cd $OLDWD
         env:
-          CMDSTAN: "/home/runner/cmdstan-2.35.0/"
+          CMDSTAN: "/home/runner/cmdstan-2.37.0/"
       - uses: actions/checkout@v2
       - uses: julia-actions/setup-julia@v1
         with:
@@ -70,7 +70,7 @@ jobs:
       - uses: julia-actions/julia-buildpkg@latest
       - uses: julia-actions/julia-runtest@latest
         env:
-          CMDSTAN: "/home/runner/cmdstan-2.35.0/"
+          CMDSTAN: "/home/runner/cmdstan-2.37.0/"
       - uses: julia-actions/julia-processcoverage@v1
         if: matrix.version == '1' && matrix.os == 'ubuntu-latest' && matrix.num_threads == 1
       - uses: codecov/codecov-action@v1
