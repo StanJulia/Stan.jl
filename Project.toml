@@ -2,8 +2,8 @@ name = "Stan"
 uuid = "682df890-35be-576f-97d0-3d8c8b33a550"
 license = "MIT"
 desc = "Illustrate StanJulia's interface options to cmdstan"
-authors = ["Rob J Goedman <goedman@icloud.com>"]
 version = "10.8.1"
+authors = ["Rob J Goedman <goedman@icloud.com>"]
 
 [deps]
 AxisKeys = "94b1ba4f-4ee9-5380-92f1-94cde586c3c5"
@@ -42,7 +42,7 @@ CSV = "0.10"
 CompatHelperLocal = "0.1"
 DataFrames = "1.4"
 DataStructures = "0.18.13, 0.19"
-DimensionalData = "0.24 - 0.29"
+DimensionalData = "0.24 - 0.29, 0.30"
 Distributions = "0.25"
 DocStringExtensions = "0.9"
 InferenceObjects = "0.3, 0.4"
