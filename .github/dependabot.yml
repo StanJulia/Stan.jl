@@ -1,0 +1,23 @@
+# Per https://docs.github.com/github/administering-a-repository/
+# \configuration-options-for-dependency-updates, we need
+# - version (always 2),
+# - updates,
+# - package-ecosystem,
+# - directory or directories,
+# - schedule.interval
+version: 2
+updates:
+  - package-ecosystem: "github-actions"
+    directory: "/"
+    schedule:
+      interval: "monthly"
+  - package-ecosystem: "julia"
+    directory: "/"
+    schedule:
+      interval: "weekly"
+    groups:
+      all-julia-packages:
+        patterns:
+          - "*"
+    ignore:
+      - dependency-name: "Stan*"
